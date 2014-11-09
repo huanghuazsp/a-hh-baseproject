@@ -35,7 +35,7 @@ public class SystemUtil {
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("operPower", getLoginUserUtilService().getOperPower());
 		paramsMap.put("theme", theme);
-		return BaseSystemUtil.getBaseJs(paramsMap, args);
+		return "<link rel=\"shortcut icon\" href=\""+SysParam.hhSysParam.getSysIcon()+"\" />"+BaseSystemUtil.getBaseJs(paramsMap, args);
 	}
 
 	private static String getTheme() {
