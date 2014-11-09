@@ -113,8 +113,6 @@ public class DataInitializationService {
 		logger.info("附件绝对路径：" + StaticVar.filepath);
 		FileUtil.isExist(StaticVar.filepath);
 		FileUtil.isExist(StaticVar.filepath + "/task");
-
-		BaseSystemUtil.initJavaScript();
 	}
 
 
