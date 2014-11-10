@@ -66,7 +66,9 @@
 	function getEventObject(event) {
 		var object = {};
 		object.start = event.start.format('YYYY-MM-DD HH:mm:ss');
-		object.end = event.end.format('YYYY-MM-DD HH:mm:ss');
+		if(event.end){
+			object.end = event.end.format('YYYY-MM-DD HH:mm:ss');
+		}
 		object.id = event.id;
 		object.content = event.content;
 		object.participants = event.participants;
