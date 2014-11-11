@@ -5,12 +5,7 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 import java.util.Timer;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hh.system.bean.HhSysParam;
 import com.hh.system.service.inf.SystemServiceInf;
 import com.hh.system.task.FileCopyDeleteTask;
-import com.hh.system.util.BaseSystemUtil;
 import com.hh.system.util.Convert;
 import com.hh.system.util.FileUtil;
 import com.hh.system.util.SysParam;
-import com.hh.system.util.SystemUtil;
 import com.hh.system.util.statics.StaticVar;
 
 @Service
@@ -38,8 +31,6 @@ public class DataInitializationService {
 	public void dataInitialization() throws IOException {
 		initProperties();
 		initTask();
-		contentInit();
-
 		int size = initSysParam();
 		if (size == 0) {
 			try {
@@ -114,16 +105,4 @@ public class DataInitializationService {
 		FileUtil.isExist(StaticVar.filepath);
 		FileUtil.isExist(StaticVar.filepath + "/task");
 	}
-
-
-	private void contentInit() {
-		try {
-			Context context = new InitialContext();
-			StaticVar.startType = (String) context
-					.lookup("java:comp/env/hh/startType");
-		} catch (NamingException e) {
-			logger.error("系统没有定义参数startType！");
-		}
-	}
-
 }
