@@ -11,8 +11,7 @@ import com.hh.hibernate.util.base.BaseTreeNodeEntity;
 @Table(name = "HH_XT_DATA")
 //@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order
-public class HhXtData extends BaseTreeNodeEntity implements
-		java.io.Serializable {
+public class HhXtData extends BaseTreeNodeEntity<HhXtData> {
 	// private String text;
 	private String describe_;
 	// private String node;
