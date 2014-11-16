@@ -3,11 +3,9 @@ package com.hh.usersystem.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
-import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.usersystem.LoginUserServiceInf;
 import com.hh.usersystem.aop.interceptor.SecurityInterceptor;
 import com.hh.usersystem.bean.usersystem.HhXtCz;
@@ -18,8 +16,6 @@ import com.opensymphony.xwork2.ActionContext;
 
 @Service
 public class LoginUserUtilService implements LoginUserServiceInf {
-	@Autowired
-	private IHibernateDAO<HhXtYh> dao;
 	private static Gson gson = new Gson();
 	public HhXtYh findLoginUser() {
 		HhXtYh hhXtYh = (HhXtYh) ActionContext.getContext().getSession()
