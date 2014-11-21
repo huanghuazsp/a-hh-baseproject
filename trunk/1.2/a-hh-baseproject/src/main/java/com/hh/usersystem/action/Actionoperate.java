@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.system.util.base.BaseAction;
-import com.hh.system.util.dto.ExtCheckTree;
-import com.hh.system.util.dto.ExtTree;
+import com.hh.system.util.model.ExtCheckTree;
+import com.hh.system.util.model.ExtTree;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.usersystem.bean.usersystem.HhXtCz;
 import com.hh.usersystem.service.impl.OperateService;

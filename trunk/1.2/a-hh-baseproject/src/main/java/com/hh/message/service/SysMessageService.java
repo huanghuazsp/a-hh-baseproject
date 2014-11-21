@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hh.hibernate.util.dto.HQLParamList;
-import com.hh.hibernate.util.dto.PagingData;
 import com.hh.message.bean.SysMessage;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
+import com.hh.system.util.dto.PagingData;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.UserService;
