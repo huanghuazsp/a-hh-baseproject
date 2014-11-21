@@ -8,7 +8,7 @@ import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.base.BaseServiceAction;
-import com.hh.system.util.dto.ExtTree;
+import com.hh.system.util.model.ExtTree;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.service.impl.UserService;

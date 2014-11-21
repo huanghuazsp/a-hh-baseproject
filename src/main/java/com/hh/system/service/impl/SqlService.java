@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hh.hibernate.util.dto.PagingData;
 import com.hh.system.bean.HHXtSql;
 import com.hh.system.util.Check;
 import com.hh.system.util.dto.PageRange;
+import com.hh.system.util.dto.PagingData;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.service.impl.UserService;
 

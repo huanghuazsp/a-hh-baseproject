@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.hibernate.util.dto.HQLParamList;
-import com.hh.hibernate.util.dto.PagingData;
 import com.hh.system.service.impl.BaseTreeService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
-import com.hh.system.util.dto.ExtCheckTree;
 import com.hh.system.util.dto.PageRange;
+import com.hh.system.util.dto.PagingData;
+import com.hh.system.util.model.ExtCheckTree;
 import com.hh.usersystem.bean.usersystem.HhXtCd;
 import com.hh.usersystem.bean.usersystem.HhXtCz;
 import com.hh.usersystem.bean.usersystem.HhXtJsCd;

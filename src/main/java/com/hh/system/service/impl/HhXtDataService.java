@@ -7,12 +7,12 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.util.dto.HQLParamList;
-import com.hh.hibernate.util.dto.PagingData;
 import com.hh.system.bean.HhXtData;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
+import com.hh.system.util.dto.PagingData;
 
 @Service
 public class HhXtDataService extends BaseTreeService<HhXtData> {

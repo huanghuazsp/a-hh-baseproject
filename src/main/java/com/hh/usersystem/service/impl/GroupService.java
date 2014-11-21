@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.hibernate.util.dto.HQLParamList;
-import com.hh.hibernate.util.dto.PagingData;
 import com.hh.system.service.impl.BaseTreeService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
+import com.hh.system.util.dto.PagingData;
 import com.hh.usersystem.bean.usersystem.HhXtGroup;
 import com.hh.usersystem.bean.usersystem.HhXtYhGroup;
 
