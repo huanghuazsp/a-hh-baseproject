@@ -21,26 +21,6 @@ public class SetupInitializerSystem {
 				"系统管理", "com.hh.global.NavigAtionWindow",
 				"/hhcommon/images/extjsico/17460336.png", 0, 0);
 		rootHhXtCd.setChildren(new ArrayList<HhXtCd>());
-		// rootHhXtCd.getChildren().add(
-		// new HhXtCd("20eb2825-26a6-4119-8b4e-813c6d18b87c", "错误追踪",
-		// "com.hh.system.error.ErrorList",
-		// "/hhcommon/images/icons/bug/bug.png", 0, 1));
-		// rootHhXtCd.getChildren().add(
-		// new HhXtCd("c88ef678-2785-4e24-b949-fbb0b72de837", "系统参数",
-		// "com.hh.system.sysparam.ParamList",
-		// "/hhcommon/images/extjsico/bogus.png", 0, 1));
-		// rootHhXtCd.getChildren().add(
-		// new HhXtCd("eeb2a494-50a6-46e7-8fa2-cd1d95c8c04d", "SQL监控",
-		// "com.hh.system.sql.SqlList",
-		// "/hhcommon/images/icons/script/script.png", 0, 1));
-		// rootHhXtCd.getChildren().add(
-		// new HhXtCd("613c3476-3721-493d-a688-6cd1d3ed8348", "消息管理",
-		// "com.hh.message.message.MessageList",
-		// "/hhcommon/images/extjsico/17460341.png", 0, 1));
-		// rootHhXtCd.getChildren().add(
-		// new HhXtCd("a55f050a-f6bc-4751-9d5c-557ac9c6a328", "在线用户",
-		// "com.hh.usersystem.user.OnlineUserList",
-		// "/hhcommon/images/icons/user/user.png", 0, 1));
 
 		rootHhXtCd.getChildren().add(
 				new HhXtCd("d45831d2-b887-40f1-9a3f-450298ac3f91", "取色工具",
@@ -87,7 +67,37 @@ public class SetupInitializerSystem {
 		
 		StaticProperties.hhXtCds.add(rootHhXtCd);
 
+		//菜单
+		
+		HhXtCd menurootHhXtCd = new HhXtCd("94805849-70ae-4504-8192-2ab56fc83bb5",
+				"表单设计", "com.hh.global.NavigAtionWindow",
+				"/hhcommon/images/icons/world/world.png", 1, 0);
+		menurootHhXtCd.setChildren(new ArrayList<HhXtCd>());
+		
+		menurootHhXtCd.getChildren().add(
+				new HhXtCd("8d86355a-0c6e-4f2a-a1c7-f4c31e744988", "表单结果",
+						"jsp-form-service-formtree",
+						"/hhcommon/images/icons/world/world.png", 0, 1));
+
+		menurootHhXtCd.getChildren().add(
+				new HhXtCd("0233e554-5735-4586-a100-a62a84c0f71b",
+						"表单设计器CkEditor", "jsp-form-ckeditor-ckEditor",
+						"/hhcommon/images/icons/world/world.png", 0, 1));
+
+		menurootHhXtCd.getChildren().add(
+				new HhXtCd("8bc6e72d-27b2-46eb-aef7-d073d89bbd1b", "表单模板",
+						"jsp-form-ckeditor-formmodel",
+						"/hhcommon/images/icons/world/world.png", 0, 1));
+
+		for (HhXtCd hhXtCd : StaticProperties.hhXtCds) {
+			if ("系统管理".equals(hhXtCd.getText())) {
+				hhXtCd.getChildren().add(menurootHhXtCd);
+				break;
+			}
+		}
+		
 		
 		com.hh.system.util.StaticProperties.loadDataTimeList.add(systemService);
+		
 	}
 }
