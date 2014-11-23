@@ -73,25 +73,6 @@ public class DataInitializationService {
 	}
 
 	private void initProperties() throws IOException {
-		ClassLoader classloader = Thread.currentThread()
-				.getContextClassLoader();
-
-		Properties springProperties = new Properties();
-		InputStream springin = classloader
-				.getResourceAsStream("spring.properties");
-		springProperties.load(springin);
-		springin.close();
-
-		Object dialect = springProperties.get("hibernate.dialect");
-		String dialectString = Convert.toString(dialect);
-		if (dialectString.toLowerCase().indexOf("mysql") > -1) {
-			SysParam.DATABASE = "mysql";
-		} else if (dialectString.toLowerCase().indexOf("oracle") > -1) {
-			SysParam.DATABASE = "oracle";
-		}
-		SysParam.DATABASE_SCHEMA = springProperties
-				.get("hibernate.default_schema");
-
 		String classPath = Thread.currentThread().getContextClassLoader()
 				.getResource("").getPath();
 		classPath = classPath.substring(1, classPath.indexOf("/WEB-INF"));
