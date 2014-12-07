@@ -1,6 +1,9 @@
 package com.hh.usersystem.action;
 
+import java.util.Set;
+
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,6 +13,7 @@ import com.hh.system.util.model.ReturnModel;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.service.impl.LoginService;
 import com.hh.usersystem.service.impl.ZmsxService;
+import com.hh.usersystem.util.app.LoginUser;
 
 @SuppressWarnings("serial")
 public class Actionlogin extends BaseAction {
@@ -60,20 +64,34 @@ public class Actionlogin extends BaseAction {
 		return null;
 	}
 
+	public void findUserSessionId() {
+		String sessionId = xtYh.getId();
+		if (Check.isNoEmpty(sessionId)) {
+			Set<String> keyset = LoginUser.loginUserSession.keySet();
+			for (String key : keyset) {
+				HttpSession httpSession = LoginUser.loginUserSession.get(key);
+				if (sessionId.equals(httpSession.getId())) {
+					this.returnResult(true);
+				}
+			}
+		}
+		this.returnResult(false);
+	}
+
 	private void addCookie() {
 		int maxAge = 0;
-//		if (Check.isNoEmpty(cookie)) {
-			maxAge = 60 * 60 * 24 * 30;
-//		}
+		// if (Check.isNoEmpty(cookie)) {
+		maxAge = 60 * 60 * 24 * 30;
+		// }
 		Cookie cookie = new Cookie("xtYh.vdlzh", xtYh.getVdlzh());
 		cookie.setMaxAge(maxAge); // cookie 保存30天
 		response.addCookie(cookie);
-//		cookie = new Cookie("xtYh.vmm", xtYh.getVmm());
-//		cookie.setMaxAge(maxAge); // cookie 保存30天
-//		response.addCookie(cookie);
-//		cookie = new Cookie("xtYh.cookie", "checked");
-//		cookie.setMaxAge(maxAge); // cookie 保存30天
-//		response.addCookie(cookie);
+		// cookie = new Cookie("xtYh.vmm", xtYh.getVmm());
+		// cookie.setMaxAge(maxAge); // cookie 保存30天
+		// response.addCookie(cookie);
+		// cookie = new Cookie("xtYh.cookie", "checked");
+		// cookie.setMaxAge(maxAge); // cookie 保存30天
+		// response.addCookie(cookie);
 	}
 
 	public String logout() {
@@ -84,10 +102,10 @@ public class Actionlogin extends BaseAction {
 
 	public String updateDesktopType() {
 		HhXtYh hhXtYh = (HhXtYh) session.get("loginuser");
-		if (hhXtYh!=null) {
+		if (hhXtYh != null) {
 			zmsxService.update(hhXtYh.getId(), "desktopType", desktop);
 			return desktop;
-		}else {
+		} else {
 			return "login";
 		}
 	}
