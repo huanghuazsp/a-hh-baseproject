@@ -1,8 +1,5 @@
 package com.hh.usersystem.bean.usersystem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -23,27 +20,17 @@ import com.hh.hibernate.util.base.BaseTreeNodeEntity;
 @Table(name = "HH_XT_CD")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order(fields = "order", sorts = "desc")
-public class HhXtCd extends BaseTreeNodeEntity<HhXtCd>  {
-
-	// Fields
-
-	// private String text;
-	// private String node;
-	// private String icon;
+public class HhXtCd extends BaseTreeNodeEntity<HhXtCd> {
 	private String vsj;
-	// private Long leaf;
 	private String vbz;
-	// private int nlx;
 	private String vdtp = "/hhcommon/images/big/apple/20.png";
 	private String vpname;
 	private String params;
-
-	// Constructors
-
-	/** default constructor */
-	public HhXtCd() {
+	
+	private int openType;
+	public HhXtCd(){
+		
 	}
-
 	public HhXtCd(String id, String text, String vsj, String icon, int exp,
 			int leaf) {
 		this.setId(id);
@@ -54,33 +41,6 @@ public class HhXtCd extends BaseTreeNodeEntity<HhXtCd>  {
 		this.setLeaf(leaf);
 	}
 
-	// @Column(name = "TEXT", length = 64)
-	// public String getText() {
-	// return this.text;
-	// }
-	//
-	// public void setText(String text) {
-	// this.text = text;
-	// }
-	//
-	// @Column(name = "NODE", length = 128)
-	// public String getNode() {
-	// return this.node;
-	// }
-	//
-	// public void setNode(String node) {
-	// this.node = node;
-	// }
-	//
-	// @Column(name = "ICON", length = 128)
-	// public String getIcon() {
-	// return this.icon;
-	// }
-	//
-	// public void setIcon(String icon) {
-	// this.icon =icon;
-	// }
-
 	@Column(name = "VSJ", length = 256)
 	public String getVsj() {
 		return this.vsj;
@@ -90,15 +50,6 @@ public class HhXtCd extends BaseTreeNodeEntity<HhXtCd>  {
 		this.vsj = vsj;
 	}
 
-	// @Column(name = "LEAF", precision = 1, scale = 0)
-	// public Long getLeaf() {
-	// return this.leaf;
-	// }
-	//
-	// public void setLeaf(Long leaf) {
-	// this.leaf = leaf;
-	// }
-
 	@Column(name = "VBZ", length = 512)
 	public String getVbz() {
 		return this.vbz;
@@ -107,15 +58,6 @@ public class HhXtCd extends BaseTreeNodeEntity<HhXtCd>  {
 	public void setVbz(String vbz) {
 		this.vbz = vbz;
 	}
-
-	// @Column(name = "NLX", precision = 1, scale = 0)
-	// public int getNlx() {
-	// return this.nlx;
-	// }
-	//
-	// public void setNlx(int nlx) {
-	// this.nlx = nlx;
-	// }
 
 	@Column(name = "VDTP", length = 128)
 	public String getVdtp() {
@@ -142,6 +84,15 @@ public class HhXtCd extends BaseTreeNodeEntity<HhXtCd>  {
 
 	public void setParams(String params) {
 		this.params = params;
+	}
+
+	@Column(name = "OPEN_TYPE", length = 1)
+	public int getOpenType() {
+		return openType;
+	}
+
+	public void setOpenType(int openType) {
+		this.openType = openType;
 	}
 
 }

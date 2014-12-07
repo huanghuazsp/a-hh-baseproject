@@ -96,6 +96,11 @@
 						config=" name : 'vsj'"></span></td>
 				</tr>
 				<tr>
+					<td xtype="label">打开类型：</td>
+					<td colspan="3"><span  xtype="radio"
+						config="name: 'openType' ,value : 0, data :[{id:0,text:'tab页签'},{id:1,text:'浏览器href'}]  "></td>
+				</tr>
+				<tr>
 					<td xtype="label">参数：</td>
 					<td colspan="3"><span lxchange="true" xtype="tableitem"
 						config="name: 'params' "></span></td>
