@@ -13,6 +13,7 @@ import com.hh.system.util.Check;
 import com.hh.system.util.base.BaseAction;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
+import com.hh.usersystem.bean.usersystem.Organization;
 import com.hh.usersystem.service.impl.LoginService;
 import com.hh.usersystem.service.impl.ZmsxService;
 import com.hh.usersystem.util.app.LoginUser;
@@ -75,8 +76,24 @@ public class Actionlogin extends BaseAction {
 				if (sessionId.equals(httpSession.getId())) {
 					HhXtYh hhXtYh = LoginUser.loginUserMap.get(key);
 					Map<String, Object> map = new HashMap<String, Object>();
+					Object orgObj = httpSession.getAttribute("currOrg");
 					map.put("id", hhXtYh.getId());
 					map.put("text", hhXtYh.getText());
+					if (orgObj != null) {
+						Organization organization = (Organization) orgObj;
+						Organization dept = organization.getBm();
+						Organization org = organization.getJg();
+						map.put("jobId", organization.getId());
+						map.put("jobText", organization.getText());
+						if (dept != null) {
+							map.put("deptId", dept.getId());
+							map.put("deptText", dept.getText());
+						}
+						if (org != null) {
+							map.put("orgId", org.getId());
+							map.put("orgText", org.getText());
+						}
+					}
 					this.returnResult(map);
 				}
 			}
