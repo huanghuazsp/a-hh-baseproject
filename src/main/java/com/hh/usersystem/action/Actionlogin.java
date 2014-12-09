@@ -1,5 +1,7 @@
 package com.hh.usersystem.action;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.Cookie;
@@ -71,7 +73,11 @@ public class Actionlogin extends BaseAction {
 			for (String key : keyset) {
 				HttpSession httpSession = LoginUser.loginUserSession.get(key);
 				if (sessionId.equals(httpSession.getId())) {
-					this.returnResult(true);
+					HhXtYh hhXtYh = LoginUser.loginUserMap.get(key);
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("id", hhXtYh.getId());
+					map.put("text", hhXtYh.getText());
+					this.returnResult(map);
 				}
 			}
 		}
