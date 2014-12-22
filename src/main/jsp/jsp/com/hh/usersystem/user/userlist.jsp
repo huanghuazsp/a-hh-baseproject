@@ -52,10 +52,10 @@
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
-		<span xtype="button" config="onClick:doAdd,text:'添加'"></span> <span
-			xtype="button" config="onClick:doEdit,text:'修改'"></span> <span
-			xtype="button" config="onClick:doDelete,text:'删除'"></span> <span
-			xtype="button" config="onClick: doQuery ,text:'查询'"></span> <span
+		<span xtype="button" config="onClick:doAdd,text:'添加' , color:'add' "></span> <span
+			xtype="button" config="onClick:doEdit,text:'修改' , color:'edit' "></span> <span
+			xtype="button" config="onClick:doDelete,text:'删除' , color:'delete' "></span> <span
+			xtype="button" config="onClick: doQuery ,text:'查询' , color:'query' "></span> <span
 			xtype="button"
 			config="onClick: PageUtil.doUp , params:{ pageid :'pagelist',action:'usersystem-user-order'}  ,  icon : 'hh_up' "></span>
 		<span xtype="button"
