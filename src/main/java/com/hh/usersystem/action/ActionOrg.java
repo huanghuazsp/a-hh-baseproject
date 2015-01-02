@@ -90,7 +90,7 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 		if (Check.isNoEmpty(object.getId())) {
 			StringBuffer texts = new StringBuffer();
 			List<Organization> organizationList = organizationService
-					.queryList(Restrictions.in(StaticVar.id_r,
+					.queryList(Restrictions.in(StaticVar.entityId,
 							Convert.strToList(object.getId())));
 			for (Organization organization : organizationList) {
 				texts.append(organization.getText() + ",");
