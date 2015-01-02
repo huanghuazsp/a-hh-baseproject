@@ -173,7 +173,7 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 		String returnTextString = "";
 		if (Check.isNoEmpty(object.getId())) {
 			StringBuffer texts = new StringBuffer();
-			List<HhXtYh> hhXtYhList =	userService.queryList(Restrictions.in(StaticVar.id_r, Convert.strToList(object.getId())));
+			List<HhXtYh> hhXtYhList =	userService.queryList(Restrictions.in(StaticVar.entityId, Convert.strToList(object.getId())));
 			for (HhXtYh hhXtYh : hhXtYhList) {
 				texts.append(hhXtYh.getText()+",");
 			}
