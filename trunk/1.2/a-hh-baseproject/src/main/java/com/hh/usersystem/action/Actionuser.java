@@ -36,7 +36,7 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 
 	public void queryPagingData() {
 		this.returnResult(userService.queryPagingData(object,
-				this.getPageRange(),this.getIds(), orgs, roles,groups));
+				this.getPageRange(), this.getIds(), orgs, roles, groups));
 	}
 
 	public void queryPagingDataCombox() {
@@ -44,13 +44,13 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 			this.returnResult(userService.queryItemsByIdsStr(object.getId()));
 		} else {
 			this.returnResult(userService.queryPagingData(object,
-					this.getPageRange(), null,null, null, null));
+					this.getPageRange(), null, null, null, null));
 		}
 	}
 
 	public void queryPagingDataList() {
 		this.returnResult(userService.queryPagingData(object,
-				this.getPageRange(),null, null, null, null));
+				this.getPageRange(), null, null, null, null));
 	}
 
 	public void queryOnLinePagingData() {
@@ -73,7 +73,7 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 		}
 		this.returnResult();
 	}
-	
+
 	public void save2() {
 		try {
 			HhXtYh hhXtYh = userService.save2(this.object);
@@ -104,6 +104,7 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 		HhXtYh hhXtYh = userService.findObjectById(this.object.getId());
 		this.returnResult(hhXtYh);
 	}
+
 	public void findObjectById2() {
 		HhXtYh hhXtYh = userService.findObjectById_user(this.object.getId());
 		this.returnResult(hhXtYh);
@@ -168,23 +169,30 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 				.getParameter("groupId"));
 		this.returnResult(hhXtYhList);
 	}
-	
+
 	public void findUserTextByIds() {
 		String returnTextString = "";
 		if (Check.isNoEmpty(object.getId())) {
 			StringBuffer texts = new StringBuffer();
-			List<HhXtYh> hhXtYhList =	userService.queryList(Restrictions.in(StaticVar.entityId, Convert.strToList(object.getId())));
+			List<HhXtYh> hhXtYhList = userService.queryList(Restrictions.in(
+					StaticVar.entityId, Convert.strToList(object.getId())));
 			for (HhXtYh hhXtYh : hhXtYhList) {
-				texts.append(hhXtYh.getText()+",");
+				texts.append(hhXtYh.getText() + ",");
 			}
 			if (Check.isNoEmpty(texts)) {
-				returnTextString=texts.substring(0,texts.length()-1);
+				returnTextString = texts.substring(0, texts.length() - 1);
 			}
 		}
 		Map<String, String> returnMap = new HashMap<String, String>();
 		returnMap.put("text", returnTextString);
 		returnMap.put("id", object.getId());
-		 this.returnResult(returnMap);
+		this.returnResult(returnMap);
+	}
+
+	public void findUserListByIds() {
+		List<HhXtYh> hhXtYhList = userService.queryList(Restrictions.in(
+				StaticVar.entityId, Convert.strToList(object.getId())));
+		this.returnResult(hhXtYhList);
 	}
 
 	public String getOldPassword() {
