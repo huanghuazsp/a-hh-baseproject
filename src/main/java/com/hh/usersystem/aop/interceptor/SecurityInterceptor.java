@@ -12,6 +12,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
+import com.hh.system.util.Check;
 import com.hh.system.util.SysParam;
 import com.hh.usersystem.bean.usersystem.HhXtCz;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
@@ -62,7 +63,7 @@ public class SecurityInterceptor implements Interceptor {
 		}
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
-		if (ActionContext.getContext().getSession().get("loginuser") == null) {
+		if (ActionContext.getContext().getSession().get("loginuser") == null && Check.isEmpty(request.getParameter("se"))) {
 
 			if (request.getHeader("x-requested-with") == null ? false : request
 					.getHeader("x-requested-with").equalsIgnoreCase(
