@@ -26,9 +26,6 @@ public class SystemUtil {
 		return BaseSystemUtil.getBaseDoctype();
 	}
 
-	public static String getLoginJqueryCss() {
-		return BaseSystemUtil.getLoginJqueryCss();
-	}
 
 	public static String getBaseJs(String... args) {
 		String theme = getTheme();
