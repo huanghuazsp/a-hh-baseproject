@@ -35,7 +35,7 @@ public class SystemUtil {
 		return "<link rel=\"shortcut icon\" href=\""+SysParam.hhSysParam.getSysIcon()+"\" />"+BaseSystemUtil.getBaseJs(paramsMap, args);
 	}
 
-	private static String getTheme() {
+	public static String getTheme() {
 		HhXtYh hhXtYh = ((HhXtYh) ServletActionContext.getRequest()
 				.getSession().getAttribute("loginuser"));
 		String theme = "";
