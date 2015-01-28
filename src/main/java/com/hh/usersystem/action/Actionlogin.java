@@ -79,6 +79,7 @@ public class Actionlogin extends BaseAction {
 					Object orgObj = httpSession.getAttribute("currOrg");
 					map.put("id", hhXtYh.getId());
 					map.put("text", hhXtYh.getText());
+					map.put("theme", hhXtYh.getHhXtZmsx().getTheme());
 					if (orgObj != null) {
 						Organization organization = (Organization) orgObj;
 						Organization dept = organization.getBm();
