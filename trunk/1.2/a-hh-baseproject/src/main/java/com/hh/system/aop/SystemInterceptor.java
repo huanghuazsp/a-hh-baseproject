@@ -17,6 +17,7 @@ import com.hh.system.inf.IFileAction;
 import com.hh.system.inf.IImageAction;
 import com.hh.system.service.impl.SaveErrorThread;
 import com.hh.system.util.ThreadUtil;
+import com.hh.usersystem.IUser;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
@@ -62,17 +63,17 @@ public class SystemInterceptor implements Interceptor {
 			resultMap.put("msg",
 					"异常：" + e.getClass().getName() + "：" + e.getMessage()
 							+ "<br/>" + sw.toString());
-			Object userObject = ActionContext.getContext().getSession()
+			IUser userObject = (IUser)ActionContext.getContext().getSession()
 					.get("loginuser");
-			String userid = userObject == null ? "null" : userObject.toString();
-			Object currOrgObject = ActionContext.getContext().getSession()
-					.get("currOrg");
-			String currOrg = currOrgObject == null ? "null" : currOrgObject
-					.toString();
-			// new SaveErrorThread(e, userid, currOrg).start();
+			String userid = "";
+			String orgid = "";
+			if (userObject!=null) {
+				userid=userObject.getId();
+				orgid=userObject.getJobId();
+			}
 			// 线程池
 			ThreadUtil.getFixedThreadPool().execute(
-					new SaveErrorThread(e, userid, currOrg));
+					new SaveErrorThread(e, userid, orgid));
 			response.getWriter().print(new Gson().toJson(resultMap));
 		}
 		return result;

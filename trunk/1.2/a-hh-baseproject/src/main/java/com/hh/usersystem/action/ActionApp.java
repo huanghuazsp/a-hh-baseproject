@@ -41,8 +41,9 @@ public class ActionApp extends BaseAction {
 
 		for (Organization organization : organizations) {
 			if (organization.getId().equals(currOrgId)) {
+				hhXtYh.setOrganization(organization);
 				ActionContext.getContext().getSession()
-						.put("currOrg", organization);
+						.put("loginuser", hhXtYh);
 				organization1 = organization;
 				if ("on".equals(request.getParameter("remember")) || Convert.toInt(request.getParameter("remember"))==1) {
 					zmsxService.updateDefaultOrg(hhXtYh.getId(),

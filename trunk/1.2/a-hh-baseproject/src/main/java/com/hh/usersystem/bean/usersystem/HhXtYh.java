@@ -259,7 +259,7 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	public void setHhXtCzPageTextMap(Map<String, List<String>> hhXtCzPageTextMap) {
 		this.hhXtCzPageTextMap = hhXtCzPageTextMap;
 	}
-
+	@Transient
 	@Override
 	public String getOrgId() {
 		if (organization != null && organization.getJg()!=null) {
@@ -267,7 +267,7 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		}
 		return "";
 	}
-
+	@Transient
 	@Override
 	public String getOrgText() {
 		if (organization != null && organization.getJg()!=null) {
@@ -275,7 +275,7 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		}
 		return "";
 	}
-
+	@Transient
 	@Override
 	public String getJobId() {
 		if (organization != null) {
@@ -283,7 +283,7 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		}
 		return "";
 	}
-
+	@Transient
 	@Override
 	public String getJobText() {
 		if (organization != null) {
@@ -291,7 +291,7 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		}
 		return "";
 	}
-
+	@Transient
 	@Override
 	public String getDeptId() {
 		if (organization != null && organization.getBm()!=null) {
@@ -299,13 +299,22 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		}
 		return "";
 	}
-
+	@Transient
 	@Override
 	public String getDeptText() {
 		if (organization != null && organization.getBm()!=null) {
 			organization.getBm().getText();
 		}
 		return "";
+	}
+
+	@Transient
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 }

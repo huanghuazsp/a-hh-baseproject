@@ -34,30 +34,33 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 	}
 
 	public String findLoginUserOrgId() {
-		Object object = ActionContext.getContext().getSession().get("currOrg");
-		if (object != null && !(object instanceof ArrayList)) {
-			Organization organization = (Organization) object;
+		HhXtYh user = findLoginUser();
+		if (user==null) {
+			return "";
+		}
+		if (user.getOrganization()!=null) {
+			Organization organization =user.getOrganization();
 			return organization.getId();
 		} else {
-			return null;
+			return "";
 		}
 	}
 
 	public Organization findLoginUserOrg() {
-		Object object = ActionContext.getContext().getSession().get("currOrg");
-		if (object != null && !(object instanceof ArrayList)) {
-			Organization organization = (Organization) object;
-			return organization;
-		} else {
+		HhXtYh user = findLoginUser();
+		if (user==null) {
 			return null;
 		}
+		return user.getOrganization();
 	}
 
 	public Organization queryDataSecurityOrg(String action) {
-		Object object = ActionContext.getContext().getSession().get("currOrg");
-		if (object != null && !(object instanceof ArrayList)) {
-			Organization organization = (Organization) object;
-			;
+		HhXtYh user = findLoginUser();
+		if (user==null) {
+			return null;
+		}
+		if (user.getOrganization()!=null) {
+			Organization organization =user.getOrganization();
 			HhXtYh hhXtYh = findLoginUser();
 			List<HhXtCz> hhXtCzList = hhXtYh.getHhXtCzList();
 			for (HhXtCz hhXtCz : hhXtCzList) {

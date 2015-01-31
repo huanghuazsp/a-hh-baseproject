@@ -34,7 +34,7 @@
 			<table xtype="form">
 				<tbody>
 					<tr>
-						<td class="label">选择机构：</td>
+						<td xtype="label">选择机构：</td>
 						<td><span configVar="configcombobox"  xtype="combobox"></span></td>
 						<td width="60px"><span
 							config=" name : 'remember'  ,  data : [{id:1,text:'记住'}] "
