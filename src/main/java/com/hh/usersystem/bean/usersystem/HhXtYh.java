@@ -22,6 +22,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
 import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.usersystem.IUser;
 
 /**
  * HhXtYh entity.
@@ -32,7 +33,7 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 @Table(name = "HH_XT_YH")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order
-public class HhXtYh extends BaseTwoEntity {
+public class HhXtYh extends BaseTwoEntity implements IUser {
 	@Override
 	public String toString() {
 		return this.getId();
@@ -47,21 +48,23 @@ public class HhXtYh extends BaseTwoEntity {
 	private String vdh;
 	private Date dsr;
 	private String headpic;
-	
+
 	private List<HhXtCd> hhXtCdList = new ArrayList<HhXtCd>();// 菜单
 	private List<HhXtJs> hhXtJsList = new ArrayList<HhXtJs>();// 角色
 	private List<HhXtCd> hhXtYhCdZmtbList = new ArrayList<HhXtCd>();// 桌面快捷方式
 	private List<HhXtCz> hhXtCzList = new ArrayList<HhXtCz>();// 用户的操作权限
 	private List<String> hhXtCzUrlList = new ArrayList<String>();
 	private List<String> hhXtCzPageTextList = new ArrayList<String>();
-	
+
 	private Map<String, List<String>> hhXtCzPageTextMap = new HashMap<String, List<String>>();
-	
+
 	private List<String> jsList = new ArrayList<String>();// 角色ID
 	private HHXtZmsx hhXtZmsx;// 用户属性
 	private List<Organization> organizationList = new ArrayList<Organization>();// 岗位
 	private String orgIdsStr;
 	private String jsIdsStr;
+
+	private Organization organization;
 
 	@OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID")
@@ -126,7 +129,7 @@ public class HhXtYh extends BaseTwoEntity {
 	public void setOrganizationList(List<Organization> organizationList) {
 		this.organizationList = organizationList;
 	}
-	
+
 	@Transient
 	public List<String> getHhXtCzUrlList() {
 		return hhXtCzUrlList;
@@ -221,6 +224,7 @@ public class HhXtYh extends BaseTwoEntity {
 	public void setOrgIdsStr(String orgIdsStr) {
 		this.orgIdsStr = orgIdsStr;
 	}
+
 	@Transient
 	public String getJsIdsStr() {
 		return jsIdsStr;
@@ -237,6 +241,7 @@ public class HhXtYh extends BaseTwoEntity {
 	public void setHeadpic(String headpic) {
 		this.headpic = headpic;
 	}
+
 	@Transient
 	public List<String> getHhXtCzPageTextList() {
 		return hhXtCzPageTextList;
@@ -245,6 +250,7 @@ public class HhXtYh extends BaseTwoEntity {
 	public void setHhXtCzPageTextList(List<String> hhXtCzPageTextList) {
 		this.hhXtCzPageTextList = hhXtCzPageTextList;
 	}
+
 	@Transient
 	public Map<String, List<String>> getHhXtCzPageTextMap() {
 		return hhXtCzPageTextMap;
@@ -252,6 +258,54 @@ public class HhXtYh extends BaseTwoEntity {
 
 	public void setHhXtCzPageTextMap(Map<String, List<String>> hhXtCzPageTextMap) {
 		this.hhXtCzPageTextMap = hhXtCzPageTextMap;
+	}
+
+	@Override
+	public String getOrgId() {
+		if (organization != null && organization.getJg()!=null) {
+			organization.getJg().getId();
+		}
+		return "";
+	}
+
+	@Override
+	public String getOrgText() {
+		if (organization != null && organization.getJg()!=null) {
+			organization.getJg().getText();
+		}
+		return "";
+	}
+
+	@Override
+	public String getJobId() {
+		if (organization != null) {
+			organization.getId();
+		}
+		return "";
+	}
+
+	@Override
+	public String getJobText() {
+		if (organization != null) {
+			organization.getText();
+		}
+		return "";
+	}
+
+	@Override
+	public String getDeptId() {
+		if (organization != null && organization.getBm()!=null) {
+			organization.getBm().getId();
+		}
+		return "";
+	}
+
+	@Override
+	public String getDeptText() {
+		if (organization != null && organization.getBm()!=null) {
+			organization.getBm().getText();
+		}
+		return "";
 	}
 
 }
