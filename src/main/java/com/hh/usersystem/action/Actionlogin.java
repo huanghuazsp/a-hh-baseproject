@@ -76,12 +76,11 @@ public class Actionlogin extends BaseAction {
 				if (sessionId.equals(httpSession.getId())) {
 					HhXtYh hhXtYh = LoginUser.loginUserMap.get(key);
 					Map<String, Object> map = new HashMap<String, Object>();
-					Object orgObj = httpSession.getAttribute("currOrg");
 					map.put("id", hhXtYh.getId());
 					map.put("text", hhXtYh.getText());
 					map.put("theme", hhXtYh.getHhXtZmsx().getTheme());
-					if (orgObj != null) {
-						Organization organization = (Organization) orgObj;
+					if (hhXtYh.getOrganization() != null) {
+						Organization organization =hhXtYh.getOrganization();
 						Organization dept = organization.getBm();
 						Organization org = organization.getJg();
 						map.put("jobId", organization.getId());
@@ -120,7 +119,6 @@ public class Actionlogin extends BaseAction {
 
 	public String logout() {
 		session.remove("loginuser");
-		session.remove("currOrg");
 		return "login";
 	}
 

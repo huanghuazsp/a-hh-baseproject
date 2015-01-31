@@ -269,29 +269,16 @@ public class LoginService {
 		List<Organization> organizations = hhXtYh.getOrganizationList();
 
 		if (organizations.size() == 1) {
-			ActionContext.getContext().getSession()
-					.put("currOrg", hhXtYh.getOrganizationList().get(0));
+			hhXtYh.setOrganization( hhXtYh.getOrganizationList().get(0));
 			return hhXtYh.getOrganizationList().get(0);
 		} else {
-			boolean asCurrOrg = true;
 			if (!Check.isEmpty(hhXtYh.getHhXtZmsx().getDefaultOrgId())) {
 				for (Organization organization : organizations) {
 					if (hhXtYh.getHhXtZmsx().getDefaultOrgId()
 							.equals(organization.getId())) {
-						asCurrOrg = false;
-						ActionContext.getContext().getSession()
-								.put("currOrg", organization);
+						hhXtYh.setOrganization( organization);
 						return organization;
 					}
-				}
-			}
-			if (asCurrOrg) {
-				if (hhXtYh.getOrganizationList().size() == 0) {
-					ActionContext.getContext().getSession()
-							.put("currOrg", null);
-				} else {
-					ActionContext.getContext().getSession()
-							.put("currOrg", hhXtYh.getOrganizationList());
 				}
 			}
 			return null;

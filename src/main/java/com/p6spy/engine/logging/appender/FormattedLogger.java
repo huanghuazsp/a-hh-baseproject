@@ -4,6 +4,7 @@ import com.hh.system.service.impl.SaveErrorThread;
 import com.hh.system.service.impl.SaveSqlThread;
 import com.hh.system.util.SysParam;
 import com.hh.system.util.ThreadUtil;
+import com.hh.usersystem.IUser;
 import com.opensymphony.xwork2.ActionContext;
 
 public abstract class FormattedLogger {
@@ -25,17 +26,15 @@ public abstract class FormattedLogger {
 				}
 				if (1 == SysParam.hhSysParam.getDataBaseSql()) {
 					if (ActionContext.getContext() != null) {
-						Object userObject = ActionContext.getContext()
-								.getSession().get("loginuser");
-						String userid = userObject == null ? "null"
-								: userObject.toString();
-						Object currOrgObject = ActionContext.getContext()
-								.getSession().get("currOrg");
-						String currOrg = currOrgObject == null ? "null"
-								: currOrgObject.toString();
-//						new SaveSqlThread(sql, elapsed, userid, currOrg)
-//								.start();
-						ThreadUtil.getFixedThreadPool().execute(new SaveSqlThread(sql, elapsed, userid, currOrg));
+						IUser userObject = (IUser)ActionContext.getContext().getSession()
+								.get("loginuser");
+						String userid = "";
+						String orgid = "";
+						if (userObject!=null) {
+							userid=userObject.getId();
+							orgid=userObject.getJobId();
+						}
+						ThreadUtil.getFixedThreadPool().execute(new SaveSqlThread(sql, elapsed, userid, orgid));
 					}
 				}
 			}
