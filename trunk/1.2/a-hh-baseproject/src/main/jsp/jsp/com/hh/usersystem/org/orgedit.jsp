@@ -14,7 +14,7 @@
 
 	var lxconfig = {
 		name : 'lx_',
-		value : 2,
+		defaultValue : 2,
 		onChange:function(value){
 			$('#node_span').setConfig({params:{lx_ : value}});
 		},
@@ -107,7 +107,7 @@
 				text : '岗位'
 			} ];
 		}
-		lxconfig.value=lx_;
+		lxconfig.defaultValue=lx_;
 		$('#lxspan').render();
 	}
 	
@@ -169,10 +169,10 @@
 				<tr>
 					<td xtype="label">状态：</td>
 					<td><span xtype="radio"
-						config="name: 'zt_' ,value : 0,  data :[{id:0,text:'正常'},{id:1,text:'冻结'}]"></span></td>
+						config="name: 'zt_' ,defaultValue : 0,  data :[{id:0,text:'正常'},{id:1,text:'冻结'}]"></span></td>
 					<td xtype="label">是否展开：</td>
 					<td><span xtype="radio"
-						config="name: 'expanded' ,value : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
+						config="name: 'expanded' ,defaultValue : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">类型：</td>

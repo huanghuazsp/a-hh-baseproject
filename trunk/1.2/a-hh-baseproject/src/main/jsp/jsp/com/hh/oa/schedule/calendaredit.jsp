@@ -19,7 +19,6 @@
 
 	var yxjconfig = {
 		name : 'level',
-		value : '',
 		data : [
 				{
 					'id' : '4',

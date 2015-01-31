@@ -74,12 +74,12 @@
 					<tr>
 						<td xtype="label">是否展开：</td>
 						<td><span xtype="radio"
-							config="name: 'expanded' ,value : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
+							config="name: 'expanded' ,defaultValue : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
 					</tr>
 					<tr id="lx_tr">
 						<td xtype="label">类型：</td>
 						<td><span xtype="radio"
-							config="name: 'leaf' ,value : 0,  data :[{id:1,text:'子节点'},{id:0,text:'父节点'}]"></span></td>
+							config="name: 'leaf' ,defaultValue : 0,  data :[{id:1,text:'子节点'},{id:0,text:'父节点'}]"></span></td>
 					</tr>
 					<tr>
 						<td xtype="label">组员：</td>

@@ -57,12 +57,12 @@
 					<tr>
 						<td xtype="label">状态：</td>
 						<td><span xtype="radio"
-							config="name: 'nzt' ,value : 0, data :[{id:0,text:'正常'},{id:1,text:'冻结'}]"></span></td>
+							config="name: 'nzt' ,defaultValue : 0, data :[{id:0,text:'正常'},{id:1,text:'冻结'}]"></span></td>
 					</tr>
 					<tr>
 						<td xtype="label">类型：</td>
 						<td><span xtype="radio"
-							config="name: 'nlx' ,value : 1, data : [ {	'id' : 1,	text : '业务角色'}, {	'id' : 2,	text : '管理角色'}, {	'id' : 3,	text : '系统内置角色'  } ]"></span></td>
+							config="name: 'nlx' ,defaultValue : 1, data : [ {	'id' : 1,	text : '业务角色'}, {	'id' : 2,	text : '管理角色'}, {	'id' : 3,	text : '系统内置角色'  } ]"></span></td>
 					</tr>
 					<tr>
 						<td xtype="label">备注：</td>
