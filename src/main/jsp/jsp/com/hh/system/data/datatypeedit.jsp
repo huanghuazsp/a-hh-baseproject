@@ -66,10 +66,10 @@
 					<tr>
 						<td xtype="label">类型：</td>
 						<td><span id="leafspan" xtype="radio"
-							config="name: 'leaf' ,value : 0, data :[{id:1,text:'字典项'},{id:0,text:'类别'}]"></span></td>
+							config="name: 'leaf' ,defaultValue : 0, data :[{id:1,text:'字典项'},{id:0,text:'类别'}]"></span></td>
 						<td xtype="label">是否展开：</td>
 						<td><span xtype="radio"
-							config="name: 'expanded' ,value : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
+							config="name: 'expanded' ,defaultValue : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
 					</tr>
 					<tr>
 						<td xtype="label">标识：</td>

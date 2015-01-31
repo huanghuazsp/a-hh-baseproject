@@ -67,7 +67,7 @@
 			<td><span xtype="text" config=" name : 'text'"></span></td>
 			<td xtype="label">性别：</td>
 			<td><span xtype="radio"
-				config="name: 'nxb'  , value : 2 , data :[{id:2,text:'所有'},{id:1,text:'男'},{id:0,text:'女'}]"></span></td>
+				config="name: 'nxb'  ,defaultValue : 2 , data :[{id:2,text:'所有'},{id:1,text:'男'},{id:0,text:'女'}]"></span></td>
 		</tr>
 	</table>
 	<div id="pagelist" xtype="pagelist"

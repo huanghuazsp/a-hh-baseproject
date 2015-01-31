@@ -71,7 +71,7 @@
 				<tr>
 					<td xtype="label">性别：</td>
 					<td><span xtype="radio"
-						config="name: 'nxb' ,value : 1, data :[{id:1,text:'男'},{id:0,text:'女'}]"></span></td>
+						config="name: 'nxb' ,defaultValue : 1, data :[{id:1,text:'男'},{id:0,text:'女'}]"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">电话：</td>
