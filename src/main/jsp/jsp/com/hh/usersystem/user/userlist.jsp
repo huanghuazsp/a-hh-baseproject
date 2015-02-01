@@ -61,7 +61,7 @@
 		<span xtype="button"
 			config="onClick: PageUtil.doDown , params:{ pageid :'pagelist',action:'usersystem-user-order'} , icon : 'hh_down' "></span>
 	</div>
-	<table xtype="form" id="queryForm">
+	<table xtype="form" id="queryForm" style="width:600px;">
 		<tr>
 			<td xtype="label">名称：</td>
 			<td><span xtype="text" config=" name : 'text'"></span></td>
