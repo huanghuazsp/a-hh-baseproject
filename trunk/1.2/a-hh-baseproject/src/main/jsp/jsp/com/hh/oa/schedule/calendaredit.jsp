@@ -103,7 +103,7 @@
 				$('#deletespan').hide();
 				$('#okspan').hide();
 				$('#nookspan').hide();
-				$('#form').setValue(object, true);
+				$('#form').setValue(object, {view:true});
 			} else {
 				$('#form').setValue(object);
 			}
