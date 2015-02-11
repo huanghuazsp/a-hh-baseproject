@@ -87,7 +87,11 @@
 		});
 	}
 	function removeData(treeNode) {
-
+		TreeUtil.deleteData({
+			pageid : 'dataTree',
+			action : 'system-SysData-deleteTreeByIds',
+			id : treeNode.id
+		});
 	}
 </script>
 </head>

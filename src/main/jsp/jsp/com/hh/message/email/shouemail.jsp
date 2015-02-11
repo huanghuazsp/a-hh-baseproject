@@ -23,7 +23,7 @@
 				},
 				callback : function(result) {
 					shouObject = result;
-					$('#form').setValue(result, true);
+					$('#form').setValue(result, {view:true});
 				}
 			});
 		}
