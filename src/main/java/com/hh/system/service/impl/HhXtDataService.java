@@ -15,7 +15,7 @@ import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 
 @Service
-public class HhXtDataService extends BaseTreeService<HhXtData> {
+public class HhXtDataService extends BaseService<HhXtData> {
 
 	
 	public PagingData<HhXtData> queryPagingData(HhXtData hhXtData,
@@ -29,7 +29,7 @@ public class HhXtDataService extends BaseTreeService<HhXtData> {
 		HQLParamList hqlParamList = new HQLParamList().addCondition(
 				Restrictions.eq("node", node)).addCondition(
 				Restrictions.eq("type", type));
-		List<HhXtData> hhXtDatas = treedao.queryTreeList(HhXtData.class, hqlParamList);
+		List<HhXtData> hhXtDatas = dao.queryTreeList(HhXtData.class, hqlParamList);
 		return hhXtDatas;
 	}
 
@@ -64,7 +64,7 @@ public class HhXtDataService extends BaseTreeService<HhXtData> {
 				.addCondition(
 						Restrictions.not(Restrictions.eq("type",
 								"workflow_tree")));
-		List<HhXtData> hhXtDatas = treedao.queryTreeList(HhXtData.class, hqlParamList);
+		List<HhXtData> hhXtDatas = dao.queryTreeList(HhXtData.class, hqlParamList);
 		return hhXtDatas;
 	}
 

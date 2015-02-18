@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.system.bean.SysData;
 import com.hh.system.service.impl.BaseService;
-import com.hh.system.service.impl.BaseTreeService;
 import com.hh.system.service.impl.SysDataService;
 import com.hh.system.util.Convert;
 import com.hh.system.util.base.BaseServiceAction;

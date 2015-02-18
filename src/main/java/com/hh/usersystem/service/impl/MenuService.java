@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.hibernate.util.dto.HQLParamList;
-import com.hh.system.service.impl.BaseTreeService;
+import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.dto.PageRange;
@@ -26,7 +26,7 @@ import com.hh.usersystem.bean.usersystem.Organization;
 import com.opensymphony.xwork2.ActionContext;
 
 @Service
-public class MenuService extends BaseTreeService<HhXtCd> {
+public class MenuService extends BaseService<HhXtCd> {
 	@Autowired
 	private IHibernateDAO<HhXtCd> dao;
 	@Autowired
@@ -122,10 +122,10 @@ public class MenuService extends BaseTreeService<HhXtCd> {
 		HQLParamList hqlParamList = new HQLParamList()
 				.addCondition(Restrictions.eq("leaf", 0));
 		if (Check.isEmpty(node) || "root".equals(node)) {
-			hhxtcdList = treedao.queryTreeList(HhXtCd.class,
+			hhxtcdList = dao.queryTreeList(HhXtCd.class,
 					hqlParamList.addCondition(Restrictions.eq("node", "root")));
 		} else {
-			hhxtcdList = treedao.queryTreeList(HhXtCd.class,
+			hhxtcdList = dao.queryTreeList(HhXtCd.class,
 					hqlParamList.addCondition(Restrictions.eq("node", node)));
 		}
 
@@ -136,10 +136,10 @@ public class MenuService extends BaseTreeService<HhXtCd> {
 		List<HhXtCd> hhxtcdList = new ArrayList<HhXtCd>();
 		HQLParamList hqlParamList = new HQLParamList();
 		if (Check.isEmpty(node) || "root".equals(node)) {
-			hhxtcdList = treedao.queryAllTreeList(HhXtCd.class,
+			hhxtcdList = dao.queryAllTreeList(HhXtCd.class,
 					hqlParamList.addCondition(Restrictions.eq("node", "root")));
 		} else {
-			hhxtcdList = treedao.queryAllTreeList(HhXtCd.class,
+			hhxtcdList = dao.queryAllTreeList(HhXtCd.class,
 					hqlParamList.addCondition(Restrictions.eq("node", node)));
 		}
 		List<ExtCheckTree> extTreeList = new ArrayList<ExtCheckTree>();

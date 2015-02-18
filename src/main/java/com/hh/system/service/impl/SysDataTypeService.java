@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 import com.hh.system.bean.SysDataType;
 
 @Service
-public class SysDataTypeService  extends BaseTreeService<SysDataType>{
+public class SysDataTypeService  extends BaseService<SysDataType>{
 
 }

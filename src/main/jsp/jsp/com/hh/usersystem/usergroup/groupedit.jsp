@@ -18,7 +18,7 @@
 
 	function save() {
 		FormUtil.check('form', function(formData) {
-			Request.request('usersystem-UserGroup-save', {
+			Request.request('usersystem-UserGroup-saveTree', {
 				data : formData,
 				callback : function(result) {
 					if (result.success) {

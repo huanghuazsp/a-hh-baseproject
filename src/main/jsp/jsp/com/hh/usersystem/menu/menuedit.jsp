@@ -14,7 +14,7 @@
 
 	function save() {
 		FormUtil.check('form', function(formData) {
-			Request.request('usersystem-menu-save', {
+			Request.request('usersystem-menu-saveTree', {
 				data : formData,
 				callback : function(result) {
 					if (result.success) {

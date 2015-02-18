@@ -14,7 +14,7 @@
 
 	function save() {
 		FormUtil.check('form', function(formData) {
-			Request.request('system-SysDataType-save', {
+			Request.request('system-SysDataType-saveTree', {
 				data : formData,
 				callback : function(result) {
 					if (result.success) {
