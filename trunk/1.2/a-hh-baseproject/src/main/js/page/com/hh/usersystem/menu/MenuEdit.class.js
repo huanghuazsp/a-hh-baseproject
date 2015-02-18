@@ -4,6 +4,7 @@ Ext
 				{
 					extend : 'com.hh.global.SimpleFormPanelWindow',
 					action : 'usersystem-menu-',
+					submitMethod : 'saveTree',
 					title : '菜单编辑',
 					width : 600,
 					height : 400,

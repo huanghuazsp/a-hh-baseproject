@@ -1,6 +1,7 @@
 Ext.define('com.hh.system.data.DataTree', {
 			extend : 'com.hh.base.BaseServicePanel',
 			action : 'system-Data-',
+			submitMethod : 'saveTree',
 			title : '编辑',
 			width : 500,
 			constructor : function(config) {

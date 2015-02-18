@@ -1,6 +1,7 @@
 Ext.define('com.hh.system.data.DataListEdit', {
 			extend : 'com.hh.global.SimpleFormPanelWindow',
 			action : 'system-Data-',
+			submitMethod : 'saveTree',
 			title : '数据编辑',
 			width : 500,
 			height : 200,

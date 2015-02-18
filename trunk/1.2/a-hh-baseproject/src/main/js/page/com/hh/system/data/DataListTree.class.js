@@ -7,5 +7,5 @@ Ext
 					collapsible : false,
 					query_action : 'system-Data-queryDataTreeByTypeAndPid',
 					editPage : 'com.hh.system.data.DataEdit',
-					delete_action : 'system-Data-deleteByIds'
+					delete_action : 'system-Data-deleteTreeByIds'
 				});

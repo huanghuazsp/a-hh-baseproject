@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.hh.system.bean.SysData;
 
 @Service
-public class SysDataService  extends BaseTreeService<SysData> {
+public class SysDataService  extends BaseService<SysData> {
 	protected boolean checkTextOnly(SysData hhXtData) {
 		return dao
 				.findWhetherData(

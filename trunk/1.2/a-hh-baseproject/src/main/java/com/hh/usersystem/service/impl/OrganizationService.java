@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.hibernate.util.dto.HQLParamList;
-import com.hh.system.service.impl.BaseTreeService;
+import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
@@ -26,7 +26,7 @@ import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 
 @Service
-public class OrganizationService  extends BaseTreeService<Organization>  {
+public class OrganizationService  extends BaseService<Organization>  {
 	@Autowired
 	private IHibernateDAO<HhXtYhOrg> hhXtYhOrgDAO;
 	@Autowired
@@ -87,7 +87,7 @@ public class OrganizationService  extends BaseTreeService<Organization>  {
 		hqlParamList.add(Restrictions.eq("lx_", organization.getLx_()));
 		// hqlParamList.add(Restrictions.eq("zt_", 0));
 		// hqlParamList.add(Order.desc(StaticVar.ORDER));
-		return organizationToIconCls(treedao.queryTreeList(Organization.class,
+		return organizationToIconCls(dao.queryTreeList(Organization.class,
 				hqlParamList),null);
 	}
 
@@ -101,7 +101,7 @@ public class OrganizationService  extends BaseTreeService<Organization>  {
 		hqlParamList.add(Restrictions.eq("zt_", 0));
 		hqlParamList.add(Restrictions.eq("node", node));
 		hqlParamList.add(Order.asc("lx_"));
-		organizationList = treedao.queryTreeList(Organization.class,
+		organizationList = dao.queryTreeList(Organization.class,
 				hqlParamList);
 		return organizationToIconCls(organizationList,selectType);
 	}

@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
-import com.hh.system.service.impl.BaseTreeService;
+import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.MessageException;
 import com.hh.usersystem.bean.usersystem.HhXtYhGroup;
 import com.hh.usersystem.bean.usersystem.UserGroup;
 
 @Service
-public class UserGroupService extends BaseTreeService<UserGroup> {
+public class UserGroupService extends BaseService<UserGroup> {
 
 	@Autowired
 	private IHibernateDAO<HhXtYhGroup> hhXtYhGroupdao;
