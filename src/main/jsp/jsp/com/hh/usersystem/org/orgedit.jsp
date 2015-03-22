@@ -38,7 +38,7 @@
 	}
 
 	function save() {
-		FormUtil.check('form', function(formData) {
+		$.hh.validation.check('form', function(formData) {
 			Request.request('usersystem-Org-save', {
 				data : formData,
 				callback : function(result) {

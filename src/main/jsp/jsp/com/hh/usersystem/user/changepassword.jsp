@@ -7,7 +7,7 @@
 <%=SystemUtil.getBaseJs("checkform")%>
 <script type="text/javascript">
 	function updatePassWord() {
-		FormUtil.check('form', function(formData) {
+		$.hh.validation.check('form', function(formData) {
 			if (formData.vmm != formData.mm) {
 				Dialog.infomsg("新密码输入不一致！");
 			} else {

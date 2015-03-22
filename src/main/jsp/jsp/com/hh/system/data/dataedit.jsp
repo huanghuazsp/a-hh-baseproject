@@ -15,7 +15,7 @@
 	var dataTypeId = selectTypeNode.id;
 
 	function save() {
-		FormUtil.check('form', function(formData) {
+		$.hh.validation.check('form', function(formData) {
 			formData.dataTypeId = dataTypeId;
 			Request.request('system-SysData-saveTree', {
 				data : formData,

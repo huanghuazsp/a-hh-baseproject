@@ -13,7 +13,7 @@
 	var objectid = params.object ? params.object.id : '';
 
 	function save() {
-		FormUtil.check('form', function(formData) {
+		$.hh.validation.check('form', function(formData) {
 			if(!formData.vurl && !formData.pageText){
 				Dialog.infomsg('页面名字和请求地址不能同时为空!');
 				return;

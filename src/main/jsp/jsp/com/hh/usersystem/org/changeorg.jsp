@@ -17,7 +17,7 @@
 		data : data
 	}
 	function submit() {
-		FormUtil.check('form', function(formData) {
+		$.hh.validation.check('form', function(formData) {
 			Request.request('usersystem-App-changeOrg', {
 				data : formData,
 				callback : function(result) {

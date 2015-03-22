@@ -15,7 +15,7 @@
 	var shouuser = params.shouuser;
 
 	function save() {
-		FormUtil.check('form', function(formData) {
+		$.hh.validation.check('form', function(formData) {
 			Request.request('message-SendEmail-sendEmail', {
 				data : formData,
 				callback : function(result) {
@@ -31,7 +31,7 @@
 	}
 
 	function write() {
-		FormUtil.check('form', function(formData) {
+		$.hh.validation.check('form', function(formData) {
 			formData.leixing = '0';
 			formData.type = 'yfs';
 			Request.request('message-SendEmail-sendEmail', {
