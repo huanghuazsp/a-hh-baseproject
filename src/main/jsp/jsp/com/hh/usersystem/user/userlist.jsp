@@ -7,7 +7,7 @@
 <%=SystemUtil.getBaseJs()%>
 <script type="text/javascript">
 	function doDelete() {
-		PageUtil.deleteData({
+		$.hh.pagelist.deleteData({
 			pageid : 'pagelist',
 			action : 'usersystem-user-deleteByIds'
 		});
@@ -23,7 +23,7 @@
 		});
 	}
 	function doEdit() {
-		PageUtil.callRow("pagelist", function(row) {
+		$.hh.pagelist.callRow("pagelist", function(row) {
 			Dialog.open({
 				url : 'jsp-usersystem-user-useredit',
 				params : {
@@ -57,9 +57,9 @@
 			xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span> <span
 			xtype="button" config="onClick: doQuery ,text:'查询' , itype :'query' "></span> <span
 			xtype="button"
-			config="onClick: PageUtil.doUp , params:{ pageid :'pagelist',action:'usersystem-user-order'}  ,  icon : 'hh_up' "></span>
+			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'usersystem-user-order'}  ,  icon : 'hh_up' "></span>
 		<span xtype="button"
-			config="onClick: PageUtil.doDown , params:{ pageid :'pagelist',action:'usersystem-user-order'} , icon : 'hh_down' "></span>
+			config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'usersystem-user-order'} , icon : 'hh_down' "></span>
 	</div>
 	<table xtype="form" id="queryForm" style="width:600px;">
 		<tr>

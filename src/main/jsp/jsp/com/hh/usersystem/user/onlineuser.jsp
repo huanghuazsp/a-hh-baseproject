@@ -7,7 +7,7 @@
 <%=SystemUtil.getBaseJs()%>
 <script type="text/javascript">
 	function doDelete() {
-		PageUtil.callRows("pagelist", function(rows) {
+		$.hh.pagelist.callRows("pagelist", function(rows) {
 			Dialog.confirm({
 				message : '您确认要强制选中的用户下线吗？',
 				yes : function(result) {

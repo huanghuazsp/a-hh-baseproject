@@ -17,7 +17,7 @@
 		});
 	}
 	function doEdit() {
-		PageUtil.callRow("pagelist", function(row) {
+		$.hh.pagelist.callRow("pagelist", function(row) {
 			Dialog.open({
 				url : 'jsp-usersystem-group-groupedit',
 				params : {
@@ -30,7 +30,7 @@
 		});
 	}
 	function doDelete() {
-		PageUtil.deleteData({
+		$.hh.pagelist.deleteData({
 			pageid : 'pagelist',
 			action : 'usersystem-Group-deleteByIds'
 		});
@@ -43,9 +43,9 @@
 			xtype="button" config="onClick:doEdit,text:'修改'"></span> <span
 			xtype="button" config="onClick:doDelete,text:'删除'"></span> <span
 			xtype="button"
-			config="onClick: PageUtil.doUp , params:{ pageid :'pagelist',action:'usersystem-Group-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
+			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'usersystem-Group-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
 		<span xtype="button"
-			config="onClick: PageUtil.doDown , params:{ pageid :'pagelist',action:'usersystem-Group-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
+			config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'usersystem-Group-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
 	</div>
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'usersystem-Group-queryPagingData' ,column : [
