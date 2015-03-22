@@ -17,7 +17,7 @@
 		});
 	}
 	function doEdit() {
-		PageUtil.callRow("pagelist", function(row) {
+		$.hh.pagelist.callRow("pagelist", function(row) {
 			Dialog.open({
 				url : 'jsp-message-message-messageedit',
 				params : {
@@ -30,7 +30,7 @@
 		});
 	}
 	function doDelete() {
-		PageUtil.deleteData({
+		$.hh.pagelist.deleteData({
 			pageid : 'pagelist',
 			action : 'message-SysMessage-deleteByIds'
 		});

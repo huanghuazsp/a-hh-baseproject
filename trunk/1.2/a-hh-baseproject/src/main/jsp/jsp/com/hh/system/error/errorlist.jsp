@@ -7,14 +7,14 @@
 <%=SystemUtil.getBaseJs()%>
 <script type="text/javascript">
 	function doDelete() {
-		PageUtil.deleteData({
+		$.hh.pagelist.deleteData({
 			pageid : 'pagelist',
 			action : 'system-Error-deleteByIds'
 		});
 	}
 
 	function doView() {
-		PageUtil.callRow("pagelist", function(row) {
+		$.hh.pagelist.callRow("pagelist", function(row) {
 			Dialog.open({
 				width : Browser.getWidth() * 0.9,
 				height : Browser.getHeight() * 0.85,
