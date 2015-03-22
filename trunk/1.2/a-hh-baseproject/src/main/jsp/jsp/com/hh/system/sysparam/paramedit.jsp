@@ -21,7 +21,7 @@
 		});
 	}
 	function save() {
-		FormUtil.check('form', function(formData) {
+		$.hh.validation.check('form', function(formData) {
 			formData.id = objectId;
 			Request.request('system-SysParam-save', {
 				data : formData

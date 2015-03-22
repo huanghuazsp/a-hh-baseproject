@@ -13,7 +13,7 @@
 	var objectid = params.treeNode ? params.treeNode.id : '';
 
 	function save() {
-		FormUtil.check('form', function(formData) {
+		$.hh.validation.check('form', function(formData) {
 			Request.request('system-SysDataType-saveTree', {
 				data : formData,
 				callback : function(result) {

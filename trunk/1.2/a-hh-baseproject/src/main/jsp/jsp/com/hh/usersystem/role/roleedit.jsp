@@ -13,7 +13,7 @@
 	var objectid = params.row ? params.row.id : '';
 
 	function save() {
-		FormUtil.check('form', function(formData) {
+		$.hh.validation.check('form', function(formData) {
 			Request.request('usersystem-role-save', {
 				data : formData,
 				callback : function(result) {

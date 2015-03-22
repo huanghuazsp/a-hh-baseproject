@@ -42,7 +42,7 @@
 	}
 
 	function save() {
-		FormUtil.check('form', function(formData) {
+		$.hh.validation.check('form', function(formData) {
 			Request.request('oa-Schedule-save', {
 				data : formData,
 				callback : function(result) {
