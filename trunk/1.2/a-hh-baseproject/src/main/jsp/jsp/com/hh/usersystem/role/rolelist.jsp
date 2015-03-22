@@ -61,7 +61,7 @@
 			$('#menuTreeDiv').append(menuTree);
 			menuTree.render();
 		} else {
-			TreeUtil.loadData('menuTree', {
+			$.hh.tree.loadData('menuTree', {
 				params : {
 					roleid : roleId
 				}
@@ -71,7 +71,7 @@
 
 	function doSave() {
 		if (saveRoleId) {
-			var menuids = BaseUtil.objsToStr(TreeUtil
+			var menuids = BaseUtil.objsToStr($.hh.tree
 					.getCheckedNodes('menuTree'), 'id');
 			Request.request('usersystem-role-saveJsMenu', {
 				data : {
@@ -111,7 +111,7 @@
 				$('#czTreeDiv').append(menuTree);
 				menuTree.render();
 			} else {
-				TreeUtil.loadData('cztree', {
+				$.hh.tree.loadData('cztree', {
 					params : cztreeconfig.params
 				});
 			}
@@ -124,7 +124,7 @@
 		var menuId = cztreeconfig.params.vpid;
 		var roleId = cztreeconfig.params.roleid;
 		if (roleId && menuId) {
-			var czid_operLevel = BaseUtil.objsToStr(TreeUtil
+			var czid_operLevel = BaseUtil.objsToStr($.hh.tree
 					.getCheckedNodes('cztree'), 'id');
 			Request.request('usersystem-role-saveJsOper', {
 				data : {

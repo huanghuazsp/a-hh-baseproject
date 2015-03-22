@@ -7,13 +7,13 @@
 <%=SystemUtil.getBaseJs("layout", "ztree", "ztree_edit")%>
 <script type="text/javascript">
 	function doAdd() {
-		var selectNode = TreeUtil.getSelectNode('menuTree');
+		var selectNode = $.hh.tree.getSelectNode('menuTree');
 		Dialog.open({
 			url : 'jsp-usersystem-menu-menuedit',
 			params : {
 				selectNode : selectNode,
 				callback : function() {
-					TreeUtil.refresh('menuTree');
+					$.hh.tree.refresh('menuTree');
 				}
 			}
 		});
@@ -24,13 +24,13 @@
 			params : {
 				object : treeNode,
 				callback : function() {
-					TreeUtil.refresh('menuTree');
+					$.hh.tree.refresh('menuTree');
 				}
 			}
 		});
 	}
 	function doDelete(treeNode) {
-		TreeUtil.deleteData({
+		$.hh.tree.deleteData({
 			pageid : 'menuTree',
 			action : 'usersystem-menu-deleteByIds',
 			id : treeNode.id,
@@ -50,7 +50,7 @@
 	var selectMenuNode = null;
 
 	function doLoadOper() {
-		var selectNode = TreeUtil.getSelectNode('menuTree');
+		var selectNode = $.hh.tree.getSelectNode('menuTree');
 		if (selectNode) {
 			if (selectNode.leaf == 1) {
 				selectMenuNode = selectNode;
@@ -65,7 +65,7 @@
 					$('#czTreeDiv').append(menuTree);
 					menuTree.render();
 				} else {
-					TreeUtil.loadData('cztree', {
+					$.hh.tree.loadData('cztree', {
 						params : {
 							vpid : menuId
 						}
@@ -86,7 +86,7 @@
 			params : {
 				selectMenuNode : selectMenuNode,
 				callback : function() {
-					TreeUtil.refresh('cztree');
+					$.hh.tree.refresh('cztree');
 				}
 			}
 		});
@@ -98,13 +98,13 @@
 				object : treeNode,
 				selectMenuNode : selectMenuNode,
 				callback : function() {
-					TreeUtil.refresh('cztree');
+					$.hh.tree.refresh('cztree');
 				}
 			}
 		});
 	}
 	function doDeleteOper(treeNode) {
-		TreeUtil.deleteData({
+		$.hh.tree.deleteData({
 			pageid : 'cztree',
 			action : 'usersystem-operate-deleteByIds',
 			id : treeNode.id
@@ -122,11 +122,11 @@
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span> <span
 					xtype="button"
-					config="onClick : TreeUtil.refresh,text : '刷新' ,params: 'menuTree'  "></span>
+					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'menuTree'  "></span>
 				<span xtype="button"
-					config="onClick: TreeUtil.doUp , params:{treeid:'menuTree',action:'usersystem-menu-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
+					config="onClick: $.hh.tree.doUp , params:{treeid:'menuTree',action:'usersystem-menu-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
 				<span xtype="button"
-					config="onClick: TreeUtil.doDown , params:{treeid:'menuTree',action:'usersystem-menu-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
+					config="onClick: $.hh.tree.doDown , params:{treeid:'menuTree',action:'usersystem-menu-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
 				<span xtype="button" config="onClick: doLoadOper ,text:'功能设置'"></span>
 			</div>
 			<span xtype="tree"

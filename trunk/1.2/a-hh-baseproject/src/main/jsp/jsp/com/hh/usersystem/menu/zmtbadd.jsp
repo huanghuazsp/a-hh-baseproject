@@ -94,7 +94,7 @@ String zmtbcdStr =  gson.toJson(zmtbcd);
 	function init() {
 	}
 	function save(){
-		var nodes = TreeUtil.getCheckedNodes('menuTreeId');
+		var nodes = $.hh.tree.getCheckedNodes('menuTreeId');
 		var ids = BaseUtil.objsToStr(nodes);
 		if(ids){
 			Request.request('usersystem-menu-addZmtb', {
