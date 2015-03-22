@@ -11,8 +11,8 @@
 	var selectTypeNode = null;
 
 	function init() {
-		typeTreeObject = $('#typeTreeSpan').getWidgetObject();
-		dataTreeObject = $('#dataTreeSpan').getWidgetObject();
+		typeTreeObject = $('#typeTreeSpan').gethhWidget();
+		dataTreeObject = $('#dataTreeSpan').gethhWidget();
 		$("#datacenter").disabled('请选择字典类别！');
 	}
 
