@@ -8,10 +8,10 @@
 <script type="text/javascript">
 	function doAdd() {
 		$('#centerdiv').undisabled();
-		var selectNode = TreeUtil.getSelectNode('groupTree');
+		var selectNode = $.hh.tree.getSelectNode('groupTree');
 		var iframe = window.frames['orgeditiframe'];
 		iframe.callback = function() {
-			TreeUtil.refresh('groupTree');
+			$.hh.tree.refresh('groupTree');
 			$('#centerdiv').disabled('请选择要编辑的用户组或添加新的数据！');
 		}
 		if (selectNode) {
@@ -23,7 +23,7 @@
 		}
 	}
 	function doDelete(treeNode) {
-		TreeUtil.deleteData({
+		$.hh.tree.deleteData({
 			pageid : 'groupTree',
 			action : 'usersystem-UserGroup-deleteTreeByIds',
 			id : treeNode.id,
@@ -40,8 +40,8 @@
 		iframe.callback = function(object) {
 			treeNode.name = object.text;
 			treeNode.isParent = object.leaf == 0;
-			TreeUtil.updateNode('groupTree', treeNode);
-			TreeUtil.getTree('groupTree').refresh();
+			$.hh.tree.updateNode('groupTree', treeNode);
+			$.hh.tree.getTree('groupTree').refresh();
 			$('#centerdiv').disabled('请选择要编辑的用户组或添加新的数据！');
 		}
 		iframe.findData(treeNode.id);
@@ -58,11 +58,11 @@
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span> <span
 					xtype="button"
-					config="onClick: TreeUtil.doUp , params:{treeid:'groupTree',action:'usersystem-UserGroup-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
+					config="onClick: $.hh.tree.doUp , params:{treeid:'groupTree',action:'usersystem-UserGroup-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
 				<span xtype="button"
-					config="onClick: TreeUtil.doDown , params:{treeid:'groupTree',action:'usersystem-UserGroup-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
+					config="onClick: $.hh.tree.doDown , params:{treeid:'groupTree',action:'usersystem-UserGroup-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
 				<span xtype="button"
-					config="onClick : TreeUtil.refresh,text : '刷新' ,params: 'groupTree'  "></span>
+					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'groupTree'  "></span>
 			</div>
 			<span xtype="tree"
 				config=" id:'groupTree', url:'usersystem-UserGroup-queryTreeList' ,remove: doDelete , onClick : orgTreeClick  "></span>

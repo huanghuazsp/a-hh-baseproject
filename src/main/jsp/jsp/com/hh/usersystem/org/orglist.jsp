@@ -8,10 +8,10 @@
 <script type="text/javascript">
 	function doAdd() {
 		$('#centerdiv').undisabled();
-		var selectNode = TreeUtil.getSelectNode('orgTree');
+		var selectNode = $.hh.tree.getSelectNode('orgTree');
 		var iframe = window.frames['orgeditiframe'];
 		iframe.callback = function() {
-			TreeUtil.refresh('orgTree');
+			$.hh.tree.refresh('orgTree');
 			$('#centerdiv').disabled('请选择要编辑的用户组或添加新的数据！');
 		}
 		if (selectNode) {
@@ -29,7 +29,7 @@
 			params : {
 				selectNode : selectNode,
 				callback : function() {
-					TreeUtil.refresh('orgTree');
+					$.hh.tree.refresh('orgTree');
 				}
 			}
 		});
@@ -40,13 +40,13 @@
 			params : {
 				object : treeNode,
 				callback : function() {
-					TreeUtil.refresh('orgTree');
+					$.hh.tree.refresh('orgTree');
 				}
 			}
 		});
 	}
 	function doDelete(treeNode) {
-		TreeUtil.deleteData({
+		$.hh.tree.deleteData({
 			pageid : 'orgTree',
 			action : 'usersystem-Org-deleteByIds',
 			id : treeNode.id,
@@ -61,7 +61,7 @@
 		$('#centerdiv').undisabled();
 		var iframe = window.frames['orgeditiframe'];
 		iframe.callback = function(object) {
-			//TreeUtil.refresh('orgTree');
+			//$.hh.tree.refresh('orgTree');
 			if (object.lx_) {
 				treeNode.icon = object.lx_ == 0 ? "/hhcommon/images/myimage/org/group.png"
 						: object.lx_ == 1 ? "/hhcommon/images/myimage/org/org.png"
@@ -70,8 +70,8 @@
 												: "";
 			}
 			treeNode.name = object.text;
-			TreeUtil.updateNode('orgTree', treeNode);
-			TreeUtil.getTree('orgTree').refresh();
+			$.hh.tree.updateNode('orgTree', treeNode);
+			$.hh.tree.getTree('orgTree').refresh();
 		}
 		iframe.findData(treeNode.id);
 	}
@@ -83,11 +83,11 @@
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span> <span
 					xtype="button"
-					config="onClick: TreeUtil.doUp , params:{treeid:'orgTree',action:'usersystem-Org-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
+					config="onClick: $.hh.tree.doUp , params:{treeid:'orgTree',action:'usersystem-Org-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
 				<span xtype="button"
-					config="onClick: TreeUtil.doDown , params:{treeid:'orgTree',action:'usersystem-Org-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
+					config="onClick: $.hh.tree.doDown , params:{treeid:'orgTree',action:'usersystem-Org-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
 				<span xtype="button"
-					config="onClick : TreeUtil.refresh,text : '刷新' ,params: 'orgTree'  "></span>
+					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'orgTree'  "></span>
 			</div>
 			<span xtype="tree"
 				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick  "></span>
