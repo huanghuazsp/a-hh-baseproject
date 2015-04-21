@@ -5,13 +5,11 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
-import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.message.bean.SysSendEmail;
 import com.hh.message.bean.SysShouEmail;
 import com.hh.system.service.impl.BaseService;
@@ -20,6 +18,8 @@ import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
+import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 
 @Service
@@ -32,7 +32,7 @@ public class SendEmailService extends BaseService<SysSendEmail> {
 	public PagingData<SysSendEmail> queryPagingData(SysSendEmail entity,
 			PageRange pageRange) {
 		return dao.queryPagingData(this.getGenericType(0),
-				new HQLParamList().addCondition(Order.desc("dcreate")),
+				ParamFactory.getParamHb().orderDesc("dcreate"),
 				pageRange, new String[] { "id", "title", "dcreate", "type" });
 	}
 

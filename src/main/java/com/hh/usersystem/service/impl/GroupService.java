@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
-import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
+import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.dto.ParamInf;
 import com.hh.usersystem.bean.usersystem.HhXtGroup;
 import com.hh.usersystem.bean.usersystem.HhXtYhGroup;
 
@@ -68,13 +69,12 @@ public class GroupService extends BaseService<HhXtGroup> {
 
 	public PagingData<HhXtGroup> queryPagingData(HhXtGroup object,
 			String groups, PageRange pageRange) {
-		HQLParamList hqlParamList = new HQLParamList();
+		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (!Check.isEmpty(object.getText())) {
-			hqlParamList.add(Restrictions.like("text", "%" + object.getText()
-					+ "%"));
+			hqlParamList.like("text", object.getText());
 		}
 		if (!Check.isEmpty(groups)) {
-			hqlParamList.add(Restrictions.in("id", Convert.strToList(groups)));
+			hqlParamList.in("id", Convert.strToList(groups));
 		}
 		// if (!Check.isEmpty(hhXtYh.getNxb())) {
 		// hqlSearchCondition.getHqlParamList().add(

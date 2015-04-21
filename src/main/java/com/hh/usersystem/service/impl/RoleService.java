@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
-import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
+import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtTree;
 import com.hh.usersystem.bean.usersystem.HhXtCz;
 import com.hh.usersystem.bean.usersystem.HhXtJs;
@@ -43,15 +44,15 @@ public class RoleService extends BaseService<HhXtJs> {
 
 	public List<HhXtJs> queryAllRoleList() {
 		return xtjsdao.queryList(HhXtJs.class,
-				new HQLParamList().addCondition(Restrictions.eq("nzt", 0)));
+				ParamFactory.getParamHb().is("nzt", 0));
 	}
 
 	public PagingData<HhXtJs> queryPagingData(HhXtJs hhXtJs, String roles,
 			PageRange pageRange) {
-		HQLParamList hqlParamList = new HQLParamList();
+		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (!Check.isEmpty(hhXtJs.getText())) {
-			hqlParamList.add(Restrictions.like("text", "%" + hhXtJs.getText()
-					+ "%"));
+			hqlParamList.like("text",  hhXtJs.getText()
+					);
 		}
 		if (!Check.isEmpty(roles)) {
 			hqlParamList.add(Restrictions.in("id", Convert.strToList(roles)));
