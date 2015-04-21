@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
-import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
+import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtCheckTree;
 import com.hh.usersystem.bean.usersystem.HhXtCd;
 import com.hh.usersystem.bean.usersystem.HhXtCz;
@@ -45,17 +46,17 @@ public class MenuService extends BaseService<HhXtCd> {
 	private OperateService operateService;
 	
 	public PagingData<HhXtCd> queryPagingData(HhXtCd hhXtCd, PageRange pageRange) {
-		HQLParamList hqlParamList = new HQLParamList();
+		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (!Check.isEmpty(hhXtCd.getText())) {
-			hqlParamList.add(Restrictions.like("text", "%" + hhXtCd.getText()
-					+ "%"));
+			hqlParamList.like("text",  hhXtCd.getText()
+					+ "%");
 		}
 		if (!Check.isEmpty(hhXtCd.getLeaf())) {
-			hqlParamList.add(Restrictions.eq("leaf", 1));
+			hqlParamList.is("leaf", 1);
 		}
 
 		if (!Check.isEmpty(hhXtCd.getNode())) {
-			hqlParamList.add(Restrictions.eq("node", hhXtCd.getNode()));
+			hqlParamList.is("node", hhXtCd.getNode());
 		}
 
 		if (!Check.isEmpty(hhXtCd.getOrgCode())) {
@@ -119,14 +120,14 @@ public class MenuService extends BaseService<HhXtCd> {
 
 	public List<HhXtCd> queryMenuListByPid(String node) {
 		List<HhXtCd> hhxtcdList = new ArrayList<HhXtCd>();
-		HQLParamList hqlParamList = new HQLParamList()
-				.addCondition(Restrictions.eq("leaf", 0));
+		ParamInf hqlParamList =ParamFactory.getParamHb()
+				.is("leaf", 0);
 		if (Check.isEmpty(node) || "root".equals(node)) {
 			hhxtcdList = dao.queryTreeList(HhXtCd.class,
-					hqlParamList.addCondition(Restrictions.eq("node", "root")));
+					ParamFactory.getParamHb().is("node", "root"));
 		} else {
 			hhxtcdList = dao.queryTreeList(HhXtCd.class,
-					hqlParamList.addCondition(Restrictions.eq("node", node)));
+					ParamFactory.getParamHb().is("node", node));
 		}
 
 		return hhxtcdList;
@@ -134,13 +135,13 @@ public class MenuService extends BaseService<HhXtCd> {
 
 	public List<ExtCheckTree> queryMenuAllListByPid(String node, String roleid) {
 		List<HhXtCd> hhxtcdList = new ArrayList<HhXtCd>();
-		HQLParamList hqlParamList = new HQLParamList();
+		ParamInf hqlParamList =ParamFactory.getParamHb();
 		if (Check.isEmpty(node) || "root".equals(node)) {
 			hhxtcdList = dao.queryAllTreeList(HhXtCd.class,
-					hqlParamList.addCondition(Restrictions.eq("node", "root")));
+					hqlParamList.is("node", "root"));
 		} else {
 			hhxtcdList = dao.queryAllTreeList(HhXtCd.class,
-					hqlParamList.addCondition(Restrictions.eq("node", node)));
+					hqlParamList.is("node", node));
 		}
 		List<ExtCheckTree> extTreeList = new ArrayList<ExtCheckTree>();
 
@@ -162,9 +163,9 @@ public class MenuService extends BaseService<HhXtCd> {
 		}
 
 		if (!Check.isEmpty(cdidList)) {
-			HQLParamList hqlParamList2 = new HQLParamList();
-			hqlParamList2.add(Restrictions.in("cdId", cdidList));
-			hqlParamList2.add(Restrictions.eq("jsId", roleid));
+			ParamInf hqlParamList2 =ParamFactory.getParamHb();
+			hqlParamList2.in("cdId", cdidList);
+			hqlParamList2.is("jsId", roleid);
 			List<HhXtJsCd> hhXtJsCdList = xtjscddao.queryList(HhXtJsCd.class,
 					hqlParamList2);
 

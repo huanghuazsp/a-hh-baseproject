@@ -14,13 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
-import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
+import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtTree;
 import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
@@ -34,7 +35,7 @@ import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 
 @Service
-public class UserService extends BaseService<HhXtYh>{
+public class UserService extends BaseService<HhXtYh> {
 	@Autowired
 	private IHibernateDAO<HhXtYh> xtyhdao;
 	@Autowired
@@ -77,10 +78,9 @@ public class UserService extends BaseService<HhXtYh>{
 	public PagingData<HhXtYh> queryPagingData(HhXtYh hhXtYh,
 			PageRange pageRange, String ids, String orgs, String roles,
 			String groups) {
-		HQLParamList hqlParamList = new HQLParamList();
+		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (!Check.isEmpty(hhXtYh.getText())) {
-			hqlParamList.add(Restrictions.like("text", "%" + hhXtYh.getText()
-					+ "%"));
+			hqlParamList.like("text", hhXtYh.getText());
 		}
 
 		if (hhXtYh.getNxb() != 2) {
@@ -131,7 +131,7 @@ public class UserService extends BaseService<HhXtYh>{
 	}
 
 	private void tiaojian(String orgs, String roles, String users,
-			String groups, HQLParamList hqlParamList) {
+			String groups, ParamInf hqlParamList) {
 		List<Criterion> orCriterion = new ArrayList<Criterion>();
 
 		if (Check.isNoEmpty(users)) {
@@ -273,7 +273,7 @@ public class UserService extends BaseService<HhXtYh>{
 	public HhXtYh findObjectById(String id) {
 		HhXtYh hhXtYh = xtyhdao.findEntityByPK(HhXtYh.class, id);
 		List<HhXtYhJs> hhXtYhJsList = hhXtYhJsDAO.queryList(HhXtYhJs.class,
-				new HQLParamList().addCondition(Restrictions.eq("yhId", id)));
+				ParamFactory.getParamHb().is("yhId", id));
 
 		String jsidsStr = "";
 		for (HhXtYhJs hhXtYhJs : hhXtYhJsList) {
@@ -297,8 +297,7 @@ public class UserService extends BaseService<HhXtYh>{
 
 	private String findOrgIdsStr(String userid) {
 		List<HhXtYhOrg> hhXtYhOrgs = hhXtYhOrgDAO
-				.queryList(HhXtYhOrg.class, new HQLParamList()
-						.addCondition(Restrictions.eq("yhId", userid)));
+				.queryList(HhXtYhOrg.class, ParamFactory.getParamHb().is("yhId", userid));
 		String orgstr = "";
 		for (HhXtYhOrg hhXtYhOrg : hhXtYhOrgs) {
 			orgstr += hhXtYhOrg.getOrgId() + ",";
@@ -313,8 +312,8 @@ public class UserService extends BaseService<HhXtYh>{
 		List<String> orgList = new ArrayList<String>();
 		List<HhXtYhOrg> hhXtYhOrgs = hhXtYhOrgDAO.queryList(
 				HhXtYhOrg.class,
-				new HQLParamList().addCondition(Restrictions.eq("yhId",
-						hhXtYh.getId())));
+				ParamFactory.getParamHb().is("yhId",
+						hhXtYh.getId()));
 		for (HhXtYhOrg hhXtYhOrg : hhXtYhOrgs) {
 			orgList.add(hhXtYhOrg.getOrgId());
 		}
@@ -323,8 +322,8 @@ public class UserService extends BaseService<HhXtYh>{
 
 		if (!Check.isEmpty(orgList)) {
 			organizationList = hhXtOrgDAO.queryList(Organization.class,
-					new HQLParamList().addCondition(Restrictions.in("id",
-							orgList)));
+					ParamFactory.getParamHb().in("id",
+							orgList));
 		}
 
 		hhXtYh.setOrganizationList(organizationList);
@@ -374,8 +373,8 @@ public class UserService extends BaseService<HhXtYh>{
 		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
 		List<HhXtYhCyLxr> hhXtYhCyLxrs = cylxrdao.queryList(
 				HhXtYhCyLxr.class,
-				new HQLParamList().addCondition(Restrictions.eq("yhId",
-						hhXtYh.getId())));
+				ParamFactory.getParamHb().is("yhId",
+						hhXtYh.getId()));
 
 		List<String> cylxrIdList = new ArrayList<String>();
 		for (HhXtYhCyLxr hhXtYhCyLxr : hhXtYhCyLxrs) {
@@ -383,8 +382,7 @@ public class UserService extends BaseService<HhXtYh>{
 		}
 
 		if (!Check.isEmpty(cylxrIdList)) {
-			return xtyhdao.queryList(HhXtYh.class, new HQLParamList()
-					.addCondition(Restrictions.in("id", cylxrIdList)));
+			return xtyhdao.queryList(HhXtYh.class, ParamFactory.getParamHb().in("id", cylxrIdList));
 		} else {
 			return new ArrayList<HhXtYh>();
 		}
@@ -440,7 +438,7 @@ public class UserService extends BaseService<HhXtYh>{
 
 	public List<HhXtYh> queryListByIds(String[] users) {
 		return xtyhdao.queryList(HhXtYh.class,
-				new HQLParamList().addCondition(Restrictions.in("id", users)));
+				ParamFactory.getParamHb().in("id", users));
 	}
 
 	public List<HhXtYh> queryItemsByIdsStr(String ids) {
@@ -449,8 +447,8 @@ public class UserService extends BaseService<HhXtYh>{
 		}
 		return xtyhdao.queryList(
 				HhXtYh.class,
-				new HQLParamList().addCondition(Restrictions.in("id",
-						Convert.strToList(ids))));
+				ParamFactory.getParamHb().in("id",
+						Convert.strToList(ids)));
 	}
 
 	public List<HhXtYh> queryUserByOrcCode(String code) {

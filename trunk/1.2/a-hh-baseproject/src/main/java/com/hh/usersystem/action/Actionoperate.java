@@ -4,59 +4,45 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hh.system.util.base.BaseAction;
+import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.model.ExtCheckTree;
 import com.hh.system.util.model.ExtTree;
-import com.hh.system.util.model.ReturnModel;
 import com.hh.usersystem.bean.usersystem.HhXtCz;
 import com.hh.usersystem.service.impl.OperateService;
-import com.opensymphony.xwork2.ModelDriven;
 
 @SuppressWarnings("serial")
-public class Actionoperate extends BaseAction implements ModelDriven<HhXtCz> {
-	private HhXtCz hhXtCz = new HhXtCz();
-	private String node;
+public class Actionoperate extends BaseServiceAction<HhXtCz> {
 	private String roleid;
 	@Autowired
 	private OperateService operateService;
 
-	public HhXtCz getModel() {
-		return hhXtCz;
-	}
-
 	public void queryOperateListByPid() {
-		List<ExtTree> hhxtczList = operateService.queryOperateListByPid(hhXtCz
+		List<ExtTree> hhxtczList = operateService.queryOperateListByPid(object
 				.getVpid());
 		this.returnResult(hhxtczList);
 	}
 
 	public void queryCheckOperateListByPid() {
+		System.out.println(request.getParameter("node"));
 		List<ExtCheckTree> hhxtczList = operateService
-				.queryCheckOperateListByPid(hhXtCz.getVpid(), roleid, node);
+				.queryCheckOperateListByPid(object.getVpid(), roleid,
+						findParam("node"));
 		this.returnResult(hhxtczList);
 	}
 
 	public void findObjectById() {
-		HhXtCz hhXtCz = operateService.findObjectById(this.hhXtCz.getId());
+		HhXtCz hhXtCz = operateService.findObjectById(this.object.getId());
 		this.returnResult(hhXtCz);
 	}
 
 	public void save() {
-		HhXtCz hhXtCz = operateService.save(this.hhXtCz);
+		HhXtCz hhXtCz = operateService.save(this.object);
 		this.getResultMap().put("object", hhXtCz);
 		this.returnResult();
 	}
 
 	public void deleteByIds() {
 		operateService.deleteByIds(this.getIds());
-	}
-
-	public String getNode() {
-		return node;
-	}
-
-	public void setNode(String node) {
-		this.node = node;
 	}
 
 	public String getRoleid() {

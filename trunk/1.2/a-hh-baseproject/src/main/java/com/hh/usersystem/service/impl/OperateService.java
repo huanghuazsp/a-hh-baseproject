@@ -8,15 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
-import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
+import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtCheckTree;
 import com.hh.system.util.model.ExtTree;
 import com.hh.usersystem.aop.interceptor.SecurityInterceptor;
 import com.hh.usersystem.bean.usersystem.HhXtCz;
-import com.hh.usersystem.bean.usersystem.HhXtGroup;
 import com.hh.usersystem.bean.usersystem.HhXtJsCz;
 import com.hh.usersystem.util.steady.StaticProperties.OperationLevel;
 
@@ -29,9 +29,9 @@ public class OperateService  extends BaseService<HhXtCz> {
 
 	public List<ExtTree> queryOperateListByPid(String node) {
 		List<HhXtCz> hhXtCzList = new ArrayList<HhXtCz>();
-		HQLParamList hqlParamList = new HQLParamList();
+		ParamInf hqlParamList = ParamFactory.getParamHb();
 		hhXtCzList = dao.queryList(HhXtCz.class,
-				hqlParamList.addCondition(Restrictions.eq("vpid", node)));
+				hqlParamList.is("vpid", node));
 		List<ExtTree> extTreeList = new ArrayList<ExtTree>();
 		for (HhXtCz hhXtCd : hhXtCzList) {
 			ExtTree extTree = new ExtTree();
@@ -56,9 +56,9 @@ public class OperateService  extends BaseService<HhXtCz> {
 		List<ExtCheckTree> extTreeList = new ArrayList<ExtCheckTree>();
 		if ("root".equals(node)) {
 			List<HhXtCz> hhXtCzList = new ArrayList<HhXtCz>();
-			HQLParamList hqlParamList = new HQLParamList();
+			ParamInf hqlParamList = ParamFactory.getParamHb();
 			hhXtCzList = dao.queryList(HhXtCz.class,
-					hqlParamList.addCondition(Restrictions.eq("vpid", vpid)));
+					hqlParamList.is("vpid", vpid));
 
 			List<String> czidList = new ArrayList<String>();
 
@@ -81,9 +81,9 @@ public class OperateService  extends BaseService<HhXtCz> {
 			}
 
 			if (!Check.isEmpty(czidList)) {
-				HQLParamList hqlParamList2 = new HQLParamList();
-				hqlParamList2.add(Restrictions.in("hhXtCz.id", czidList));
-				hqlParamList2.add(Restrictions.eq("jsId", roleid));
+				ParamInf hqlParamList2 = ParamFactory.getParamHb();
+				hqlParamList2.in("hhXtCz.id", czidList);
+				hqlParamList2.is("jsId", roleid);
 				List<HhXtJsCz> hhXtJsCdList = hhxtjsczDao.queryList(
 						HhXtJsCz.class, hqlParamList2);
 
@@ -104,10 +104,10 @@ public class OperateService  extends BaseService<HhXtCz> {
 			for (ExtCheckTree extCheckTree_parent : extTreeList) {
 				List<ExtCheckTree> extTreeListchild = new ArrayList<ExtCheckTree>();
 				extCheckTree_parent.setChildren(extTreeListchild);
-				HQLParamList hqlParamList2 = new HQLParamList();
-				hqlParamList2.add(Restrictions.eq("hhXtCz.id",
-						extCheckTree_parent.getId()));
-				hqlParamList2.add(Restrictions.eq("jsId", roleid));
+				ParamInf hqlParamList2 = ParamFactory.getParamHb();
+				hqlParamList2.is("hhXtCz.id",
+						extCheckTree_parent.getId());
+				hqlParamList2.is("jsId", roleid);
 				HhXtJsCz hhXtJsCz = hhxtjsczDao.findEntity(HhXtJsCz.class,
 						hqlParamList2);
 

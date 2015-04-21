@@ -2,17 +2,16 @@ package com.hh.usersystem.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Convert;
 import com.hh.system.util.PrimaryKey;
+import com.hh.system.util.dto.ParamFactory;
 import com.hh.usersystem.bean.usersystem.HhXtCd;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.bean.usersystem.HhXtYhCdZmtb;
@@ -42,8 +41,7 @@ public class ZmtbService extends BaseService<HhXtYhCdZmtb> {
 
 	public List<HhXtCd> queryZmtbByUserId(String userId) {
 		List<HhXtYhCdZmtb> hhXtYhCdZmtbList = dao
-				.queryList(HhXtYhCdZmtb.class, new HQLParamList()
-						.addCondition(Restrictions.eq("yhId", userId)));
+				.queryList(HhXtYhCdZmtb.class, ParamFactory.getParamHb().is("yhId", userId));
 		List<HhXtCd> hhXtCds = new ArrayList<HhXtCd>();
 		for (HhXtYhCdZmtb hhXtYhCdZmtb : hhXtYhCdZmtbList) {
 			hhXtCds.add(hhXtYhCdZmtb.getHhXtCd());

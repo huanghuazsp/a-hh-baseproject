@@ -6,37 +6,33 @@ import java.util.List;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
-import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.system.bean.HhXtData;
-import com.hh.system.util.Check;
-import com.hh.system.util.Convert;
-import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
+import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.dto.ParamInf;
 
 @Service
 public class HhXtDataService extends BaseService<HhXtData> {
 
-	
 	public PagingData<HhXtData> queryPagingData(HhXtData hhXtData,
 			PageRange pageRange) {
-		HQLParamList hqlParamList = new HQLParamList();
-		hqlParamList.add(Restrictions.eq("node", hhXtData.getNode()));
+		ParamInf hqlParamList = ParamFactory.getParamHb();
+		hqlParamList.is("node", hhXtData.getNode());
 		return dao.queryPagingData(HhXtData.class, hqlParamList, pageRange);
 	}
 
 	public List<HhXtData> queryMenuListByPid(String node, String type) {
-		HQLParamList hqlParamList = new HQLParamList().addCondition(
-				Restrictions.eq("node", node)).addCondition(
-				Restrictions.eq("type", type));
-		List<HhXtData> hhXtDatas = dao.queryTreeList(HhXtData.class, hqlParamList);
+		ParamInf hqlParamList = ParamFactory.getParamHb()
+				.is("node", node).is("type", type);
+		List<HhXtData> hhXtDatas = dao.queryTreeList(HhXtData.class,
+				hqlParamList);
 		return hhXtDatas;
 	}
 
 	public List<HhXtData> queryAllMenuListByPid(String type) {
-		HQLParamList hqlParamList = new HQLParamList().addCondition(
-				Restrictions.eq("node", "root")).addCondition(
-				Restrictions.eq("type", type));
+		ParamInf hqlParamList = ParamFactory.getParamHb()
+				.is("node", "root").is("type", type);
 		List<HhXtData> hhXtDatas = dao.queryList(HhXtData.class, hqlParamList);
 		for (HhXtData hhXtData : hhXtDatas) {
 			addYzNode(hhXtData);
@@ -46,9 +42,8 @@ public class HhXtDataService extends BaseService<HhXtData> {
 	}
 
 	private void addYzNode(HhXtData hhXtData) {
-		HQLParamList hqlParamList = new HQLParamList().addCondition(
-				Restrictions.eq("node", hhXtData.getId())).addCondition(
-				Restrictions.eq("type", hhXtData.getType()));
+		ParamInf hqlParamList = ParamFactory.getParamHb()
+				.is("node", hhXtData.getId()).is("type", hhXtData.getType());
 		List<HhXtData> hhXtDatas = dao.queryList(HhXtData.class, hqlParamList);
 		hhXtData.setChildren(hhXtDatas);
 		for (HhXtData hhXtData2 : hhXtDatas) {
@@ -57,14 +52,13 @@ public class HhXtDataService extends BaseService<HhXtData> {
 	}
 
 	public List<HhXtData> queryDataTreeByPid(String node) {
-		HQLParamList hqlParamList = new HQLParamList()
-				.addCondition(Restrictions.eq("node", node))
-				.addCondition(
-						Restrictions.not(Restrictions.eq("type", "form_tree")))
-				.addCondition(
-						Restrictions.not(Restrictions.eq("type",
-								"workflow_tree")));
-		List<HhXtData> hhXtDatas = dao.queryTreeList(HhXtData.class, hqlParamList);
+		ParamInf hqlParamList = ParamFactory.getParamHb()
+				.is("node", node).
+				nis("type", "form_tree")
+				.nis("type",
+								"workflow_tree");
+		List<HhXtData> hhXtDatas = dao.queryTreeList(HhXtData.class,
+				hqlParamList);
 		return hhXtDatas;
 	}
 

@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
-import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
+import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.dto.ParamInf;
 import com.hh.usersystem.bean.usersystem.HhXtOrgJs;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.bean.usersystem.HhXtYhOrg;
@@ -38,11 +38,11 @@ public class OrganizationService  extends BaseService<Organization>  {
 
 	
 	public List<Organization> queryTreeList(Organization object, boolean isNoLeaf) {
-		return organizationToIconCls(queryTreeList(object.getNode(),isNoLeaf, new HQLParamList()),null);
+		return organizationToIconCls(queryTreeList(object.getNode(),isNoLeaf, ParamFactory.getParamHb()),null);
 	}
 	
 	public List<Organization> queryTreeListByLx(Organization object, boolean isNoLeaf) {
-		return organizationToIconCls(queryTreeList(object.getNode(),isNoLeaf, new HQLParamList().addCondition(Restrictions.le("lx_", object.getLx_()))),null);
+		return organizationToIconCls(queryTreeList(object.getNode(),isNoLeaf, ParamFactory.getParamHb().le("lx_", object.getLx_())),null);
 	}
 	
 	public List<Organization> organizationToIconCls(
@@ -81,10 +81,10 @@ public class OrganizationService  extends BaseService<Organization>  {
 		String pid = !Check.isEmpty(node)
 				&& "root".equals(organization.getNode()) ? node : organization
 				.getNode();
-		HQLParamList hqlParamList = new HQLParamList();
+		ParamInf hqlParamList = ParamFactory.getParamHb();
 		// pid = "root".equals(pid) ? "0" : pid;
-		hqlParamList.add(Restrictions.eq("node", pid));
-		hqlParamList.add(Restrictions.eq("lx_", organization.getLx_()));
+		hqlParamList.is("node", pid);
+		hqlParamList.is("lx_", organization.getLx_());
 		// hqlParamList.add(Restrictions.eq("zt_", 0));
 		// hqlParamList.add(Order.desc(StaticVar.ORDER));
 		return organizationToIconCls(dao.queryTreeList(Organization.class,
@@ -93,14 +93,14 @@ public class OrganizationService  extends BaseService<Organization>  {
 
 	public List<Organization> queryOrgListByPid(Organization organization , String orgs, String selectType) {
 		String node = organization.getNode();
-		HQLParamList hqlParamList = new HQLParamList();
+		ParamInf hqlParamList = ParamFactory.getParamHb();
 		List<Organization> organizationList = null;
 		if (Check.isNoEmpty(orgs)) {
-			hqlParamList.add(Restrictions.in("id", Convert.strToList(orgs)));
+			hqlParamList.in("id", Convert.strToList(orgs));
 		}
-		hqlParamList.add(Restrictions.eq("zt_", 0));
-		hqlParamList.add(Restrictions.eq("node", node));
-		hqlParamList.add(Order.asc("lx_"));
+		hqlParamList.is("zt_", 0);
+		hqlParamList.is("node", node);
+		hqlParamList.order("lx_");
 		organizationList = dao.queryTreeList(Organization.class,
 				hqlParamList);
 		return organizationToIconCls(organizationList,selectType);
@@ -120,8 +120,7 @@ public class OrganizationService  extends BaseService<Organization>  {
 				organization.setCode_(organization.getCode_().replace(p_organization.getCode_(), ""));
 			}
 			List<HhXtOrgJs> hhXtYhJsList = hhxtorgjsdao.queryList(
-					HhXtOrgJs.class, new HQLParamList()
-							.addCondition(Restrictions.eq("orgId", id)));
+					HhXtOrgJs.class, ParamFactory.getParamHb().is("orgId", id));
 			
 			String jss = "";
 			
@@ -256,9 +255,8 @@ public class OrganizationService  extends BaseService<Organization>  {
 		}
 			if (organization.getLx_() == 3) {
 				List<HhXtYhOrg> hhXtYhOrgs = hhXtYhOrgDAO.queryList(
-						HhXtYhOrg.class, new HQLParamList()
-								.addCondition(Restrictions.eq("orgId",
-										organization.getId())));
+						HhXtYhOrg.class, ParamFactory.getParamHb().is("orgId",
+										organization.getId()));
 				List<String> yhid = new ArrayList<String>();
 				for (HhXtYhOrg hhXtYhOrg : hhXtYhOrgs) {
 					yhid.add(hhXtYhOrg.getYhId());
@@ -266,8 +264,8 @@ public class OrganizationService  extends BaseService<Organization>  {
 				if (!Check.isEmpty(yhid)) {
 					organization.setExpanded(1);
 					List<HhXtYh> hhXtYhs = xtyhdao.queryList(HhXtYh.class,
-							new HQLParamList().addCondition(Restrictions.in(
-									"id", yhid)));
+							ParamFactory.getParamHb().in(
+									"id", yhid));
 					for (HhXtYh hhXtYh : hhXtYhs) {
 						Organization extTree = new Organization();
 						extTree.setId("{orgid : '" + organization.getId()
@@ -296,8 +294,8 @@ public class OrganizationService  extends BaseService<Organization>  {
 			organizations
 					.add(loginUserUtilService.queryDataSecurityOrg(action));
 		} else {
-			HQLParamList hqlParamList = new HQLParamList();
-			hqlParamList.add(Restrictions.like("code_", node + "___"));
+			ParamInf hqlParamList = ParamFactory.getParamHb();
+			hqlParamList.likenoreg("code_", node + "___");
 			organizations = dao.queryList(Organization.class, hqlParamList);
 		}
 		for (Organization organization : organizations) {

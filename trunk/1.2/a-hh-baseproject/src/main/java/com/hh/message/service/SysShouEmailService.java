@@ -4,19 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.message.bean.SysShouEmail;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.Convert;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
+import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.UserService;
@@ -33,12 +33,12 @@ public class SysShouEmailService extends BaseService<SysShouEmail> implements
 	@Override
 	public PagingData<SysShouEmail> queryPagingData(SysShouEmail entity,
 			PageRange pageRange) {
+
 		return dao.queryPagingData(
 				this.getGenericType(0),
-				new HQLParamList().addCondition(
-						Restrictions.eq("shouUser",
-								loginUserUtilService.findLoginUserId()))
-						.addCondition(Order.desc("dcreate")), pageRange);
+				ParamFactory.getParamHb()
+						.is("shouUser", loginUserUtilService.findLoginUserId())
+						.orderDesc("dcreate"), pageRange);
 	}
 
 	@Override
@@ -68,13 +68,13 @@ public class SysShouEmailService extends BaseService<SysShouEmail> implements
 	}
 
 	public Map<String, Object> load() {
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		int shouCount = findCount(new HQLParamList().addCondition(
-				Restrictions.eq("shouUser",
-						loginUserUtilService.findLoginUserId())).addCondition(
-				Restrictions.eq("read", 0)));
+		int shouCount = findCount(ParamFactory.getParamHb()
+				.is("shouUser", loginUserUtilService.findLoginUserId())
+				.is("read", 0));
 		Map<String, Object> map2 = new HashMap<String, Object>();
-		map2.put("count",shouCount);
+		map2.put("count", shouCount);
 		map2.put("id", "93bb64fe-e50a-40b2-ab59-b1ae543cd107");
 		map2.put("text", "收件箱");
 		map2.put("vsj", "jsp-message-email-shouemaillist");

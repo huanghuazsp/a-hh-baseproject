@@ -9,15 +9,14 @@ import java.util.UUID;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
-import com.hh.hibernate.util.dto.HQLParamList;
 import com.hh.system.util.Check;
 import com.hh.system.util.base.BaseAction;
+import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.MsgProperties;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.usersystem.bean.usersystem.HHXtZmsx;
@@ -63,8 +62,8 @@ public class LoginService {
 		ReturnModel returnModel = new ReturnModel();
 		List<HhXtYh> xtYhList = xtyhdao.queryList(
 				HhXtYh.class,
-				new HQLParamList().addCondition(Restrictions.eq("vdlzh",
-						xtYh.getVdlzh())));
+				ParamFactory.getParamHb().is("vdlzh",
+						xtYh.getVdlzh()));
 		if (Check.isEmpty(xtYhList)) {
 			returnModel.setType(ReturnModel.TYPE_OK);
 			returnModel.setMsg(MsgProperties.system_userlogin_notexist);
@@ -99,9 +98,8 @@ public class LoginService {
 					returnModel.setHref("webapp-desktop-" + desktop);
 
 					List<HhXtYhJs> hhXtYhJsList = xtyhjsdao.queryList(
-							HhXtYhJs.class, new HQLParamList()
-									.addCondition(Restrictions.eq("yhId",
-											hhXtYh.getId())));
+							HhXtYhJs.class, ParamFactory.getParamHb().is("yhId",
+											hhXtYh.getId()));
 
 					List<String> jsids = new ArrayList<String>();
 					for (HhXtYhJs hhXtYhJs : hhXtYhJsList) {
@@ -140,19 +138,15 @@ public class LoginService {
 					if (jsids.size() != 0) {
 						hhXtJsList = xtjsdao.queryList(
 								HhXtJs.class,
-								new HQLParamList().addCondition(
-										Restrictions.eq("nzt", 0))
-										.addCondition(
-												Restrictions.in("id", jsids)));
+								ParamFactory.getParamHb().is("nzt", 0)
+										.in("id", jsids));
 						if (hhXtJsList.size() != 0) {
 							hhXtJsCdList = xtjscddao.queryList(HhXtJsCd.class,
-									new HQLParamList()
-											.addCondition(Restrictions.in(
-													"jsId", jsids)));
+									ParamFactory.getParamHb().in(
+													"jsId", jsids));
 							hhXtJsCzList = xtjsczdao.queryList(HhXtJsCz.class,
-									new HQLParamList()
-											.addCondition(Restrictions.in(
-													"jsId", jsids)));
+									ParamFactory.getParamHb().in(
+													"jsId", jsids));
 						}
 					}
 
@@ -297,8 +291,8 @@ public class LoginService {
 	private List<HhXtCd> queryZmtbList(HhXtYh hhXtYh, List<String> hhxtcdIdList) {
 		List<HhXtYhCdZmtb> hhXtYhCdZmtbList = xtyhcdzmtb.queryList(
 				HhXtYhCdZmtb.class,
-				new HQLParamList().addCondition(Restrictions.eq("yhId",
-						hhXtYh.getId()))
+				ParamFactory.getParamHb().is("yhId",
+						hhXtYh.getId())
 		// .addCondition(Order.asc(StaticVar.ORDER))
 				);
 
