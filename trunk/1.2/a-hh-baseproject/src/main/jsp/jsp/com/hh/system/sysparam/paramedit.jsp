@@ -64,6 +64,11 @@
 					<td><span xtype="uploadpic"
 						config=" width:36,height:36, name: 'sysIcon' , filePath : 'hh_sys_param/SYS_ICON'  , path:'/hhcommon/images/extjsico' "></span></td>
 				</tr>
+				<tr>
+					<td xtype="label">登陆背景图片</td>
+					<td colspan="3"><span xtype="uploadpic"
+						config=" width:550,height:400, name: 'loginBackImg' , filePath : 'hh_sys_param/SYS_ICON'  , path:'/hhcommon/images/background' "></span></td>
+				</tr>
 			</table>
 		</form>
 	</div>
