@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.hh.hibernate.util.base.BaseOneEntity;
+import com.hh.system.util.Check;
 
 @SuppressWarnings("serial")
 @Entity
@@ -19,6 +20,7 @@ public class HhSysParam extends BaseOneEntity {
 	private String sysIcon;
 	private int onePage;
 	private String sysImg;
+	private String loginBackImg;
 	
 	public int getLogSql() {
 		return logSql;
@@ -64,6 +66,16 @@ public class HhSysParam extends BaseOneEntity {
 	}
 	public void setSysImg(String sysImg) {
 		this.sysImg = sysImg;
+	}
+	@Column(name="LOGIN_BACK_IMG",length=256)
+	public String getLoginBackImg() {
+		if (Check.isEmpty(loginBackImg)) {
+			return "/hhcommon/images/background/background.png";
+		}
+		return loginBackImg;
+	}
+	public void setLoginBackImg(String loginBackImg) {
+		this.loginBackImg = loginBackImg;
 	}
 	
 }
