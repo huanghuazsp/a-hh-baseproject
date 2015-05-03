@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.system.service.impl.BaseService;
@@ -12,6 +11,7 @@ import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.base.BaseServiceAction;
+import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.ExtTree;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.system.util.statics.StaticVar;
@@ -172,8 +172,10 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 		String returnTextString = "";
 		if (Check.isNoEmpty(object.getId())) {
 			StringBuffer texts = new StringBuffer();
-			List<HhXtYh> hhXtYhList = userService.queryList(Restrictions.in(
-					StaticVar.entityId, Convert.strToList(object.getId())));
+
+			List<HhXtYh> hhXtYhList = userService.queryList(ParamFactory
+					.getParamHb().in(StaticVar.entityId,
+							Convert.strToList(object.getId())));
 			for (HhXtYh hhXtYh : hhXtYhList) {
 				texts.append(hhXtYh.getText() + ",");
 			}
@@ -188,8 +190,9 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 	}
 
 	public void findUserListByIds() {
-		List<HhXtYh> hhXtYhList = userService.queryList(Restrictions.in(
-				StaticVar.entityId, Convert.strToList(object.getId())));
+		List<HhXtYh> hhXtYhList = userService.queryList(ParamFactory
+				.getParamHb().in(StaticVar.entityId,
+						Convert.strToList(object.getId())));
 		this.returnResult(hhXtYhList);
 	}
 

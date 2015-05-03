@@ -12,6 +12,7 @@ import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.base.BaseServiceAction;
+import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.bean.usersystem.Organization;
@@ -88,7 +89,7 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 		if (Check.isNoEmpty(object.getId())) {
 			StringBuffer texts = new StringBuffer();
 			List<Organization> organizationList = organizationService
-					.queryList(Restrictions.in(StaticVar.entityId,
+					.queryList(ParamFactory.getParamHb().in(StaticVar.entityId,
 							Convert.strToList(object.getId())));
 			for (Organization organization : organizationList) {
 				texts.append(organization.getText() + ",");

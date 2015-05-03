@@ -15,6 +15,7 @@ import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtCheckTree;
 import com.hh.system.util.model.ExtTree;
+import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.aop.interceptor.SecurityInterceptor;
 import com.hh.usersystem.bean.usersystem.HhXtCz;
 import com.hh.usersystem.bean.usersystem.HhXtJsCz;
@@ -165,7 +166,7 @@ public class OperateService  extends BaseService<HhXtCz> {
 	}
 	
 	public List<HhXtCz> queryOperateListByPids(List<String> pids) {
-		return this.queryList(Restrictions.in("vpid", pids));
+		return this.queryList(ParamFactory.getParamHb().in("vpid", pids));
 	}
 
 	public HhXtCz save(HhXtCz hhXtCz) {

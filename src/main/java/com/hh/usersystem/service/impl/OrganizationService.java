@@ -280,7 +280,8 @@ public class OrganizationService  extends BaseService<Organization>  {
 						extTree.setLeaf(1);
 						
 						if (organization.getChildren()==null) {
-							organization.setChildren(	organizationToIconCls(this.queryList(Restrictions.eq("node", organization.getId())),null));
+							
+							organization.setChildren(	organizationToIconCls(this.queryList(ParamFactory.getParamHb().is("node", organization.getId())),null));
 						}
 						organization.getChildren().add(extTree);
 					}
