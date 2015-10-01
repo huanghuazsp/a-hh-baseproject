@@ -37,8 +37,8 @@
 	}
 	function rendersex(value) {
 		return (value == 1 ? '男' : '女')
-				+ '<img src="/hhcommon/opensource/ext/shared/icons/fam/'
-				+ (value == 1 ? 'user' : 'user_female') + '.gif" />';
+		+ '<img src="/hhcommon/images/myimage/sex/'
+		+ (value == 1 ? 'nan' : 'nv') + '.png" />';
 	}
 	function renderzt(value) {
 		return value == 0 ? '正常' : '<font color=red>冻结</font>';
