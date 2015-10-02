@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project id="097e970e-378e-4022-9ec5-267b97797268" name="sys" text="sys" type="project">
+  <table id="91fb656a-697c-438b-9162-e09306395153" name="plantask" text="plantask" type="table">
+    <column defaultValue="" empty="true" id="dc3e6099-af96-47f4-959a-6166e9651bb1" length="" name="name" primary="false" text="name" type="String"/>
+    <column defaultValue="" empty="true" id="32cbc1c4-0b4a-4758-912e-34275ecc6d3c" length="" name="valid" primary="false" text="valid" type="String"/>
+    <column defaultValue="" empty="true" id="14ab8a9c-50c1-4616-a27c-f9875feca77e" length="" name="day" primary="false" text="day" type="String"/>
+    <column defaultValue="" empty="true" id="bca4eb06-22a0-468f-8ebd-bd66d35905b0" length="" name="hour" primary="false" text="hour" type="String"/>
+    <column defaultValue="" empty="true" id="8789916e-a2f3-461a-a1de-58c76144eff4" length="" name="minute" primary="false" text="minute" type="String"/>
+    <column defaultValue="" empty="true" id="e6677960-d44f-447e-a652-98e9be82513b" length="" name="second" primary="false" text="second" type="String"/>
+    <column defaultValue="" empty="true" id="7c6ec2ca-719b-4522-990e-a083e94c1eb0" length="" name="hourRegister" primary="false" text="hourRegister" type="String"/>
+    <column defaultValue="" empty="true" id="b8b057c0-0f9c-4611-89c5-5bae8db297fd" length="" name="minuteRegister" primary="false" text="minuteRegister" type="String"/>
+    <column defaultValue="" empty="true" id="df0af942-047f-4616-a093-b545ea926e62" length="" name="secondRegister" primary="false" text="secondRegister" type="String"/>
+    <column defaultValue="" empty="true" id="e35086d9-f9e3-4296-baef-a49ce9e2d888" length="" name="formula" primary="false" text="formula" type="String"/>
+  </table>
+</project>
