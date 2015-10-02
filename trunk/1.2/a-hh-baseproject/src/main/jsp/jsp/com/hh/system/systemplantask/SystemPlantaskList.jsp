@@ -44,6 +44,10 @@
 			params : $('#queryForm').getValue()
 		});
 	}
+	
+	function render(value) {
+		return (value == 1 ? '开启' : '关闭');
+	}
 </script>
 </head>
 <body>
@@ -77,7 +81,8 @@
 		
 			{
 				name : 'valid' ,
-				text : '是否有效'
+				text : '是否开启',
+				render : render
 			}
 		
 	]">

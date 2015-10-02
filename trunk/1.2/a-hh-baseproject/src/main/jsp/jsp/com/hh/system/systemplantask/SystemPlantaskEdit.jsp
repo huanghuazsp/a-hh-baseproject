@@ -68,7 +68,7 @@
 				</tr>
 
 				<tr>
-					<td xtype="label">是否有效：</td>
+					<td xtype="label">是否开启：</td>
 					<td><span xtype="check" config=" name : 'valid' , num : true"></span></td>
 				</tr>
 
