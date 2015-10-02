@@ -22,6 +22,12 @@ public class SetupInitializerSystem {
 				"/hhcommon/images/extjsico/17460336.png", 0, 0);
 		rootHhXtCd.setChildren(new ArrayList<HhXtCd>());
 
+		
+		rootHhXtCd.getChildren().add(
+				new HhXtCd("d45831d2-b887-40f1-9a3f-450298ac3f92", "计划任务",
+						"jsp-system-systemplantask-SystemPlantaskList",
+						"/hhcommon/images/icons/world/world.png", 0, 1));
+		
 		rootHhXtCd.getChildren().add(
 				new HhXtCd("d45831d2-b887-40f1-9a3f-450298ac3f91", "取色工具",
 						"jsp-system-tools-color",
