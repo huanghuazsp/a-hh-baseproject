@@ -16,7 +16,7 @@ import com.hh.system.util.PlanTask;
 public class SystemPlantaskService extends BaseService<SystemPlantask> {
 
 	public void test(HashMap<String, Object> map) throws Exception {
-		System.out.println("==============="+new Date());
+		System.out.println("定时任务：==============="+new Date());
 	}
 	
 	@Override
