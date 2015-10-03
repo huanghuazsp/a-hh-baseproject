@@ -35,22 +35,24 @@
 		{
 			name : 'allMessage' ,
 			text : '异常完整内容',
-			contentwidth: '150'
+			contentwidth: 150
 		},{
 			name : 'message' ,
 			text : '异常内容',
-			contentwidth: '150'
+			contentwidth: 150
 		},{
 			name : 'name' ,
 			text : '异常类名',
-			contentwidth: '150'
+			contentwidth: 150
 		},{
 			name : 'dcreate' ,
 			text : '异常生成时间',
-			render:'datetime'
+			render:'datetime',
+			contentwidth: 150
 		},{
 			name : 'createUserName' ,
-			text : '操作人'
+			text : '操作人',
+			contentwidth: 150
 		}
 	]">
 	</div>
