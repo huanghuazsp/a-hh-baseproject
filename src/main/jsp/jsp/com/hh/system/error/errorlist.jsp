@@ -35,11 +35,13 @@
 		{
 			name : 'allMessage' ,
 			text : '异常完整内容',
-			contentwidth: 150
+			contentwidth: 150,
+			valueType : 'text'
 		},{
 			name : 'message' ,
 			text : '异常内容',
-			contentwidth: 150
+			contentwidth: 150,
+			valueType : 'text'
 		},{
 			name : 'name' ,
 			text : '异常类名',
