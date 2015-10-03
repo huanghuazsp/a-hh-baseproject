@@ -22,19 +22,19 @@
 		data : [
 				{
 					'id' : '4',
-					'text' : '<img src=\'/hhcommon/opensource/ext/controls/calendar/resources/images/flag/flag_red.png\'/>重要紧急'
+					'text' : '<img src=\'/hhcommon/images/icons/flag/flag_red.png\'/>重要紧急'
 				},
 				{
 					'id' : '3',
-					'text' : '<img src=\'/hhcommon/opensource/ext/controls/calendar/resources/images/flag/flag_yellow.png\'/>重要不紧急'
+					'text' : '<img src=\'/hhcommon/images/icons/flag/flag_yellow.png\'/>重要不紧急'
 				},
 				{
 					'id' : '2',
-					'text' : '<img src=\'/hhcommon/opensource/ext/controls/calendar/resources/images/flag/flag_blue.png\'/>紧急不重要'
+					'text' : '<img src=\'/hhcommon/images/icons/flag/flag_blue.png\'/>紧急不重要'
 				},
 				{
 					'id' : '1',
-					'text' : '<img src=\'/hhcommon/opensource/ext/controls/calendar/resources/images/flag/flag_green.png\'/>不重要不紧急'
+					'text' : '<img src=\'/hhcommon/images/icons/flag/flag_green.png\'/>不重要不紧急'
 				}, {
 					'id' : '',
 					'text' : '无优先级'
