@@ -50,7 +50,7 @@ public class SystemInterceptor implements Interceptor {
 			if (!(arg0.getAction() instanceof ActionFile
 					|| arg0.getAction() instanceof IFileAction || arg0
 						.getAction() instanceof IImageAction)) {
-				response.getWriter().print("{success:true}");
+				response.getWriter().print("{'success':true}");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

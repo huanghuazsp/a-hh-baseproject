@@ -23,6 +23,8 @@ public class HhXtJs extends BaseTwoEntity  {
 	private String vbz;
 	private int nzt;
 	private int nlx;
+	
+	private String jssx;
 
 	// Constructors
 
@@ -65,5 +67,16 @@ public class HhXtJs extends BaseTwoEntity  {
 	public void setVbz(String vbz) {
 		this.vbz = vbz;
 	}
+	
+	@Column(name = "JSSX", length = 64)
+	public String getJssx() {
+		return jssx;
+	}
 
+	public void setJssx(String jssx) {
+		this.jssx = jssx;
+	}
+
+	
+	
 }

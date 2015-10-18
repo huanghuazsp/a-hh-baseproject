@@ -55,6 +55,10 @@
 						<td><span xtype="text" config=" name : 'text',required :true"></span></td>
 					</tr>
 					<tr>
+						<td xtype="label">角色属性：</td>
+						<td><span xtype="text" config=" name : 'jssx' "></span></td>
+					</tr>
+					<tr>
 						<td xtype="label">状态：</td>
 						<td><span xtype="radio"
 							config="name: 'nzt' ,defaultValue : 0, data :[{id:0,text:'正常'},{id:1,text:'冻结'}]"></span></td>
