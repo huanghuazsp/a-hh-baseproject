@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import com.hh.system.bean.HHXtError;
+import com.hh.system.util.ExceptionUtil;
 import com.hh.system.util.MessageException;
 
 public class SaveErrorThread extends Thread {
@@ -26,12 +27,10 @@ public class SaveErrorThread extends Thread {
 	}
 
 	private void saveError() {
-		StringWriter sw = new StringWriter();
-		e.printStackTrace(new PrintWriter(sw, true));
 		HHXtError hhXtError = new HHXtError();
 		hhXtError.setName(e.getClass().getName());
 		hhXtError.setMessage(e.getMessage());
-		hhXtError.setAllMessage(sw.toString());
+		hhXtError.setAllMessage(ExceptionUtil.getMessage(e));
 		hhXtError.setVcreate(userid);
 		hhXtError.setVupdate(userid);
 		hhXtError.setVorgid(currOrg);

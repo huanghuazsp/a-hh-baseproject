@@ -16,6 +16,7 @@ import com.hh.system.action.ActionFile;
 import com.hh.system.inf.IFileAction;
 import com.hh.system.inf.IImageAction;
 import com.hh.system.service.impl.SaveErrorThread;
+import com.hh.system.util.ExceptionUtil;
 import com.hh.system.util.ThreadUtil;
 import com.hh.usersystem.IUser;
 import com.opensymphony.xwork2.ActionContext;
@@ -54,15 +55,13 @@ public class SystemInterceptor implements Interceptor {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw, true));
 			response.setStatus(500);
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			resultMap.put("success", false);
 			resultMap.put("titleMsg", "错误");
 			resultMap.put("msg",
 					"异常：" + e.getClass().getName() + "：" + e.getMessage()
-							+ "<br/>" + sw.toString());
+							+ "<br/>" + ExceptionUtil.getMessage(e));
 			IUser userObject = (IUser)ActionContext.getContext().getSession()
 					.get("loginuser");
 			String userid = "";
@@ -72,7 +71,7 @@ public class SystemInterceptor implements Interceptor {
 				orgid=userObject.getJobId();
 			}
 			// 线程池
-			ThreadUtil.getFixedThreadPool().execute(
+			ThreadUtil.getThreadPool().execute(
 					new SaveErrorThread(e, userid, orgid));
 			response.getWriter().print(new Gson().toJson(resultMap));
 		}
