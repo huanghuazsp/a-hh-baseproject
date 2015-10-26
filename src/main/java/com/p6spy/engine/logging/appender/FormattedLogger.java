@@ -34,7 +34,7 @@ public abstract class FormattedLogger {
 							userid=userObject.getId();
 							orgid=userObject.getJobId();
 						}
-						ThreadUtil.getFixedThreadPool().execute(new SaveSqlThread(sql, elapsed, userid, orgid));
+						ThreadUtil.getThreadPool().execute(new SaveSqlThread(sql, elapsed, userid, orgid));
 					}
 				}
 			}
