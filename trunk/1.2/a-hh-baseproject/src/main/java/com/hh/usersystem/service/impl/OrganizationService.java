@@ -268,8 +268,7 @@ public class OrganizationService  extends BaseService<Organization>  {
 									"id", yhid));
 					for (HhXtYh hhXtYh : hhXtYhs) {
 						Organization extTree = new Organization();
-						extTree.setId("{orgid : '" + organization.getId()
-								+ "' ,userid : '" + hhXtYh.getId() + "'}");
+						extTree.setId( hhXtYh.getId());
 						extTree.setText(hhXtYh.getText());
 						if (LoginUser.getLoginUserId().contains(hhXtYh.getId())) {
 							extTree.setIcon(hhXtYh.getNxb() == 0 ? StaticProperties.HHXT_USERSYSTEM_NV
