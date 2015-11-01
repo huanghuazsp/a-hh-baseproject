@@ -38,9 +38,8 @@ Ext.define('com.hh.message.main.OrgAndUserList', {
 				if (!record.get('leaf')) {
 					ExtFrame.msg("请选择人员！", 3000);
 				} else {
-					var user = Ext.decode(record.get("id"));
 					Request.synRequestObject('usersystem-user-addCylxr', {
-								'paramsMap.cylxrid' : user.userid
+								'paramsMap.cylxrid' : record.get("id")
 							});
 					this.cylxrsPanel.tree.getStore().load();
 				}
@@ -65,10 +64,9 @@ Ext.define('com.hh.message.main.OrgAndUserList', {
 										});
 							});
 				} else {
-					var user = Ext.decode(record.get("id"));
 					ExtUtil.create('com.hh.message.email.WriteEmail', {
 								eobject : {
-									sendUser : user.userid
+									sendUser : record.get("id")
 								}
 							}).show();
 				}
