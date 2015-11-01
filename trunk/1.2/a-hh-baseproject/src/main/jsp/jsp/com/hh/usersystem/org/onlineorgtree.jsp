@@ -30,7 +30,7 @@
 						usernames = BaseUtil.objsToStr(result, 'text');
 					});
 				} else {
-					userids = BaseUtil.toObject(data.id).userid;
+					userids = data.id;
 					usernames = data.text;
 				}
 
