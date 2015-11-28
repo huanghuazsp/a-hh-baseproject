@@ -14,7 +14,7 @@ import com.hh.hibernate.dao.inf.Order;
 @Order
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "SYSTEM_PLANTASK")
+@Table(name = "SYS_PLANTASK")
 public class SystemPlantask extends BaseTwoEntity {
 	// name
 	private String name;
