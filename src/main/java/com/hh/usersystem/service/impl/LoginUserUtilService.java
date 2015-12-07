@@ -18,12 +18,18 @@ import com.opensymphony.xwork2.ActionContext;
 public class LoginUserUtilService implements LoginUserServiceInf {
 	private static Gson gson = new Gson();
 	public HhXtYh findLoginUser() {
+		if(ActionContext.getContext()==null){
+			return null;
+		}
 		HhXtYh hhXtYh = (HhXtYh) ActionContext.getContext().getSession()
 				.get("loginuser");
 		return hhXtYh;
 	}
 
 	public String findLoginUserId() {
+		if(ActionContext.getContext()==null){
+			return null;
+		}
 		Object object = ActionContext.getContext().getSession()
 				.get("loginuser");
 		if (object != null) {
