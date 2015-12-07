@@ -3,7 +3,6 @@ package com.hh.usersystem.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.system.service.impl.BaseService;
@@ -28,12 +27,12 @@ public class ActionGroup extends BaseServiceAction<HhXtGroup> {
 		return service;
 	}
 
-	public void queryPagingData() {
-		this.returnResult(service.queryPagingData(object, groups,
-				this.getPageRange()));
+	public Object queryPagingData() {
+		return service.queryPagingData(object, groups,
+				this.getPageRange());
 	}
 
-	public void queryListAndUserGroup() {
+	public Object queryListAndUserGroup() {
 		
 		List<Object> returnObjects = new ArrayList<Object>();
 		if ("root".equals(this.object.getNode())) {
@@ -48,7 +47,7 @@ public class ActionGroup extends BaseServiceAction<HhXtGroup> {
 		}
 		List<HhXtGroup> groupList=	service.queryTreeList(this.object,Convert.toBoolean(request.getParameter("isNoLeaf")));
 		returnObjects.addAll(groupList);
-		this.returnResult(returnObjects);
+		return returnObjects;
 	}
 
 	public String getGroups() {

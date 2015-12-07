@@ -22,44 +22,43 @@ public class ActionData extends BaseServiceAction<HhXtData> {
 	@Autowired
 	private HhXtDataService hhXtDataService;
 
-	public void queryDataTreeByTypeAndPid() {
+	public Object queryDataTreeByTypeAndPid() {
 		List<HhXtData> hhXtDatas = hhXtDataService.queryMenuListByPid(
 				object.getNode(), object.getType());
-		this.returnResult(hhXtDatas);
+		return hhXtDatas;
 	}
 
-	public void queryDataTreeByPid() {
+	public Object queryDataTreeByPid() {
 		List<HhXtData> hhXtDatas = hhXtDataService.queryDataTreeByPid(object
 				.getNode());
-		this.returnResult(hhXtDatas);
+		return hhXtDatas;
 	}
 
-	public void queryDataByType() {
+	public Object queryDataByType() {
 		List<HhXtData> hhXtDatas = hhXtDataService.queryDataByType(object
 				.getType());
-		this.returnResult(hhXtDatas);
+		return hhXtDatas;
 	}
 
-	public void queryAllDataTreeByTypeAndPid() {
+	public Object queryAllDataTreeByTypeAndPid() {
 		List<HhXtData> hhXtDatas = hhXtDataService.queryAllMenuListByPid(object
 				.getType());
-		this.returnResult(hhXtDatas);
+		return hhXtDatas;
 	}
 
-	public void findObjectById() {
+	public Object findObjectById() {
 		HhXtData hhXtData = hhXtDataService.findObjectById(this.object.getId());
-		this.returnResult(hhXtData);
+		return hhXtData;
 	}
 
-	public void save() {
+	public Object save() {
 		try {
 			HhXtData hhXtData = hhXtDataService.save(this.object);
-			this.getResultMap().put("object", hhXtData);
+			return null;
 		} catch (MessageException e) {
-			this.getResultMap().put("returnModel",
-					new ReturnModel(e.getMessage()));
+			return e;
 		}
-		this.returnResult();
+		
 	}
 
 	public void deleteByIds() {

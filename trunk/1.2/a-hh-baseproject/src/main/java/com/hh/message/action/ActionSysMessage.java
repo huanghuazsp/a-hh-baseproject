@@ -20,9 +20,9 @@ public class ActionSysMessage extends BaseServiceAction<SysMessage> {
 		service.updateRead(this.object.getId());
 	}
 	
-	public void queryMyMessage() {
-		this.returnResult(service.queryMyMessage(object,
-				this.getPageRange()));
+	public Object queryMyMessage() {
+		return service.queryMyMessage(object,
+				this.getPageRange());
 	}
 	
 }

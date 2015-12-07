@@ -32,80 +32,73 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 		return userService;
 	}
 
-	public void queryPagingData() {
-		this.returnResult(userService.queryPagingData(object,
-				this.getPageRange(), this.getIds(), orgs, roles, groups));
+	public Object queryPagingData() {
+		return userService.queryPagingData(object,
+				this.getPageRange(), this.getIds(), orgs, roles, groups);
 	}
 
-	public void queryPagingDataCombox() {
+	public Object queryPagingDataCombox() {
 		if (Check.isNoEmpty(this.object.getId())) {
-			this.returnResult(userService.queryItemsByIdsStr(object.getId()));
+			return userService.queryItemsByIdsStr(object.getId());
 		} else {
-			this.returnResult(userService.queryPagingData(object,
-					this.getPageRange(), null, null, null, null));
+			return userService.queryPagingData(object,
+					this.getPageRange(), null, null, null, null);
 		}
 	}
 
-	public void queryPagingDataList() {
-		this.returnResult(userService.queryPagingData(object,
-				this.getPageRange(), null, null, null, null));
+	public Object queryPagingDataList() {
+		return userService.queryPagingData(object,
+				this.getPageRange(), null, null, null, null);
 	}
 
-	public void queryOnLinePagingData() {
-		this.getResultMap().putAll(
-				userService.queryOnLinePagingData(object, this.getPageRange()));
-		this.returnResult();
+	public Object queryOnLinePagingData() {
+		return userService.queryOnLinePagingData(object, this.getPageRange());
 	}
 
 	public void deleteOnLineByIds() {
 		userService.deleteOnLineByIds(this.getIds());
 	}
 
-	public void save() {
+	public Object save() {
 		try {
 			HhXtYh hhXtYh = userService.save(this.object);
-			this.getResultMap().put("object", hhXtYh);
+			return null;
 		} catch (MessageException e) {
-			this.getResultMap().put("returnModel",
-					new ReturnModel(e.getMessage()));
+			return e;
 		}
-		this.returnResult();
 	}
 
-	public void save2() {
+	public Object save2() {
 		try {
 			HhXtYh hhXtYh = userService.save2(this.object);
-			this.getResultMap().put("object", hhXtYh);
+			return null;
 		} catch (MessageException e) {
-			this.getResultMap().put("returnModel",
-					new ReturnModel(e.getMessage()));
+			return e;
 		}
-		this.returnResult();
 	}
 
-	public void updatePassWord() {
+	public Object updatePassWord() {
 		try {
 			userService.updatePassWord(this.object, oldPassword);
+			return null;
 		} catch (MessageException e) {
-			this.getResultMap().put("returnModel",
-					new ReturnModel(e.getMessage()));
+			return e;
 		}
-		this.returnResult();
 	}
 
-	public void vdlzhOnly() {
+	public Object vdlzhOnly() {
 		boolean result = userService.checkVdlzhOnly(object);
-		this.returnResult(result);
+		return result;
 	}
 
-	public void findObjectById() {
+	public Object findObjectById() {
 		HhXtYh hhXtYh = userService.findObjectById(this.object.getId());
-		this.returnResult(hhXtYh);
+		return hhXtYh;
 	}
 
-	public void findObjectById2() {
+	public Object findObjectById2() {
 		HhXtYh hhXtYh = userService.findObjectById_user(this.object.getId());
-		this.returnResult(hhXtYh);
+		return hhXtYh;
 	}
 
 	public void deleteByIds() {
@@ -120,55 +113,53 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 		userService.deleteYhOrg(this.getParamsMap());
 	}
 
-	public void queryCylxrs() {
+	public Object queryCylxrs() {
 		List<HhXtYh> hhXtYhs = userService.queryCylxrs();
-		this.returnResult(hhXtYhs);
+		return hhXtYhs;
 	}
 
-	public void queryCylxrTree() {
+	public Object queryCylxrTree() {
 		List<ExtTree> hhXtYhs = userService.queryCylxrTree();
-		this.returnResult(hhXtYhs);
+		return hhXtYhs;
 	}
 
-	public void addCylxr() {
+	public Object addCylxr() {
 		try {
 			userService.addCylxr(this.getParamsMap().get("cylxrid"));
+			return null;
 		} catch (MessageException e) {
-			this.getResultMap().put("returnModel",
-					new ReturnModel(e.getMessage()));
+			return e;
 		}
-		this.returnResult();
 	}
 
-	public void deleteCylxr() {
+	public Object deleteCylxr() {
 		try {
 			userService.deleteCylxr(this.getParamsMap().get("cylxrid"));
+			return null;
 		} catch (MessageException e) {
-			this.getResultMap().put("returnModel",
-					new ReturnModel(e.getMessage()));
+			return e;
 		}
-		this.returnResult();
 	}
 
-	public void queryUserByOrcCode() {
+	public Object queryUserByOrcCode() {
 		List<HhXtYh> hhXtYhList = userService.queryUserByOrcCode(request
 				.getParameter("code"));
-		this.returnResult(hhXtYhList);
+		return hhXtYhList;
 	}
 
-	public void queryUserByRole() {
+	public Object queryUserByRole() {
 		List<HhXtYh> hhXtYhList = userService.queryUserByRole(request
 				.getParameter("roleId"));
-		this.returnResult(hhXtYhList);
+		return hhXtYhList;
 	}
 
-	public void queryUserByGroup() {
+	public Object queryUserByGroup() {
 		List<HhXtYh> hhXtYhList = userService.queryUserByGroup(request
 				.getParameter("groupId"));
-		this.returnResult(hhXtYhList);
+		return hhXtYhList;
 	}
 
-	public void findUserTextByIds() {
+	public Object findUserTextByIds() {
 		String returnTextString = "";
 		if (Check.isNoEmpty(object.getId())) {
 			StringBuffer texts = new StringBuffer();
@@ -186,14 +177,14 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 		Map<String, String> returnMap = new HashMap<String, String>();
 		returnMap.put("text", returnTextString);
 		returnMap.put("id", object.getId());
-		this.returnResult(returnMap);
+		return returnMap;
 	}
 
-	public void findUserListByIds() {
+	public Object findUserListByIds() {
 		List<HhXtYh> hhXtYhList = userService.queryList(ParamFactory
 				.getParamHb().in(StaticVar.entityId,
 						Convert.strToList(object.getId())));
-		this.returnResult(hhXtYhList);
+		return hhXtYhList;
 	}
 
 	public String getOldPassword() {

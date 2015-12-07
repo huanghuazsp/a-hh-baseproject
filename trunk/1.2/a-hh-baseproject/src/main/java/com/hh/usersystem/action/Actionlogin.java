@@ -31,7 +31,7 @@ public class Actionlogin extends BaseAction {
 	@Autowired
 	private ZmsxService zmsxService;
 
-	public String login() {
+	public Object login() {
 		if (xtYh == null) {
 			this.setMessage("请输入用户名和密码！！");
 			return "login";
@@ -56,18 +56,16 @@ public class Actionlogin extends BaseAction {
 			}
 		}
 		if (jump) {
-			this.getResultMap().put("returnModel", returnModel);
-			this.returnResult();
+			return returnModel;
 		} else {
 			if (Check.isEmpty(returnModel.getHref())) {
-				this.getResultMap().put("returnModel", returnModel);
-				this.returnResult();
+				return returnModel;
 			}
 		}
 		return null;
 	}
 
-	public void findUserSessionId() {
+	public Object findUserSessionId() {
 		String sessionId = xtYh.getId();
 		if (Check.isNoEmpty(sessionId)) {
 			Set<String> keyset = LoginUser.loginUserSession.keySet();
@@ -94,11 +92,11 @@ public class Actionlogin extends BaseAction {
 							map.put("orgText", org.getText());
 						}
 					}
-					this.returnResult(map);
+					return map;
 				}
 			}
 		}
-		this.returnResult(false);
+		return false;
 	}
 
 	private void addCookie() {
