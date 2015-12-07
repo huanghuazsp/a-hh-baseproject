@@ -19,16 +19,14 @@ public class ActionSendEmail extends BaseServiceAction<SysSendEmail> {
 		return sendEmailService;
 	}
 
-	public void sendEmail() {
+	public Object sendEmail() {
 		try {
 			String leixing = Convert.toString(request.getParameter("leixing"));
 			SysSendEmail object = sendEmailService.sendEmail(this.object,leixing);
-			this.getResultMap().put("object", object);
 		} catch (MessageException e) {
-			this.getResultMap().put("returnModel",
-					new ReturnModel(e.getMessage()));
+			return e;
 		}
-		this.returnResult();
+		return null;
 	}
 
 }

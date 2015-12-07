@@ -29,12 +29,12 @@ public class ActionApp extends BaseAction {
 	@Autowired
 	private ZmtbService zmtbService;
 
-	public void queryLoginOrgList() {
-		this.returnResult(loginUserUtilService.findLoginUser()
-				.getOrganizationList());
+	public Object queryLoginOrgList() {
+		return loginUserUtilService.findLoginUser()
+				.getOrganizationList();
 	}
 
-	public void changeOrg() {
+	public Object changeOrg() {
 		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
 		List<Organization> organizations = hhXtYh.getOrganizationList();
 		Organization organization1 = new Organization();
@@ -54,18 +54,18 @@ public class ActionApp extends BaseAction {
 				break;
 			}
 		}
-		this.returnResult(organization1);
+		return organization1;
 	}
 
-	public void queryCurrOrgTree() {
+	public Object queryCurrOrgTree() {
 		List<Organization> organizationList = organizationService
 				.queryCurrOrgTree(node, action);
-		this.returnResult(organizationList);
+		return organizationList;
 	}
 	
-	public void queryZmtb() {
+	public Object queryZmtb() {
 		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
-		this.returnResult(zmtbService.queryZmtbByUserId(hhXtYh.getId()));
+		return zmtbService.queryZmtbByUserId(hhXtYh.getId());
 	}
 
 	public String getCurrOrgId() {

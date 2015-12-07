@@ -16,29 +16,28 @@ public class Actionoperate extends BaseServiceAction<HhXtCz> {
 	@Autowired
 	private OperateService operateService;
 
-	public void queryOperateListByPid() {
+	public Object queryOperateListByPid() {
 		List<ExtTree> hhxtczList = operateService.queryOperateListByPid(object
 				.getVpid());
-		this.returnResult(hhxtczList);
+		return hhxtczList;
 	}
 
-	public void queryCheckOperateListByPid() {
+	public Object queryCheckOperateListByPid() {
 		System.out.println(request.getParameter("node"));
 		List<ExtCheckTree> hhxtczList = operateService
 				.queryCheckOperateListByPid(object.getVpid(), roleid,
 						findParam("node"));
-		this.returnResult(hhxtczList);
+		return hhxtczList;
 	}
 
-	public void findObjectById() {
+	public Object findObjectById() {
 		HhXtCz hhXtCz = operateService.findObjectById(this.object.getId());
-		this.returnResult(hhXtCz);
+		return hhXtCz;
 	}
 
-	public void save() {
+	public Object save() {
 		HhXtCz hhXtCz = operateService.save(this.object);
-		this.getResultMap().put("object", hhXtCz);
-		this.returnResult();
+		return null;
 	}
 
 	public void deleteByIds() {

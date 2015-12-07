@@ -22,13 +22,13 @@ public class Actionrole  extends BaseServiceAction<HhXtJs> {
 		return roleService;
 	}
 
-	public void queryAllRoleList() {
+	public Object queryAllRoleList() {
 		List<HhXtJs> hhxtjsList = roleService.queryAllRoleList();
-		this.returnResult(hhxtjsList);
+		return hhxtjsList;
 	}
 
-	public void queryPagingData() {
-		this.returnResult(roleService.queryPagingData(this.object, roles, this.getPageRange()));
+	public Object queryPagingData() {
+		return roleService.queryPagingData(this.object, roles, this.getPageRange());
 	}
 
 	public void deleteByIds() {

@@ -24,30 +24,30 @@ public class Actionmenu extends BaseServiceAction<HhXtCd> {
 		return menuService;
 	}
 
-	public void queryPagingData() {
-		this.returnResult(menuService.queryPagingData(this.object,
-				this.getPageRange()));
+	public Object queryPagingData() {
+		return menuService.queryPagingData(this.object,
+				this.getPageRange());
 	}
 
-	public void findObjectById() {
+	public Object findObjectById() {
 		HhXtCd hhXtCd = menuService.findObjectById(this.object.getId());
-		this.returnResult(hhXtCd);
+		return hhXtCd;
 	}
 
-	public void queryMenuListByPid() {
+	public Object queryMenuListByPid() {
 		List<HhXtCd> hhxtcdList = menuService.queryMenuListByPid(this.object
 				.getNode());
-		this.returnResult(hhxtcdList);
+		return hhxtcdList;
 	}
 	
-	public void queryAllMenuList() {
-		this.returnResult(StaticProperties.hhXtCds);
+	public Object queryAllMenuList() {
+		return StaticProperties.hhXtCds;
 	}
 
-	public void queryMenuAllListByPid() {
+	public Object queryMenuAllListByPid() {
 		List<ExtCheckTree> hhxtcdList = menuService.queryMenuAllListByPid(
 				this.object.getNode(), roleid);
-		this.returnResult(hhxtcdList);
+		return hhxtcdList;
 	}
 
 	public void deleteByIds() {

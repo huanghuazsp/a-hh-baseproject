@@ -28,19 +28,18 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 	private LoginUserUtilService loginUserUtilService;
 
 	@Override
-	public void save() {
+	public Object save() {
 		this.object.setUserId(loginUserUtilService.findLoginUserId());
-		super.save();
+		return super.save();
 	}
 
-	public void queryListByDate() {
+	public Object queryListByDate() {
 		// Date start = DateFormat.strToDate("2013-10", "yyyy-MM");
 		// Date end = DateFormat.strToDate("2013-11", "yyyy-MM");
-		;
 		List<Schedule> schedules = scheduleService.queryList(ParamFactory
 				.getParamHb().ge("start", startDate).le("end", endDate)
 				.is("userId", loginUserUtilService.findLoginUserId()));
-		this.returnResult(schedules);
+		return schedules;
 	}
 
 	public void ok() {

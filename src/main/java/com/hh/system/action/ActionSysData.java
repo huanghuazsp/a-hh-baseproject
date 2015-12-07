@@ -20,12 +20,12 @@ public class ActionSysData extends BaseServiceAction<SysData> {
 	private SysDataService sysDataService;
 
 	@Override
-	public void queryTreeList() {
-		this.returnResult(sysDataService.queryTreeList(
+	public Object queryTreeList() {
+		return sysDataService.queryTreeList(
 				object.getNode(),
 				Convert.toBoolean(request.getParameter("isNoLeaf")),
 				ParamFactory.getParamHb().is("dataTypeId",
-						object.getDataTypeId())));
+						object.getDataTypeId()));
 	}
 
 }

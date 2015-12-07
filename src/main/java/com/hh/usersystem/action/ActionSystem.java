@@ -20,17 +20,17 @@ public class ActionSystem extends BaseAction {
 		systemService.initMenuAndUser();
 	}
 	
-	public void loadDataTime() {
+	public Object loadDataTime() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<LoadDataTime> loadDataTimeList = StaticProperties.loadDataTimeList;
 		for (LoadDataTime loadDataTime : loadDataTimeList) {
 			map.putAll(loadDataTime.load());
 		}
-		this.returnResult(map);
+		return map;
 	}
 	
-	public void queryCacheListPage() {
-		this.returnResult(systemService.queryCacheListPage());
+	public Object queryCacheListPage() {
+		return systemService.queryCacheListPage();
 	}
 	
 	public void deleteCacheByIds() {

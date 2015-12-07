@@ -31,31 +31,31 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 		return organizationService;
 	}
 
-	public void queryPagingData() {
-		this.returnResult(organizationService.queryPagingData(object,
-				this.getPageRange()));
+	public Object queryPagingData() {
+		return organizationService.queryPagingData(object,
+				this.getPageRange());
 	}
 
-	public void queryOrgListByPidAndLx() {
+	public Object queryOrgListByPidAndLx() {
 		List<Organization> organizationList = organizationService
 				.queryOrgListByPidAndLx(object, paramsMap.get("node"));
-		this.returnResult(organizationList);
+		return organizationList;
 	}
 
-	public void queryOrgAndUsersList() {
-		this.returnResult(organizationService.queryOrgAndUsersList(object));
+	public Object queryOrgAndUsersList() {
+		return organizationService.queryOrgAndUsersList(object);
 	}
 
-	public void queryOrgListByPid() {
+	public Object queryOrgListByPid() {
 		List<Organization> organizationList = organizationService
 				.queryOrgListByPid(object, orgs, selectType);
-		this.returnResult(organizationList);
+		return organizationList;
 	}
 
-	public void findObjectById() {
+	public Object findObjectById() {
 		Organization hhXtCd = organizationService.findObjectById(this.object
 				.getId());
-		this.returnResult(hhXtCd);
+		return hhXtCd;
 	}
 
 	public void deleteByIds() {
@@ -63,28 +63,27 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 	}
 
 	@Override
-	public void queryTreeList() {
-		this.returnResult(organizationService.queryTreeList(object,
-				Convert.toBoolean(request.getParameter("isNoLeaf"))));
+	public Object queryTreeList() {
+		return organizationService.queryTreeList(object,
+				Convert.toBoolean(request.getParameter("isNoLeaf")));
 	}
 
-	public void queryTreeListByLx() {
-		this.returnResult(organizationService.queryTreeListByLx(object,
-				Convert.toBoolean(request.getParameter("isNoLeaf"))));
+	public Object queryTreeListByLx() {
+		return organizationService.queryTreeListByLx(object,
+				Convert.toBoolean(request.getParameter("isNoLeaf")));
 	}
 
-	public void save() {
+	public Object save() {
 		try {
 			Organization hhXtYh = organizationService.save(this.object);
-			this.getResultMap().put("object", hhXtYh);
+			return null;
 		} catch (MessageException e) {
-			this.getResultMap().put("returnModel",
-					new ReturnModel(e.getMessage()));
+			return new ReturnModel(e.getMessage());
 		}
-		this.returnResult();
+		
 	}
 
-	public void findOrgTextByIds() {
+	public Object findOrgTextByIds() {
 		String returnTextString = "";
 		if (Check.isNoEmpty(object.getId())) {
 			StringBuffer texts = new StringBuffer();
@@ -101,7 +100,7 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 		Map<String, String> returnMap = new HashMap<String, String>();
 		returnMap.put("text", returnTextString);
 		returnMap.put("id", object.getId());
-		this.returnResult(returnMap);
+		return returnMap;
 	}
 
 	public String getOrgs() {
