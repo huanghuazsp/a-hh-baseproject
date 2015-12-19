@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>组织机构管理</title>
-<%=SystemUtil.getBaseJs("layout", "ztree", "ztree_edit")%>
+<%=SystemUtil.getBaseJs("layout", "ztree", "ztree_edit","right_menu")%>
 <script type="text/javascript">
 	function doAdd() {
 		$('#centerdiv').undisabled();
@@ -75,9 +75,32 @@
 		}
 		iframe.findData(treeNode.id);
 	}
+	
+	var bodyRightMenu = {
+			data : [ {
+				text : '导入',
+				img : StaticVar.img_excel,
+				onClick : function() {
+					Dialog.open({
+						url : 'jsp-system-tools-file',
+						width : 450,
+						height : 270,
+						params : {
+							saveUrl : 'usersystem-Org-importData',
+							filePath : 'temp/file/org',
+							callback : function(data) {
+								
+							}
+						}
+					});
+				}
+			} ]
+		};
+	
 </script>
 </head>
 <body>
+	<span xtype="rightMenu" configVar="bodyRightMenu"></span>
 	<div xtype="border_layout">
 		<div config="render : 'west'">
 			<div xtype="toolbar" config="type:'head'">
