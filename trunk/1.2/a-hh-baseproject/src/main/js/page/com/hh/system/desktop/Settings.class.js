@@ -111,7 +111,7 @@ Ext.define('com.hh.system.desktop.Settings', {
 
 	onOK : function() {
 		var me = this;
-		var resultObject = Request.synRequestObject( 'usersystem-zmsx-updateZmbj',{
+		var resultObject = Request.synRequestObject( 'usersystem-user-updateZmbj',{
 			vzmbj : me.selected
 		});
 		if (resultObject.success == true) {

@@ -23,7 +23,7 @@ import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtTree;
-import com.hh.usersystem.bean.usersystem.HHXtZmsx;
+//import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.bean.usersystem.HhXtYhCdZmtb;
 import com.hh.usersystem.bean.usersystem.HhXtYhCyLxr;
@@ -33,6 +33,7 @@ import com.hh.usersystem.bean.usersystem.HhXtYhOrg;
 import com.hh.usersystem.bean.usersystem.Organization;
 import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
+import com.opensymphony.xwork2.ActionContext;
 
 @Service
 public class UserService extends BaseService<HhXtYh> {
@@ -47,8 +48,6 @@ public class UserService extends BaseService<HhXtYh> {
 
 	@Autowired
 	private IHibernateDAO<HhXtYhCdZmtb> xtyhcdzmtb;
-	@Autowired
-	private IHibernateDAO<HHXtZmsx> zmsxdao;
 
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
@@ -207,13 +206,12 @@ public class UserService extends BaseService<HhXtYh> {
 			throw new MessageException("用户名已存在，请更换！");
 		}
 		if (Check.isEmpty(hhXtYh.getId())) {
-			HHXtZmsx hhXtZmsx = new HHXtZmsx();
-			hhXtYh.setHhXtZmsx(hhXtZmsx);
+//			HHXtZmsx hhXtZmsx = new HHXtZmsx();
+//			hhXtYh.setHhXtZmsx(hhXtZmsx);
 			hhXtYh.setVmm("123456");
 			hhXtYh.setId(UUID.randomUUID().toString());
-			hhXtZmsx.setId(hhXtYh.getId());
-			hhXtZmsx.setDesktopType("jquerydesktop");
-			hhXtZmsx.setTheme("base");
+			hhXtYh.setDesktopType("jquerydesktop");
+			hhXtYh.setTheme("base");
 			xtyhdao.createEntity(hhXtYh);
 		} else {
 			xtyhdao.updateEntity(hhXtYh);
@@ -335,7 +333,7 @@ public class UserService extends BaseService<HhXtYh> {
 			xtyhdao.deleteEntity(HhXtYh.class, "id", idList);
 			hhXtYhJsDAO.deleteEntity(HhXtYhJs.class, "yhId", idList);
 			xtyhcdzmtb.deleteEntity(HhXtYhCdZmtb.class, "yhId", idList);
-			zmsxdao.deleteEntity(HHXtZmsx.class, "id", idList);
+//			zmsxdao.deleteEntity(HHXtZmsx.class, "id", idList);
 			hhXtYhOrgDAO.deleteEntity(HhXtYhOrg.class, "yhId", idList);
 			cylxrdao.deleteEntity(HhXtYhCyLxr.class, "yhId", idList);
 		}
@@ -524,6 +522,28 @@ public class UserService extends BaseService<HhXtYh> {
 			return new ArrayList<String>();
 		}
 		return yhIdList;
+	}
+	
+	
+	public void updateZmbj(HhXtYh hhXtZmsx) {
+		hhXtZmsx.setId(loginUserUtilService.findLoginUser().getId());
+		dao.updateEntity("update " + HhXtYh.class.getName()
+				+ " o set o.vzmbj=:vzmbj where o.id=:id", hhXtZmsx);
+	}
+
+	public void updateDefaultOrg(String userId, String orgid) {
+		dao.updateEntity("update " + HhXtYh.class.getName()
+				+ " o set o.defaultOrgId=? where o.id=?", new Object[] { orgid,
+				userId });
+	}
+
+	public void updateTheme(HhXtYh hhXtZmsx) {
+		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
+		hhXtZmsx.setId(hhXtYh.getId());
+		dao.updateEntity("update " + HhXtYh.class.getName()
+				+ " o set o.theme=:theme where o.id=:id", hhXtZmsx);
+		hhXtYh.setTheme(hhXtZmsx.getTheme());
+		ActionContext.getContext().getSession().put("loginuser", hhXtYh);
 	}
 
 }

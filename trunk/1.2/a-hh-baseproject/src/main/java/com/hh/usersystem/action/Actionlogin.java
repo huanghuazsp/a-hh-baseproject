@@ -15,7 +15,8 @@ import com.hh.system.util.model.ReturnModel;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.bean.usersystem.Organization;
 import com.hh.usersystem.service.impl.LoginService;
-import com.hh.usersystem.service.impl.ZmsxService;
+import com.hh.usersystem.service.impl.UserService;
+//import com.hh.usersystem.service.impl.ZmsxService;
 import com.hh.usersystem.util.app.LoginUser;
 
 @SuppressWarnings("serial")
@@ -29,7 +30,7 @@ public class Actionlogin extends BaseAction {
 	@Autowired
 	private LoginService loginService;
 	@Autowired
-	private ZmsxService zmsxService;
+	private UserService userService;
 
 	public Object login() {
 		if (xtYh == null) {
@@ -43,10 +44,10 @@ public class Actionlogin extends BaseAction {
 				return "login";
 			} else {
 				addCookie();
-				if (Check.isEmpty(xtYh.getHhXtZmsx().getDesktopType())) {
+				if (Check.isEmpty(xtYh.getDesktopType())) {
 					return "desktop2";
 				} else {
-					return xtYh.getHhXtZmsx().getDesktopType();
+					return xtYh.getDesktopType();
 				}
 
 			}
@@ -76,7 +77,7 @@ public class Actionlogin extends BaseAction {
 					Map<String, Object> map = new HashMap<String, Object>();
 					map.put("id", hhXtYh.getId());
 					map.put("text", hhXtYh.getText());
-					map.put("theme", hhXtYh.getHhXtZmsx().getTheme());
+					map.put("theme", hhXtYh.getTheme());
 					if (hhXtYh.getOrganization() != null) {
 						Organization organization =hhXtYh.getOrganization();
 						Organization dept = organization.getBm();
@@ -123,7 +124,7 @@ public class Actionlogin extends BaseAction {
 	public String updateDesktopType() {
 		HhXtYh hhXtYh = (HhXtYh) session.get("loginuser");
 		if (hhXtYh != null) {
-			zmsxService.update(hhXtYh.getId(), "desktopType", desktop);
+			userService.update(hhXtYh.getId(), "desktopType", desktop);
 			return desktop;
 		} else {
 			return "login";

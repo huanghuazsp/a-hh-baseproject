@@ -12,7 +12,7 @@
 	}
 	var gridViewConfig = {
 		onClick : function(data) {
-			Request.request('usersystem-zmsx-updateTheme', {
+			Request.request('usersystem-user-updateTheme', {
 				data : {
 					theme : data.value
 				},

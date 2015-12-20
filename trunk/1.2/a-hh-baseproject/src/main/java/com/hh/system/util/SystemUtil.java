@@ -39,9 +39,9 @@ public class SystemUtil {
 		HhXtYh hhXtYh = ((HhXtYh) ServletActionContext.getRequest()
 				.getSession().getAttribute("loginuser"));
 		String theme = "";
-		if (Check.isNoEmpty(hhXtYh) && Check.isNoEmpty(hhXtYh.getHhXtZmsx())
-				&& Check.isNoEmpty(hhXtYh.getHhXtZmsx().getTheme())) {
-			theme = hhXtYh.getHhXtZmsx().getTheme();
+		if (Check.isNoEmpty(hhXtYh) && Check.isNoEmpty(hhXtYh)
+				&& Check.isNoEmpty(hhXtYh.getTheme())) {
+			theme = hhXtYh.getTheme();
 		}
 		return theme;
 	}

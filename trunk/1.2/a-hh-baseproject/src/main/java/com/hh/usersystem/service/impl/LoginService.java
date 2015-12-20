@@ -19,7 +19,7 @@ import com.hh.system.util.base.BaseAction;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.MsgProperties;
 import com.hh.system.util.model.ReturnModel;
-import com.hh.usersystem.bean.usersystem.HHXtZmsx;
+//import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.HhXtCd;
 import com.hh.usersystem.bean.usersystem.HhXtCz;
 import com.hh.usersystem.bean.usersystem.HhXtJs;
@@ -92,8 +92,8 @@ public class LoginService {
 					}
 
 					String desktop = "desktop";
-					if (Check.isNoEmpty(hhXtYh.getHhXtZmsx().getDesktopType())) {
-						desktop = hhXtYh.getHhXtZmsx().getDesktopType();
+					if (Check.isNoEmpty(hhXtYh.getDesktopType())) {
+						desktop = hhXtYh.getDesktopType();
 					}
 					returnModel.setHref("webapp-desktop-" + desktop);
 
@@ -214,12 +214,12 @@ public class LoginService {
 
 					hhXtYh.setHhXtJsList(hhXtJsList);
 
-					createZmsx(hhXtYh);
+//					createZmsx(hhXtYh);
 					HhXtYh hhXtYh2 = new HhXtYh();
 					try {
 						BeanUtils.copyProperties(hhXtYh2, hhXtYh);
 						hhXtYh2.setVmm("");
-						hhXtYh2.setHhXtZmsx(hhXtYh.getHhXtZmsx());
+//						hhXtYh2.setHhXtZmsx(hhXtYh.getHhXtZmsx());
 						ActionContext.getContext().getSession()
 								.put("loginuser", hhXtYh2);
 					} catch (IllegalAccessException e) {
@@ -266,9 +266,9 @@ public class LoginService {
 			hhXtYh.setOrganization( hhXtYh.getOrganizationList().get(0));
 			return hhXtYh.getOrganizationList().get(0);
 		} else {
-			if (!Check.isEmpty(hhXtYh.getHhXtZmsx().getDefaultOrgId())) {
+			if (!Check.isEmpty(hhXtYh.getDefaultOrgId())) {
 				for (Organization organization : organizations) {
-					if (hhXtYh.getHhXtZmsx().getDefaultOrgId()
+					if (hhXtYh.getDefaultOrgId()
 							.equals(organization.getId())) {
 						hhXtYh.setOrganization( organization);
 						return organization;
@@ -279,14 +279,14 @@ public class LoginService {
 		}
 	}
 
-	private void createZmsx(HhXtYh hhXtYh) {
-		if (hhXtYh.getHhXtZmsx() == null) {
-			HHXtZmsx hhXtZmsx = new HHXtZmsx();
-			hhXtZmsx.setId(UUID.randomUUID().toString());
-			hhXtYh.setHhXtZmsx(hhXtZmsx);
-			xtyhdao.updateEntity(hhXtYh);
-		}
-	}
+//	private void createZmsx(HhXtYh hhXtYh) {
+//		if (hhXtYh.getHhXtZmsx() == null) {
+//			HHXtZmsx hhXtZmsx = new HHXtZmsx();
+//			hhXtZmsx.setId(UUID.randomUUID().toString());
+//			hhXtYh.setHhXtZmsx(hhXtZmsx);
+//			xtyhdao.updateEntity(hhXtYh);
+//		}
+//	}
 
 	private List<HhXtCd> queryZmtbList(HhXtYh hhXtYh, List<String> hhxtcdIdList) {
 		List<HhXtYhCdZmtb> hhXtYhCdZmtbList = xtyhcdzmtb.queryList(

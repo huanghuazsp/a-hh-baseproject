@@ -186,6 +186,15 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 						Convert.strToList(object.getId())));
 		return hhXtYhList;
 	}
+	
+	
+	public void updateZmbj() {
+		userService.updateZmbj(object);
+	}
+	
+	public void updateTheme() {
+		userService.updateTheme(object);
+	}
 
 	public String getOldPassword() {
 		return oldPassword;
