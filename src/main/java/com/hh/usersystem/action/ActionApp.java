@@ -11,7 +11,8 @@ import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.bean.usersystem.Organization;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.OrganizationService;
-import com.hh.usersystem.service.impl.ZmsxService;
+import com.hh.usersystem.service.impl.UserService;
+//import com.hh.usersystem.service.impl.ZmsxService;
 import com.hh.usersystem.service.impl.ZmtbService;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -21,7 +22,7 @@ public class ActionApp extends BaseAction {
 	private LoginUserUtilService loginUserUtilService;
 	private String currOrgId;
 	@Autowired
-	private ZmsxService zmsxService;
+	private UserService userService;
 	private String node;
 	private String action;
 	@Autowired
@@ -46,10 +47,10 @@ public class ActionApp extends BaseAction {
 						.put("loginuser", hhXtYh);
 				organization1 = organization;
 				if ("on".equals(request.getParameter("remember")) || Convert.toInt(request.getParameter("remember"))==1) {
-					zmsxService.updateDefaultOrg(hhXtYh.getId(),
+					userService.updateDefaultOrg(hhXtYh.getId(),
 							organization1.getId());
 				} else {
-					zmsxService.updateDefaultOrg(hhXtYh.getId(), "");
+					userService.updateDefaultOrg(hhXtYh.getId(), "");
 				}
 				break;
 			}

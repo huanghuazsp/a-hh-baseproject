@@ -23,6 +23,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import com.hh.hibernate.dao.inf.Order;
 import com.hh.hibernate.util.base.BaseTwoEntity;
 import com.hh.usersystem.IUser;
+import com.hh.usersystem.util.steady.StaticProperties;
 
 /**
  * HhXtYh entity.
@@ -59,22 +60,30 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	private Map<String, List<String>> hhXtCzPageTextMap = new HashMap<String, List<String>>();
 
 	private List<String> jsList = new ArrayList<String>();// 角色ID
-	private HHXtZmsx hhXtZmsx;// 用户属性
+//	private HHXtZmsx hhXtZmsx;// 用户属性
 	private List<Organization> organizationList = new ArrayList<Organization>();// 岗位
 	private String orgIdsStr;
 	private String jsIdsStr;
 
 	private Organization organization;
+	
+	
+	private String vzmbj = StaticProperties.HHXT_USERSYSTEM_ZMBJ;
+	private int pageSize = 15;
+	private String defaultOrgId;
+	private String theme;
+	private String desktopType;
+	
 
-	@OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "ID")
-	public HHXtZmsx getHhXtZmsx() {
-		return hhXtZmsx;
-	}
-
-	public void setHhXtZmsx(HHXtZmsx hhXtZmsx) {
-		this.hhXtZmsx = hhXtZmsx;
-	}
+//	@OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+//	@JoinColumn(name = "ID")
+//	public HHXtZmsx getHhXtZmsx() {
+//		return hhXtZmsx;
+//	}
+//
+//	public void setHhXtZmsx(HHXtZmsx hhXtZmsx) {
+//		this.hhXtZmsx = hhXtZmsx;
+//	}
 
 	@Transient
 	public List<String> getJsList() {
@@ -315,6 +324,51 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
+	}
+
+	@Column(name="VZMBJ",length=256)
+	public String getVzmbj() {
+		return vzmbj;
+	}
+
+	public void setVzmbj(String vzmbj) {
+		this.vzmbj = vzmbj;
+	}
+
+	@Column(name = "PAGE_SIZE")
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	@Column(name = "DEFAULT_ORG_ID",length=36)
+	public String getDefaultOrgId() {
+		return defaultOrgId;
+	}
+
+	public void setDefaultOrgId(String defaultOrgId) {
+		this.defaultOrgId = defaultOrgId;
+	}
+
+	@Column(name = "THEME_",length=36)
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+
+	@Column(name = "DESKTOP_TYPE_",length=36)
+	public String getDesktopType() {
+		return desktopType;
+	}
+
+	public void setDesktopType(String desktopType) {
+		this.desktopType = desktopType;
 	}
 
 }

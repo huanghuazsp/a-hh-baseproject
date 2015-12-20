@@ -12,12 +12,12 @@ Ext.define('com.hh.system.desktop.Theme', {
 	initComponent : function() {
 		var me = this;
 		me.selected = '/hhcommon/opensource/ext/desktop/theme/ext-theme-neptune.jpg';
-		if (static_var.loginuser.hhXtZmsx.theme) {
+		if (static_var.loginuser.theme) {
 			me.selected = '/hhcommon/opensource/ext/desktop/theme/'
-					+ static_var.loginuser.hhXtZmsx.theme + '.jpg';
+					+ static_var.loginuser.theme + '.jpg';
 		}
 
-		me.submitValue = static_var.loginuser.hhXtZmsx.theme;
+		me.submitValue = static_var.loginuser.theme;
 
 		me.preview = Ext.create('widget.wallpaper', {
 			html : '<img src="/hhcommon/opensource/ext/desktop/theme/ext-theme-neptune.jpg">'
@@ -108,7 +108,7 @@ Ext.define('com.hh.system.desktop.Theme', {
 	onOK : function() {
 		var me = this;
 		var resultObject = Request.synRequestObject(
-				'usersystem-zmsx-updateTheme', {
+				'usersystem-user-updateTheme', {
 					theme : me.submitValue
 				});
 		if (resultObject.success == true) {
