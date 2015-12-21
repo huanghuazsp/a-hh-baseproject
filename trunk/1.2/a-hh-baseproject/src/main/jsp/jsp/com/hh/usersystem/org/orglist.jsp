@@ -12,7 +12,7 @@
 		var iframe = window.frames['orgeditiframe'];
 		iframe.callback = function() {
 			$.hh.tree.refresh('orgTree');
-			$('#centerdiv').disabled('请选择要编辑的用户组或添加新的数据！');
+			$('#centerdiv').disabled('请选择要编辑的机构树或添加新的数据！！');
 		}
 		if (selectNode) {
 			iframe.newData({
@@ -96,6 +96,10 @@
 				}
 			} ]
 		};
+	
+	function init(){
+		$('#centerdiv').disabled('请选择要编辑的机构树或添加新的数据！！');
+	}
 	
 </script>
 </head>
