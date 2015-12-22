@@ -118,22 +118,21 @@
 		renderLxSpan(params.lx_);
 		$.extend(params, {
 			zt_ : 0,
-			expanded : 0,
-			code_ : BaseUtil.getUUID(3)
+			expanded : 0
 		});
 		$('#form').setValue(params);
 	}
 	function node_span_change(data,change){
-		if(change){
+		/*if(change){
 			if(data){
 				$('#sjbmspan').setValue(data.code_);
 			}else{
 				$('#sjbmspan').setValue('');
 			}
-		}
+		}*/
 	}
 	function init() {
-		$('#spancode_').setValue(BaseUtil.getUUID(3));
+		//$('#spancode_').setValue(BaseUtil.getUUID(3));
 	}
 	/* function init() {
 		if (params.selectNode) {
@@ -159,13 +158,14 @@
 					</td>
 				</tr>
 				<tr>
-					<td xtype="label">上级编码：</td>
+					<!-- <td xtype="label">上级编码：</td>
 					<td><span id="sjbmspan"  xtype="text"
-						config=" name : 'sjbm_', readonly : true "></span></td>
+						config=" name : 'sjbm_', readonly : true "></span></td> -->
 					<td xtype="label">编码：</td>
-					<td><span id="spancode_" xtype="text"
-						config=" name : 'code_',required :true"></span></td>
+					<td colspan="3"><span id="spancode_" xtype="text"
+						config=" name : 'code_',readonly :true ,watermark : '自动生成'"></span></td>
 				</tr>
+				
 				<tr>
 					<td xtype="label">状态：</td>
 					<td><span xtype="radio"
