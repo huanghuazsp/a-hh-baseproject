@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
@@ -18,14 +19,18 @@ import com.hh.system.util.Convert;
 import com.hh.system.util.FileUtil;
 import com.hh.system.util.Json;
 import com.hh.system.util.MessageException;
+import com.hh.system.util.PrimaryKey;
 import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.document.ExcelUtil;
 import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.system.util.statics.StaticVar;
+import com.hh.usersystem.bean.usersystem.HhXtJs;
+import com.hh.usersystem.bean.usersystem.HhXtOrgJs;
 import com.hh.usersystem.bean.usersystem.Organization;
 import com.hh.usersystem.service.impl.OrganizationService;
+import com.hh.usersystem.service.impl.RoleService;
 
 @SuppressWarnings("serial")
 public class ActionOrg extends BaseServiceAction<Organization> {
@@ -34,6 +39,7 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 
 	@Autowired
 	private OrganizationService organizationService;
+	
 
 	@Override
 	public BaseService<Organization> getService() {
@@ -138,14 +144,13 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 		response.setContentType("text/html");
 		String path = FileUpload.uploadFile(attachment, attachmentFileName,
 				filePath);
-		
 		File file = new File(StaticVar.filepath+path);
+		
+		
 		
 		try {
 			List<Map<String, Object>> mapList = ExcelUtil.getMapList(file, 1);
-			for (Map<String, Object> map : mapList) {
-				
-			}
+			organizationService.save(mapList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -156,6 +161,8 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 		returnMap.put("name", name);
 		return returnMap;
 	}
+
+	
 
 	public String download() {
 		this.setName("test");

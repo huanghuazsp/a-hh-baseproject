@@ -169,7 +169,7 @@
 				<tr>
 					<td xtype="label">状态：</td>
 					<td><span xtype="radio"
-						config="name: 'zt_' ,defaultValue : 0,  data :[{id:0,text:'正常'},{id:1,text:'冻结'}]"></span></td>
+						config="name: 'zt_' ,defaultValue : 0,  data :[{id:0,text:'正常'},{id:1,text:'禁用'}]"></span></td>
 					<td xtype="label">是否展开：</td>
 					<td><span xtype="radio"
 						config="name: 'expanded' ,defaultValue : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
