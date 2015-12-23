@@ -1,7 +1,9 @@
 package com.hh.usersystem.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.hibernate.criterion.Restrictions;
@@ -14,10 +16,12 @@ import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
+import com.hh.system.util.PrimaryKey;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
+import com.hh.usersystem.bean.usersystem.HhXtJs;
 import com.hh.usersystem.bean.usersystem.HhXtOrgJs;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.bean.usersystem.HhXtYhOrg;
@@ -35,6 +39,9 @@ public class OrganizationService  extends BaseService<Organization>  {
 	private IHibernateDAO<HhXtOrgJs> hhxtorgjsdao;
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
+	
+	@Autowired
+	private RoleService roleService;
 
 	
 	public List<Organization> queryTreeList(Organization object, boolean isNoLeaf) {
@@ -356,5 +363,112 @@ public class OrganizationService  extends BaseService<Organization>  {
 		}
 		return organizationToIconCls(organizations,null);
 	}
+
+	public IHibernateDAO<HhXtOrgJs> getHhxtorgjsdao() {
+		return hhxtorgjsdao;
+	}
+	
+	
+	public void save(List<Map<String, Object>> mapList) {
+		Map<String, String> orgMapNameId = new HashMap<String, String>();
+		Map<String, String> roleMapNameId = new HashMap<String, String>();
+		for (Map<String, Object> map : mapList) {
+			Organization organization = null;
+			String id = PrimaryKey.getPrimaryKeyUUID();
+			String name = Convert.toString(map.get("名称"));
+			if (Check.isNoEmpty(map.get("标识"))) {
+				id=Convert.toString(map.get("标识"));
+				organization = findObjectById(id);
+			}else{
+				List<Organization> organizations  = queryListByProperty("text", name);
+				if (organizations.size()>0) {
+					organization=organizations.get(0);
+				}
+			}
+			
+			int iscreate = 0 ;
+			
+			if (organization==null) {
+				iscreate=1;
+				organization = new Organization();
+				organization.setId(id);
+			}else{
+				getHhxtorgjsdao().deleteEntity(HhXtOrgJs.class, "orgId",
+						organization.getId());
+			}
+			
+			organization.setText(name);
+			organization.setJc_(Convert.toString(map.get("简称")));
+			organization.setZdybm_(Convert.toString(map.get("自定义编码")));
+			organization.setMs_(Convert.toString(map.get("备注")));
+			int zt=0;
+			if ("禁用".equals(Convert.toString(map.get("状态")))) {
+				zt=1;
+			}
+			organization.setZt_(zt);
+			int lx = 1;
+			if ("集团".equals(Convert.toString(map.get("类型")))) {
+				lx=0;
+			}else if ("部门".equals(Convert.toString(map.get("类型")))) {
+				lx=2;
+			}else if ("岗位".equals(Convert.toString(map.get("类型")))) {
+				lx=3;
+			}
+			organization.setLx_(lx);
+			
+			String sjmc = Convert.toString(map.get("上级名称"));
+			
+			if (Check.isNoEmpty(sjmc)) {
+				if (!orgMapNameId.containsKey(sjmc)) {
+					List<Organization> organizationList = queryListByProperty("text", sjmc);
+					if (organizationList.size()>0) {
+						orgMapNameId.put(sjmc, organizationList.get(0).getId());
+					}else{
+						orgMapNameId.put(sjmc, "root");
+					}
+				}
+				
+				organization.setNode(orgMapNameId.get(sjmc));
+			}else{
+				organization.setNode("root");
+			}
+			
+			String jgjs = Convert.toString(map.get("机构角色"));
+			if (Check.isNoEmpty(jgjs)) {
+				String[] jgjsArr =	jgjs.split(",");
+				for (String jgjsname : jgjsArr) {
+					if (!roleMapNameId.containsKey(jgjsname)) {
+						List<HhXtJs> hhXtJsList = roleService.queryListByProperty("text", jgjsname);
+						if (hhXtJsList.size()>0) {
+							roleMapNameId.put(jgjsname, hhXtJsList.get(0).getId());
+						}else{
+							roleMapNameId.put(jgjsname, "");
+						}
+					}
+					
+					if (Check.isNoEmpty(roleMapNameId.get(jgjsname))) {
+						HhXtOrgJs hhXtOrgJs = new HhXtOrgJs();
+						hhXtOrgJs.setOrgId(organization.getId());
+						hhXtOrgJs.setJsId(roleMapNameId.get(jgjsname));
+						getHhxtorgjsdao().createEntity(hhXtOrgJs);
+					}
+					
+					
+				}
+				
+			}
+			if (iscreate==1) {
+				createEntity(organization);
+			}else{
+				getDao().updateEntity(organization);
+			}
+			
+		}
+		
+		Organization parentOrganization = new Organization();
+		parentOrganization.setId("root");
+		updateSubCode(parentOrganization);
+	}
+	
 
 }
