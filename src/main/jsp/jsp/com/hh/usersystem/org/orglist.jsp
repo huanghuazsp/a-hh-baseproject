@@ -106,7 +106,7 @@
 <body>
 	<span xtype="rightMenu" configVar="bodyRightMenu"></span>
 	<div xtype="border_layout">
-		<div config="render : 'west'">
+		<div config="render : 'west' ,width:280">
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span> <span
 					xtype="button"
@@ -117,7 +117,7 @@
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'orgTree'  "></span>
 			</div>
 			<span xtype="tree"
-				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick  "></span>
+				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick ,nheight:38 "></span>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="orgeditiframe" name="orgeditiframe" width=100%
