@@ -44,10 +44,10 @@ public class UserGroupService extends BaseService<UserGroup> {
 	}
 
 	@Override
-	public UserGroup save(UserGroup entity) throws MessageException {
+	public UserGroup saveTree(UserGroup entity) throws MessageException {
 		hhXtYhGroupdao.deleteEntity(HhXtYhGroup.class, "groupId",
 				entity.getId());
-		UserGroup hhXtGroup = super.save(entity);
+		UserGroup hhXtGroup = super.saveTree(entity);
 
 		String userIds = entity.getUsers();
 		if (Check.isNoEmpty(userIds)) {
