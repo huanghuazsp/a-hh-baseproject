@@ -31,7 +31,11 @@
 			</tr>
 			<tr>
 				<td xtype="label">异常完整内容</td>
-				<td colspan="3" domName="allMessage"></td>
+				<td colspan="3"  style="word-break: keep-all;white-space:nowrap;width:600px">
+				<div  domName="allMessage" style="width:600px;text-align:center;vertical-align:middle;overflow:hidden;text-overflow:ellipsis;">
+				
+				</div>
+				</td>
 			</tr>
 		</table>
 	</div>
