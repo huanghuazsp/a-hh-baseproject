@@ -15,7 +15,7 @@
 					data : formData,
 					defaultMsg : true,
 					callback : function(result) {
-						if(result.success){
+						if(result.success!=false){
 							Dialog.close();
 						}
 					}

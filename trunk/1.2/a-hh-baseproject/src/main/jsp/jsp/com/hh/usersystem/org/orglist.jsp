@@ -51,7 +51,7 @@
 			action : 'usersystem-Org-deleteByIds',
 			id : treeNode.id,
 			callback : function(result) {
-				if (result.success) {
+				if (result.success!=false) {
 					$('#centerdiv').disabled('请选择要编辑的机构树或添加新的数据！');
 				}
 			}

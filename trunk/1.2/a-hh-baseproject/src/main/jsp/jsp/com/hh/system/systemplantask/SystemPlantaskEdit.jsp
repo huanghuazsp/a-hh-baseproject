@@ -20,7 +20,7 @@
 			Request.request('system-SystemPlantask-save', {
 				data : formData,
 				callback : function(result) {
-					if (result.success) {
+					if (result.success!=false) {
 						params.callback(formData);
 						Dialog.close();
 					}

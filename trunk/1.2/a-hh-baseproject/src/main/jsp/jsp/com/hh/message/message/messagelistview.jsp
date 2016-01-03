@@ -23,7 +23,7 @@
 			},
 			defaultMsg:false
 		},function(result){
-			if(result.success){
+			if(result.success!=false){
 				$('#pagelist').loadData();
 			}
 		});

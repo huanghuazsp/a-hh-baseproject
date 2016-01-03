@@ -20,7 +20,7 @@
 			Request.request('system-SysData-saveTree', {
 				data : formData,
 				callback : function(result) {
-					if (result.success) {
+					if (result.success!=false) {
 						params.callback();
 						Dialog.close();
 					}

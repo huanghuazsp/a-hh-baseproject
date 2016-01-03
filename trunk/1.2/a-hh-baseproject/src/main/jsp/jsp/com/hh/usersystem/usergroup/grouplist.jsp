@@ -28,7 +28,7 @@
 			action : 'usersystem-UserGroup-deleteTreeByIds',
 			id : treeNode.id,
 			callback : function(result) {
-				if (result.success) {
+				if (result.success!=false) {
 					$('#centerdiv').disabled('请选择要编辑的用户组或添加新的数据！');
 				}
 			}

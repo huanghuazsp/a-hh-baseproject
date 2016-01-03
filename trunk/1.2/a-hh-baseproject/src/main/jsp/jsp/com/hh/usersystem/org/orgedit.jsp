@@ -42,7 +42,7 @@
 			Request.request('usersystem-Org-save', {
 				data : formData,
 				callback : function(result) {
-					if (result.success) {
+					if (result.success!=false) {
 						callback(formData);
 					}
 				}

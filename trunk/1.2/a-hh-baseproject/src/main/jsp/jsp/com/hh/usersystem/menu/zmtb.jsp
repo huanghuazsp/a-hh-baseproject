@@ -49,7 +49,7 @@ String hhxtcdStr =  gson.toJson(hhXtCds);
 						id : id
 					}
 				}, function(result) {
-					if (result.success) {
+					if (result.success!=false) {
 						refresh();
 					}
 				});
