@@ -7,7 +7,7 @@
 <html>
 <head>
 <title>组织机构树</title>
-<%=SystemUtil.getBaseJs("ztree", "right_menu")%>
+<%=SystemUtil.getBaseJs("layout","ztree", "right_menu")%>
 <script type="text/javascript">
 	var params = BaseUtil.getIframeParams();
 	var orgtreeconfig = {
@@ -93,24 +93,30 @@
 			}
 		} ]
 	}
-	
+
 	function set_height(height) {
 		$('#tabs').render();
 	}
 </script>
 </head>
 <body>
-	<div id="tabs" xtype="tab" configVar="tabconfig">
-		<ul>
-			<li><a href="#tabs-1">机构</a></li>
-			<li><a href="#grooupDiv">组</a></li>
-		</ul>
-		<div id="tabs-1">
-			<span xtype="tree" configVar="orgtreeconfig"></span>
+	<div xtype="border_layout">
+		<div config="render : 'west' ,resizable :false ,width:180 ">
+			<div id="tabs" xtype="tab" configVar="tabconfig">
+				<ul>
+					<li><a href="#tabs-1">机构</a></li>
+					<li><a href="#grooupDiv">组</a></li>
+				</ul>
+				<div id="tabs-1">
+					<span xtype="tree" configVar="orgtreeconfig"></span>
+				</div>
+				<div id="grooupDiv">
+					<span xtype="tree" configVar=" groupTreeConfig "></span>
+				</div>
+			</div>
 		</div>
-		<div id="grooupDiv">
-			<span xtype="tree" configVar=" groupTreeConfig "></span>
-		</div>
+		<div></div>
 	</div>
+
 </body>
 </html>
