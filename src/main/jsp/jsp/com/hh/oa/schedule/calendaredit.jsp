@@ -46,8 +46,8 @@
 			Request.request('oa-Schedule-save', {
 				data : formData,
 				callback : function(result) {
-					if (result.success) {
-						params.callback(result.object);
+					if (result.success!=false) {
+						params.callback(result);
 						Dialog.close();
 					}
 				}
@@ -63,7 +63,7 @@
 					isOk : ok
 				}
 			}, function(result) {
-				if (result.success) {
+				if (result.success!=false) {
 					object.isOk = ok;
 					object.start = BaseUtil.stringToDate(object.start);
 					object.end = BaseUtil.stringToDate(object.end);
@@ -80,7 +80,7 @@
 					ids : objectid
 				}
 			}, function(result) {
-				if (result.success) {
+				if (result.success!=false) {
 					params.callback('delete');
 					Dialog.close();
 				}

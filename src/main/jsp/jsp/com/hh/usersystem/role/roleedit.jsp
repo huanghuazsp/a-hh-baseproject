@@ -17,7 +17,7 @@
 			Request.request('usersystem-role-save', {
 				data : formData,
 				callback : function(result) {
-					if (result.success) {
+					if (result.success!=false) {
 						params.callback();
 						Dialog.close();
 					}

@@ -19,7 +19,7 @@
 			Request.request('message-SendEmail-sendEmail', {
 				data : formData,
 				callback : function(result) {
-					if (result.success) {
+					if (result.success!=false) {
 						if(params.callback){
 							params.callback();
 						}
@@ -37,7 +37,7 @@
 			Request.request('message-SendEmail-sendEmail', {
 				data : formData,
 				callback : function(result) {
-					if (result.success) {
+					if (result.success!=false) {
 						if(params.callback){
 							params.callback();
 						}

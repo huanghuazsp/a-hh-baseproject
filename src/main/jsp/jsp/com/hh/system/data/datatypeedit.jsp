@@ -17,7 +17,7 @@
 			Request.request('system-SysDataType-saveTree', {
 				data : formData,
 				callback : function(result) {
-					if (result.success) {
+					if (result.success!=false) {
 						params.callback();
 						Dialog.close();
 					}

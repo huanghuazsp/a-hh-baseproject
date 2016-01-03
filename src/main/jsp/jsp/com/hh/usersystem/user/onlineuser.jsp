@@ -17,7 +17,7 @@
 							ids : ids
 						}
 					}, function(result) {
-						if (result.success) {
+						if (result.success!=false) {
 							$("#pagelist").loadData();
 						}
 					});
