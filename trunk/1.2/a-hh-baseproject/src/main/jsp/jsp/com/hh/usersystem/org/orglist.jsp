@@ -89,7 +89,7 @@
 							saveUrl : 'usersystem-Org-importData',
 							filePath : 'temp/file/org',
 							callback : function(data) {
-								
+								$.hh.tree.refresh('orgTree');
 							}
 						}
 					});
