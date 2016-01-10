@@ -13,7 +13,7 @@
 	var orgtreeconfig = {
 		id : 'orgTree',
 		url : 'usersystem-Org-queryOrgAndUsersList',
-		rightItems : [ {
+		rightMenu : [ {
 			text : '发送邮件',
 			img : StaticVar.img_email,
 			onClick : function(data) {
@@ -64,7 +64,7 @@
 		id : 'groupTree',
 		url : 'usersystem-Group-queryListAndUserGroup',
 		render : false,
-		rightItems : [ {
+		rightMenu : [ {
 			text : '发送邮件',
 			img : StaticVar.img_email,
 			onClick : function(data) {
