@@ -111,7 +111,7 @@
 					config="onClick: $.hh.tree.doDown , params:{treeid:'orgTree',action:'usersystem-Org-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
 				<span xtype="button"
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'orgTree'  "></span>
-				<span xtype=menu    config=" id:'menu1', data : [ { text : '导入' , onClick : inExcel } ,{ text : '下载模板' , onClick : downloadExcel } ]"></span>
+				<span xtype=menu    config=" id:'menu1', data : [ { img : StaticVar.img_excel , text : '导入' , onClick : inExcel } ,{ img : StaticVar.img_excel ,text : '下载模板' , onClick : downloadExcel } ]"></span>
 				<span xtype="button"
 					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 			</div>
