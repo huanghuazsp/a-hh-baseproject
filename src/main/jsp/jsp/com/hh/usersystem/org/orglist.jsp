@@ -76,35 +76,31 @@
 		iframe.findData(treeNode.id);
 	}
 	
-	var bodyRightMenu = {
-			data : [ {
-				text : '导入',
-				img : StaticVar.img_excel,
-				onClick : function() {
-					Dialog.open({
-						url : 'jsp-system-tools-file',
-						width : 450,
-						height : 270,
-						params : {
-							saveUrl : 'usersystem-Org-importData',
-							filePath : 'temp/file/org',
-							callback : function(data) {
-								$.hh.tree.refresh('orgTree');
-							}
-						}
-					});
+	function inExcel(){
+		Dialog.open({
+			url : 'jsp-system-tools-file',
+			width : 450,
+			height : 270,
+			params : {
+				saveUrl : 'usersystem-Org-importData',
+				filePath : 'temp/file/org',
+				callback : function(data) {
+					$.hh.tree.refresh('orgTree');
 				}
-			} ]
-		};
+			}
+		});
+	}
+	
+	function downloadExcel(){
+		
+	}
 	
 	function init(){
 		$('#centerdiv').disabled('请选择要编辑的机构树或添加新的数据！！');
 	}
-	
 </script>
 </head>
 <body>
-	<span xtype="rightMenu" configVar="bodyRightMenu"></span>
 	<div xtype="border_layout">
 		<div config="render : 'west' ,width:280">
 			<div xtype="toolbar" config="type:'head'">
@@ -115,6 +111,9 @@
 					config="onClick: $.hh.tree.doDown , params:{treeid:'orgTree',action:'usersystem-Org-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
 				<span xtype="button"
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'orgTree'  "></span>
+				<span xtype=menu    config=" id:'menu1', data : [ { text : '导入' , onClick : inExcel } ,{ text : '下载模板' , onClick : downloadExcel } ]"></span>
+				<span xtype="button"
+					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 			</div>
 			<span xtype="tree"
 				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick ,nheight:38 "></span>
