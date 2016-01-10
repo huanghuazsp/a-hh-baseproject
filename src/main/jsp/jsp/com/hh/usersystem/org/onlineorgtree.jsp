@@ -101,7 +101,7 @@
 </head>
 <body>
 	<div xtype="border_layout">
-		<div config="render : 'west' ,resizable :false ,width:180 ">
+		<div config="render : 'west' ,width:250 ">
 			<div id="tabs" xtype="tab" configVar="tabconfig">
 				<ul>
 					<li><a href="#tabs-1">机构</a></li>
