@@ -7,13 +7,20 @@
 <html>
 <head>
 <title>组织机构树</title>
-<%=SystemUtil.getBaseJs("layout","ztree", "right_menu")%>
+<%=SystemUtil.getBaseJs("layout","ztree")%>
 <script type="text/javascript">
 	var params = BaseUtil.getIframeParams();
 	var orgtreeconfig = {
-		id : 'orgTree',
+		id : 'orgTree',nheight:45,
 		url : 'usersystem-Org-queryOrgAndUsersList',
-		rightMenu : [ {
+		rightMenu :[{
+			text:'刷新',
+			img : StaticVar.img_refresh,
+			onClick:function(){
+					$.hh.tree.refresh('orgTree');
+			}
+		}],
+		itemRightMenu : [ {
 			text : '发送邮件',
 			img : StaticVar.img_email,
 			onClick : function(data) {
@@ -45,6 +52,12 @@
 				});
 
 			}
+		},{
+			text:'刷新',
+			img : StaticVar.img_refresh,
+			onClick:function(){
+					$.hh.tree.refresh('orgTree');
+			}
 		} ]
 	}
 
@@ -61,10 +74,17 @@
 	}
 
 	var groupTreeConfig = {
-		id : 'groupTree',
+		id : 'groupTree',nheight:45,
 		url : 'usersystem-Group-queryListAndUserGroup',
 		render : false,
-		rightMenu : [ {
+		rightMenu : [{
+			text:'刷新',
+			img : StaticVar.img_refresh,
+			onClick:function(){
+					$.hh.tree.refresh('groupTree');
+			}
+		}],
+		itemRightMenu : [ {
 			text : '发送邮件',
 			img : StaticVar.img_email,
 			onClick : function(data) {
@@ -91,17 +111,23 @@
 				});
 
 			}
+		},{
+			text:'刷新',
+			img : StaticVar.img_refresh,
+			onClick:function(){
+					$.hh.tree.refresh('groupTree');
+			}
 		} ]
 	}
 
-	function set_height(height) {
-		$('#tabs').render();
+	function setHeight(height) {
+		//$('#tabs').render();
 	}
 </script>
 </head>
 <body>
 	<div xtype="border_layout">
-		<div config="render : 'west' ,width:250 ">
+		<div config="render : 'west' ,width:260 ">
 			<div id="tabs" xtype="tab" configVar="tabconfig">
 				<ul>
 					<li><a href="#tabs-1">机构</a></li>

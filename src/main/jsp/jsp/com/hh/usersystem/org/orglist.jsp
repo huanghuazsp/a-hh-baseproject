@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>组织机构管理</title>
-<%=SystemUtil.getBaseJs("layout", "ztree", "ztree_edit","right_menu")%>
+<%=SystemUtil.getBaseJs("layout", "ztree", "ztree_edit")%>
 <script type="text/javascript">
 	function doAdd() {
 		$('#centerdiv').undisabled();

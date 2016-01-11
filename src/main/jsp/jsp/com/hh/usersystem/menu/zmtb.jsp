@@ -7,7 +7,7 @@
 <html>
 <head>
 <title>快捷页面</title>
-<%=SystemUtil.getBaseJs("right_menu")%>
+<%=SystemUtil.getBaseJs()%>
 <%
 	Gson gson = new Gson();
 HhXtYh hhXtYh =	(HhXtYh)session.getAttribute("loginuser");
