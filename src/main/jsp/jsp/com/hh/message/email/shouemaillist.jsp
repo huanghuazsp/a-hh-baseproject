@@ -13,14 +13,8 @@
 
 	function doView() {
 		$.hh.pagelist.callRow("pagelist", function(row) {
-			Dialog.open({
-				url : 'jsp-message-email-shouemail',
-				params : {
-					row : row,
-					callback : function() {
-						$("#pagelist").loadData();
-					}
-				}
+			parent.viewemail({
+				id:row.id
 			});
 		});
 	}
