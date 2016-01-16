@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.SystemUtil"%>
+<%@page import="com.hh.system.util.Convert"%>
 <%=SystemUtil.getBaseDoctype()%>
 <html>
 <head>
@@ -9,10 +10,8 @@
 	var params = BaseUtil.getIframeParams();
 	var width = 800;
 	var height = 450;
-
-	var objectid = params.row ? params.row.id : '';
-	var writeObject = params.writeObject||{};
-	var shouuser = params.shouuser;
+	var objectid = '<%=Convert.toString(request.getParameter("id"))%>';
+	var writeObject = parent.paramsData.writeObject||{};
 
 	function save() {
 		$.hh.validation.check('form', function(formData) {
@@ -23,7 +22,7 @@
 						if(params.callback){
 							params.callback();
 						}
-						Dialog.close();
+						shoujianlist();
 					}
 				}
 			});
@@ -41,7 +40,7 @@
 						if(params.callback){
 							params.callback();
 						}
-						Dialog.close();
+						shoujianlist();
 					}
 				}
 			});
@@ -64,10 +63,11 @@
 	}
 
 	function init() {
-		if(shouuser){
-			writeObject.users=shouuser;
-		}
 		findData();
+	}
+	
+	function shoujianlist(){
+		parent.shoujianlist();
 	}
 </script>
 </head>
@@ -98,8 +98,8 @@
 	</div>
 	<div xtype="toolbar">
 	<span xtype="button" config="text:'发送' , onClick : write "></span>
-		<span xtype="button" config="text:'保存' , onClick : save "></span> <span
-			xtype="button" config="text:'取消' , onClick : Dialog.close "></span>
+		<span xtype="button" config="text:'暂存' , onClick : save "></span> <span
+			xtype="button" config="text:'返回收件列表' , onClick : shoujianlist "></span>
 	</div>
 </body>
 </html>

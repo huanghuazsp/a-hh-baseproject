@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.SystemUtil"%>
+<%@page import="com.hh.system.util.Convert"%>
 <%=SystemUtil.getBaseDoctype()%>
 <html>
 <head>
@@ -10,10 +11,7 @@
 	var width = 800;
 	var height = 450;
 
-	var objectid = params.row ? params.row.id : '';
-	if(objectid==''){
-		objectid=params.objectId;
-	}
+	var objectid = '<%=Convert.toString(request.getParameter("id"))%>';
 	var shouObject = null;
 	function findData() {
 		if (objectid) {
@@ -51,25 +49,21 @@
 		}
 		content+='内容：'+data.content+'<br/>';
 		
-		Dialog
-				.open({
-					url : 'jsp-message-email-writeemail',
-					params : {
-						writeObject : {
-							users : userObject,
-							title : title,
-							content : "<br/><br/><br/><br/><br/><h2 style='text-align:center;'>------------------ 原始邮件 ------------------</h2>"
-									+( content)
-						},
-						callback : function() {
-							Dialog.close();
-						}
-					}
-				});
+		
+		parent.writeemail({
+			users : userObject,
+			title : title,
+			content : "<br/><br/><br/><br/><br/><h2 style='text-align:center;'>------------------ 原始邮件 ------------------</h2>"
+					+( content)
+		});
 	}
 
 	function init() {
 		findData();
+	}
+	
+	function shoujianlist(){
+		parent.shoujianlist();
 	}
 </script>
 </head>
@@ -107,7 +101,7 @@
 	</div>
 	<div xtype="toolbar">
 		<span xtype="button" config="text:'回复' , onClick : reply "></span><span
-			xtype="button" config="text:'取消' , onClick : Dialog.close "></span>
+			xtype="button" config="text:'返回收件列表' , onClick : shoujianlist "></span>
 	</div>
 </body>
 </html>
