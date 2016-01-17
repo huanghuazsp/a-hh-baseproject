@@ -6,11 +6,6 @@
 <title>发邮件列表</title>
 <%=SystemUtil.getBaseJs()%>
 <script type="text/javascript">
-	function typerender(value){
-		return value == 'yfs' ? '<font class=hh_red >已发送</font>'
-				: '<font class=hh_green>未发送</font>';
-	}
-	
 	function doAdd(){
 		Dialog.open({
 			url : 'jsp-message-email-writeemail',
@@ -51,11 +46,6 @@
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'message-Email-queryDeletePage' ,column : [
 		{
-			name : 'type' ,
-			text : '状态',
-			width : 60 ,
-			render : 'typerender'
-		},{
 			name : 'title' ,
 			text : '标题'
 		},{
