@@ -6,6 +6,10 @@
 <title>发邮件列表</title>
 <%=SystemUtil.getBaseJs()%>
 <script type="text/javascript">
+	function typerender(value){
+		return value == 'yfs' ? '<font class=hh_red >已发送</font>'
+				: '<font class=hh_green>未发送</font>';
+	}
 	
 	function doAdd(){
 		Dialog.open({
@@ -40,13 +44,18 @@
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
-		<span xtype="button" config="onClick: doAdd ,text:'写信'"></span> <span
-			xtype="button" config="onClick:doEdit,text:'修改'"></span> <span
-			xtype="button" config="onClick:doDelete,text:'删除'"></span>
+	 <span
+			xtype="button" config="onClick:doEdit,text:'恢复'"></span> <span
+			xtype="button" config="onClick:doDelete,text:'彻底删除'"></span>
 	</div>
 	<div id="pagelist" xtype="pagelist"
-		config=" url: 'message-Email-querySendPage' ,column : [
+		config=" url: 'message-Email-queryDeletePage' ,column : [
 		{
+			name : 'type' ,
+			text : '状态',
+			width : 60 ,
+			render : 'typerender'
+		},{
 			name : 'title' ,
 			text : '标题'
 		},{

@@ -6,30 +6,6 @@
 <title>发邮件列表</title>
 <%=SystemUtil.getBaseJs()%>
 <script type="text/javascript">
-	
-	function doAdd(){
-		Dialog.open({
-			url : 'jsp-message-email-writeemail',
-			params : {
-				callback : function() {
-					$("#pagelist").loadData();
-				}
-			}
-		});
-	}
-	function doEdit() {
-		$.hh.pagelist.callRow("pagelist", function(row) {
-			Dialog.open({
-				url : 'jsp-message-email-writeemail',
-				params : {
-					row : row,
-					callback : function() {
-						$("#pagelist").loadData();
-					}
-				}
-			});
-		});
-	}
 	function doDelete() {
 		$.hh.pagelist.deleteData({
 			pageid : 'pagelist',
@@ -40,12 +16,11 @@
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
-		<span xtype="button" config="onClick: doAdd ,text:'写信'"></span> <span
-			xtype="button" config="onClick:doEdit,text:'修改'"></span> <span
+		 <span
 			xtype="button" config="onClick:doDelete,text:'删除'"></span>
 	</div>
 	<div id="pagelist" xtype="pagelist"
-		config=" url: 'message-Email-querySendPage' ,column : [
+		config=" url: 'message-Email-queryCGXPage' ,column : [
 		{
 			name : 'title' ,
 			text : '标题'

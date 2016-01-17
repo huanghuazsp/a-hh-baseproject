@@ -33,7 +33,7 @@
 			xtype="button" config="onClick: doDelete ,text:'删除'"></span>
 	</div>
 	<div id="pagelist" xtype="pagelist"
-		config=" url: 'message-ShouEmail-queryPagingData' ,column : [
+		config=" url: 'message-Email-queryShouPage' ,column : [
 		{
 			name : 'read' ,
 			text : '状态',

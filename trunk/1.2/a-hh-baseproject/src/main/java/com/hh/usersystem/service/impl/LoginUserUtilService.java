@@ -38,6 +38,15 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 		}
 		return null;
 	}
+	
+	public String findLoginUserText() {
+		HhXtYh hhXtYh = findLoginUser();
+		if(hhXtYh==null){
+			return null;
+		}else{
+			return hhXtYh.getText();
+		}
+	}
 
 	public String findLoginUserOrgId() {
 		HhXtYh user = findLoginUser();

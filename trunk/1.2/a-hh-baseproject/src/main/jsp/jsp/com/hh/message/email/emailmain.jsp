@@ -19,16 +19,48 @@
 			onClick : function() {
 				shoujianlist();
 			}
-		} ]
+		},{
+			text : '已发送',
+			img : '/hhcommon/images/icons/email/email_go.png',
+			onClick : function() {
+				sendemaillist();
+			}
+		},{
+			text : '草稿箱',
+			img : '/hhcommon/images/icons/email/email_link.png',
+			onClick : function() {
+				cgxemaillist();
+			}
+		},{
+			text : '已删除',
+			img : '/hhcommon/images/icons/email/email_delete.png',
+			onClick : function() {
+				deleteemaillist();
+			}
+		}
+		]
 	};
 	
 	function shoujianlist(){
 		$('#email').attr('src','jsp-message-email-shouemaillist');
 	}
 	
+	function sendemaillist(){
+		$('#email').attr('src','jsp-message-email-sendemaillist');
+	}
+	
+	function cgxemaillist(){
+		$('#email').attr('src','jsp-message-email-cgxemaillist');
+	}
+	
+	function deleteemaillist(){
+		$('#email').attr('src','jsp-message-email-deleteemaillist');
+	}
+	
 	function viewemail(params){
 		$('#email').attr('src','jsp-message-email-shouemail?'+$.param(params));
 	}
+	
 	
 	var paramsData = {
 			
