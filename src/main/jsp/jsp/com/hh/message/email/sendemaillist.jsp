@@ -40,9 +40,7 @@
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
-		<span xtype="button" config="onClick: doAdd ,text:'写信'"></span> <span
-			xtype="button" config="onClick:doEdit,text:'修改'"></span> <span
-			xtype="button" config="onClick:doDelete,text:'删除'"></span>
+		<span xtype="button" config="onClick:doDelete,text:'删除'"></span>
 	</div>
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'message-Email-querySendPage' ,column : [

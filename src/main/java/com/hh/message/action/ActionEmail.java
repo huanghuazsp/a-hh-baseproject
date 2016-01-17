@@ -20,33 +20,37 @@ public class ActionEmail extends BaseServiceAction<SysEmail> {
 	}
 
 	public Object queryShouPage() {
-		return sendEmailService.queryShouPage(object,
-				this.getPageRange());
+		return sendEmailService.queryShouPage(object, this.getPageRange());
 	}
-	
+
 	public Object querySendPage() {
-		return sendEmailService.querySendPage(object,
-				this.getPageRange());
+		return sendEmailService.querySendPage(object, this.getPageRange());
 	}
-	
+
 	public Object queryCGXPage() {
-		return sendEmailService.queryCGXPage(object,
-				this.getPageRange());
+		return sendEmailService.queryCGXPage(object, this.getPageRange());
 	}
-	
+
 	public Object queryDeletePage() {
-		return sendEmailService.queryDeletePage(object,
-				this.getPageRange());
+		return sendEmailService.queryDeletePage(object, this.getPageRange());
 	}
-	
+
 	public Object sendEmail() {
 		try {
 			String leixing = Convert.toString(request.getParameter("leixing"));
-			SysEmail object = sendEmailService.sendEmail(this.object,leixing);
+			SysEmail object = sendEmailService.sendEmail(this.object, leixing);
 		} catch (MessageException e) {
 			return e;
 		}
 		return null;
+	}
+
+	public void recovery() {
+		sendEmailService.recovery(this.getIds());
+	}
+
+	public void thoroughDelete() {
+		sendEmailService.thoroughDelete(this.getIds());
 	}
 
 }
