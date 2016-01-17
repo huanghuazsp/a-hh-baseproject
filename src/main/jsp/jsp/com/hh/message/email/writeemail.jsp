@@ -15,7 +15,12 @@
 
 	function save() {
 		$.hh.validation.check('form', function(formData) {
-			Request.request('message-SendEmail-sendEmail', {
+			formData.type = 'cgx';
+			var userData = $('#shoujianrenspan').getValueData();
+			if(userData){
+				formData.userNames = userData.text;
+			}
+			Request.request('message-Email-sendEmail', {
 				data : formData,
 				callback : function(result) {
 					if (result.success!=false) {
@@ -31,9 +36,12 @@
 
 	function write() {
 		$.hh.validation.check('form', function(formData) {
-			formData.leixing = '0';
 			formData.type = 'yfs';
-			Request.request('message-SendEmail-sendEmail', {
+			var userData = $('#shoujianrenspan').getValueData();
+			if(userData){
+				formData.userNames = userData.text;
+			}
+			Request.request('message-Email-sendEmail', {
 				data : formData,
 				callback : function(result) {
 					if (result.success!=false) {
@@ -49,7 +57,7 @@
 
 	function findData() {
 		if (objectid) {
-			Request.request('message-SendEmail-findObjectById', {
+			Request.request('message-Email-findObjectById', {
 				data : {
 					id : objectid
 				},
