@@ -22,7 +22,7 @@
 	function doDelete() {
 		$.hh.pagelist.deleteData({
 			pageid : 'pagelist',
-			action : 'message-ShouEmail-deleteByIds'
+			action : 'message-Email-deleteByIds'
 		});
 	}
 </script>

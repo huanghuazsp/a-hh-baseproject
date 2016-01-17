@@ -1,6 +1,7 @@
 package com.hh.message.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.hh.message.bean.SysEmail;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.Check;
+import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
@@ -38,7 +40,7 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime 
 		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
 		entity.setSendUserId(hhXtYh.getId());
 		entity.setSendUserName(hhXtYh.getText());
-		
+
 		if (Check.isEmpty(entity.getId())) {
 			dao.createEntity(entity);
 		} else {
@@ -82,6 +84,8 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime 
 						.getParamHb()
 						.is("sendUserId",
 								loginUserUtilService.findLoginUserId())
+						.nolike("deleteUserId",
+								loginUserUtilService.findLoginUserId())
 						.is("type", "cgx").orderDesc("dcreate"), pageRange,
 				new String[] { "id", "title", "dcreate", "type" });
 	}
@@ -93,6 +97,8 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime 
 				ParamFactory
 						.getParamHb()
 						.is("sendUserId",
+								loginUserUtilService.findLoginUserId())
+						.nolike("deleteUserId",
 								loginUserUtilService.findLoginUserId())
 						.is("type", "yfs").orderDesc("dcreate"), pageRange,
 				new String[] { "id", "title", "dcreate", "type" });
@@ -109,6 +115,23 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime 
 								loginUserUtilService.findLoginUserId())
 						.is("type", "yfs").orderDesc("dcreate"), pageRange,
 				new String[] { "id", "title", "dcreate", "type" });
+	}
+
+	@Override
+	public void deleteByIds(String ids) {
+		if (Check.isNoEmpty(ids)) {
+			String userId = loginUserUtilService.findLoginUserId();
+			List<SysEmail> sysEmails = queryListByIds(Convert.strToList(ids));
+			for (SysEmail sysEmail : sysEmails) {
+				if (Convert.toString(sysEmail.getDeleteUserId())
+						.indexOf(userId) == -1) {
+					sysEmail.setDeleteUserId(sysEmail.getDeleteUserId() + ","
+							+ userId);
+					dao.updateEntity(sysEmail);
+				}
+			}
+		}
+
 	}
 
 }
