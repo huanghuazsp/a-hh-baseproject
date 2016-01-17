@@ -6,41 +6,44 @@
 <title>发邮件列表</title>
 <%=SystemUtil.getBaseJs()%>
 <script type="text/javascript">
-	function doAdd(){
-		Dialog.open({
-			url : 'jsp-message-email-writeemail',
-			params : {
-				callback : function() {
+	function recovery() {
+		var data = {};
+		$.hh.pagelist.callRows('pagelist', function(rows) {
+			var ids = BaseUtil.objsToStr(rows);
+			data.ids = ids;
+			Request.request('message-Email-recovery', {
+				data : data
+			}, function(result) {
+				if (result.success != false) {
 					$("#pagelist").loadData();
-				}
-			}
-		});
-	}
-	function doEdit() {
-		$.hh.pagelist.callRow("pagelist", function(row) {
-			Dialog.open({
-				url : 'jsp-message-email-writeemail',
-				params : {
-					row : row,
-					callback : function() {
-						$("#pagelist").loadData();
-					}
 				}
 			});
 		});
 	}
 	function doDelete() {
-		$.hh.pagelist.deleteData({
-			pageid : 'pagelist',
-			action : 'message-SendEmail-deleteByIds'
+		var data = {};
+		$.hh.pagelist.callRows('pagelist', function(rows) {
+			Dialog.confirm({
+				message : '您确认要删除数据吗？',
+				yes : function(result) {
+					var ids = BaseUtil.objsToStr(rows);
+					data.ids = ids;
+					Request.request('message-Email-thoroughDelete', {
+						data : data
+					}, function(result) {
+						if (result.success != false) {
+							$("#pagelist").loadData();
+						}
+					});
+				}
+			});
 		});
 	}
 </script>
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
-	 <span
-			xtype="button" config="onClick:doEdit,text:'恢复'"></span> <span
+		<span xtype="button" config="onClick:recovery,text:'恢复'"></span> <span
 			xtype="button" config="onClick:doDelete,text:'彻底删除'"></span>
 	</div>
 	<div id="pagelist" xtype="pagelist"

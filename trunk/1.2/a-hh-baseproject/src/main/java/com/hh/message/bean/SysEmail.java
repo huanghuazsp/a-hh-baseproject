@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.hh.hibernate.util.base.BaseTwoEntity;
 
@@ -23,6 +24,11 @@ public class SysEmail extends BaseTwoEntity implements java.io.Serializable {
 	private String readUserId="";
 	
 	private String deleteUserId="";
+	
+	private String thoroughDeleteUserId="";
+	
+	
+	private int read=0;
 
 	private enum Type {
 		yfs, cgx
@@ -125,4 +131,23 @@ public class SysEmail extends BaseTwoEntity implements java.io.Serializable {
 		this.deleteUserId = deleteUserId;
 	}
 
+	@Lob
+	@Column(name="THOROUGH_DELETE_USERID")
+	public String getThoroughDeleteUserId() {
+		return thoroughDeleteUserId;
+	}
+
+	public void setThoroughDeleteUserId(String thoroughDeleteUserId) {
+		this.thoroughDeleteUserId = thoroughDeleteUserId;
+	}
+
+	@Transient
+	public int getRead() {
+		return read;
+	}
+
+	public void setRead(int read) {
+		this.read = read;
+	}
+	
 }
