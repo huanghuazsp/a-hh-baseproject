@@ -12,6 +12,7 @@
 	var height = 450;
 
 	var objectid = '<%=Convert.toString(request.getParameter("id"))%>';
+	var type = '<%=Convert.toString(request.getParameter("type"))%>';
 	var shouObject = null;
 	function findData() {
 		if (objectid) {
@@ -63,7 +64,15 @@
 	}
 	
 	function shoujianlist(){
-		parent.shoujianlist();
+		if(type=='shouemaillist'){
+			
+		}else if(type=='shouemaillist'){
+			
+		}else if(type=='shouemaillist'){
+			
+		}else{
+			parent.shoujianlist();
+		}
 	}
 </script>
 </head>
@@ -100,8 +109,11 @@
 		</form>
 	</div>
 	<div xtype="toolbar">
-		<span xtype="button" config="text:'回复' , onClick : reply "></span><span
-			xtype="button" config="text:'返回收件列表' , onClick : shoujianlist "></span>
+		<% if(Convert.toString(request.getParameter("type")).equals("shouemaillist")){ %>
+		<span id='reply' xtype="button" config="text:'回复' , onClick : reply "></span>
+		<%} %>
+		<span id="back"
+			xtype="button" config="text:'返回列表' , onClick : shoujianlist "></span>
 	</div>
 </body>
 </html>

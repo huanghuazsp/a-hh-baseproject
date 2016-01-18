@@ -42,7 +42,8 @@
 	function doView() {
 		$.hh.pagelist.callRow("pagelist", function(row) {
 			parent.viewemail({
-				id:row.id
+				id:row.id,
+				type:'deleteemaillist'
 			});
 		});
 	}
