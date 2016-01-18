@@ -49,15 +49,15 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime 
 	public Map<String, Object> load() {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		int shouCount = findCount(ParamFactory.getParamHb().is("users", loginUserUtilService.findLoginUserId())
+		int shouCount = findCount(ParamFactory.getParamHb().like("users", loginUserUtilService.findLoginUserId())
 				.nolike("readUserId", loginUserUtilService.findLoginUserId())
-				.nolike("deleteUserId", loginUserUtilService.findLoginUserId())
+				.nolike("deleteUserId", loginUserUtilService.findLoginUserId()).is("type", "yfs")
 				.nolike("thoroughDeleteUserId", loginUserUtilService.findLoginUserId()));
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("count", shouCount);
 		map2.put("id", "93bb64fe-e50a-40b2-ab59-b1ae543cd107");
 		map2.put("text", "收件箱");
-		map2.put("vsj", "jsp-message-email-shouemaillist");
+		map2.put("vsj", "jsp-message-email-emailmain");
 		map.put("email", map2);
 		return map;
 	}

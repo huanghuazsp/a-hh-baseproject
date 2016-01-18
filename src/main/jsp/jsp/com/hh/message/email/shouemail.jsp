@@ -29,7 +29,7 @@
 
 	function reply() {
 		var userObject = {
-			id : shouObject.sendUser,
+			id : shouObject.sendUserId,
 			text : shouObject.sendUserName
 		};
 		var title = "回复-->" + shouObject.title;
@@ -43,7 +43,7 @@
 				filehtml+='<a href="'+fileitem.path+'">'+fileitem.attachmentFileName+'</a>&nbsp;；';
 			}
 		}
-		var content ='<h3>【'+data.userNames+'】于'+ data.dcreate+'向【'+data.sendUserName+'】发送了一封邮件【'+data.title+'】！</h3><br/><br/>';
+		var content ='<h3>【'+data.sendUserName+'】于'+ data.dcreate+'向【'+data.userNames+'】发送了一封邮件【'+data.title+'】！</h3><br/><br/>';
 		if(filehtml){
 			content+='附件：'+filehtml+'<br/>'
 		}
