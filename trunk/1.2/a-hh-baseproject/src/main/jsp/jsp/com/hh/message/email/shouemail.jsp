@@ -64,12 +64,12 @@
 	}
 	
 	function shoujianlist(){
-		if(type=='shouemaillist'){
-			
-		}else if(type=='shouemaillist'){
-			
-		}else if(type=='shouemaillist'){
-			
+		if(type=='sendemaillist'){
+			parent.sendemaillist();
+		}else if(type=='cgxemaillist'){
+			parent.cgxemaillist();
+		}else if(type=='deleteemaillist'){
+			parent.deleteemaillist();
 		}else{
 			parent.shoujianlist();
 		}
