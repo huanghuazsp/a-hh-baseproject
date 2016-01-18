@@ -12,10 +12,18 @@
 			action : 'message-Email-deleteByIds'
 		});
 	}
+	function doView() {
+		$.hh.pagelist.callRow("pagelist", function(row) {
+			parent.viewemail({
+				id:row.id
+			});
+		});
+	}
 </script>
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
+		<span xtype="button" config="onClick: doView ,text:'查看'"></span>
 		 <span
 			xtype="button" config="onClick:doDelete,text:'删除'"></span>
 	</div>

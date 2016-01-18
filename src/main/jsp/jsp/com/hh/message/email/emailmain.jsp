@@ -11,6 +11,7 @@
 			text : '写信',
 			img : '/hhcommon/images/icons/email/email_edit.png',
 			onClick : function() {
+				paramsData.writeObject=null;
 				$('#email').attr('src','jsp-message-email-writeemail');
 			}
 		},{
