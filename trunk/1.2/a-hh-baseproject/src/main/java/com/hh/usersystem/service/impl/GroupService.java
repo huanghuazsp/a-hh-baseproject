@@ -52,7 +52,7 @@ public class GroupService extends BaseService<HhXtGroup> {
 	public HhXtGroup save(HhXtGroup entity) throws MessageException {
 		hhXtYhGroupdao.deleteEntity(HhXtYhGroup.class, "groupId",
 				entity.getId());
-		HhXtGroup hhXtGroup = super.save(entity);
+		HhXtGroup hhXtGroup = super.saveTree(entity);
 
 		String userIds = entity.getUsers();
 		if (Check.isNoEmpty(userIds)) {
