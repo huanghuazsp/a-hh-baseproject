@@ -62,6 +62,17 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime 
 		return map;
 	}
 
+	@Transactional
+	public SysEmail findObjectById(String id) {
+		String userId = loginUserUtilService.findLoginUserId();
+		SysEmail sysEmail = super.findObjectById(id);
+		if (Convert.toString(sysEmail.getReadUserId()).indexOf(userId) == -1) {
+			sysEmail.setReadUserId(sysEmail.getReadUserId() + "," + userId);
+			dao.updateEntity(sysEmail);
+		}
+		return sysEmail;
+	}
+
 	public PagingData<SysEmail> queryDeletePage(SysEmail object, PageRange pageRange) {
 		return dao.queryPagingData(this.getGenericType(0),
 				ParamFactory.getParamHb().like("deleteUserId", loginUserUtilService.findLoginUserId())
@@ -94,14 +105,14 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime 
 						.nolike("deleteUserId", loginUserUtilService.findLoginUserId())
 						.nolike("thoroughDeleteUserId", loginUserUtilService.findLoginUserId()).is("type", "yfs")
 						.orderDesc("dcreate"),
-				pageRange, new String[] { "id", "title", "dcreate", "type" });
-		
+				pageRange, new String[] { "id", "title", "dcreate", "type", "readUserId" });
+
 		for (SysEmail sysEmail : page.getItems()) {
 			if (Convert.toString(sysEmail.getReadUserId()).indexOf(userId) > -1) {
 				sysEmail.setRead(1);
 			}
 		}
-		
+
 		return page;
 	}
 

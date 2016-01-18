@@ -15,7 +15,7 @@
 	if(objectid==''){
 		objectid = params.objectId||'';
 	}
-
+	
 	function save() {
 		$.hh.validation.check('form', function(formData) {
 			Request.request('usersystem-user-save', {
@@ -56,6 +56,9 @@
 		<form id="form" xtype="form">
 			<span xtype="text" config=" hidden:true,name : 'id'"></span> <span
 				xtype="text" config=" hidden:true,name : 'vmm'"></span>
+			<span
+				xtype="text" config=" hidden:true,name : 'theme'"></span>
+			<span xtype="text" config=" hidden:true,name : 'desktopType'"></span>
 			<table xtype="form">
 				<tr>
 					<td xtype="label">用户名称：</td>
