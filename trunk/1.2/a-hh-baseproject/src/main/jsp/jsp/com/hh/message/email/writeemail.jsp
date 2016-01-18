@@ -18,7 +18,7 @@
 			formData.type = 'cgx';
 			var userData = $('#shoujianrenspan').getValueData();
 			if(userData){
-				formData.userNames = userData.text;
+				formData.userNames = BaseUtil.objsToStr(userData,'text');
 			}
 			Request.request('message-Email-sendEmail', {
 				data : formData,
@@ -39,7 +39,7 @@
 			formData.type = 'yfs';
 			var userData = $('#shoujianrenspan').getValueData();
 			if(userData){
-				formData.userNames = userData.text;
+				formData.userNames = BaseUtil.objsToStr(userData,'text');
 			}
 			Request.request('message-Email-sendEmail', {
 				data : formData,
