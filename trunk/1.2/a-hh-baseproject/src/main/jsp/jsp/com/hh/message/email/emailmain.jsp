@@ -62,15 +62,30 @@
 		$('#email').attr('src','jsp-message-email-shouemail?'+$.param(params));
 	}
 	
-	
+	var params = BaseUtil.getIframeParams();
 	var paramsData = {
 			
 	};
+	if(params.userids && params.usernames ){
+		paramsData.writeObject = {
+				users :{
+					id:params.userids,
+					text:params.usernames
+				}
+		};
+	}
 	
 	function writeemail(params){
 		paramsData.writeObject = params;
 		$('#email').attr('src','jsp-message-email-writeemail');
 	}
+	
+	<%
+		String baseurl = "jsp-message-email-shouemaillist";
+		if("write".equals(request.getParameter("type"))){
+			baseurl = "jsp-message-email-writeemail";
+		}
+	%>
 </script>
 </head>
 <body>
@@ -80,7 +95,7 @@
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="email" name="email" width=100%
-				height=100% frameborder=0 src="jsp-message-email-shouemaillist"></iframe>
+				height=100% frameborder=0 src="<%=baseurl%>"></iframe>
 		</div>
 	</div>
 </body>
