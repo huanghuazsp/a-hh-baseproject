@@ -23,11 +23,11 @@ import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtTree;
+import com.hh.usersystem.bean.usersystem.HhXtGroup;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.bean.usersystem.HhXtYhCdZmtb;
 import com.hh.usersystem.bean.usersystem.HhXtYhCyLxr;
-import com.hh.usersystem.bean.usersystem.HhXtYhGroup;
 import com.hh.usersystem.bean.usersystem.HhXtYhJs;
 import com.hh.usersystem.bean.usersystem.HhXtYhOrg;
 import com.hh.usersystem.bean.usersystem.Organization;
@@ -54,9 +54,10 @@ public class UserService extends BaseService<HhXtYh> {
 
 	@Autowired
 	private IHibernateDAO<HhXtYhCyLxr> cylxrdao;
-
+	
+	
 	@Autowired
-	private IHibernateDAO<HhXtYhGroup> hhxtyhGroup;
+	private GroupService groupService;
 
 	public Map<? extends String, ? extends Object> queryOnLinePagingData(
 			HhXtYh hhXtYh, PageRange pageRange) {
@@ -140,13 +141,13 @@ public class UserService extends BaseService<HhXtYh> {
 		}
 
 		if (Check.isNoEmpty(groups)) {
-			List<String> groupIdList = Convert.strToList(groups);
-			DetachedCriteria ownerCriteria = DetachedCriteria
-					.forEntityName(HhXtYhGroup.class.getName());
-			ownerCriteria.setProjection(Property.forName("yhId"));
-			ownerCriteria.add(Restrictions.in("groupId", groupIdList));
-			Criterion groupCriterion = Property.forName("id").in(ownerCriteria);
-			orCriterion.add(groupCriterion);
+//			List<String> groupIdList = Convert.strToList(groups);
+//			DetachedCriteria ownerCriteria = DetachedCriteria
+//					.forEntityName(HhXtYhGroup.class.getName());
+//			ownerCriteria.setProjection(Property.forName("yhId"));
+//			ownerCriteria.add(Restrictions.in("groupId", groupIdList));
+//			Criterion groupCriterion = Property.forName("id").in(ownerCriteria);
+//			orCriterion.add(groupCriterion);
 		}
 
 		if (!Check.isEmpty(orgs)) {
@@ -513,13 +514,9 @@ public class UserService extends BaseService<HhXtYh> {
 
 	private List<String> queryUserIdListByGroup(String groupId) {
 		List<String> yhIdList = new ArrayList<String>();
-		List<HhXtYhGroup> hhXtYhJList = hhxtyhGroup.queryList(
-				HhXtYhGroup.class, Restrictions.eq("groupId", groupId));
-		for (HhXtYhGroup hhXtYhJs : hhXtYhJList) {
-			yhIdList.add(hhXtYhJs.getYhId());
-		}
-		if (Check.isEmpty(yhIdList)) {
-			return new ArrayList<String>();
+		HhXtGroup hhXtGroup = groupService.findObjectById(groupId);
+		if (hhXtGroup!=null && Check.isNoEmpty(hhXtGroup.getUsers())) {
+			yhIdList = Convert.strToList(hhXtGroup.getUsers());
 		}
 		return yhIdList;
 	}
