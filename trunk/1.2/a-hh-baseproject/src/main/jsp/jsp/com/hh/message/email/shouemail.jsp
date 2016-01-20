@@ -82,30 +82,27 @@
 			<table xtype="form">
 				<tr>
 					<td xtype="label" style="width: 80px;">标题：</td>
-					<td><span xtype="text" config=" name : 'title',required :true"></span></td>
+					<td colspan="3"><span xtype="text" config=" name : 'title',required :true"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">发件人：</td>
 					<td><span xtype="text" config="name: 'sendUserName' "></span></td>
-				</tr>
-				<tr>
 					<td xtype="label">时间：</td>
 					<td><span xtype="date" config="name: 'dcreate' ,type:'datetime'"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">收件人：</td>
-					<td><span xtype="text" config="name: 'userNames' "></span></td>
+					<td  colspan="3"><span xtype="text" config="name: 'userNames' "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">附件：</td>
-					<td><span xtype="file"
+					<td   colspan="3"><span xtype="file"
 						config="name: 'files' ,filePath:'task/sys_send_email#sys_shou_email/files' "></span></td>
 				</tr>
-				<tr>
-					<td xtype="label">内容：</td>
-					<td ><span xtype="textarea" config="name: 'content' "></span></td>
-				</tr>
 			</table>
+			<div>
+						<span xtype="textarea" config="name: 'content' "></span>
+					</div>
 		</form>
 	</div>
 	<div xtype="toolbar">

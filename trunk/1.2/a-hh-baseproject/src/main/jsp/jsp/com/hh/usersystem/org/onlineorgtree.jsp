@@ -45,12 +45,14 @@
 						id:'e9fa8689-c362-4c66-bd75-d1b132bd5211',
 						text:'个人邮件',
 						vsj:'jsp-message-email-emailmain?type=write',
-						userids : userids,
-						usernames : usernames
+						params:{
+							userids : userids,
+							usernames : usernames
+						}
 				}
 
 				if (BaseUtil.getRootFrame().addTab) {
-					BaseUtil.getRootFrame().addTab(data);
+					BaseUtil.addTab(data)
 				} else {
 					Request.href(data.vsj);
 				}
