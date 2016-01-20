@@ -2,6 +2,7 @@ package com.hh.usersystem.bean.usersystem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -17,19 +18,10 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order
 public class HhXtGroup  extends BaseTreeNodeEntity<HhXtGroup> {
-//	private String text;
 	private String remark;
-
 	private String users;
 	
-//	@Column(length = 64)
-//	public String getText() {
-//		return text;
-//	}
-//
-//	public void setText(String text) {
-//		this.text = text;
-//	}
+	private String type;
 
 	@Column(length = 1024)
 	public String getRemark() {
@@ -41,7 +33,8 @@ public class HhXtGroup  extends BaseTreeNodeEntity<HhXtGroup> {
 	}
 
 	
-	@Transient
+	@Lob
+	@Column(name="USERS")
 	public String getUsers() {
 		return users;
 	}
@@ -49,7 +42,14 @@ public class HhXtGroup  extends BaseTreeNodeEntity<HhXtGroup> {
 	public void setUsers(String users) {
 		this.users = users;
 	}
-	
-	
+
+	@Transient
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }
