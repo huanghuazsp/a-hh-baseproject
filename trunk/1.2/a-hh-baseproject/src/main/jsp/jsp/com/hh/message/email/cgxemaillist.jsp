@@ -20,13 +20,19 @@
 			});
 		});
 	}
+	
+	function doEdit(){
+		$.hh.pagelist.callRow("pagelist", function(row) {
+			parent.writeemail({id:row.id});
+		});
+	}
 </script>
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
 		<span xtype="button" config="onClick: doView ,text:'查看'"></span>
-		 <span
-			xtype="button" config="onClick:doDelete,text:'删除'"></span>
+		<span xtype="button" config="onClick: doEdit ,text:'编辑'"></span>
+		<span xtype="button" config="onClick:doDelete,text:'删除'"></span>
 	</div>
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'message-Email-queryCGXPage' ,column : [

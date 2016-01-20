@@ -76,8 +76,13 @@
 	}
 	
 	function writeemail(params){
-		paramsData.writeObject = params;
-		$('#email').attr('src','jsp-message-email-writeemail');
+		if(params && params.id){
+			paramsData.writeObject = null;
+			$('#email').attr('src','jsp-message-email-writeemail?id='+params.id);
+		}else{
+			paramsData.writeObject = params;
+			$('#email').attr('src','jsp-message-email-writeemail');
+		}
 	}
 	
 	<%
