@@ -60,30 +60,28 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	private Map<String, List<String>> hhXtCzPageTextMap = new HashMap<String, List<String>>();
 
 	private List<String> jsList = new ArrayList<String>();// 角色ID
-//	private HHXtZmsx hhXtZmsx;// 用户属性
+	// private HHXtZmsx hhXtZmsx;// 用户属性
 	private List<Organization> organizationList = new ArrayList<Organization>();// 岗位
 	private String orgIdsStr;
 	private String jsIdsStr;
 
-	private Organization organization;
-	
-	
+	private Map<String, Organization> organization;
+
 	private String vzmbj = StaticProperties.HHXT_USERSYSTEM_ZMBJ;
 	private int pageSize = 15;
 	private String defaultOrgId;
 	private String theme;
 	private String desktopType;
-	
 
-//	@OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-//	@JoinColumn(name = "ID")
-//	public HHXtZmsx getHhXtZmsx() {
-//		return hhXtZmsx;
-//	}
-//
-//	public void setHhXtZmsx(HHXtZmsx hhXtZmsx) {
-//		this.hhXtZmsx = hhXtZmsx;
-//	}
+	// @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	// @JoinColumn(name = "ID")
+	// public HHXtZmsx getHhXtZmsx() {
+	// return hhXtZmsx;
+	// }
+	//
+	// public void setHhXtZmsx(HHXtZmsx hhXtZmsx) {
+	// this.hhXtZmsx = hhXtZmsx;
+	// }
 
 	@Transient
 	public List<String> getJsList() {
@@ -268,67 +266,73 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	public void setHhXtCzPageTextMap(Map<String, List<String>> hhXtCzPageTextMap) {
 		this.hhXtCzPageTextMap = hhXtCzPageTextMap;
 	}
+
 	@Transient
 	@Override
 	public String getOrgId() {
-		if (organization != null && organization.getJg()!=null) {
-			organization.getJg().getId();
+		if (organization != null && organization.get("jg") != null) {
+			organization.get("jg").getId();
 		}
 		return "";
 	}
+
 	@Transient
 	@Override
 	public String getOrgText() {
-		if (organization != null && organization.getJg()!=null) {
-			organization.getJg().getText();
+		if (organization != null && organization.get("jg") != null) {
+			organization.get("jg").getText();
 		}
 		return "";
 	}
+
 	@Transient
 	@Override
 	public String getJobId() {
-		if (organization != null) {
-			organization.getId();
+		if (organization != null && organization.get("gw") != null) {
+			organization.get("gw").getId();
 		}
 		return "";
 	}
+
 	@Transient
 	@Override
 	public String getJobText() {
-		if (organization != null) {
-			organization.getText();
+		if (organization != null && organization.get("gw") != null) {
+			organization.get("gw").getText();
 		}
 		return "";
 	}
+
 	@Transient
 	@Override
 	public String getDeptId() {
-		if (organization != null && organization.getBm()!=null) {
-			organization.getBm().getId();
+		if (organization != null && organization.get("bm") != null) {
+			organization.get("bm").getId();
 		}
 		return "";
 	}
+
 	@Transient
 	@Override
 	public String getDeptText() {
-		if (organization != null && organization.getBm()!=null) {
-			organization.getBm().getText();
+		if (organization != null && organization.get("bm") != null) {
+			organization.get("bm").getText();
 		}
 		return "";
 	}
 
+	@Column(name = "VZMBJ", length = 256)
+	public String getVzmbj() {
+		return vzmbj;
+	}
+
 	@Transient
-	public Organization getOrganization() {
+	public Map<String, Organization> getOrganization() {
 		return organization;
 	}
 
-	public void setOrganization(Organization organization) {
+	public void setOrganization(Map<String, Organization> organization) {
 		this.organization = organization;
-	}
-
-	@Column(name="VZMBJ",length=256)
-	public String getVzmbj() {
-		return vzmbj;
 	}
 
 	public void setVzmbj(String vzmbj) {
@@ -344,7 +348,7 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		this.pageSize = pageSize;
 	}
 
-	@Column(name = "DEFAULT_ORG_ID",length=36)
+	@Column(name = "DEFAULT_ORG_ID", length = 36)
 	public String getDefaultOrgId() {
 		return defaultOrgId;
 	}
@@ -353,7 +357,7 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		this.defaultOrgId = defaultOrgId;
 	}
 
-	@Column(name = "THEME_",length=36)
+	@Column(name = "THEME_", length = 36)
 	public String getTheme() {
 		return theme;
 	}
@@ -362,7 +366,7 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		this.theme = theme;
 	}
 
-	@Column(name = "DESKTOP_TYPE_",length=36)
+	@Column(name = "DESKTOP_TYPE_", length = 36)
 	public String getDesktopType() {
 		return desktopType;
 	}

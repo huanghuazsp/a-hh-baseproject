@@ -79,11 +79,15 @@ public class Actionlogin extends BaseAction {
 					map.put("text", hhXtYh.getText());
 					map.put("theme", hhXtYh.getTheme());
 					if (hhXtYh.getOrganization() != null) {
-						Organization organization =hhXtYh.getOrganization();
-						Organization dept = organization.getBm();
-						Organization org = organization.getJg();
-						map.put("jobId", organization.getId());
-						map.put("jobText", organization.getText());
+						Map<String, Organization> organization =hhXtYh.getOrganization();
+						Organization dept = organization.get("bm");
+						Organization org = organization.get("jg");
+						Organization gw = organization.get("gw");
+					
+						if (gw != null) {
+							map.put("jobId", gw.getId());
+							map.put("jobText", gw.getText());
+						}
 						if (dept != null) {
 							map.put("deptId", dept.getId());
 							map.put("deptText", dept.getText());

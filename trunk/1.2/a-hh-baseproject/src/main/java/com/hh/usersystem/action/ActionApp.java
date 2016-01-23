@@ -9,6 +9,7 @@ import com.hh.system.util.base.BaseAction;
 import com.hh.usersystem.bean.usersystem.HhXtCd;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.bean.usersystem.Organization;
+import com.hh.usersystem.service.impl.LoginService;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.OrganizationService;
 import com.hh.usersystem.service.impl.UserService;
@@ -30,6 +31,9 @@ public class ActionApp extends BaseAction {
 	@Autowired
 	private ZmtbService zmtbService;
 
+	@Autowired
+	private LoginService loginService;
+	
 	public Object queryLoginOrgList() {
 		return loginUserUtilService.findLoginUser()
 				.getOrganizationList();
@@ -42,7 +46,7 @@ public class ActionApp extends BaseAction {
 
 		for (Organization organization : organizations) {
 			if (organization.getId().equals(currOrgId)) {
-				hhXtYh.setOrganization(organization);
+				hhXtYh.setOrganization(loginService.addGwJtJgBm(organization));
 				ActionContext.getContext().getSession()
 						.put("loginuser", hhXtYh);
 				organization1 = organization;
