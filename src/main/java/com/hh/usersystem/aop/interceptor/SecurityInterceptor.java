@@ -106,38 +106,38 @@ public class SecurityInterceptor implements Interceptor {
 							isSecurity = true;
 							break;
 						} else {
-							Organization organization = loginUserUtilService
+							Map<String, Organization> organizationMap = loginUserUtilService
 									.findLoginUserOrg();
-							if (organization != null) {
+							Organization organization = null;
+							if (organizationMap != null) {
 								if (OperationLevel.BBM.toString().equals(
 										hhXtCz.getOperLevel())) {
-									if (organization.getBm() != null) {
-										organization = organization.getBm();
+									if (organizationMap.get("bm") != null) {
+										organization =organizationMap.get("bm");
 									}
 									noSecurity = "<br/>您的操作范围是本<font color=red>部门</font>！";
 								} else if (OperationLevel.BJG.toString()
 										.equals(hhXtCz.getOperLevel())) {
-									if (organization.getJg() == null) {
-										if (organization.getBm() != null) {
-											organization = organization.getBm();
+									if (organizationMap.get("jg")  == null) {
+										if (organizationMap.get("bm")  != null) {
+											organization =organizationMap.get("bm") ;
 										}
 									} else {
-										organization = organization.getJg();
+										organization = organizationMap.get("jg") ;
 									}
 									noSecurity = "<br/>您的操作范围是本<font color=red>机构</font>！";
 								} else if (OperationLevel.BJT.toString()
 										.equals(hhXtCz.getOperLevel())) {
-									if (organization.getJt() == null) {
-										if (organization.getJg() == null) {
-											if (organization.getBm() != null) {
-												organization = organization
-														.getBm();
+									if (organizationMap.get("jt") == null) {
+										if ( organizationMap.get("jg") == null) {
+											if (organizationMap.get("bm")  != null) {
+												organization = organizationMap.get("bm") ;
 											}
 										} else {
-											organization = organization.getJg();
+											organization =organizationMap.get("jg") ;
 										}
 									} else {
-										organization = organization.getJt();
+										organization = organizationMap.get("jt");
 									}
 									noSecurity = "<br/>您的操作范围是本<font color=red>集团</font>！";
 								} else if (OperationLevel.BGW.toString()

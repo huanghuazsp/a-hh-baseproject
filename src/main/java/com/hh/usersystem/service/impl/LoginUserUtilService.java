@@ -2,6 +2,7 @@ package com.hh.usersystem.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -54,14 +55,18 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 			return "";
 		}
 		if (user.getOrganization()!=null) {
-			Organization organization =user.getOrganization();
-			return organization.getId();
+			Map<String, Organization> organization =user.getOrganization();
+			if (organization.get("base")!=null) {
+				return organization.get("base").getId();
+			}else{
+				return "";
+			}
 		} else {
 			return "";
 		}
 	}
 
-	public Organization findLoginUserOrg() {
+	public Map<String, Organization> findLoginUserOrg() {
 		HhXtYh user = findLoginUser();
 		if (user==null) {
 			return null;
@@ -75,23 +80,24 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 			return null;
 		}
 		if (user.getOrganization()!=null) {
-			Organization organization =user.getOrganization();
+			Map<String, Organization> organizationMap =user.getOrganization();
+			Organization organization =null;
 			HhXtYh hhXtYh = findLoginUser();
 			List<HhXtCz> hhXtCzList = hhXtYh.getHhXtCzList();
 			for (HhXtCz hhXtCz : hhXtCzList) {
 				if (action.equals(hhXtCz.getVurl())) {
 					if (OperationLevel.BBM.toString().equals(
 							hhXtCz.getOperLevel())) {
-						organization = organization.getBm();
+						organization = organizationMap.get("bm");
 					} else if (OperationLevel.BJG.toString().equals(
 							hhXtCz.getOperLevel())) {
-						organization = organization.getJg();
+						organization =  organizationMap.get("jg");
 					} else if (OperationLevel.BJT.toString().equals(
 							hhXtCz.getOperLevel())) {
-						organization = organization.getJt();
+						organization =  organizationMap.get("jt");
 					} else if (OperationLevel.BGW.toString().equals(
 							hhXtCz.getOperLevel())) {
-						organization = findLoginUserOrg();
+						organization =  organizationMap.get("gw");
 					} else {
 						organization = null;
 					}

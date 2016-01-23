@@ -16,7 +16,7 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 @Entity
 @Table(name = "HH_XT_GROUP")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Order
+@Order(fields = "order", sorts = "asc")
 public class HhXtGroup  extends BaseTreeNodeEntity<HhXtGroup> {
 	private String remark;
 	private String users;

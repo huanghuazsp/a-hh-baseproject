@@ -18,7 +18,7 @@ import com.hh.hibernate.util.base.BaseTreeNodeEntity;
 @Entity
 @Table(name = "HH_ORG_ORGANIZATION")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE,region="eternal")
-@Order
+@Order(fields = "order", sorts = "asc")
 public class Organization    extends BaseTreeNodeEntity<Organization> implements java.io.Serializable {
 	@Override
 	public String toString() {

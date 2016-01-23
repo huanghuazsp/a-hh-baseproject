@@ -19,7 +19,7 @@ import com.hh.hibernate.util.base.BaseTreeNodeEntity;
 @Entity
 @Table(name = "HH_XT_CD")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Order(fields = "order", sorts = "desc")
+@Order(fields = "order", sorts = "asc")
 public class HhXtCd extends BaseTreeNodeEntity<HhXtCd> {
 	private String vsj;
 	private String vbz;

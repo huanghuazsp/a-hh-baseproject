@@ -96,9 +96,9 @@
 						config="name: 'jsIdsStr'  , url:'usersystem-role-queryPagingData' ,tableName:'HH_XT_JS' "></td>
 				</tr>
 				<tr trtype="systemmanager" >
-					<td xtype="label">岗位：</td>
+					<td xtype="label">所属机构：</td>
 					<td colspan="3"><span xtype="selectOrg"
-						config="name: 'orgIdsStr'  , many : true , params_selectType : 'job' "></td>
+						config="name: 'orgIdsStr'  , many : true "></td>
 				</tr>
 			</table>
 		</form>

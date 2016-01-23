@@ -311,7 +311,7 @@ public class OrganizationService  extends BaseService<Organization>  {
 				addOrgUser(organization2);
 			}
 		}
-			if (organization.getLx_() == 3) {
+//			if (organization.getLx_() == 3) {
 				List<HhXtYhOrg> hhXtYhOrgs = hhXtYhOrgDAO.queryList(
 						HhXtYhOrg.class, ParamFactory.getParamHb().is("orgId",
 										organization.getId()));
@@ -343,7 +343,7 @@ public class OrganizationService  extends BaseService<Organization>  {
 						organization.getChildren().add(extTree);
 					}
 				}
-		}
+//		}
 	}
 
 	public List<Organization> queryCurrOrgTree(String node, String action) {

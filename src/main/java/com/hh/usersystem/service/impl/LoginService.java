@@ -60,10 +60,8 @@ public class LoginService {
 
 	public ReturnModel savefindLogin(HhXtYh xtYh) {
 		ReturnModel returnModel = new ReturnModel();
-		List<HhXtYh> xtYhList = xtyhdao.queryList(
-				HhXtYh.class,
-				ParamFactory.getParamHb().is("vdlzh",
-						xtYh.getVdlzh()));
+		List<HhXtYh> xtYhList = xtyhdao.queryList(HhXtYh.class, ParamFactory
+				.getParamHb().is("vdlzh", xtYh.getVdlzh()));
 		if (Check.isEmpty(xtYhList)) {
 			returnModel.setType(ReturnModel.TYPE_OK);
 			returnModel.setMsg(MsgProperties.system_userlogin_notexist);
@@ -98,8 +96,9 @@ public class LoginService {
 					returnModel.setHref("webapp-desktop-" + desktop);
 
 					List<HhXtYhJs> hhXtYhJsList = xtyhjsdao.queryList(
-							HhXtYhJs.class, ParamFactory.getParamHb().is("yhId",
-											hhXtYh.getId()));
+							HhXtYhJs.class,
+							ParamFactory.getParamHb()
+									.is("yhId", hhXtYh.getId()));
 
 					List<String> jsids = new ArrayList<String>();
 					for (HhXtYhJs hhXtYhJs : hhXtYhJsList) {
@@ -108,30 +107,32 @@ public class LoginService {
 						}
 					}
 
-					Organization organization = addGw(hhXtYh);
-
+					Map<String, Organization> organization = addGw(hhXtYh);
 					if (organization != null) {
-						List<String> orgIdList = new ArrayList<String>();
-						orgIdList.add(organization.getId());
-						if (organization.getJt() != null) {
-							orgIdList.add(organization.getJt().getId());
-						}
-						if (organization.getJg() != null) {
-							orgIdList.add(organization.getJg().getId());
-						}
-						if (organization.getBm() != null) {
-							orgIdList.add(organization.getBm().getId());
-						}
 
-						List<HhXtOrgJs> hhXtOrgJsList = hhxtorgjsdao.queryList(
-								HhXtOrgJs.class, "orgId", orgIdList);
-						for (HhXtOrgJs hhXtOrgJs : hhXtOrgJsList) {
-							if (!jsids.contains(hhXtOrgJs.getJsId())) {
-								jsids.add(hhXtOrgJs.getJsId());
+						if (organization.get("gw") != null) {
+							List<String> orgIdList = new ArrayList<String>();
+							orgIdList.add(organization.get("gw").getId());
+							if (organization.get("jt") != null) {
+								orgIdList.add(organization.get("jt").getId());
+							}
+							if (organization.get("jg") != null) {
+								orgIdList.add(organization.get("jg").getId());
+							}
+							if (organization.get("bm") != null) {
+								orgIdList.add(organization.get("bm").getId());
+							}
+
+							List<HhXtOrgJs> hhXtOrgJsList = hhxtorgjsdao
+									.queryList(HhXtOrgJs.class, "orgId",
+											orgIdList);
+							for (HhXtOrgJs hhXtOrgJs : hhXtOrgJsList) {
+								if (!jsids.contains(hhXtOrgJs.getJsId())) {
+									jsids.add(hhXtOrgJs.getJsId());
+								}
 							}
 						}
 					}
-
 					List<HhXtJs> hhXtJsList = new ArrayList<HhXtJs>();
 					List<HhXtJsCd> hhXtJsCdList = new ArrayList<HhXtJsCd>();
 					List<HhXtJsCz> hhXtJsCzList = new ArrayList<HhXtJsCz>();
@@ -141,12 +142,12 @@ public class LoginService {
 								ParamFactory.getParamHb().is("nzt", 0)
 										.in("id", jsids));
 						if (hhXtJsList.size() != 0) {
-							hhXtJsCdList = xtjscddao.queryList(HhXtJsCd.class,
-									ParamFactory.getParamHb().in(
-													"jsId", jsids));
-							hhXtJsCzList = xtjsczdao.queryList(HhXtJsCz.class,
-									ParamFactory.getParamHb().in(
-													"jsId", jsids));
+							hhXtJsCdList = xtjscddao
+									.queryList(HhXtJsCd.class, ParamFactory
+											.getParamHb().in("jsId", jsids));
+							hhXtJsCzList = xtjsczdao
+									.queryList(HhXtJsCz.class, ParamFactory
+											.getParamHb().in("jsId", jsids));
 						}
 					}
 
@@ -214,12 +215,12 @@ public class LoginService {
 
 					hhXtYh.setHhXtJsList(hhXtJsList);
 
-//					createZmsx(hhXtYh);
+					// createZmsx(hhXtYh);
 					HhXtYh hhXtYh2 = new HhXtYh();
 					try {
 						BeanUtils.copyProperties(hhXtYh2, hhXtYh);
 						hhXtYh2.setVmm("");
-//						hhXtYh2.setHhXtZmsx(hhXtYh.getHhXtZmsx());
+						// hhXtYh2.setHhXtZmsx(hhXtYh.getHhXtZmsx());
 						ActionContext.getContext().getSession()
 								.put("loginuser", hhXtYh2);
 					} catch (IllegalAccessException e) {
@@ -236,41 +237,29 @@ public class LoginService {
 		return returnModel;
 	}
 
-	private Organization addGw(HhXtYh hhXtYh) {
+	private Map<String, Organization> addGw(HhXtYh hhXtYh) {
 		// 岗位
 		userService.editHhXtYh_orgList(hhXtYh);
-
+		List<Map<String, Organization>> organizationMapList = new ArrayList<Map<String, Organization>>();
 		for (int i = 0; i < hhXtYh.getOrganizationList().size(); i++) {
-			List<Organization> organizations1 = hhXtOrgDAO
-					.queryList(
-							"select o from Organization o where ? like '%'|| o.code_||'%' and length(o.code_) in (select max(length(o.code_)) from Organization o where ? like '%'|| o.code_||'%' group by lx_) ",
-							new Object[] {
-									hhXtYh.getOrganizationList().get(i)
-											.getCode_(),
-									hhXtYh.getOrganizationList().get(i)
-											.getCode_() }, true);
-			for (Organization organization : organizations1) {
-				if (organization.getLx_() == 0) {
-					hhXtYh.getOrganizationList().get(i).setJt(organization);
-				} else if (organization.getLx_() == 1) {
-					hhXtYh.getOrganizationList().get(i).setJg(organization);
-				} else if (organization.getLx_() == 2) {
-					hhXtYh.getOrganizationList().get(i).setBm(organization);
-				}
-			}
+			Organization organization3 = hhXtYh.getOrganizationList().get(i);
+
+			Map<String, Organization> organizationMap = addGwJtJgBm(organization3);
+
+			organizationMapList.add(organizationMap);
 		}
 
 		List<Organization> organizations = hhXtYh.getOrganizationList();
 
 		if (organizations.size() == 1) {
-			hhXtYh.setOrganization( hhXtYh.getOrganizationList().get(0));
-			return hhXtYh.getOrganizationList().get(0);
+			hhXtYh.setOrganization(organizationMapList.get(0));
+			return organizationMapList.get(0);
 		} else {
 			if (!Check.isEmpty(hhXtYh.getDefaultOrgId())) {
-				for (Organization organization : organizations) {
-					if (hhXtYh.getDefaultOrgId()
-							.equals(organization.getId())) {
-						hhXtYh.setOrganization( organization);
+				for (Map<String, Organization> organization : organizationMapList) {
+					if (hhXtYh.getDefaultOrgId().equals(
+							organization.get("base").getId())) {
+						hhXtYh.setOrganization(organization);
 						return organization;
 					}
 				}
@@ -279,20 +268,41 @@ public class LoginService {
 		}
 	}
 
-//	private void createZmsx(HhXtYh hhXtYh) {
-//		if (hhXtYh.getHhXtZmsx() == null) {
-//			HHXtZmsx hhXtZmsx = new HHXtZmsx();
-//			hhXtZmsx.setId(UUID.randomUUID().toString());
-//			hhXtYh.setHhXtZmsx(hhXtZmsx);
-//			xtyhdao.updateEntity(hhXtYh);
-//		}
-//	}
+	public Map<String, Organization> addGwJtJgBm(Organization organization3) {
+		Map<String, Organization> organizationMap = new HashMap<String, Organization>();
+		organizationMap.put("base", organization3);
+		List<Organization> organizations1 = hhXtOrgDAO
+				.queryList(
+						"select o from Organization o where ? like '%'|| o.code_||'%' and length(o.code_) in (select max(length(o.code_)) from Organization o where ? like '%'|| o.code_||'%' group by lx_) ",
+						new Object[] { organization3.getCode_(),
+								organization3.getCode_() }, true);
+		for (Organization organization : organizations1) {
+			if (organization.getLx_() == 0) {
+				organizationMap.put("jt", organization);
+			} else if (organization.getLx_() == 1) {
+				organizationMap.put("jg", organization);
+			} else if (organization.getLx_() == 2) {
+				organizationMap.put("bm", organization);
+			} else {
+				organizationMap.put("gw", organization);
+			}
+		}
+		return organizationMap;
+	}
+
+	// private void createZmsx(HhXtYh hhXtYh) {
+	// if (hhXtYh.getHhXtZmsx() == null) {
+	// HHXtZmsx hhXtZmsx = new HHXtZmsx();
+	// hhXtZmsx.setId(UUID.randomUUID().toString());
+	// hhXtYh.setHhXtZmsx(hhXtZmsx);
+	// xtyhdao.updateEntity(hhXtYh);
+	// }
+	// }
 
 	private List<HhXtCd> queryZmtbList(HhXtYh hhXtYh, List<String> hhxtcdIdList) {
 		List<HhXtYhCdZmtb> hhXtYhCdZmtbList = xtyhcdzmtb.queryList(
 				HhXtYhCdZmtb.class,
-				ParamFactory.getParamHb().is("yhId",
-						hhXtYh.getId())
+				ParamFactory.getParamHb().is("yhId", hhXtYh.getId())
 		// .addCondition(Order.asc(StaticVar.ORDER))
 				);
 
