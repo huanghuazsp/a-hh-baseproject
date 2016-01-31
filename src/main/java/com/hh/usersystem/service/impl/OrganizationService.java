@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +23,12 @@ import com.hh.system.util.dto.ParamInf;
 import com.hh.usersystem.bean.usersystem.HhXtJs;
 import com.hh.usersystem.bean.usersystem.HhXtOrgJs;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
-import com.hh.usersystem.bean.usersystem.HhXtYhOrg;
 import com.hh.usersystem.bean.usersystem.Organization;
 import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 
 @Service
 public class OrganizationService  extends BaseService<Organization>  {
-	@Autowired
-	private IHibernateDAO<HhXtYhOrg> hhXtYhOrgDAO;
 	@Autowired
 	private IHibernateDAO<HhXtYh> xtyhdao;
 	@Autowired
@@ -259,7 +255,6 @@ public class OrganizationService  extends BaseService<Organization>  {
 			}
 			
 			dao.deleteEntity(Organization.class, "id", idList);
-			hhXtYhOrgDAO.deleteEntity(HhXtYhOrg.class, "orgId", idList);
 			hhxtorgjsdao.deleteEntity(HhXtOrgJs.class, "orgId", idList);
 			
 			
@@ -288,7 +283,6 @@ public class OrganizationService  extends BaseService<Organization>  {
 			}
 			if (!Check.isEmpty(yzIdList)) {
 				dao.deleteEntity(Organization.class, "id", yzIdList);
-				hhXtYhOrgDAO.deleteEntity(HhXtYhOrg.class, "orgId", yzIdList);
 				hhxtorgjsdao.deleteEntity(HhXtOrgJs.class, "orgId", yzIdList);
 			}
 			deleteYzNode(yzIdList);
@@ -312,18 +306,18 @@ public class OrganizationService  extends BaseService<Organization>  {
 			}
 		}
 //			if (organization.getLx_() == 3) {
-				List<HhXtYhOrg> hhXtYhOrgs = hhXtYhOrgDAO.queryList(
-						HhXtYhOrg.class, ParamFactory.getParamHb().is("orgId",
-										organization.getId()));
-				List<String> yhid = new ArrayList<String>();
-				for (HhXtYhOrg hhXtYhOrg : hhXtYhOrgs) {
-					yhid.add(hhXtYhOrg.getYhId());
-				}
-				if (!Check.isEmpty(yhid)) {
-					organization.setExpanded(1);
+//				List<HhXtYhOrg> hhXtYhOrgs = hhXtYhOrgDAO.queryList(
+//						HhXtYhOrg.class, ParamFactory.getParamHb().is("orgId",
+//										organization.getId()));
+//				List<String> yhid = new ArrayList<String>();
+//				for (HhXtYhOrg hhXtYhOrg : hhXtYhOrgs) {
+//					yhid.add(hhXtYhOrg.getYhId());
+//				}
 					List<HhXtYh> hhXtYhs = xtyhdao.queryList(HhXtYh.class,
 							ParamFactory.getParamHb().in(
-									"id", yhid));
+									"jobId", organization.getId().split(",")));
+					if (!Check.isEmpty(hhXtYhs)) {
+						organization.setExpanded(1);
 					for (HhXtYh hhXtYh : hhXtYhs) {
 						Organization extTree = new Organization();
 						extTree.setId( hhXtYh.getId());
@@ -407,9 +401,10 @@ public class OrganizationService  extends BaseService<Organization>  {
 			}
 			organization.setZt_(zt);
 			int lx = 1;
-			if ("集团".equals(Convert.toString(map.get("类型")))) {
-				lx=0;
-			}else if ("部门".equals(Convert.toString(map.get("类型")))) {
+//			if ("集团".equals(Convert.toString(map.get("类型")))) {
+//				lx=0;
+//			}else
+				if ("部门".equals(Convert.toString(map.get("类型")))) {
 				lx=2;
 			}else if ("岗位".equals(Convert.toString(map.get("类型")))) {
 				lx=3;

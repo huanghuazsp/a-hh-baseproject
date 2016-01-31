@@ -78,11 +78,11 @@ public class Actionlogin extends BaseAction {
 					map.put("id", hhXtYh.getId());
 					map.put("text", hhXtYh.getText());
 					map.put("theme", hhXtYh.getTheme());
-					if (hhXtYh.getOrganization() != null) {
-						Map<String, Organization> organization =hhXtYh.getOrganization();
-						Organization dept = organization.get("bm");
-						Organization org = organization.get("jg");
-						Organization gw = organization.get("gw");
+//					if (hhXtYh.getOrganization() != null) {
+//						Map<String, Organization> organization =hhXtYh.getOrganization();
+						Organization dept =hhXtYh.getDept();
+						Organization org = hhXtYh.getOrg();
+						Organization gw = hhXtYh.getJob();
 					
 						if (gw != null) {
 							map.put("jobId", gw.getId());
@@ -96,7 +96,7 @@ public class Actionlogin extends BaseAction {
 							map.put("orgId", org.getId());
 							map.put("orgText", org.getText());
 						}
-					}
+//					}
 					return map;
 				}
 			}

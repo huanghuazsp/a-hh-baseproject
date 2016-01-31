@@ -49,7 +49,7 @@ public class LoginService {
 	@Autowired
 	private IHibernateDAO<HhXtYhCdZmtb> xtyhcdzmtb;
 	@Autowired
-	private IHibernateDAO<Organization> hhXtOrgDAO;
+	private OrganizationService organizationService;
 	@Autowired
 	private IHibernateDAO<HhXtCd> hhxtcdDao;
 	@Autowired
@@ -107,32 +107,30 @@ public class LoginService {
 						}
 					}
 
-					Map<String, Organization> organization = addGw(hhXtYh);
-					if (organization != null) {
+					List<String> orgIdList = new ArrayList<String>();
+					addOrg(hhXtYh);
+					if (hhXtYh.getJob() != null) {
+						orgIdList.add(hhXtYh.getJob().getId());
+					}
+					if (hhXtYh.getDept() != null) {
+						orgIdList.add(hhXtYh.getDept().getId());
+					}
+					if (hhXtYh.getOrg() != null) {
+						orgIdList.add(hhXtYh.getOrg().getId());
+					}
 
-						if (organization.get("gw") != null) {
-							List<String> orgIdList = new ArrayList<String>();
-							orgIdList.add(organization.get("gw").getId());
-							if (organization.get("jt") != null) {
-								orgIdList.add(organization.get("jt").getId());
-							}
-							if (organization.get("jg") != null) {
-								orgIdList.add(organization.get("jg").getId());
-							}
-							if (organization.get("bm") != null) {
-								orgIdList.add(organization.get("bm").getId());
-							}
+					List<HhXtOrgJs> hhXtOrgJsList = new ArrayList<HhXtOrgJs>();
 
-							List<HhXtOrgJs> hhXtOrgJsList = hhxtorgjsdao
-									.queryList(HhXtOrgJs.class, "orgId",
-											orgIdList);
-							for (HhXtOrgJs hhXtOrgJs : hhXtOrgJsList) {
-								if (!jsids.contains(hhXtOrgJs.getJsId())) {
-									jsids.add(hhXtOrgJs.getJsId());
-								}
+					if (Check.isNoEmpty(orgIdList)) {
+						hhxtorgjsdao.queryList(HhXtOrgJs.class, "orgId",
+								orgIdList);
+						for (HhXtOrgJs hhXtOrgJs : hhXtOrgJsList) {
+							if (!jsids.contains(hhXtOrgJs.getJsId())) {
+								jsids.add(hhXtOrgJs.getJsId());
 							}
 						}
 					}
+
 					List<HhXtJs> hhXtJsList = new ArrayList<HhXtJs>();
 					List<HhXtJsCd> hhXtJsCdList = new ArrayList<HhXtJsCd>();
 					List<HhXtJsCz> hhXtJsCzList = new ArrayList<HhXtJsCz>();
@@ -151,7 +149,7 @@ public class LoginService {
 						}
 					}
 
-					List<HhXtCz> hhXtCzList = new ArrayList<HhXtCz>();
+					Map<String, HhXtCz> hhXtCzMap = new HashMap<String, HhXtCz>();
 					List<HhXtCd> hhXtCdZmtbList = new ArrayList<HhXtCd>();
 
 					List<String> hhxtcdIdList = new ArrayList<String>();
@@ -199,7 +197,7 @@ public class LoginService {
 								hhXtCzPageTextMap.get(hhXtCz.getMenuUrl()).add(
 										hhXtCz.getPageText());
 							}
-							hhXtCzList.add(hhXtCz);
+							hhXtCzMap.put(hhXtCz.getVurl(), hhXtCz);
 						}
 					}
 					hhXtCdZmtbList = queryZmtbList(hhXtYh, hhxtcdIdList);
@@ -210,7 +208,7 @@ public class LoginService {
 					hhXtYh.setHhXtCzPageTextList(hhXtCzPageTextList);
 					hhXtYh.setHhXtCzPageTextMap(hhXtCzPageTextMap);
 
-					hhXtYh.setHhXtCzList(hhXtCzList);
+					hhXtYh.setHhXtCzMap(hhXtCzMap);
 					hhXtYh.setHhXtYhCdZmtbList(hhXtCdZmtbList);
 
 					hhXtYh.setHhXtJsList(hhXtJsList);
@@ -237,67 +235,23 @@ public class LoginService {
 		return returnModel;
 	}
 
-	private Map<String, Organization> addGw(HhXtYh hhXtYh) {
-		// 岗位
-		userService.editHhXtYh_orgList(hhXtYh);
-		List<Map<String, Organization>> organizationMapList = new ArrayList<Map<String, Organization>>();
-		for (int i = 0; i < hhXtYh.getOrganizationList().size(); i++) {
-			Organization organization3 = hhXtYh.getOrganizationList().get(i);
-
-			Map<String, Organization> organizationMap = addGwJtJgBm(organization3);
-
-			organizationMapList.add(organizationMap);
+	private void addOrg(HhXtYh hhXtYh) {
+		if (Check.isNoEmpty(hhXtYh.getOrgId())) {
+			Organization organization = organizationService
+					.findObjectById(hhXtYh.getOrgId());
+			hhXtYh.setOrg(organization);
 		}
-
-		List<Organization> organizations = hhXtYh.getOrganizationList();
-
-		if (organizations.size() == 1) {
-			hhXtYh.setOrganization(organizationMapList.get(0));
-			return organizationMapList.get(0);
-		} else {
-			if (!Check.isEmpty(hhXtYh.getDefaultOrgId())) {
-				for (Map<String, Organization> organization : organizationMapList) {
-					if (hhXtYh.getDefaultOrgId().equals(
-							organization.get("base").getId())) {
-						hhXtYh.setOrganization(organization);
-						return organization;
-					}
-				}
-			}
-			return null;
+		if (Check.isNoEmpty(hhXtYh.getDeptId())) {
+			Organization organization = organizationService
+					.findObjectById(hhXtYh.getDeptId());
+			hhXtYh.setDept(organization);
+		}
+		if (Check.isNoEmpty(hhXtYh.getJobId())) {
+			Organization organization = organizationService
+					.findObjectById(hhXtYh.getJobId());
+			hhXtYh.setJob(organization);
 		}
 	}
-
-	public Map<String, Organization> addGwJtJgBm(Organization organization3) {
-		Map<String, Organization> organizationMap = new HashMap<String, Organization>();
-		organizationMap.put("base", organization3);
-		List<Organization> organizations1 = hhXtOrgDAO
-				.queryList(
-						"select o from Organization o where ? like '%'|| o.code_||'%' and length(o.code_) in (select max(length(o.code_)) from Organization o where ? like '%'|| o.code_||'%' group by lx_) ",
-						new Object[] { organization3.getCode_(),
-								organization3.getCode_() }, true);
-		for (Organization organization : organizations1) {
-			if (organization.getLx_() == 0) {
-				organizationMap.put("jt", organization);
-			} else if (organization.getLx_() == 1) {
-				organizationMap.put("jg", organization);
-			} else if (organization.getLx_() == 2) {
-				organizationMap.put("bm", organization);
-			} else {
-				organizationMap.put("gw", organization);
-			}
-		}
-		return organizationMap;
-	}
-
-	// private void createZmsx(HhXtYh hhXtYh) {
-	// if (hhXtYh.getHhXtZmsx() == null) {
-	// HHXtZmsx hhXtZmsx = new HHXtZmsx();
-	// hhXtZmsx.setId(UUID.randomUUID().toString());
-	// hhXtYh.setHhXtZmsx(hhXtZmsx);
-	// xtyhdao.updateEntity(hhXtYh);
-	// }
-	// }
 
 	private List<HhXtCd> queryZmtbList(HhXtYh hhXtYh, List<String> hhxtcdIdList) {
 		List<HhXtYhCdZmtb> hhXtYhCdZmtbList = xtyhcdzmtb.queryList(
