@@ -105,14 +105,6 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 		userService.deleteByIds(this.getIds());
 	}
 
-	public void insertYhOrg() {
-		userService.insertYhOrg(this.getParamsMap());
-	}
-
-	public void deleteYhOrg() {
-		userService.deleteYhOrg(this.getParamsMap());
-	}
-
 	public Object queryCylxrs() {
 		List<HhXtYh> hhXtYhs = userService.queryCylxrs();
 		return hhXtYhs;

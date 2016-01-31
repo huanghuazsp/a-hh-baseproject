@@ -34,33 +34,33 @@ public class ActionApp extends BaseAction {
 	@Autowired
 	private LoginService loginService;
 	
-	public Object queryLoginOrgList() {
-		return loginUserUtilService.findLoginUser()
-				.getOrganizationList();
-	}
+//	public Object queryLoginOrgList() {
+//		return loginUserUtilService.findLoginUser()
+//				.getOrganizationList();
+//	}
 
-	public Object changeOrg() {
-		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
-		List<Organization> organizations = hhXtYh.getOrganizationList();
-		Organization organization1 = new Organization();
-
-		for (Organization organization : organizations) {
-			if (organization.getId().equals(currOrgId)) {
-				hhXtYh.setOrganization(loginService.addGwJtJgBm(organization));
-				ActionContext.getContext().getSession()
-						.put("loginuser", hhXtYh);
-				organization1 = organization;
-				if ("on".equals(request.getParameter("remember")) || Convert.toInt(request.getParameter("remember"))==1) {
-					userService.updateDefaultOrg(hhXtYh.getId(),
-							organization1.getId());
-				} else {
-					userService.updateDefaultOrg(hhXtYh.getId(), "");
-				}
-				break;
-			}
-		}
-		return organization1;
-	}
+//	public Object changeOrg() {
+//		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
+//		List<Organization> organizations = hhXtYh.getOrganizationList();
+//		Organization organization1 = new Organization();
+//
+//		for (Organization organization : organizations) {
+//			if (organization.getId().equals(currOrgId)) {
+//				hhXtYh.setOrganization(loginService.addGwJtJgBm(organization));
+//				ActionContext.getContext().getSession()
+//						.put("loginuser", hhXtYh);
+//				organization1 = organization;
+//				if ("on".equals(request.getParameter("remember")) || Convert.toInt(request.getParameter("remember"))==1) {
+//					userService.updateDefaultOrg(hhXtYh.getId(),
+//							organization1.getId());
+//				} else {
+//					userService.updateDefaultOrg(hhXtYh.getId(), "");
+//				}
+//				break;
+//			}
+//		}
+//		return organization1;
+//	}
 
 	public Object queryCurrOrgTree() {
 		List<Organization> organizationList = organizationService

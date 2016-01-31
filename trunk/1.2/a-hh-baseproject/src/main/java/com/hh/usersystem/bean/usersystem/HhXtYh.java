@@ -6,12 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,7 +49,7 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	private List<HhXtCd> hhXtCdList = new ArrayList<HhXtCd>();// 菜单
 	private List<HhXtJs> hhXtJsList = new ArrayList<HhXtJs>();// 角色
 	private List<HhXtCd> hhXtYhCdZmtbList = new ArrayList<HhXtCd>();// 桌面快捷方式
-	private List<HhXtCz> hhXtCzList = new ArrayList<HhXtCz>();// 用户的操作权限
+	private Map<String,HhXtCz> hhXtCzMap =new HashMap<String,HhXtCz>();// 用户的操作权限
 	private List<String> hhXtCzUrlList = new ArrayList<String>();
 	private List<String> hhXtCzPageTextList = new ArrayList<String>();
 
@@ -61,15 +57,15 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 
 	private List<String> jsList = new ArrayList<String>();// 角色ID
 	// private HHXtZmsx hhXtZmsx;// 用户属性
-	private List<Organization> organizationList = new ArrayList<Organization>();// 岗位
+	// private List<Organization> organizationList = new
+	// ArrayList<Organization>();// 岗位
 	private String orgIdsStr;
 	private String jsIdsStr;
 
-	private Map<String, Organization> organization;
+	// private Map<String, Organization> organization;
 
 	private String vzmbj = StaticProperties.HHXT_USERSYSTEM_ZMBJ;
 	private int pageSize = 15;
-	private String defaultOrgId;
 	private String theme;
 	private String desktopType;
 
@@ -82,6 +78,51 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	// public void setHhXtZmsx(HHXtZmsx hhXtZmsx) {
 	// this.hhXtZmsx = hhXtZmsx;
 	// }
+	private Organization dept;// 部门
+	private Organization org;// 机构
+	// private Organization jt ;// 集团
+	private Organization job;
+	
+	
+	private String jobId;
+	private String deptId;
+	private String orgId;
+
+	@Transient
+	public Organization getDept() {
+		return dept;
+	}
+
+	public void setDept(Organization bm) {
+		this.dept = bm;
+	}
+
+	@Transient
+	public Organization getOrg() {
+		return org;
+	}
+
+	public void setOrg(Organization jg) {
+		this.org = jg;
+	}
+
+	// @Transient
+	// public Organization getJt() {
+	// return jt;
+	// }
+	//
+	// public void setJt(Organization jt) {
+	// this.jt = jt;
+	// }
+
+	@Transient
+	public Organization getJob() {
+		return job;
+	}
+
+	public void setJob(Organization gw) {
+		this.job = gw;
+	}
 
 	@Transient
 	public List<String> getJsList() {
@@ -111,15 +152,6 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	}
 
 	@Transient
-	public List<HhXtCz> getHhXtCzList() {
-		return hhXtCzList;
-	}
-
-	public void setHhXtCzList(List<HhXtCz> hhXtCzList) {
-		this.hhXtCzList = hhXtCzList;
-	}
-
-	@Transient
 	public List<HhXtJs> getHhXtJsList() {
 		return hhXtJsList;
 	}
@@ -128,14 +160,14 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		this.hhXtJsList = hhXtJsList;
 	}
 
-	@Transient
-	public List<Organization> getOrganizationList() {
-		return organizationList;
-	}
-
-	public void setOrganizationList(List<Organization> organizationList) {
-		this.organizationList = organizationList;
-	}
+	// @Transient
+	// public List<Organization> getOrganizationList() {
+	// return organizationList;
+	// }
+	//
+	// public void setOrganizationList(List<Organization> organizationList) {
+	// this.organizationList = organizationList;
+	// }
 
 	@Transient
 	public List<String> getHhXtCzUrlList() {
@@ -269,27 +301,9 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 
 	@Transient
 	@Override
-	public String getOrgId() {
-		if (organization != null && organization.get("jg") != null) {
-			organization.get("jg").getId();
-		}
-		return "";
-	}
-
-	@Transient
-	@Override
 	public String getOrgText() {
-		if (organization != null && organization.get("jg") != null) {
-			organization.get("jg").getText();
-		}
-		return "";
-	}
-
-	@Transient
-	@Override
-	public String getJobId() {
-		if (organization != null && organization.get("gw") != null) {
-			organization.get("gw").getId();
+		if (getOrg() != null) {
+			return getOrg().getText();
 		}
 		return "";
 	}
@@ -297,17 +311,8 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	@Transient
 	@Override
 	public String getJobText() {
-		if (organization != null && organization.get("gw") != null) {
-			organization.get("gw").getText();
-		}
-		return "";
-	}
-
-	@Transient
-	@Override
-	public String getDeptId() {
-		if (organization != null && organization.get("bm") != null) {
-			organization.get("bm").getId();
+		if (getJob() != null) {
+			return getJob().getText();
 		}
 		return "";
 	}
@@ -315,8 +320,8 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	@Transient
 	@Override
 	public String getDeptText() {
-		if (organization != null && organization.get("bm") != null) {
-			organization.get("bm").getText();
+		if (getDept() != null) {
+			return getDept().getText();
 		}
 		return "";
 	}
@@ -326,14 +331,14 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		return vzmbj;
 	}
 
-	@Transient
-	public Map<String, Organization> getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(Map<String, Organization> organization) {
-		this.organization = organization;
-	}
+	// @Transient
+	// public Map<String, Organization> getOrganization() {
+	// return organization;
+	// }
+	//
+	// public void setOrganization(Map<String, Organization> organization) {
+	// this.organization = organization;
+	// }
 
 	public void setVzmbj(String vzmbj) {
 		this.vzmbj = vzmbj;
@@ -348,14 +353,6 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		this.pageSize = pageSize;
 	}
 
-	@Column(name = "DEFAULT_ORG_ID", length = 36)
-	public String getDefaultOrgId() {
-		return defaultOrgId;
-	}
-
-	public void setDefaultOrgId(String defaultOrgId) {
-		this.defaultOrgId = defaultOrgId;
-	}
 
 	@Column(name = "THEME_", length = 36)
 	public String getTheme() {
@@ -375,4 +372,41 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 		this.desktopType = desktopType;
 	}
 
+	@Column(name="JOB_ID",length=36)
+	public String getJobId() {
+		return jobId;
+	}
+
+	public void setJobId(String jobId) {
+		this.jobId = jobId;
+	}
+
+	@Column(name="DEPT_ID",length=36)
+	public String getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
+
+	@Column(name="ORG_ID",length=36)
+	public String getOrgId() {
+		return orgId;
+	}
+
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
+	}
+
+	@Transient
+	public Map<String, HhXtCz> getHhXtCzMap() {
+		return hhXtCzMap;
+	}
+
+	public void setHhXtCzMap(Map<String, HhXtCz> hhXtCzMap) {
+		this.hhXtCzMap = hhXtCzMap;
+	}
+
+	
 }

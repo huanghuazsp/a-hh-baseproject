@@ -18,10 +18,10 @@
 		onChange:function(value){
 			$('#node_span').setConfig({params:{lx_ : value}});
 		},
-		data : [ {
+		data : [ /*{
 			id : 0,
 			text : '集团'
-		}, {
+		},*/ {
 			id : 1,
 			text : '机构'
 		}, {
@@ -69,10 +69,10 @@
 		$('#node_span').setConfig({params:{lx_ : lx_}});
 		return;
 		if(lx_==0){
-			lxconfig.data=[ {
+			lxconfig.data=[ /*{
 				id : 0,
 				text : '集团'
-			}, {
+			}, */{
 				id : 1,
 				text : '机构'
 			}, {

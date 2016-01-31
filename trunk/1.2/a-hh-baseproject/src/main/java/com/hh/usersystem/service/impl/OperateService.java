@@ -136,12 +136,12 @@ public class OperateService  extends BaseService<HhXtCz> {
 				extTree3.setText("本机构");
 				extTree3.setLeaf(1);
 				extTreeListchild.add(extTree3);
-				ExtCheckTree extTree4 = new ExtCheckTree();
-				extTree4.setId(extCheckTree_parent.getId() + "_"
-						+ OperationLevel.BJT.toString());
-				extTree4.setText("本集团");
-				extTree4.setLeaf(1);
-				extTreeListchild.add(extTree4);
+//				ExtCheckTree extTree4 = new ExtCheckTree();
+//				extTree4.setId(extCheckTree_parent.getId() + "_"
+//						+ OperationLevel.BJT.toString());
+//				extTree4.setText("本集团");
+//				extTree4.setLeaf(1);
+//				extTreeListchild.add(extTree4);
 				if (hhXtJsCz != null) {
 					for (ExtCheckTree extCheckTree : extTreeListchild) {
 						if (extCheckTree

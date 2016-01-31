@@ -45,33 +45,6 @@ public class MenuService extends BaseService<HhXtCd> {
 	@Autowired
 	private OperateService operateService;
 	
-	public PagingData<HhXtCd> queryPagingData(HhXtCd hhXtCd, PageRange pageRange) {
-		ParamInf hqlParamList = ParamFactory.getParamHb();
-		if (!Check.isEmpty(hhXtCd.getText())) {
-			hqlParamList.like("text",  hhXtCd.getText()
-					+ "%");
-		}
-		if (!Check.isEmpty(hhXtCd.getLeaf())) {
-			hqlParamList.is("leaf", 1);
-		}
-
-		if (!Check.isEmpty(hhXtCd.getNode())) {
-			hqlParamList.is("node", hhXtCd.getNode());
-		}
-
-		if (!Check.isEmpty(hhXtCd.getOrgCode())) {
-			DetachedCriteria ownerCriteria = DetachedCriteria
-					.forEntityName(Organization.class.getName());
-			ownerCriteria.setProjection(Property.forName("id"));
-			ownerCriteria.add(Restrictions.like("code_", hhXtCd.getOrgCode()
-					+ "%"));
-			hqlParamList.add(Restrictions.or(
-					Property.forName("vorgid").in(ownerCriteria), Property
-							.forName("vorgid").isNull()));
-		}
-		return dao.queryPagingData(HhXtCd.class, hqlParamList, pageRange);
-	}
-
 	public HhXtCd findObjectById(String id) {
 		HhXtCd hhXtCd = dao.findEntityByPK(HhXtCd.class, id);
 		if (!"root".equals(hhXtCd.getNode())) {

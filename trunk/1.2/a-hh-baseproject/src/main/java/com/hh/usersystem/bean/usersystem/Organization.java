@@ -36,37 +36,37 @@ public class Organization    extends BaseTreeNodeEntity<Organization> implements
 	private String pname_;
 	private String sjbm_;
 
-	private Organization bm;// 部门
-	private Organization jg ;// 机构
-	private Organization jt ;// 集团
+//	private Organization bm;// 部门
+//	private Organization jg ;// 机构
+//	private Organization jt ;// 集团
 	private List<String> jsList = new ArrayList<String>();// 角色ID
 	private String jsIdsStr;
-	@Transient
-	public Organization getBm() {
-		return bm;
-	}
-
-	public void setBm(Organization bm) {
-		this.bm = bm;
-	}
-
-	@Transient
-	public Organization getJg() {
-		return jg;
-	}
-
-	public void setJg(Organization jg) {
-		this.jg = jg;
-	}
-
-	@Transient
-	public Organization getJt() {
-		return jt;
-	}
-
-	public void setJt(Organization jt) {
-		this.jt = jt;
-	}
+//	@Transient
+//	public Organization getBm() {
+//		return bm;
+//	}
+//
+//	public void setBm(Organization bm) {
+//		this.bm = bm;
+//	}
+//
+//	@Transient
+//	public Organization getJg() {
+//		return jg;
+//	}
+//
+//	public void setJg(Organization jg) {
+//		this.jg = jg;
+//	}
+//
+//	@Transient
+//	public Organization getJt() {
+//		return jt;
+//	}
+//
+//	public void setJt(Organization jt) {
+//		this.jt = jt;
+//	}
 
 //	@Column(length = 64)
 //	public String getText() {

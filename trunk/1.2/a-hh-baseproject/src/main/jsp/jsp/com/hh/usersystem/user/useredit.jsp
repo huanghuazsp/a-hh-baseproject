@@ -8,7 +8,7 @@
 <script type="text/javascript">
 	var params = BaseUtil.getIframeParams();
 	var width = 600;
-	var height = 450;
+	var height = 500;
 
 	var objectid = params.row ? params.row.id : '';
 	var systemmanagerhide=params.systemmanagerhide;
@@ -38,6 +38,8 @@
 				},
 				callback : function(result) {
 					$('#form').setValue(result);
+					$('#span_deptId').setConfig({params:{node:result.orgId}});
+					$('#span_jobId').setConfig({params:{node:result.deptId}});
 				}
 			});
 		}
@@ -49,6 +51,20 @@
 		}
 		findData();
 	}
+	
+	function orgChange(data){
+		$('#span_deptId').setConfig({params:{node:data.id}});
+		$('#span_deptId').setValue('');
+		
+		$('#span_jobId').setConfig({params:{node:''}});
+		$('#span_jobId').setValue('');
+	}
+	
+	function deptChange(data){
+		$('#span_jobId').setConfig({params:{node:data.id}});
+		$('#span_jobId').setValue('');
+	}
+	
 </script>
 </head>
 <body>
@@ -96,9 +112,16 @@
 						config="name: 'jsIdsStr'  , url:'usersystem-role-queryPagingData' ,tableName:'HH_XT_JS' "></td>
 				</tr>
 				<tr trtype="systemmanager" >
-					<td xtype="label">所属机构：</td>
-					<td colspan="3"><span xtype="selectOrg"
-						config="name: 'orgIdsStr'  , many : true "></td>
+					<td xtype="label">机构：</td>
+					<td colspan="3"><span xtype="selectOrg"  config="name: 'orgId' ,selectType:'org' ,onChange: orgChange  "></td>
+				</tr>
+				<tr trtype="systemmanager" >
+					<td xtype="label">部门：</td>
+					<td colspan="3"><span xtype="selectOrg"  config="name: 'deptId' ,selectType:'dept'  ,onChange : deptChange "></td>
+				</tr>
+				<tr trtype="systemmanager" >
+					<td xtype="label">岗位：</td>
+					<td colspan="3"><span xtype="selectOrg"  config="name: 'jobId' ,selectType:'job'   "></td>
 				</tr>
 			</table>
 		</form>

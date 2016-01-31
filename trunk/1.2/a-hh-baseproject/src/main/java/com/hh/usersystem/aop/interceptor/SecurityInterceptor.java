@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.util.Check;
+import com.hh.system.util.Convert;
 import com.hh.system.util.SysParam;
 import com.hh.usersystem.bean.usersystem.HhXtCz;
 import com.hh.usersystem.bean.usersystem.HhXtYh;
 import com.hh.usersystem.bean.usersystem.Organization;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.OperateService;
+import com.hh.usersystem.service.impl.OrganizationService;
 import com.hh.usersystem.util.steady.StaticProperties.OperationLevel;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -27,16 +29,16 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
 @SuppressWarnings("serial")
 public class SecurityInterceptor implements Interceptor {
 	public static List<String> all_manage_request = new ArrayList<String>();
-	
-	public static  Map<String, List<String>> all_manage_page_text_map = new HashMap<String, List<String>>();
-	
-	private static int isLoadManagerRequest=0;
+
+	public static Map<String, List<String>> all_manage_page_text_map = new HashMap<String, List<String>>();
+
+	private static int isLoadManagerRequest = 0;
 	@Autowired
 	private IHibernateDAO<HhXtCz> hibernateDAO;
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 	@Autowired
-	private IHibernateDAO<Organization> orgdao;
+	private OrganizationService organizationService;
 	@Autowired
 	private OperateService operateService;
 
@@ -56,15 +58,14 @@ public class SecurityInterceptor implements Interceptor {
 
 	private String powerControl(ActionInvocation arg0) throws Exception {
 		String noSecurity = "";
-
-		if (isLoadManagerRequest==0) {
+		if (isLoadManagerRequest == 0) {
 			operateService.initOperPower();
-			isLoadManagerRequest=1;
+			isLoadManagerRequest = 1;
 		}
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
-		if (ActionContext.getContext().getSession().get("loginuser") == null && Check.isEmpty(request.getParameter("se"))) {
-
+		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
+		if (hhXtYh == null && Check.isEmpty(request.getParameter("se"))) {
 			if (request.getHeader("x-requested-with") == null ? false : request
 					.getHeader("x-requested-with").equalsIgnoreCase(
 							"XMLHttpRequest")) {
@@ -78,124 +79,37 @@ public class SecurityInterceptor implements Interceptor {
 			String requestUri = request.getRequestURI().replace(
 					request.getContextPath() + "/", "");
 			if (all_manage_request.contains(requestUri)) {
-				HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
-				List<HhXtCz> hhXtCzList = hhXtYh.getHhXtCzList();
+				Map<String, HhXtCz> hhXtCzMap = hhXtYh.getHhXtCzMap();
 				boolean isSecurity = false;
-				for (HhXtCz hhXtCz : hhXtCzList) {
-					if (requestUri.equals(hhXtCz.getVurl())) {
-						Object vcreates = request.getParameter("vcreates");
-						if (vcreates == null || "".equals(vcreates)) {
-						} else {
-							boolean isOper = true;
-							for (String vcreate : vcreates.toString()
-									.split(",")) {
-								if (!vcreate.equals(loginUserUtilService
-										.findLoginUser().getId())) {
-									isOper = false;
-									break;
-								}
-							}
-							if (isOper) {
-								isSecurity = true;
+				HhXtCz hhXtCz = hhXtCzMap.get(requestUri);
+
+				if (hhXtCz == null) {
+					isSecurity = false;
+				} else {
+					Object vcreates = request.getParameter("vcreates");
+					if (vcreates == null || "".equals(vcreates)) {
+						isSecurity = true;
+					} else {
+						boolean isOper = true;
+						for (String vcreate : vcreates.toString().split(",")) {
+							if (!vcreate.equals(hhXtYh.getId())) {
+								isOper = false;
 								break;
 							}
 						}
-
-						Object vorgids = request.getParameter("orgids");
-						if (vorgids == null || "".equals(vorgids)) {
+						if (isOper) {
 							isSecurity = true;
-							break;
 						} else {
-							Map<String, Organization> organizationMap = loginUserUtilService
-									.findLoginUserOrg();
-							Organization organization = null;
-							if (organizationMap != null) {
-								if (OperationLevel.BBM.toString().equals(
-										hhXtCz.getOperLevel())) {
-									if (organizationMap.get("bm") != null) {
-										organization =organizationMap.get("bm");
-									}
-									noSecurity = "<br/>您的操作范围是本<font color=red>部门</font>！";
-								} else if (OperationLevel.BJG.toString()
-										.equals(hhXtCz.getOperLevel())) {
-									if (organizationMap.get("jg")  == null) {
-										if (organizationMap.get("bm")  != null) {
-											organization =organizationMap.get("bm") ;
-										}
-									} else {
-										organization = organizationMap.get("jg") ;
-									}
-									noSecurity = "<br/>您的操作范围是本<font color=red>机构</font>！";
-								} else if (OperationLevel.BJT.toString()
-										.equals(hhXtCz.getOperLevel())) {
-									if (organizationMap.get("jt") == null) {
-										if ( organizationMap.get("jg") == null) {
-											if (organizationMap.get("bm")  != null) {
-												organization = organizationMap.get("bm") ;
-											}
-										} else {
-											organization =organizationMap.get("jg") ;
-										}
-									} else {
-										organization = organizationMap.get("jt");
-									}
-									noSecurity = "<br/>您的操作范围是本<font color=red>集团</font>！";
-								} else if (OperationLevel.BGW.toString()
-										.equals(hhXtCz.getOperLevel())) {
-									// organization = loginUserUtilService
-									// .findLoginUserOrg();
-									noSecurity = "<br/>您的操作范围是本<font color=red>岗位</font>！";
-								} else {
-									noSecurity = "<br/>您的操作范围是本<font color=red>人</font>！";
-									isSecurity = false;
-									break;
-								}
-
-								boolean isOper = true;
-								for (String orgid : vorgids.toString().split(
-										",")) {
-									Organization dataOrganization = orgdao
-											.findEntityByPK(Organization.class,
-													orgid);
-									if (dataOrganization.getCode_().indexOf(
-											organization.getCode_()) != 0) {
-										noSecurity += "<br/>您操作的数据时属于<font color=red>"
-												+ dataOrganization.getText()
-												+ "</font>！";
-										isOper = false;
-										break;
-									}
-								}
-								if (isOper) {
-									isSecurity = true;
-									break;
-								} else {
-									isSecurity = false;
-									break;
-								}
-
+							noSecurity = valiOrg(request, hhXtYh, hhXtCz);
+							if (Check.isEmpty(noSecurity)) {
+								isSecurity = true;
 							} else {
-								if (OperationLevel.BBM.toString().equals(
-										hhXtCz.getOperLevel())) {
-									noSecurity = "<br/>您的操作范围是本<font color=red>部门</font>！";
-								} else if (OperationLevel.BJG.toString()
-										.equals(hhXtCz.getOperLevel())) {
-									noSecurity = "<br/>您的操作范围是本<font color=red>机构</font>！";
-								} else if (OperationLevel.BJT.toString()
-										.equals(hhXtCz.getOperLevel())) {
-									noSecurity = "<br/>您的操作范围是本<font color=red>集团</font>！";
-								} else if (OperationLevel.BGW.toString()
-										.equals(hhXtCz.getOperLevel())) {
-									noSecurity = "<br/>您的操作范围是本<font color=red>岗位</font>！";
-								} else {
-									noSecurity = "<br/>您的操作范围是本<font color=red>人</font>！";
-								}
 								isSecurity = false;
-								break;
 							}
 						}
 					}
 				}
+
 				if (isSecurity) {
 					return arg0.invoke();
 				} else {
@@ -210,6 +124,53 @@ public class SecurityInterceptor implements Interceptor {
 		}
 	}
 
+	private String valiOrg(HttpServletRequest request, HhXtYh hhXtYh,
+			HhXtCz hhXtCz) {
+		String noSecurity;
+		String orgids = Convert.toString(request
+				.getParameter("orgids"));
+		String deptids = Convert.toString(request
+				.getParameter("deptids"));
+		String jobids = Convert.toString(request
+				.getParameter("jobids"));
+		if (OperationLevel.BJG.toString().equals(
+				hhXtCz.getOperLevel())) {
+			Organization organization = hhXtYh.getOrg();
+			noSecurity = findNoSecurityStr(orgids,
+					organization,
+					"<br/>您的操作范围是本<font color=red>机构</font>！");
+		} else if (OperationLevel.BBM.toString().equals(
+				hhXtCz.getOperLevel())) {
+			Organization organization = hhXtYh.getDept();
+			noSecurity = findNoSecurityStr(deptids,
+					organization,
+					"<br/>您的操作范围是本<font color=red>部门</font>！");
+		} else if (OperationLevel.BGW.toString().equals(
+				hhXtCz.getOperLevel())) {
+			Organization organization = hhXtYh.getJob();
+			noSecurity = findNoSecurityStr(jobids,
+					organization,
+					"<br/>您的操作范围是本<font color=red>岗位</font>！");
+		} else {
+			noSecurity = "<br/>您的操作范围是本<font color=red>人</font>！";
+		}
+		return noSecurity;
+	}
+
+	private String findNoSecurityStr(String deptids, Organization organization,
+			String str) {
+		String noSecurity = null;
+		for (String orgid : deptids.split(",")) {
+			Organization dataOrganization = organizationService
+					.findObjectById(orgid);
+			if (dataOrganization.getCode_().startsWith(organization.getCode_())) {
+				noSecurity = str + "<br/>您操作的数据时属于<font color=red>"
+						+ dataOrganization.getText() + "</font>！";
+				break;
+			}
+		}
+		return noSecurity;
+	}
 
 	public static List<String> getAll_manage_request() {
 		return all_manage_request;
