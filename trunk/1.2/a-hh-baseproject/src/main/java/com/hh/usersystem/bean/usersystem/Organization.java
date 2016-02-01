@@ -31,7 +31,6 @@ public class Organization    extends BaseTreeNodeEntity<Organization> implements
 	private String ms_;
 	private String jc_;
 	private String zdybm_;
-	private int zt_;
 	private int lx_;
 	private String pname_;
 	private String sjbm_;
@@ -111,15 +110,6 @@ public class Organization    extends BaseTreeNodeEntity<Organization> implements
 
 	public void setMs_(String ms_) {
 		this.ms_ = ms_;
-	}
-
-	@Column(precision = 1, scale = 0)
-	public int getZt_() {
-		return zt_;
-	}
-
-	public void setZt_(int zt_) {
-		this.zt_ = zt_;
 	}
 
 	@Column(precision = 1, scale = 0)

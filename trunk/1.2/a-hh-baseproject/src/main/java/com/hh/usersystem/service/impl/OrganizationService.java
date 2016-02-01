@@ -28,31 +28,36 @@ import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 
 @Service
-public class OrganizationService  extends BaseService<Organization>  {
+public class OrganizationService extends BaseService<Organization> {
 	@Autowired
 	private IHibernateDAO<HhXtYh> xtyhdao;
 	@Autowired
 	private IHibernateDAO<HhXtOrgJs> hhxtorgjsdao;
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
-	
+
 	@Autowired
 	private RoleService roleService;
 
-	
-	public List<Organization> queryTreeList(Organization object, boolean isNoLeaf) {
-		return organizationToIconCls(queryTreeList(object.getNode(),isNoLeaf, ParamFactory.getParamHb()),null);
+	public List<Organization> queryTreeList(Organization object,
+			boolean isNoLeaf) {
+		return organizationToIconCls(
+				queryTreeList(object.getNode(), isNoLeaf,
+						ParamFactory.getParamHb()), null);
 	}
-	
-	public List<Organization> queryTreeListByLx(Organization object, boolean isNoLeaf) {
-		return organizationToIconCls(queryTreeList(object.getNode(),isNoLeaf, ParamFactory.getParamHb().le("lx_", object.getLx_())),null);
+
+	public List<Organization> queryTreeListByLx(Organization object,
+			boolean isNoLeaf) {
+		return organizationToIconCls(
+				queryTreeList(object.getNode(), isNoLeaf, ParamFactory
+						.getParamHb().le("lx_", object.getLx_())), null);
 	}
-	
+
 	public List<Organization> organizationToIconCls(
 			List<Organization> organizationList, String selectType) {
 		for (Organization organization : organizationList) {
 			if (organization.getChildren() != null) {
-				organizationToIconCls(organization.getChildren(),selectType);
+				organizationToIconCls(organization.getChildren(), selectType);
 			}
 			if (organization != null) {
 				String clasString = organization.getLx_() == 0 ? "group"
@@ -60,11 +65,13 @@ public class OrganizationService  extends BaseService<Organization>  {
 								.getLx_() == 2 ? "dept"
 								: organization.getLx_() == 3 ? "job" : "";
 				organization.setIconCls(clasString);
-				organization.setIcon(organization.getLx_() == 0 ? "/hhcommon/images/myimage/org/group.png"
-						: organization.getLx_() == 1 ? "/hhcommon/images/myimage/org/org.png" : organization
-								.getLx_() == 2 ? "/hhcommon/images/myimage/org/dept.png"
-								: organization.getLx_() == 3 ? "/hhcommon/images/myimage/org/job.png" : "");
-				if (selectType!=null) {
+				organization
+						.setIcon(organization.getLx_() == 0 ? "/hhcommon/images/myimage/org/group.png"
+								: organization.getLx_() == 1 ? "/hhcommon/images/myimage/org/org.png"
+										: organization.getLx_() == 2 ? "/hhcommon/images/myimage/org/dept.png"
+												: organization.getLx_() == 3 ? "/hhcommon/images/myimage/org/job.png"
+														: "");
+				if (selectType != null) {
 					if (!selectType.equals(clasString)) {
 						organization.setNocheck(true);
 					}
@@ -85,53 +92,44 @@ public class OrganizationService  extends BaseService<Organization>  {
 				&& "root".equals(organization.getNode()) ? node : organization
 				.getNode();
 		ParamInf hqlParamList = ParamFactory.getParamHb();
-		// pid = "root".equals(pid) ? "0" : pid;
 		hqlParamList.is("node", pid);
+		hqlParamList.nis("state", 1);
 		hqlParamList.is("lx_", organization.getLx_());
-		// hqlParamList.add(Restrictions.eq("zt_", 0));
-		// hqlParamList.add(Order.desc(StaticVar.ORDER));
-		return organizationToIconCls(dao.queryTreeList(Organization.class,
-				hqlParamList),null);
+		return organizationToIconCls(
+				dao.queryTreeList(Organization.class, hqlParamList), null);
 	}
 
-	public List<Organization> queryOrgListByPid(Organization organization , String orgs, String selectType) {
+	public List<Organization> queryOrgListByPid(Organization organization,
+			String orgs, String selectType) {
 		String node = organization.getNode();
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		List<Organization> organizationList = null;
 		if (Check.isNoEmpty(orgs)) {
 			hqlParamList.in("id", Convert.strToList(orgs));
 		}
-		hqlParamList.is("zt_", 0);
 		hqlParamList.is("node", node);
+		hqlParamList.nis("lx_", 3);
+		hqlParamList.nis("state", 1);
 		hqlParamList.order("lx_");
-		organizationList = dao.queryTreeList(Organization.class,
-				hqlParamList);
-		return organizationToIconCls(organizationList,selectType);
+		organizationList = dao.queryTreeList(Organization.class, hqlParamList);
+		return organizationToIconCls(organizationList, selectType);
 	}
 
 	public Organization findObjectById(String id) {
-		Organization organizationResult = dao.findEntityByPK(Organization.class, id);
+		Organization organizationResult = dao.findEntityByPK(
+				Organization.class, id);
 		if (organizationResult != null) {
-//			BeanUtils.copyProperties( organizationResult,organization);
-//			Organization p_organization = dao.findEntityByPK(
-//					Organization.class, organization.getNode());
-//			if (p_organization != null) {
-//				organization.setPname_(p_organization.getText());
-//				organization.setSjbm_(p_organization.getCode_());
-//				organization.setNode(p_organization.getId());
-//				organization.setCode_(organization.getCode_().replace(p_organization.getCode_(), ""));
-//			}
 			List<HhXtOrgJs> hhXtYhJsList = hhxtorgjsdao.queryList(
 					HhXtOrgJs.class, ParamFactory.getParamHb().is("orgId", id));
-			
+
 			String jss = "";
-			
+
 			for (HhXtOrgJs hhXtOrgJs : hhXtYhJsList) {
-				jss+=hhXtOrgJs.getJsId()+",";
+				jss += hhXtOrgJs.getJsId() + ",";
 				organizationResult.getJsList().add(hhXtOrgJs.getJsId());
 			}
 			if (Check.isNoEmpty(jss)) {
-				jss = jss.substring(0,jss.length()-1);
+				jss = jss.substring(0, jss.length() - 1);
 				organizationResult.setJsIdsStr(jss);
 			}
 		}
@@ -139,17 +137,10 @@ public class OrganizationService  extends BaseService<Organization>  {
 	}
 
 	public Organization save(Organization organization) throws MessageException {
-		
-		
-		
+
 		if (Check.isEmpty(organization.getNode())) {
 			organization.setNode("root");
 		}
-		
-		
-//		if (checkCodeOnly(organization)) {
-//			throw new MessageException("编码重复，请更换！");
-//		}
 		if (checkTextOnly(organization)) {
 			throw new MessageException("同级下名称不能一样，请更换！");
 		}
@@ -159,9 +150,11 @@ public class OrganizationService  extends BaseService<Organization>  {
 		if (checkParentNotLeaf(organization)) {
 			throw new MessageException("父节点不能是自己的子节点，请更换！");
 		}
-		
-		if (Check.isNoEmpty(organization.getNode()) && !"root".equals(organization.getNode())) {
-			if (this.findObjectById(organization.getNode()).getLx_()>organization.getLx_()) {
+
+		if (Check.isNoEmpty(organization.getNode())
+				&& !"root".equals(organization.getNode())) {
+			if (this.findObjectById(organization.getNode()).getLx_() > organization
+					.getLx_()) {
 				throw new MessageException("父节点的类型不能小于本节点的类型！");
 			}
 		}
@@ -170,13 +163,9 @@ public class OrganizationService  extends BaseService<Organization>  {
 			organization.setId(UUID.randomUUID().toString());
 			dao.createEntity(organization);
 		} else {
-//			Organization old_organization = dao.findEntityByPK(
-//					Organization.class, organization.getId());
 			if (organization.getId().equals(organization.getNode())) {
 				throw new MessageException("不能选自己为上级！");
 			}
-//			updateSubCode(old_organization.getCode_(), organization.getCode_());
-
 			dao.mergeEntity(organization);
 
 			hhxtorgjsdao.deleteEntity(HhXtOrgJs.class, "orgId",
@@ -197,25 +186,30 @@ public class OrganizationService  extends BaseService<Organization>  {
 				hhxtorgjsdao.createEntity(hhXtOrgJs);
 			}
 		}
-		
+
 		Organization parentOrganization = new Organization();
 		parentOrganization.setId("root");
-		
+
 		if (!"root".equals(organization.getNode())) {
-			parentOrganization = dao.findEntityByPK(Organization.class, organization.getNode());
+			parentOrganization = dao.findEntityByPK(Organization.class,
+					organization.getNode());
 		}
 
 		updateSubCode(parentOrganization);
-		
+
 		return organization;
 	}
-	
-	public void updateSubCode(Organization parentOrganization){
+
+	public void updateSubCode(Organization parentOrganization) {
 		if (Check.isNoEmpty(parentOrganization)) {
-			List<Organization> orgList = dao.queryList(Organization.class, ParamFactory.getParamHb().is("node",parentOrganization.getId()));
-			int i =1;
+			List<Organization> orgList = dao.queryList(
+					Organization.class,
+					ParamFactory.getParamHb().is("node",
+							parentOrganization.getId()));
+			int i = 1;
 			for (Organization organization : orgList) {
-				organization.setCode_(Convert.toString(parentOrganization.getCode_())+Convert.complete(i, 3, 0));
+				organization.setCode_(Convert.toString(parentOrganization
+						.getCode_()) + Convert.complete(i, 3, 0));
 				i++;
 				dao.updateEntity(organization);
 				updateSubCode(organization);
@@ -223,43 +217,24 @@ public class OrganizationService  extends BaseService<Organization>  {
 		}
 	}
 
-	
-//	public void updateSubCode(String oldCode,String newCode){
-//		dao.updateEntity("update Organization o set  o.code_=  replace(o.code_,'"
-//				+ oldCode
-//				+ "','"
-//				+ newCode
-//				+ "') where o.code_ like '"
-//				+ newCode
-//				+ "%' and o.code_ !='"
-//				+ oldCode + "' ");
-//	}
-
-	private boolean checkCodeOnly(Organization organization) {
-		return dao.findWhetherData("select count(o) from "
-				+ organization.getClass().getName() + " o "
-				+ "where o.code_=:code_ and (o.id!=:id or :id is null)",
-				organization);
-	}
-
 	public void deleteByIds(String ids) {
 		List<String> idList = Convert.strToList(ids);
 		deleteYzNode(idList);
 		if (!Check.isEmpty(idList)) {
-			
+
 			List<String> nodeList = new ArrayList<String>();
 			List<Organization> hhxtcdList = dao.queryList(Organization.class,
 					Restrictions.in("id", Convert.strToList(ids)));
 			for (Organization organization2 : hhxtcdList) {
 				nodeList.add(organization2.getNode());
 			}
-			
+
 			dao.deleteEntity(Organization.class, "id", idList);
 			hhxtorgjsdao.deleteEntity(HhXtOrgJs.class, "orgId", idList);
-			
-			
-			
-			List<Organization>  organizations=	dao.queryList(Organization.class, ParamFactory.getParamHb().in("id", nodeList));
+
+			List<Organization> organizations = dao.queryList(
+					Organization.class,
+					ParamFactory.getParamHb().in("id", nodeList));
 			if (nodeList.contains("root")) {
 				Organization parentOrganization = new Organization();
 				parentOrganization.setId("root");
@@ -268,7 +243,7 @@ public class OrganizationService  extends BaseService<Organization>  {
 			for (Organization organization2 : organizations) {
 				updateSubCode(organization2);
 			}
-			
+
 		}
 
 	}
@@ -292,7 +267,8 @@ public class OrganizationService  extends BaseService<Organization>  {
 	}
 
 	public List<Organization> queryOrgAndUsersList(Organization organization1) {
-		List<Organization> organizations = this.queryOrgListByPid(organization1, null,null);
+		List<Organization> organizations = this.queryOrgListByPid(
+				organization1, null, null);
 		for (Organization organization : organizations) {
 			addOrgUser(organization);
 		}
@@ -305,39 +281,33 @@ public class OrganizationService  extends BaseService<Organization>  {
 				addOrgUser(organization2);
 			}
 		}
-//			if (organization.getLx_() == 3) {
-//				List<HhXtYhOrg> hhXtYhOrgs = hhXtYhOrgDAO.queryList(
-//						HhXtYhOrg.class, ParamFactory.getParamHb().is("orgId",
-//										organization.getId()));
-//				List<String> yhid = new ArrayList<String>();
-//				for (HhXtYhOrg hhXtYhOrg : hhXtYhOrgs) {
-//					yhid.add(hhXtYhOrg.getYhId());
-//				}
-					List<HhXtYh> hhXtYhs = xtyhdao.queryList(HhXtYh.class,
-							ParamFactory.getParamHb().in(
-									"jobId", organization.getId().split(",")));
-					if (!Check.isEmpty(hhXtYhs)) {
-						organization.setExpanded(1);
-					for (HhXtYh hhXtYh : hhXtYhs) {
-						Organization extTree = new Organization();
-						extTree.setId( hhXtYh.getId());
-						extTree.setText(hhXtYh.getText());
-						if (LoginUser.getLoginUserId().contains(hhXtYh.getId())) {
-							extTree.setIcon(hhXtYh.getNxb() == 0 ? StaticProperties.HHXT_USERSYSTEM_NV
-									: StaticProperties.HHXT_USERSYSTEM_NAN);
-						} else {
-							extTree.setIcon(StaticProperties.HHXT_NO_ON_LINE_USER_ICON);
-						}
-						extTree.setLeaf(1);
-						
-						if (organization.getChildren()==null) {
-							
-							organization.setChildren(	organizationToIconCls(this.queryList(ParamFactory.getParamHb().is("node", organization.getId())),null));
-						}
-						organization.getChildren().add(extTree);
-					}
+		List<HhXtYh> hhXtYhs = xtyhdao.queryList(HhXtYh.class, ParamFactory
+				.getParamHb().in("deptId", organization.getId().split(",")));
+		if (!Check.isEmpty(hhXtYhs)) {
+			organization.setExpanded(1);
+			for (HhXtYh hhXtYh : hhXtYhs) {
+				Organization extTree = new Organization();
+				extTree.setId(hhXtYh.getId());
+				extTree.setText(hhXtYh.getText());
+				if (LoginUser.getLoginUserId().contains(hhXtYh.getId())) {
+					extTree.setIcon(hhXtYh.getNxb() == 0 ? StaticProperties.HHXT_USERSYSTEM_NV
+							: StaticProperties.HHXT_USERSYSTEM_NAN);
+				} else {
+					extTree.setIcon(StaticProperties.HHXT_NO_ON_LINE_USER_ICON);
 				}
-//		}
+				extTree.setLeaf(1);
+
+				if (organization.getChildren() == null) {
+					organization
+							.setChildren(organizationToIconCls(
+									this.queryList(ParamFactory.getParamHb()
+											.is("node", organization.getId())
+											.nis("lx_", 3).nis("state", 1)
+											.order("lx_")), null));
+				}
+				organization.getChildren().add(extTree);
+			}
+		}
 	}
 
 	public List<Organization> queryCurrOrgTree(String node, String action) {
@@ -355,14 +325,13 @@ public class OrganizationService  extends BaseService<Organization>  {
 				organization.setId(organization.getCode_());
 			}
 		}
-		return organizationToIconCls(organizations,null);
+		return organizationToIconCls(organizations, null);
 	}
 
 	public IHibernateDAO<HhXtOrgJs> getHhxtorgjsdao() {
 		return hhxtorgjsdao;
 	}
-	
-	
+
 	public void save(List<Map<String, Object>> mapList) {
 		Map<String, String> orgMapNameId = new HashMap<String, String>();
 		Map<String, String> roleMapNameId = new HashMap<String, String>();
@@ -371,99 +340,101 @@ public class OrganizationService  extends BaseService<Organization>  {
 			String id = PrimaryKey.getPrimaryKeyUUID();
 			String name = Convert.toString(map.get("名称"));
 			if (Check.isNoEmpty(map.get("标识"))) {
-				id=Convert.toString(map.get("标识"));
+				id = Convert.toString(map.get("标识"));
 				organization = findObjectById(id);
-			}else{
-				List<Organization> organizations  = queryListByProperty("text", name);
-				if (organizations.size()>0) {
-					organization=organizations.get(0);
+			} else {
+				List<Organization> organizations = queryListByProperty("text",
+						name);
+				if (organizations.size() > 0) {
+					organization = organizations.get(0);
 				}
 			}
-			
-			int iscreate = 0 ;
-			
-			if (organization==null) {
-				iscreate=1;
+
+			int iscreate = 0;
+
+			if (organization == null) {
+				iscreate = 1;
 				organization = new Organization();
 				organization.setId(id);
-			}else{
+			} else {
 				getHhxtorgjsdao().deleteEntity(HhXtOrgJs.class, "orgId",
 						organization.getId());
 			}
-			
+
 			organization.setText(name);
 			organization.setJc_(Convert.toString(map.get("简称")));
 			organization.setZdybm_(Convert.toString(map.get("自定义编码")));
 			organization.setMs_(Convert.toString(map.get("备注")));
-			int zt=0;
+			int zt = 0;
 			if ("禁用".equals(Convert.toString(map.get("状态")))) {
-				zt=1;
+				zt = 1;
 			}
-			organization.setZt_(zt);
+			organization.setState(zt);
 			int lx = 1;
-//			if ("集团".equals(Convert.toString(map.get("类型")))) {
-//				lx=0;
-//			}else
-				if ("部门".equals(Convert.toString(map.get("类型")))) {
-				lx=2;
-			}else if ("岗位".equals(Convert.toString(map.get("类型")))) {
-				lx=3;
+			// if ("集团".equals(Convert.toString(map.get("类型")))) {
+			// lx=0;
+			// }else
+			if ("部门".equals(Convert.toString(map.get("类型")))) {
+				lx = 2;
+			} else if ("岗位".equals(Convert.toString(map.get("类型")))) {
+				lx = 3;
 			}
 			organization.setLx_(lx);
-			
+
 			String sjmc = Convert.toString(map.get("上级名称"));
-			
+
 			if (Check.isNoEmpty(sjmc)) {
 				if (!orgMapNameId.containsKey(sjmc)) {
-					List<Organization> organizationList = queryListByProperty("text", sjmc);
-					if (organizationList.size()>0) {
+					List<Organization> organizationList = queryListByProperty(
+							"text", sjmc);
+					if (organizationList.size() > 0) {
 						orgMapNameId.put(sjmc, organizationList.get(0).getId());
-					}else{
+					} else {
 						orgMapNameId.put(sjmc, "root");
 					}
 				}
-				
+
 				organization.setNode(orgMapNameId.get(sjmc));
-			}else{
+			} else {
 				organization.setNode("root");
 			}
-			
+
 			String jgjs = Convert.toString(map.get("机构角色"));
 			if (Check.isNoEmpty(jgjs)) {
-				String[] jgjsArr =	jgjs.split(",");
+				String[] jgjsArr = jgjs.split(",");
 				for (String jgjsname : jgjsArr) {
 					if (!roleMapNameId.containsKey(jgjsname)) {
-						List<HhXtJs> hhXtJsList = roleService.queryListByProperty("text", jgjsname);
-						if (hhXtJsList.size()>0) {
-							roleMapNameId.put(jgjsname, hhXtJsList.get(0).getId());
-						}else{
+						List<HhXtJs> hhXtJsList = roleService
+								.queryListByProperty("text", jgjsname);
+						if (hhXtJsList.size() > 0) {
+							roleMapNameId.put(jgjsname, hhXtJsList.get(0)
+									.getId());
+						} else {
 							roleMapNameId.put(jgjsname, "");
 						}
 					}
-					
+
 					if (Check.isNoEmpty(roleMapNameId.get(jgjsname))) {
 						HhXtOrgJs hhXtOrgJs = new HhXtOrgJs();
 						hhXtOrgJs.setOrgId(organization.getId());
 						hhXtOrgJs.setJsId(roleMapNameId.get(jgjsname));
 						getHhxtorgjsdao().createEntity(hhXtOrgJs);
 					}
-					
-					
+
 				}
-				
+
 			}
-			if (iscreate==1) {
+			if (iscreate == 1) {
 				createEntity(organization);
-			}else{
+			} else {
 				getDao().updateEntity(organization);
 			}
-			
+
 		}
-		
+
 		Organization parentOrganization = new Organization();
 		parentOrganization.setId("root");
 		updateSubCode(parentOrganization);
 	}
-	
 
 }
