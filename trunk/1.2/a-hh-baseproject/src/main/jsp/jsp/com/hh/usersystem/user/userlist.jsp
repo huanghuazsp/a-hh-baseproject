@@ -77,7 +77,7 @@
 			text : '性别',
 			render:'rendersex'
 		},{
-			name : 'nzt' ,
+			name : 'state' ,
 			text : '状态',
 			render:'renderzt'
 		},{

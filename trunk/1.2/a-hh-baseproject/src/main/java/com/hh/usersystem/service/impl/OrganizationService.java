@@ -45,6 +45,12 @@ public class OrganizationService extends BaseService<Organization> {
 				queryTreeList(object.getNode(), isNoLeaf,
 						ParamFactory.getParamHb()), null);
 	}
+	
+	public List<Organization> queryTreeList(ParamInf paramList) {
+		
+		return organizationToIconCls(super.queryTreeList( paramList), null);
+	}
+
 
 	public List<Organization> queryTreeListByLx(Organization object,
 			boolean isNoLeaf) {

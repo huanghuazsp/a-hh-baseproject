@@ -44,7 +44,7 @@ public class RoleService extends BaseService<HhXtJs> {
 
 	public List<HhXtJs> queryAllRoleList() {
 		return xtjsdao.queryList(HhXtJs.class,
-				ParamFactory.getParamHb().is("nzt", 0));
+				ParamFactory.getParamHb().nis("state", 1));
 	}
 
 	public PagingData<HhXtJs> queryPagingData(HhXtJs hhXtJs, String roles,
@@ -58,8 +58,8 @@ public class RoleService extends BaseService<HhXtJs> {
 			hqlParamList.add(Restrictions.in("id", Convert.strToList(roles)));
 		}
 		
-		if (hhXtJs.getNzt()==1) {
-			hqlParamList.add(Restrictions.eq("nzt", 0));
+		if (hhXtJs.getState()==1) {
+			hqlParamList.nis("state", 1);
 		}
 		return xtjsdao.queryPagingData(HhXtJs.class, hqlParamList, pageRange);
 	}

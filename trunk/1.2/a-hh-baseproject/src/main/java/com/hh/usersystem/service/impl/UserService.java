@@ -89,8 +89,14 @@ public class UserService extends BaseService<HhXtYh> {
 		boolean param = false;
 
 		if (Check.isNoEmpty(orgs)) {
-			param = true;
-			idList.addAll(queryUserIdListByOrgCode(orgs));
+			ParamInf hqlParamList2 = ParamFactory.getParamHb();
+			hqlParamList2.is("orgId", orgs);
+			ParamInf hqlParamList3 = ParamFactory.getParamHb();
+			hqlParamList3.is("jobId", orgs);
+			ParamInf hqlParamList4 = ParamFactory.getParamHb();
+			hqlParamList4.is("deptId", orgs);
+			ParamInf hqlParamList5 = ParamFactory.getParamHb();
+			hqlParamList.or(hqlParamList5.or(hqlParamList2,hqlParamList3),hqlParamList4);
 		}
 
 		if (Check.isNoEmpty(roles)) {

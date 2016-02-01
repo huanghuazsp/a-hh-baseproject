@@ -92,7 +92,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		HhXtYh hhXtYh = new HhXtYh();
 		hhXtYh.setDsr(new Date());
 		hhXtYh.setNxb(1);
-		hhXtYh.setNzt(0);
+		hhXtYh.setState(0);
 		hhXtYh.setId("92b38970-69d8-4f5e-b7fc-f06f458a9f1f");
 		hhXtYh.setText("超级管理员");
 		hhXtYh.setVdh("123456");

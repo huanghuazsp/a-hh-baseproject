@@ -61,7 +61,7 @@
 					<tr>
 						<td xtype="label">状态：</td>
 						<td><span xtype="radio"
-							config="name: 'nzt' ,defaultValue : 0, data :[{id:0,text:'正常'},{id:1,text:'冻结'}]"></span></td>
+							config="name: 'state' ,defaultValue : 0, data :[{id:0,text:'正常'},{id:1,text:'冻结'}]"></span></td>
 					</tr>
 					<tr>
 						<td xtype="label">类型：</td>

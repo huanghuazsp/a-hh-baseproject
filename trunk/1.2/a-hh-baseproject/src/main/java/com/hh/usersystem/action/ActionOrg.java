@@ -24,6 +24,7 @@ import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.document.ExcelUtil;
 import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.bean.usersystem.HhXtJs;
@@ -81,6 +82,10 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 	public Object queryTreeList() {
 		return organizationService.queryTreeList(object,
 				Convert.toBoolean(request.getParameter("isNoLeaf")));
+	}
+	
+	public Object queryStateTreeList() {
+		return organizationService.queryTreeList(ParamFactory.getParamHb().is("state", 0).is("node", object.getNode()));
 	}
 
 	public Object queryTreeListByLx() {
