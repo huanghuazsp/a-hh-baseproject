@@ -124,7 +124,7 @@ Ext
 									fieldLabel : '状态',
 									columnWidth : 0.5,
 									allowBlank : false,
-									name : 'zt_',
+									name : 'state',
 									data : [ {
 										"id" : 0,
 										"text" : "正常"
