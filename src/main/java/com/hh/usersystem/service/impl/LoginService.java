@@ -84,7 +84,7 @@ public class LoginService {
 
 					HhXtYh hhXtYh = xtYhList.get(0);
 
-					if (hhXtYh.getNzt() == 1) {
+					if (hhXtYh.getState() == 1) {
 						returnModel.setMsg("您的账号已经被冻结，请联系管理员！");
 						return returnModel;
 					}
@@ -137,7 +137,7 @@ public class LoginService {
 					if (jsids.size() != 0) {
 						hhXtJsList = xtjsdao.queryList(
 								HhXtJs.class,
-								ParamFactory.getParamHb().is("nzt", 0)
+								ParamFactory.getParamHb().nis("state", 1)
 										.in("id", jsids));
 						if (hhXtJsList.size() != 0) {
 							hhXtJsCdList = xtjscddao

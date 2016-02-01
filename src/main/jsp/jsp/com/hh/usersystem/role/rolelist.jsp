@@ -170,7 +170,7 @@
 						name : 'text' ,
 						text : '名称'
 					},{
-						name : 'nzt' ,
+						name : 'state' ,
 						text : '状态',
 						width : 50,
 						render : 'rendernzt'

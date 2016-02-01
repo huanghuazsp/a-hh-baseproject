@@ -21,7 +21,6 @@ public class HhXtJs extends BaseTwoEntity  {
 
 	private String text;
 	private String vbz;
-	private int nzt;
 	private int nlx;
 	
 	private String jssx;
@@ -41,14 +40,6 @@ public class HhXtJs extends BaseTwoEntity  {
 		this.nlx = nlx;
 	}
 
-	@Column(name = "NZT", precision = 1, scale = 0)
-	public int getNzt() {
-		return this.nzt;
-	}
-
-	public void setNzt(int nzt) {
-		this.nzt = nzt;
-	}
 
 	@Column(name = "TEXT", length = 64)
 	public String getText() {

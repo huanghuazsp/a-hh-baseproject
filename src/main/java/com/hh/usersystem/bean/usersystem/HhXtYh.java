@@ -40,7 +40,6 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	private String vdlzh;
 	private String vmm;
 	private int nxb;
-	private int nzt;
 	private String vdzyj;
 	private String vdh;
 	private Date dsr;
@@ -216,15 +215,6 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 
 	public void setNxb(int nxb) {
 		this.nxb = nxb;
-	}
-
-	@Column(name = "NZT", precision = 1, scale = 0)
-	public int getNzt() {
-		return this.nzt;
-	}
-
-	public void setNzt(int nzt) {
-		this.nzt = nzt;
 	}
 
 	@Column(name = "VDZYJ", length = 64)
