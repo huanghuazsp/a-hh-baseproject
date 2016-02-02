@@ -133,8 +133,8 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 		}
 	}
 
-	public Object queryUserByOrcCode() {
-		List<HhXtYh> hhXtYhList = userService.queryUserByOrcCode(request
+	public Object queryUserByOrgId() {
+		List<HhXtYh> hhXtYhList = userService.queryUserByOrgId(request
 				.getParameter("code"));
 		return hhXtYhList;
 	}

@@ -361,32 +361,17 @@ public class UserService extends BaseService<HhXtYh> {
 						Convert.strToList(ids)));
 	}
 
-	public List<HhXtYh> queryUserByOrcCode(String code) {
-		List<String> yhIdList = queryUserIdListByOrgCode(code);
-		if (Check.isEmpty(yhIdList)) {
-			return new ArrayList<HhXtYh>();
-		}
-		List<HhXtYh> hhXtYhList = xtyhdao.queryList(HhXtYh.class,
-				Restrictions.in("id", yhIdList));
-		return hhXtYhList;
-	}
+	public List<HhXtYh> queryUserByOrgId(String orgs) {
+		ParamInf hqlParamList2 = ParamFactory.getParamHb();
+		hqlParamList2.is("orgId", orgs);
+		ParamInf hqlParamList3 = ParamFactory.getParamHb();
+		hqlParamList3.is("jobId", orgs);
+		ParamInf hqlParamList4 = ParamFactory.getParamHb();
+		hqlParamList4.is("deptId", orgs);
+		ParamInf hqlParamList5 = ParamFactory.getParamHb();
 
-	private List<String> queryUserIdListByOrgCode(String code) {
-		List<Organization> organizations = hhXtOrgDAO.queryList(
-				Organization.class, Restrictions.like("code_", code + "%"));
-		List<String> orgIdList = new ArrayList<String>();
-		for (Organization organization : organizations) {
-			orgIdList.add(organization.getId());
-		}
-		if (Check.isEmpty(orgIdList)) {
-			return new ArrayList<String>();
-		}
-		List<String> yhIdList = new ArrayList<String>();
-		List<HhXtYh> hhXtYhList = this.queryList(ParamFactory.getParamHb().in("orgId", orgIdList));
-		for (HhXtYh hhXtYh : hhXtYhList) {
-			yhIdList.add(hhXtYh.getId());
-		}
-		return yhIdList;
+		List<HhXtYh> hhXtYhList = queryList(ParamFactory.getParamHb().or(hqlParamList5.or(hqlParamList2,hqlParamList3),hqlParamList4));
+		return hhXtYhList;
 	}
 
 	public List<HhXtYh> queryUserByRole(String roleId) {

@@ -27,9 +27,9 @@
 				var userids = '';
 				var usernames = '';
 				if (data.code_) {
-					Request.request('usersystem-user-queryUserByOrcCode', {
+					Request.request('usersystem-user-queryUserByOrgId', {
 						data : {
-							code : data.code_
+							code : data.id
 						},
 						async : false
 					}, function(result) {
