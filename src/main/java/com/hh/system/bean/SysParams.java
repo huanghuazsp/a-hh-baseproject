@@ -11,8 +11,8 @@ import com.hh.system.util.Check;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "HH_SYS_PARAM")
-public class HhSysParam extends BaseOneEntity {
+@Table(name = "SYS_PARAMS")
+public class SysParams extends BaseOneEntity {
 	private int logSql;
 	private int dataBaseSql;
 	private int power;

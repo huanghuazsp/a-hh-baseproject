@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hh.system.bean.HhSysParam;
+import com.hh.system.bean.SysParams;
 import com.hh.system.service.inf.SystemServiceInf;
 import com.hh.system.task.FileCopyDeleteTask;
 import com.hh.system.util.Convert;
@@ -47,17 +47,17 @@ public class DataInitializationService {
 	}
 
 	public int initSysParam() {
-		List<HhSysParam> hhSysParams = sysParamService.queryAllList();
-		int size = hhSysParams.size();
+		List<SysParams> sysParams = sysParamService.queryAllList();
+		int size = sysParams.size();
 		if (size == 0) {
-			HhSysParam hhSysParam = new HhSysParam();
-			hhSysParam.setSysName("信息管理系统");
-			hhSysParam.setSysIcon("/hhcommon/images/extjsico/17460336.png");
-			hhSysParam.setSysImg("/hhcommon/images/big/apple/25.png");
-			sysParamService.createEntity(hhSysParam);
-			SysParam.hhSysParam = hhSysParam;
+			SysParams sysParam = new SysParams();
+			sysParam.setSysName("信息管理系统");
+			sysParam.setSysIcon("/hhcommon/images/extjsico/17460336.png");
+			sysParam.setSysImg("/hhcommon/images/big/apple/25.png");
+			sysParamService.createEntity(sysParam);
+			SysParam.sysParam = sysParam;
 		} else {
-			SysParam.hhSysParam = hhSysParams.get(0);
+			SysParam.sysParam = sysParams.get(0);
 		}
 		return size;
 	}

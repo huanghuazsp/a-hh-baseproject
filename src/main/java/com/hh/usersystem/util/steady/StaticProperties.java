@@ -3,7 +3,7 @@ package com.hh.usersystem.util.steady;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hh.usersystem.bean.usersystem.HhXtCd;
+import com.hh.usersystem.bean.usersystem.SysMenu;
 
 public class StaticProperties {
 	// 默认背景
@@ -16,7 +16,7 @@ public class StaticProperties {
 	public static final String HHXT_NO_ON_LINE_USER_ICON = "/hhcommon/images/icons/user/no_on_line_user.jpg";
 	
 	
-	public static List<HhXtCd> hhXtCds = new ArrayList<HhXtCd>();
+	public static List<SysMenu> hhXtCds = new ArrayList<SysMenu>();
 
 	public static enum OperationLevel {
 		BR, BGW, BBM, BJG, BJT

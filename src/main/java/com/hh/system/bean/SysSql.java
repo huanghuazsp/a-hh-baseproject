@@ -12,8 +12,8 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 @SuppressWarnings("serial")
 @Entity
 @Order
-@Table(name = "HH_XT_SQL")
-public class HHXtSql extends BaseTwoEntity {
+@Table(name = "SYS_SQL")
+public class SysSql extends BaseTwoEntity {
 	private long elapsedTime;
 	private String sql;
 	private String createUserName;

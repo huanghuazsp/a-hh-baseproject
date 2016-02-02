@@ -3,7 +3,7 @@ package com.hh.system.service.impl;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import com.hh.system.bean.HHXtError;
+import com.hh.system.bean.SysError;
 import com.hh.system.util.ExceptionUtil;
 import com.hh.system.util.MessageException;
 
@@ -27,15 +27,15 @@ public class SaveErrorThread extends Thread {
 	}
 
 	private void saveError() {
-		HHXtError hhXtError = new HHXtError();
-		hhXtError.setName(e.getClass().getName());
-		hhXtError.setMessage(e.getMessage());
-		hhXtError.setAllMessage(ExceptionUtil.getMessage(e));
-		hhXtError.setVcreate(userid);
-		hhXtError.setVupdate(userid);
-		hhXtError.setVorgid(currOrg);
+		SysError sysError = new SysError();
+		sysError.setName(e.getClass().getName());
+		sysError.setMessage(e.getMessage());
+		sysError.setAllMessage(ExceptionUtil.getMessage(e));
+		sysError.setVcreate(userid);
+		sysError.setVupdate(userid);
+		sysError.setVorgid(currOrg);
 		try {
-			errorService.save(hhXtError);
+			errorService.save(sysError);
 		} catch (MessageException e1) {
 			e1.printStackTrace();
 		}

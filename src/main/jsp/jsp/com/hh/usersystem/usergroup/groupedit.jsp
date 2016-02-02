@@ -68,7 +68,7 @@
 					<tr>
 						<td xtype="label">父节点：</td>
 						<td><span id="node_span" xtype="selectTree"
-							config="name: 'node' , tableName : 'hh_user_group' , url : 'usersystem-UserGroup-queryTreeList' , params : {isNoLeaf : true} "></span>
+							config="name: 'node' , tableName : 'us_group' , url : 'usersystem-UserGroup-queryTreeList' , params : {isNoLeaf : true} "></span>
 						</td>
 					</tr>
 					<tr>

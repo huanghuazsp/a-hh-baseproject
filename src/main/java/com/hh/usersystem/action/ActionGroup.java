@@ -9,8 +9,8 @@ import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.base.BaseServiceAction;
-import com.hh.usersystem.bean.usersystem.HhXtGroup;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
+import com.hh.usersystem.bean.usersystem.UsGroup;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UserGroup;
 import com.hh.usersystem.service.impl.GroupService;
 import com.hh.usersystem.service.impl.UserGroupService;
@@ -19,7 +19,7 @@ import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 
 @SuppressWarnings("serial")
-public class ActionGroup extends BaseServiceAction<HhXtGroup> {
+public class ActionGroup extends BaseServiceAction<UsGroup> {
 
 	private String groups;
 	@Autowired
@@ -31,7 +31,7 @@ public class ActionGroup extends BaseServiceAction<HhXtGroup> {
 	@Autowired
 	private UserService userService;
 
-	public BaseService<HhXtGroup> getService() {
+	public BaseService<UsGroup> getService() {
 		return service;
 	}
 
@@ -58,25 +58,25 @@ public class ActionGroup extends BaseServiceAction<HhXtGroup> {
 			userGroup.setChildren(userGroups);
 			returnObjects.add(userGroup);
 		}
-		List<HhXtGroup> groupList=	service.queryTreeList(this.object,Convert.toBoolean(request.getParameter("isNoLeaf")));
-		for (HhXtGroup hhXtGroup : groupList) {
+		List<UsGroup> groupList=	service.queryTreeList(this.object,Convert.toBoolean(request.getParameter("isNoLeaf")));
+		for (UsGroup hhXtGroup : groupList) {
 			addXtGroup(hhXtGroup);
 		}
 		returnObjects.addAll(groupList);
 		return returnObjects;
 	}
 	
-	private void addXtGroup(HhXtGroup userGroup) {
+	private void addXtGroup(UsGroup userGroup) {
 		if (userGroup.getChildren() != null) {
-			for (HhXtGroup userGroup2 : userGroup.getChildren()) {
+			for (UsGroup userGroup2 : userGroup.getChildren()) {
 				addXtGroup(userGroup2);
 			}
 		}
 		if (Check.isNoEmpty(userGroup.getUsers())) {
 			List<String> userIds = Convert.strToList(userGroup.getUsers());
-			List<HhXtYh> hhXtYhs = userService.queryListByIds(userIds);
-			for (HhXtYh hhXtYh : hhXtYhs) {
-				HhXtGroup extTree = new HhXtGroup();
+			List<UsUser> hhXtYhs = userService.queryListByIds(userIds);
+			for (UsUser hhXtYh : hhXtYhs) {
+				UsGroup extTree = new UsGroup();
 				extTree.setId( hhXtYh.getId());
 				extTree.setText(hhXtYh.getText());
 				if (LoginUser.getLoginUserId().contains(hhXtYh.getId())) {
@@ -99,8 +99,8 @@ public class ActionGroup extends BaseServiceAction<HhXtGroup> {
 		}
 		if (Check.isNoEmpty(userGroup.getUsers())) {
 			List<String> userIds = Convert.strToList(userGroup.getUsers());
-			List<HhXtYh> hhXtYhs = userService.queryListByIds(userIds);
-			for (HhXtYh hhXtYh : hhXtYhs) {
+			List<UsUser> hhXtYhs = userService.queryListByIds(userIds);
+			for (UsUser hhXtYh : hhXtYhs) {
 				UserGroup extTree = new UserGroup();
 				extTree.setId( hhXtYh.getId());
 				extTree.setText(hhXtYh.getText());

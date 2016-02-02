@@ -12,14 +12,14 @@ import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
-import com.hh.usersystem.bean.usersystem.HhXtGroup;
+import com.hh.usersystem.bean.usersystem.UsGroup;
 
 @Service
-public class GroupService extends BaseService<HhXtGroup> {
+public class GroupService extends BaseService<UsGroup> {
 
 	@Override
-	public HhXtGroup findObjectById(String id) {
-		HhXtGroup hhXtGroup = super.findObjectById(id);
+	public UsGroup findObjectById(String id) {
+		UsGroup hhXtGroup = super.findObjectById(id);
 		return hhXtGroup;
 	}
 
@@ -30,12 +30,12 @@ public class GroupService extends BaseService<HhXtGroup> {
 	}
 
 	@Override
-	public HhXtGroup save(HhXtGroup entity) throws MessageException {
-		HhXtGroup hhXtGroup = super.saveTree(entity);
+	public UsGroup save(UsGroup entity) throws MessageException {
+		UsGroup hhXtGroup = super.saveTree(entity);
 		return hhXtGroup;
 	}
 
-	public PagingData<HhXtGroup> queryPagingData(HhXtGroup object,
+	public PagingData<UsGroup> queryPagingData(UsGroup object,
 			String groups, PageRange pageRange) {
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (!Check.isEmpty(object.getText())) {
@@ -48,7 +48,7 @@ public class GroupService extends BaseService<HhXtGroup> {
 		// hqlSearchCondition.getHqlParamList().add(
 		// Restrictions.eq("nxb", hhXtYh.getNxb()));
 		// }
-		return dao.queryPagingData(HhXtGroup.class, hqlParamList, pageRange);
+		return dao.queryPagingData(UsGroup.class, hqlParamList, pageRange);
 	}
 
 }

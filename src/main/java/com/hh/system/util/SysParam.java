@@ -1,7 +1,7 @@
 package com.hh.system.util;
 
-import com.hh.system.bean.HhSysParam;
+import com.hh.system.bean.SysParams;
 
 public class SysParam {
-	public static HhSysParam hhSysParam = new HhSysParam();
+	public static SysParams sysParam = new SysParams();
 }

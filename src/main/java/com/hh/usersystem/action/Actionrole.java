@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.base.BaseServiceAction;
-import com.hh.usersystem.bean.usersystem.HhXtJs;
+import com.hh.usersystem.bean.usersystem.UsRole;
 import com.hh.usersystem.service.impl.RoleService;
 
 @SuppressWarnings("serial")
-public class Actionrole  extends BaseServiceAction<HhXtJs> {
+public class Actionrole  extends BaseServiceAction<UsRole> {
 	private String roles;
 	private String menuIds;
 	
@@ -18,12 +18,12 @@ public class Actionrole  extends BaseServiceAction<HhXtJs> {
 	
 	@Autowired
 	private RoleService roleService;
-	public BaseService<HhXtJs> getService() {
+	public BaseService<UsRole> getService() {
 		return roleService;
 	}
 
 	public Object queryAllRoleList() {
-		List<HhXtJs> hhxtjsList = roleService.queryAllRoleList();
+		List<UsRole> hhxtjsList = roleService.queryAllRoleList();
 		return hhxtjsList;
 	}
 

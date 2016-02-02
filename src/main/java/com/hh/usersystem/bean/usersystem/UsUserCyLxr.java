@@ -15,8 +15,8 @@ import com.hh.hibernate.util.base.BaseOneEntity;
  * @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "HH_XT_YH_CYLXR")
-public class HhXtYhCyLxr extends BaseOneEntity implements java.io.Serializable {
+@Table(name = "US_USER_CYLXR")
+public class UsUserCyLxr extends BaseOneEntity implements java.io.Serializable {
 
 	private String yhId;
 	private String cylxrId;
@@ -24,7 +24,7 @@ public class HhXtYhCyLxr extends BaseOneEntity implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public HhXtYhCyLxr() {
+	public UsUserCyLxr() {
 	}
 
 

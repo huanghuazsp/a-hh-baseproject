@@ -18,26 +18,26 @@ import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtCheckTree;
-import com.hh.usersystem.bean.usersystem.HhXtCd;
-import com.hh.usersystem.bean.usersystem.HhXtCz;
-import com.hh.usersystem.bean.usersystem.HhXtJsCd;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
-import com.hh.usersystem.bean.usersystem.HhXtYhCdZmtb;
-import com.hh.usersystem.bean.usersystem.Organization;
+import com.hh.usersystem.bean.usersystem.SysMenu;
+import com.hh.usersystem.bean.usersystem.SysOper;
+import com.hh.usersystem.bean.usersystem.UsRoleMenu;
+import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.bean.usersystem.UsUserMenuZmtb;
+import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.opensymphony.xwork2.ActionContext;
 
 @Service
-public class MenuService extends BaseService<HhXtCd> {
+public class MenuService extends BaseService<SysMenu> {
 	@Autowired
-	private IHibernateDAO<HhXtCd> dao;
+	private IHibernateDAO<SysMenu> dao;
 	@Autowired
-	private IHibernateDAO<HhXtJsCd> xtjscddao;
+	private IHibernateDAO<UsRoleMenu> xtjscddao;
 	@Autowired
-	private IHibernateDAO<HhXtYhCdZmtb> xtyhcdzmtb;
+	private IHibernateDAO<UsUserMenuZmtb> xtyhcdzmtb;
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 	@Autowired
-	private IHibernateDAO<HhXtCz> czdao;
+	private IHibernateDAO<SysOper> czdao;
 	@Autowired
 	private LoginUserUtilService loginUserService;
 	@Autowired
@@ -45,17 +45,17 @@ public class MenuService extends BaseService<HhXtCd> {
 	@Autowired
 	private OperateService operateService;
 	
-	public HhXtCd findObjectById(String id) {
-		HhXtCd hhXtCd = dao.findEntityByPK(HhXtCd.class, id);
+	public SysMenu findObjectById(String id) {
+		SysMenu hhXtCd = dao.findEntityByPK(SysMenu.class, id);
 		if (!"root".equals(hhXtCd.getNode())) {
-			HhXtCd parenthhXtCd = dao.findEntityByPK(HhXtCd.class,
+			SysMenu parenthhXtCd = dao.findEntityByPK(SysMenu.class,
 					hhXtCd.getNode());
 			hhXtCd.setVpname(parenthhXtCd.getText());
 		}
 		return hhXtCd;
 	}
-	public HhXtCd findObjectById2(String id) {
-		HhXtCd hhXtCd = dao.findEntityByPK(HhXtCd.class, id);
+	public SysMenu findObjectById2(String id) {
+		SysMenu hhXtCd = dao.findEntityByPK(SysMenu.class, id);
 		return hhXtCd;
 	}
 
@@ -64,9 +64,9 @@ public class MenuService extends BaseService<HhXtCd> {
 		deleteYzNode(idList);
 		if (!Check.isEmpty(idList)) {
 			// czdao.deleteEntity(HhXtCz.class,"node",idList);
-			xtjscddao.deleteEntity(HhXtJsCd.class, "cdId", idList);
-			xtyhcdzmtb.deleteEntity(HhXtYhCdZmtb.class, "cdId", idList);
-			dao.deleteEntity(HhXtCd.class, "id", idList);
+			xtjscddao.deleteEntity(UsRoleMenu.class, "cdId", idList);
+			xtyhcdzmtb.deleteEntity(UsUserMenuZmtb.class, "cdId", idList);
+			dao.deleteEntity(SysMenu.class, "id", idList);
 		}
 
 	}
@@ -76,30 +76,30 @@ public class MenuService extends BaseService<HhXtCd> {
 		List<String> yzIdList = new ArrayList<String>();
 		if (!Check.isEmpty(idList)) {
 		 	operateService.deleteByPidList(idList);
-			List<HhXtCd> hhxtcdList = dao.queryList(HhXtCd.class,
+			List<SysMenu> hhxtcdList = dao.queryList(SysMenu.class,
 					Restrictions.in("node", idList));
-			for (HhXtCd hhXtCd : hhxtcdList) {
+			for (SysMenu hhXtCd : hhxtcdList) {
 				yzIdList.add(hhXtCd.getId());
 			}
 			deleteYzNode(yzIdList);
 			if (!Check.isEmpty(yzIdList)) {
-				xtjscddao.deleteEntity(HhXtJsCd.class, "cdId", yzIdList);
-				xtyhcdzmtb.deleteEntity(HhXtYhCdZmtb.class, "cdId", yzIdList);
-				dao.deleteEntity(HhXtCd.class, "id", yzIdList);
+				xtjscddao.deleteEntity(UsRoleMenu.class, "cdId", yzIdList);
+				xtyhcdzmtb.deleteEntity(UsUserMenuZmtb.class, "cdId", yzIdList);
+				dao.deleteEntity(SysMenu.class, "id", yzIdList);
 			}
 		}
 
 	}
 
-	public List<HhXtCd> queryMenuListByPid(String node) {
-		List<HhXtCd> hhxtcdList = new ArrayList<HhXtCd>();
+	public List<SysMenu> queryMenuListByPid(String node) {
+		List<SysMenu> hhxtcdList = new ArrayList<SysMenu>();
 		ParamInf hqlParamList =ParamFactory.getParamHb()
 				.is("leaf", 0);
 		if (Check.isEmpty(node) || "root".equals(node)) {
-			hhxtcdList = dao.queryTreeList(HhXtCd.class,
+			hhxtcdList = dao.queryTreeList(SysMenu.class,
 					ParamFactory.getParamHb().is("node", "root"));
 		} else {
-			hhxtcdList = dao.queryTreeList(HhXtCd.class,
+			hhxtcdList = dao.queryTreeList(SysMenu.class,
 					ParamFactory.getParamHb().is("node", node));
 		}
 
@@ -107,20 +107,20 @@ public class MenuService extends BaseService<HhXtCd> {
 	}
 
 	public List<ExtCheckTree> queryMenuAllListByPid(String node, String roleid) {
-		List<HhXtCd> hhxtcdList = new ArrayList<HhXtCd>();
+		List<SysMenu> hhxtcdList = new ArrayList<SysMenu>();
 		ParamInf hqlParamList =ParamFactory.getParamHb();
 		if (Check.isEmpty(node) || "root".equals(node)) {
-			hhxtcdList = dao.queryAllTreeList(HhXtCd.class,
+			hhxtcdList = dao.queryAllTreeList(SysMenu.class,
 					hqlParamList.is("node", "root"));
 		} else {
-			hhxtcdList = dao.queryAllTreeList(HhXtCd.class,
+			hhxtcdList = dao.queryAllTreeList(SysMenu.class,
 					hqlParamList.is("node", node));
 		}
 		List<ExtCheckTree> extTreeList = new ArrayList<ExtCheckTree>();
 
 		List<String> cdidList = new ArrayList<String>();
 
-		for (HhXtCd hhXtCd : hhxtcdList) {
+		for (SysMenu hhXtCd : hhxtcdList) {
 			ExtCheckTree extTree = new ExtCheckTree();
 			extTree.setId(hhXtCd.getId());
 			extTree.setText(hhXtCd.getText());
@@ -139,12 +139,12 @@ public class MenuService extends BaseService<HhXtCd> {
 			ParamInf hqlParamList2 =ParamFactory.getParamHb();
 			hqlParamList2.in("cdId", cdidList);
 			hqlParamList2.is("jsId", roleid);
-			List<HhXtJsCd> hhXtJsCdList = xtjscddao.queryList(HhXtJsCd.class,
+			List<UsRoleMenu> hhXtJsCdList = xtjscddao.queryList(UsRoleMenu.class,
 					hqlParamList2);
 
 			List<String> jscdidList = new ArrayList<String>();
 			if (!Check.isEmpty(hhXtJsCdList)) {
-				for (HhXtJsCd hhXtJsCd : hhXtJsCdList) {
+				for (UsRoleMenu hhXtJsCd : hhXtJsCdList) {
 					jscdidList.add(hhXtJsCd.getCdId());
 				}
 			}
@@ -174,9 +174,9 @@ public class MenuService extends BaseService<HhXtCd> {
 		}
 	}
 
-	private void addChildren(ExtCheckTree parentextTree, List<HhXtCd> children,
+	private void addChildren(ExtCheckTree parentextTree, List<SysMenu> children,
 			List<String> cdidList) {
-		for (HhXtCd hhXtCd : children) {
+		for (SysMenu hhXtCd : children) {
 			ExtCheckTree extTree = new ExtCheckTree();
 			extTree.setId(hhXtCd.getId());
 			extTree.setText(hhXtCd.getText());
@@ -195,22 +195,22 @@ public class MenuService extends BaseService<HhXtCd> {
 	public void addZmtb(String ids) {
 		List<String> idList = Convert.strToList(ids);
 		for (String id : idList) {
-			HhXtYhCdZmtb hhXtYhCdZmtb = new HhXtYhCdZmtb();
-			HhXtCd hhXtCd = dao.findEntityByPK(HhXtCd.class, id);
+			UsUserMenuZmtb hhXtYhCdZmtb = new UsUserMenuZmtb();
+			SysMenu hhXtCd = dao.findEntityByPK(SysMenu.class, id);
 			hhXtYhCdZmtb.setHhXtCd(hhXtCd);
 			hhXtYhCdZmtb.setYhId(loginUserUtilService.findLoginUser().getId());
 			xtyhcdzmtb.createEntity(hhXtYhCdZmtb);
 		}
-		HhXtYh hhXtYh = loginUserService.findLoginUser();
+		UsUser hhXtYh = loginUserService.findLoginUser();
 		hhXtYh.setHhXtYhCdZmtbList(zmtbService.queryZmtbByUserId(hhXtYh.getId()));
 		ActionContext.getContext().getSession().put("loginuser", hhXtYh);
 	}
 
 	public void deleteZmtb(String id) {
 		if (Check.isNoEmpty(id)) {
-			xtyhcdzmtb.deleteEntity(HhXtYhCdZmtb.class, "cdId",
+			xtyhcdzmtb.deleteEntity(UsUserMenuZmtb.class, "cdId",
 					Convert.strToList(id));
-			HhXtYh hhXtYh = loginUserService.findLoginUser();
+			UsUser hhXtYh = loginUserService.findLoginUser();
 			hhXtYh.setHhXtYhCdZmtbList(zmtbService.queryZmtbByUserId(hhXtYh.getId()));
 			ActionContext.getContext().getSession().put("loginuser", hhXtYh);
 		}

@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hh.system.util.Check;
 import com.hh.system.util.base.BaseAction;
 import com.hh.system.util.model.ReturnModel;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
-import com.hh.usersystem.bean.usersystem.Organization;
+import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.service.impl.LoginService;
 import com.hh.usersystem.service.impl.UserService;
 //import com.hh.usersystem.service.impl.ZmsxService;
@@ -21,7 +21,7 @@ import com.hh.usersystem.util.app.LoginUser;
 
 @SuppressWarnings("serial")
 public class Actionlogin extends BaseAction {
-	private HhXtYh xtYh;
+	private UsUser xtYh;
 	private boolean jump;
 	private String cookie;
 	private String type;
@@ -73,16 +73,16 @@ public class Actionlogin extends BaseAction {
 			for (String key : keyset) {
 				HttpSession httpSession = LoginUser.loginUserSession.get(key);
 				if (sessionId.equals(httpSession.getId())) {
-					HhXtYh hhXtYh = LoginUser.loginUserMap.get(key);
+					UsUser hhXtYh = LoginUser.loginUserMap.get(key);
 					Map<String, Object> map = new HashMap<String, Object>();
 					map.put("id", hhXtYh.getId());
 					map.put("text", hhXtYh.getText());
 					map.put("theme", hhXtYh.getTheme());
 //					if (hhXtYh.getOrganization() != null) {
 //						Map<String, Organization> organization =hhXtYh.getOrganization();
-						Organization dept =hhXtYh.getDept();
-						Organization org = hhXtYh.getOrg();
-						Organization gw = hhXtYh.getJob();
+						UsOrganization dept =hhXtYh.getDept();
+						UsOrganization org = hhXtYh.getOrg();
+						UsOrganization gw = hhXtYh.getJob();
 					
 						if (gw != null) {
 							map.put("jobId", gw.getId());
@@ -126,7 +126,7 @@ public class Actionlogin extends BaseAction {
 	}
 
 	public String updateDesktopType() {
-		HhXtYh hhXtYh = (HhXtYh) session.get("loginuser");
+		UsUser hhXtYh = (UsUser) session.get("loginuser");
 		if (hhXtYh != null) {
 			userService.update(hhXtYh.getId(), "desktopType", desktop);
 			return desktop;
@@ -135,11 +135,11 @@ public class Actionlogin extends BaseAction {
 		}
 	}
 
-	public HhXtYh getXtYh() {
+	public UsUser getXtYh() {
 		return xtYh;
 	}
 
-	public void setXtYh(HhXtYh xtYh) {
+	public void setXtYh(UsUser xtYh) {
 		this.xtYh = xtYh;
 	}
 

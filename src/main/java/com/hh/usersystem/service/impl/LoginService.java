@@ -20,16 +20,16 @@ import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.MsgProperties;
 import com.hh.system.util.model.ReturnModel;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
-import com.hh.usersystem.bean.usersystem.HhXtCd;
-import com.hh.usersystem.bean.usersystem.HhXtCz;
-import com.hh.usersystem.bean.usersystem.HhXtJs;
-import com.hh.usersystem.bean.usersystem.HhXtJsCd;
-import com.hh.usersystem.bean.usersystem.HhXtJsCz;
-import com.hh.usersystem.bean.usersystem.HhXtOrgJs;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
-import com.hh.usersystem.bean.usersystem.HhXtYhCdZmtb;
-import com.hh.usersystem.bean.usersystem.HhXtYhJs;
-import com.hh.usersystem.bean.usersystem.Organization;
+import com.hh.usersystem.bean.usersystem.SysMenu;
+import com.hh.usersystem.bean.usersystem.SysOper;
+import com.hh.usersystem.bean.usersystem.UsRole;
+import com.hh.usersystem.bean.usersystem.UsRoleMenu;
+import com.hh.usersystem.bean.usersystem.UsRoleOper;
+import com.hh.usersystem.bean.usersystem.UsOrgRole;
+import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.bean.usersystem.UsUserMenuZmtb;
+import com.hh.usersystem.bean.usersystem.UsUserRole;
+import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 import com.opensymphony.xwork2.ActionContext;
@@ -37,30 +37,30 @@ import com.opensymphony.xwork2.ActionContext;
 @Service
 public class LoginService {
 	@Autowired
-	private IHibernateDAO<HhXtYhJs> xtyhjsdao;
+	private IHibernateDAO<UsUserRole> xtyhjsdao;
 	@Autowired
-	private IHibernateDAO<HhXtYh> xtyhdao;
+	private IHibernateDAO<UsUser> xtyhdao;
 	@Autowired
-	private IHibernateDAO<HhXtJs> xtjsdao;
+	private IHibernateDAO<UsRole> xtjsdao;
 	@Autowired
-	private IHibernateDAO<HhXtJsCd> xtjscddao;
+	private IHibernateDAO<UsRoleMenu> xtjscddao;
 	@Autowired
-	private IHibernateDAO<HhXtJsCz> xtjsczdao;
+	private IHibernateDAO<UsRoleOper> xtjsczdao;
 	@Autowired
-	private IHibernateDAO<HhXtYhCdZmtb> xtyhcdzmtb;
+	private IHibernateDAO<UsUserMenuZmtb> xtyhcdzmtb;
 	@Autowired
 	private OrganizationService organizationService;
 	@Autowired
-	private IHibernateDAO<HhXtCd> hhxtcdDao;
+	private IHibernateDAO<SysMenu> hhxtcdDao;
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private IHibernateDAO<HhXtOrgJs> hhxtorgjsdao;
+	private IHibernateDAO<UsOrgRole> hhxtorgjsdao;
 	private static final Logger logger = Logger.getLogger(BaseAction.class);
 
-	public ReturnModel savefindLogin(HhXtYh xtYh) {
+	public ReturnModel savefindLogin(UsUser xtYh) {
 		ReturnModel returnModel = new ReturnModel();
-		List<HhXtYh> xtYhList = xtyhdao.queryList(HhXtYh.class, ParamFactory
+		List<UsUser> xtYhList = xtyhdao.queryList(UsUser.class, ParamFactory
 				.getParamHb().is("vdlzh", xtYh.getVdlzh()));
 		if (Check.isEmpty(xtYhList)) {
 			returnModel.setType(ReturnModel.TYPE_OK);
@@ -82,7 +82,7 @@ public class LoginService {
 					returnModel.setTitleMsg(MsgProperties.system_please_later);
 					returnModel.setMsg(MsgProperties.system_is_jump);
 
-					HhXtYh hhXtYh = xtYhList.get(0);
+					UsUser hhXtYh = xtYhList.get(0);
 
 					if (hhXtYh.getState() == 1) {
 						returnModel.setMsg("您的账号已经被冻结，请联系管理员！");
@@ -95,13 +95,13 @@ public class LoginService {
 					}
 					returnModel.setHref("webapp-desktop-" + desktop);
 
-					List<HhXtYhJs> hhXtYhJsList = xtyhjsdao.queryList(
-							HhXtYhJs.class,
+					List<UsUserRole> hhXtYhJsList = xtyhjsdao.queryList(
+							UsUserRole.class,
 							ParamFactory.getParamHb()
 									.is("yhId", hhXtYh.getId()));
 
 					List<String> jsids = new ArrayList<String>();
-					for (HhXtYhJs hhXtYhJs : hhXtYhJsList) {
+					for (UsUserRole hhXtYhJs : hhXtYhJsList) {
 						if (!jsids.contains(hhXtYhJs.getJsId())) {
 							jsids.add(hhXtYhJs.getJsId());
 						}
@@ -119,47 +119,47 @@ public class LoginService {
 						orgIdList.add(hhXtYh.getOrg().getId());
 					}
 
-					List<HhXtOrgJs> hhXtOrgJsList = new ArrayList<HhXtOrgJs>();
+					List<UsOrgRole> hhXtOrgJsList = new ArrayList<UsOrgRole>();
 
 					if (Check.isNoEmpty(orgIdList)) {
-						hhxtorgjsdao.queryList(HhXtOrgJs.class, "orgId",
+						hhxtorgjsdao.queryList(UsOrgRole.class, "orgId",
 								orgIdList);
-						for (HhXtOrgJs hhXtOrgJs : hhXtOrgJsList) {
+						for (UsOrgRole hhXtOrgJs : hhXtOrgJsList) {
 							if (!jsids.contains(hhXtOrgJs.getJsId())) {
 								jsids.add(hhXtOrgJs.getJsId());
 							}
 						}
 					}
 
-					List<HhXtJs> hhXtJsList = new ArrayList<HhXtJs>();
-					List<HhXtJsCd> hhXtJsCdList = new ArrayList<HhXtJsCd>();
-					List<HhXtJsCz> hhXtJsCzList = new ArrayList<HhXtJsCz>();
+					List<UsRole> hhXtJsList = new ArrayList<UsRole>();
+					List<UsRoleMenu> hhXtJsCdList = new ArrayList<UsRoleMenu>();
+					List<UsRoleOper> hhXtJsCzList = new ArrayList<UsRoleOper>();
 					if (jsids.size() != 0) {
 						hhXtJsList = xtjsdao.queryList(
-								HhXtJs.class,
+								UsRole.class,
 								ParamFactory.getParamHb().nis("state", 1)
 										.in("id", jsids));
 						if (hhXtJsList.size() != 0) {
 							hhXtJsCdList = xtjscddao
-									.queryList(HhXtJsCd.class, ParamFactory
+									.queryList(UsRoleMenu.class, ParamFactory
 											.getParamHb().in("jsId", jsids));
 							hhXtJsCzList = xtjsczdao
-									.queryList(HhXtJsCz.class, ParamFactory
+									.queryList(UsRoleOper.class, ParamFactory
 											.getParamHb().in("jsId", jsids));
 						}
 					}
 
-					Map<String, HhXtCz> hhXtCzMap = new HashMap<String, HhXtCz>();
-					List<HhXtCd> hhXtCdZmtbList = new ArrayList<HhXtCd>();
+					Map<String, SysOper> hhXtCzMap = new HashMap<String, SysOper>();
+					List<SysMenu> hhXtCdZmtbList = new ArrayList<SysMenu>();
 
 					List<String> hhxtcdIdList = new ArrayList<String>();
 
-					for (HhXtJsCd hhXtJsCd : hhXtJsCdList) {
+					for (UsRoleMenu hhXtJsCd : hhXtJsCdList) {
 						hhxtcdIdList.add(hhXtJsCd.getCdId());
 					}
-					List<HhXtCd> hhXtCdList = new ArrayList<HhXtCd>();
+					List<SysMenu> hhXtCdList = new ArrayList<SysMenu>();
 					if (hhxtcdIdList.size() > 0) {
-						hhXtCdList = hhxtcdDao.queryList(HhXtCd.class, "id",
+						hhXtCdList = hhxtcdDao.queryList(SysMenu.class, "id",
 								hhxtcdIdList);
 					}
 					// 请求的控制
@@ -169,8 +169,8 @@ public class LoginService {
 					Map<String, List<String>> hhXtCzPageTextMap = new HashMap<String, List<String>>();
 
 					// 多个角色 获取权限最大的操作级别
-					for (HhXtJsCz hhXtJsCz : hhXtJsCzList) {
-						HhXtCz hhXtCz = hhXtJsCz.getHhXtCz();
+					for (UsRoleOper hhXtJsCz : hhXtJsCzList) {
+						SysOper hhXtCz = hhXtJsCz.getHhXtCz();
 						if (Check.isEmpty(hhXtCz.getOperLevel())) {
 							hhXtCz.setOperLevel(hhXtJsCz.getOperLevel());
 						} else {
@@ -214,7 +214,7 @@ public class LoginService {
 					hhXtYh.setHhXtJsList(hhXtJsList);
 
 					// createZmsx(hhXtYh);
-					HhXtYh hhXtYh2 = new HhXtYh();
+					UsUser hhXtYh2 = new UsUser();
 					try {
 						BeanUtils.copyProperties(hhXtYh2, hhXtYh);
 						hhXtYh2.setVmm("");
@@ -235,33 +235,33 @@ public class LoginService {
 		return returnModel;
 	}
 
-	private void addOrg(HhXtYh hhXtYh) {
+	private void addOrg(UsUser hhXtYh) {
 		if (Check.isNoEmpty(hhXtYh.getOrgId())) {
-			Organization organization = organizationService
+			UsOrganization organization = organizationService
 					.findObjectById(hhXtYh.getOrgId());
 			hhXtYh.setOrg(organization);
 		}
 		if (Check.isNoEmpty(hhXtYh.getDeptId())) {
-			Organization organization = organizationService
+			UsOrganization organization = organizationService
 					.findObjectById(hhXtYh.getDeptId());
 			hhXtYh.setDept(organization);
 		}
 		if (Check.isNoEmpty(hhXtYh.getJobId())) {
-			Organization organization = organizationService
+			UsOrganization organization = organizationService
 					.findObjectById(hhXtYh.getJobId());
 			hhXtYh.setJob(organization);
 		}
 	}
 
-	private List<HhXtCd> queryZmtbList(HhXtYh hhXtYh, List<String> hhxtcdIdList) {
-		List<HhXtYhCdZmtb> hhXtYhCdZmtbList = xtyhcdzmtb.queryList(
-				HhXtYhCdZmtb.class,
+	private List<SysMenu> queryZmtbList(UsUser hhXtYh, List<String> hhxtcdIdList) {
+		List<UsUserMenuZmtb> hhXtYhCdZmtbList = xtyhcdzmtb.queryList(
+				UsUserMenuZmtb.class,
 				ParamFactory.getParamHb().is("yhId", hhXtYh.getId())
 		// .addCondition(Order.asc(StaticVar.ORDER))
 				);
 
-		List<HhXtCd> hhXtCdZmtbList = new ArrayList<HhXtCd>();
-		for (HhXtYhCdZmtb hhXtYhCdZmtb : hhXtYhCdZmtbList) {
+		List<SysMenu> hhXtCdZmtbList = new ArrayList<SysMenu>();
+		for (UsUserMenuZmtb hhXtYhCdZmtb : hhXtYhCdZmtbList) {
 			if (hhXtYhCdZmtb.getHhXtCd() != null) {
 				if (hhxtcdIdList.contains(hhXtYhCdZmtb.getHhXtCd().getId())) {
 					hhXtCdZmtbList.add(hhXtYhCdZmtb.getHhXtCd());

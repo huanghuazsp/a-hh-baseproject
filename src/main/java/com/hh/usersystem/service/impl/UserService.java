@@ -23,41 +23,41 @@ import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtTree;
-import com.hh.usersystem.bean.usersystem.HhXtGroup;
+import com.hh.usersystem.bean.usersystem.UsGroup;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
-import com.hh.usersystem.bean.usersystem.HhXtYhCdZmtb;
-import com.hh.usersystem.bean.usersystem.HhXtYhCyLxr;
-import com.hh.usersystem.bean.usersystem.HhXtYhJs;
-import com.hh.usersystem.bean.usersystem.Organization;
+import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.bean.usersystem.UsUserMenuZmtb;
+import com.hh.usersystem.bean.usersystem.UsUserCyLxr;
+import com.hh.usersystem.bean.usersystem.UsUserRole;
+import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 import com.opensymphony.xwork2.ActionContext;
 
 @Service
-public class UserService extends BaseService<HhXtYh> {
+public class UserService extends BaseService<UsUser> {
 	@Autowired
-	private IHibernateDAO<HhXtYh> xtyhdao;
+	private IHibernateDAO<UsUser> xtyhdao;
 	@Autowired
-	private IHibernateDAO<HhXtYhJs> hhXtYhJsDAO;
+	private IHibernateDAO<UsUserRole> hhXtYhJsDAO;
 	@Autowired
-	private IHibernateDAO<Organization> hhXtOrgDAO;
+	private IHibernateDAO<UsOrganization> hhXtOrgDAO;
 
 	@Autowired
-	private IHibernateDAO<HhXtYhCdZmtb> xtyhcdzmtb;
+	private IHibernateDAO<UsUserMenuZmtb> xtyhcdzmtb;
 
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 
 	@Autowired
-	private IHibernateDAO<HhXtYhCyLxr> cylxrdao;
+	private IHibernateDAO<UsUserCyLxr> cylxrdao;
 	
 	
 	@Autowired
 	private GroupService groupService;
 
 	public Map<? extends String, ? extends Object> queryOnLinePagingData(
-			HhXtYh hhXtYh, PageRange pageRange) {
+			UsUser hhXtYh, PageRange pageRange) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("items", LoginUser.getLoginUserList());
 		resultMap.put("total", LoginUser.getLoginUserCount());
@@ -72,7 +72,7 @@ public class UserService extends BaseService<HhXtYh> {
 		}
 	}
 
-	public PagingData<HhXtYh> queryPagingData(HhXtYh hhXtYh,
+	public PagingData<UsUser> queryPagingData(UsUser hhXtYh,
 			PageRange pageRange, String ids, String orgs, String roles,
 			String groups) {
 		ParamInf hqlParamList = ParamFactory.getParamHb();
@@ -116,7 +116,7 @@ public class UserService extends BaseService<HhXtYh> {
 			}
 		}
 		if (idParamList.size() == 0 && param == true) {
-			return new PagingData<HhXtYh>();
+			return new PagingData<UsUser>();
 		}
 		if (Check.isNoEmpty(idParamList)) {
 			hqlParamList.add(Restrictions.in("id", idParamList));
@@ -130,7 +130,7 @@ public class UserService extends BaseService<HhXtYh> {
 		// } else if (orgCriterion != null) {
 		// hqlParamList.add(orgCriterion);
 		// }
-		return xtyhdao.queryPagingData(HhXtYh.class, hqlParamList, pageRange);
+		return xtyhdao.queryPagingData(UsUser.class, hqlParamList, pageRange);
 	}
 
 	private void tiaojian(String orgs, String roles, String users,
@@ -146,7 +146,7 @@ public class UserService extends BaseService<HhXtYh> {
 		if (!Check.isEmpty(roles)) {
 			List<String> roleIdList = Convert.strToList(roles);
 			DetachedCriteria ownerCriteria = DetachedCriteria
-					.forEntityName(HhXtYhJs.class.getName());
+					.forEntityName(UsUserRole.class.getName());
 			ownerCriteria.setProjection(Property.forName("yhId"));
 			ownerCriteria.add(Restrictions.in("jsId", roleIdList));
 			Criterion roleCriterion = Property.forName("id").in(ownerCriteria);
@@ -171,7 +171,7 @@ public class UserService extends BaseService<HhXtYh> {
 		}
 	}
 
-	public HhXtYh save2(HhXtYh hhXtYh) throws MessageException {
+	public UsUser save2(UsUser hhXtYh) throws MessageException {
 		if (checkVdlzhOnly(hhXtYh)) {
 			throw new MessageException("用户名已存在，请更换！");
 		}
@@ -189,10 +189,10 @@ public class UserService extends BaseService<HhXtYh> {
 		return hhXtYh;
 	}
 
-	public HhXtYh save(HhXtYh hhXtYh) throws MessageException {
+	public UsUser save(UsUser hhXtYh) throws MessageException {
 
 		if (Check.isNoEmpty(hhXtYh.getId())) {
-			hhXtYhJsDAO.deleteEntity(HhXtYhJs.class, "yhId", hhXtYh.getId());
+			hhXtYhJsDAO.deleteEntity(UsUserRole.class, "yhId", hhXtYh.getId());
 		}
 
 		save2(hhXtYh);
@@ -207,7 +207,7 @@ public class UserService extends BaseService<HhXtYh> {
 				if (Check.isEmpty(jsid)) {
 					continue;
 				}
-				HhXtYhJs hhXtYhJs = new HhXtYhJs();
+				UsUserRole hhXtYhJs = new UsUserRole();
 				hhXtYhJs.setYhId(hhXtYh.getId());
 				hhXtYhJs.setJsId(jsid);
 				// hhXtYh.getJsList().add(jsid);
@@ -217,7 +217,7 @@ public class UserService extends BaseService<HhXtYh> {
 		return hhXtYh;
 	}
 
-	public boolean checkVdlzhOnly(HhXtYh hhXtYh) {
+	public boolean checkVdlzhOnly(UsUser hhXtYh) {
 		return xtyhdao
 				.findWhetherData(
 						"select count(o) from "
@@ -227,13 +227,13 @@ public class UserService extends BaseService<HhXtYh> {
 						hhXtYh);
 	}
 
-	public HhXtYh findObjectById(String id) {
-		HhXtYh hhXtYh = xtyhdao.findEntityByPK(HhXtYh.class, id);
-		List<HhXtYhJs> hhXtYhJsList = hhXtYhJsDAO.queryList(HhXtYhJs.class,
+	public UsUser findObjectById(String id) {
+		UsUser hhXtYh = xtyhdao.findEntityByPK(UsUser.class, id);
+		List<UsUserRole> hhXtYhJsList = hhXtYhJsDAO.queryList(UsUserRole.class,
 				ParamFactory.getParamHb().is("yhId", id));
 
 		String jsidsStr = "";
-		for (HhXtYhJs hhXtYhJs : hhXtYhJsList) {
+		for (UsUserRole hhXtYhJs : hhXtYhJsList) {
 			hhXtYh.getJsList().add(hhXtYhJs.getJsId());
 			jsidsStr += hhXtYhJs.getJsId() + ",";
 		}
@@ -247,25 +247,25 @@ public class UserService extends BaseService<HhXtYh> {
 		return hhXtYh;
 	}
 
-	public HhXtYh findObjectById_user(String id) {
-		HhXtYh hhXtYh = xtyhdao.findEntityByPK(HhXtYh.class, id);
+	public UsUser findObjectById_user(String id) {
+		UsUser hhXtYh = xtyhdao.findEntityByPK(UsUser.class, id);
 		return hhXtYh;
 	}
 
 	public void deleteByIds(String ids) {
 		List<String> idList = Convert.strToList(ids);
 		if (!Check.isEmpty(idList)) {
-			xtyhdao.deleteEntity(HhXtYh.class, "id", idList);
-			hhXtYhJsDAO.deleteEntity(HhXtYhJs.class, "yhId", idList);
-			xtyhcdzmtb.deleteEntity(HhXtYhCdZmtb.class, "yhId", idList);
+			xtyhdao.deleteEntity(UsUser.class, "id", idList);
+			hhXtYhJsDAO.deleteEntity(UsUserRole.class, "yhId", idList);
+			xtyhcdzmtb.deleteEntity(UsUserMenuZmtb.class, "yhId", idList);
 //			zmsxdao.deleteEntity(HHXtZmsx.class, "id", idList);
-			cylxrdao.deleteEntity(HhXtYhCyLxr.class, "yhId", idList);
+			cylxrdao.deleteEntity(UsUserCyLxr.class, "yhId", idList);
 		}
 
 	}
 
 
-	public void updatePassWord(HhXtYh hhXtYh, String oldPass)
+	public void updatePassWord(UsUser hhXtYh, String oldPass)
 			throws MessageException {
 		hhXtYh.setId(loginUserUtilService.findLoginUserId());
 		boolean as = xtyhdao.isExist(
@@ -279,30 +279,30 @@ public class UserService extends BaseService<HhXtYh> {
 		}
 	}
 
-	public List<HhXtYh> queryCylxrs() {
-		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
-		List<HhXtYhCyLxr> hhXtYhCyLxrs = cylxrdao.queryList(
-				HhXtYhCyLxr.class,
+	public List<UsUser> queryCylxrs() {
+		UsUser hhXtYh = loginUserUtilService.findLoginUser();
+		List<UsUserCyLxr> hhXtYhCyLxrs = cylxrdao.queryList(
+				UsUserCyLxr.class,
 				ParamFactory.getParamHb().is("yhId",
 						hhXtYh.getId()));
 
 		List<String> cylxrIdList = new ArrayList<String>();
-		for (HhXtYhCyLxr hhXtYhCyLxr : hhXtYhCyLxrs) {
+		for (UsUserCyLxr hhXtYhCyLxr : hhXtYhCyLxrs) {
 			cylxrIdList.add(hhXtYhCyLxr.getCylxrId());
 		}
 
 		if (!Check.isEmpty(cylxrIdList)) {
-			return xtyhdao.queryList(HhXtYh.class, ParamFactory.getParamHb().in("id", cylxrIdList));
+			return xtyhdao.queryList(UsUser.class, ParamFactory.getParamHb().in("id", cylxrIdList));
 		} else {
-			return new ArrayList<HhXtYh>();
+			return new ArrayList<UsUser>();
 		}
 
 	}
 
 	public List<ExtTree> queryCylxrTree() {
-		List<HhXtYh> hhXtYhs = this.queryCylxrs();
+		List<UsUser> hhXtYhs = this.queryCylxrs();
 		List<ExtTree> extTrees = new ArrayList<ExtTree>();
-		for (HhXtYh hhXtYh : hhXtYhs) {
+		for (UsUser hhXtYh : hhXtYhs) {
 			ExtTree extTree = new ExtTree();
 			extTree.setId(hhXtYh.getId());
 			extTree.setText(hhXtYh.getText());
@@ -328,8 +328,8 @@ public class UserService extends BaseService<HhXtYh> {
 		if (as) {
 			throw new MessageException("此人已经是您的常用联系人了！");
 		} else {
-			HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
-			HhXtYhCyLxr hhXtYhCyLxr = new HhXtYhCyLxr();
+			UsUser hhXtYh = loginUserUtilService.findLoginUser();
+			UsUserCyLxr hhXtYhCyLxr = new UsUserCyLxr();
 			hhXtYhCyLxr.setCylxrId(string);
 			hhXtYhCyLxr.setYhId(hhXtYh.getId());
 			cylxrdao.createEntity(hhXtYhCyLxr);
@@ -337,7 +337,7 @@ public class UserService extends BaseService<HhXtYh> {
 	}
 
 	public void deleteCylxr(String string) throws MessageException {
-		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
+		UsUser hhXtYh = loginUserUtilService.findLoginUser();
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("yhId", hhXtYh.getId());
 		paramsMap.put("cylxrId", string);
@@ -346,22 +346,22 @@ public class UserService extends BaseService<HhXtYh> {
 				paramsMap);
 	}
 
-	public List<HhXtYh> queryListByIds(String[] users) {
-		return xtyhdao.queryList(HhXtYh.class,
+	public List<UsUser> queryListByIds(String[] users) {
+		return xtyhdao.queryList(UsUser.class,
 				ParamFactory.getParamHb().in("id", users));
 	}
 
-	public List<HhXtYh> queryItemsByIdsStr(String ids) {
+	public List<UsUser> queryItemsByIdsStr(String ids) {
 		if (Check.isEmpty(ids)) {
 			return null;
 		}
 		return xtyhdao.queryList(
-				HhXtYh.class,
+				UsUser.class,
 				ParamFactory.getParamHb().in("id",
 						Convert.strToList(ids)));
 	}
 
-	public List<HhXtYh> queryUserByOrgId(String orgs) {
+	public List<UsUser> queryUserByOrgId(String orgs) {
 		ParamInf hqlParamList2 = ParamFactory.getParamHb();
 		hqlParamList2.is("orgId", orgs);
 		ParamInf hqlParamList3 = ParamFactory.getParamHb();
@@ -370,25 +370,25 @@ public class UserService extends BaseService<HhXtYh> {
 		hqlParamList4.is("deptId", orgs);
 		ParamInf hqlParamList5 = ParamFactory.getParamHb();
 
-		List<HhXtYh> hhXtYhList = queryList(ParamFactory.getParamHb().or(hqlParamList5.or(hqlParamList2,hqlParamList3),hqlParamList4));
+		List<UsUser> hhXtYhList = queryList(ParamFactory.getParamHb().or(hqlParamList5.or(hqlParamList2,hqlParamList3),hqlParamList4));
 		return hhXtYhList;
 	}
 
-	public List<HhXtYh> queryUserByRole(String roleId) {
+	public List<UsUser> queryUserByRole(String roleId) {
 		List<String> yhIdList = queryUserIdListByRole(roleId);
 		if (Check.isEmpty(yhIdList)) {
-			return new ArrayList<HhXtYh>();
+			return new ArrayList<UsUser>();
 		}
-		List<HhXtYh> hhXtYhList = xtyhdao.queryList(HhXtYh.class,
+		List<UsUser> hhXtYhList = xtyhdao.queryList(UsUser.class,
 				Restrictions.in("id", yhIdList));
 		return hhXtYhList;
 	}
 
 	private List<String> queryUserIdListByRole(String roleId) {
 		List<String> yhIdList = new ArrayList<String>();
-		List<HhXtYhJs> hhXtYhJList = hhXtYhJsDAO.queryList(HhXtYhJs.class,
+		List<UsUserRole> hhXtYhJList = hhXtYhJsDAO.queryList(UsUserRole.class,
 				Restrictions.eq("jsId", roleId));
-		for (HhXtYhJs hhXtYhJs : hhXtYhJList) {
+		for (UsUserRole hhXtYhJs : hhXtYhJList) {
 			yhIdList.add(hhXtYhJs.getYhId());
 		}
 		if (Check.isEmpty(yhIdList)) {
@@ -397,19 +397,19 @@ public class UserService extends BaseService<HhXtYh> {
 		return yhIdList;
 	}
 
-	public List<HhXtYh> queryUserByGroup(String groupId) {
+	public List<UsUser> queryUserByGroup(String groupId) {
 		List<String> yhIdList = queryUserIdListByGroup(groupId);
 		if (Check.isEmpty(yhIdList)) {
-			return new ArrayList<HhXtYh>();
+			return new ArrayList<UsUser>();
 		}
-		List<HhXtYh> hhXtYhList = xtyhdao.queryList(HhXtYh.class,
+		List<UsUser> hhXtYhList = xtyhdao.queryList(UsUser.class,
 				Restrictions.in("id", yhIdList));
 		return hhXtYhList;
 	}
 
 	private List<String> queryUserIdListByGroup(String groupId) {
 		List<String> yhIdList = new ArrayList<String>();
-		HhXtGroup hhXtGroup = groupService.findObjectById(groupId);
+		UsGroup hhXtGroup = groupService.findObjectById(groupId);
 		if (hhXtGroup!=null && Check.isNoEmpty(hhXtGroup.getUsers())) {
 			yhIdList = Convert.strToList(hhXtGroup.getUsers());
 		}
@@ -417,22 +417,22 @@ public class UserService extends BaseService<HhXtYh> {
 	}
 	
 	
-	public void updateZmbj(HhXtYh hhXtZmsx) {
+	public void updateZmbj(UsUser hhXtZmsx) {
 		hhXtZmsx.setId(loginUserUtilService.findLoginUser().getId());
-		dao.updateEntity("update " + HhXtYh.class.getName()
+		dao.updateEntity("update " + UsUser.class.getName()
 				+ " o set o.vzmbj=:vzmbj where o.id=:id", hhXtZmsx);
 	}
 
 	public void updateDefaultOrg(String userId, String orgid) {
-		dao.updateEntity("update " + HhXtYh.class.getName()
+		dao.updateEntity("update " + UsUser.class.getName()
 				+ " o set o.defaultOrgId=? where o.id=?", new Object[] { orgid,
 				userId });
 	}
 
-	public void updateTheme(HhXtYh hhXtZmsx) {
-		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
+	public void updateTheme(UsUser hhXtZmsx) {
+		UsUser hhXtYh = loginUserUtilService.findLoginUser();
 		hhXtZmsx.setId(hhXtYh.getId());
-		dao.updateEntity("update " + HhXtYh.class.getName()
+		dao.updateEntity("update " + UsUser.class.getName()
 				+ " o set o.theme=:theme where o.id=:id", hhXtZmsx);
 		hhXtYh.setTheme(hhXtZmsx.getTheme());
 		ActionContext.getContext().getSession().put("loginuser", hhXtYh);

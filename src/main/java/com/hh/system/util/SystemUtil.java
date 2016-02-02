@@ -7,7 +7,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.google.gson.Gson;
 import com.hh.system.service.impl.BeanFactoryHelper;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 
 public class SystemUtil {
@@ -32,11 +32,11 @@ public class SystemUtil {
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("operPower", getLoginUserUtilService().getOperPower());
 		paramsMap.put("theme", theme);
-		return "<link rel=\"shortcut icon\" href=\""+SysParam.hhSysParam.getSysIcon()+"\" />"+BaseSystemUtil.getBaseJs(paramsMap, args);
+		return "<link rel=\"shortcut icon\" href=\""+SysParam.sysParam.getSysIcon()+"\" />"+BaseSystemUtil.getBaseJs(paramsMap, args);
 	}
 
 	public static String getTheme() {
-		HhXtYh hhXtYh = ((HhXtYh) ServletActionContext.getRequest()
+		UsUser hhXtYh = ((UsUser) ServletActionContext.getRequest()
 				.getSession().getAttribute("loginuser"));
 		String theme = "";
 		if (Check.isNoEmpty(hhXtYh) && Check.isNoEmpty(hhXtYh)
@@ -47,7 +47,7 @@ public class SystemUtil {
 	}
 
 	public static String getUser() {
-		HhXtYh hhXtYh = getLoginUserUtilService().findLoginUser();
+		UsUser hhXtYh = getLoginUserUtilService().findLoginUser();
 		if (hhXtYh != null) {
 			return "<script type=\"text/javascript\">var loginUser="
 					+ gson.toJson(hhXtYh) + ";</script>";

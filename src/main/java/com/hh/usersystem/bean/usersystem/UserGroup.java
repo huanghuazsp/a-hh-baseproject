@@ -13,7 +13,7 @@ import com.hh.hibernate.dao.inf.Order;
 import com.hh.hibernate.util.base.BaseTreeNodeEntity;
 
 @Entity
-@Table(name = "HH_USER_GROUP")
+@Table(name = "US_GROUP")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order
 public class UserGroup  extends BaseTreeNodeEntity<UserGroup> {

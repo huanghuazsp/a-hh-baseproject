@@ -20,11 +20,11 @@ public abstract class FormattedLogger {
 					// + "|" + category
 					// + "|" + prepared
 					+ "；SQL语句：\n" + sql;
-			if (!sql.contains("HH_XT_SQL")) {
-				if (1 == SysParam.hhSysParam.getLogSql()) {
+			if (!sql.toLowerCase().contains("sys_sql")) {
+				if (1 == SysParam.sysParam.getLogSql()) {
 					logText(logEntry);
 				}
-				if (1 == SysParam.hhSysParam.getDataBaseSql()) {
+				if (1 == SysParam.sysParam.getDataBaseSql()) {
 					if (ActionContext.getContext() != null) {
 						IUser userObject = (IUser)ActionContext.getContext().getSession()
 								.get("loginuser");

@@ -1,5 +1,5 @@
-<%@page import="com.hh.usersystem.bean.usersystem.HhXtCd"%>
-<%@page import="com.hh.usersystem.bean.usersystem.HhXtYh"%>
+<%@page import="com.hh.usersystem.bean.usersystem.SysMenu"%>
+<%@page import="com.hh.usersystem.bean.usersystem.UsUser"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.SystemUtil"%>
 <%@page import="com.google.gson.Gson"%>

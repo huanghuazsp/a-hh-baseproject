@@ -15,9 +15,9 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
  * @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "HH_XT_JS")
+@Table(name = "US_ROLE")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class HhXtJs extends BaseTwoEntity  {
+public class UsRole extends BaseTwoEntity  {
 
 	private String text;
 	private String vbz;
@@ -28,7 +28,7 @@ public class HhXtJs extends BaseTwoEntity  {
 	// Constructors
 
 	/** default constructor */
-	public HhXtJs() {
+	public UsRole() {
 	}
 
 	@Column(name = "NLX", precision = 1, scale = 0)

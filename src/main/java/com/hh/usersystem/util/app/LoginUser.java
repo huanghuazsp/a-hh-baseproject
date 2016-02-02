@@ -8,17 +8,17 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
-import com.hh.usersystem.bean.usersystem.HhXtYh;
+import com.hh.usersystem.bean.usersystem.UsUser;
 
 public class LoginUser {
-	public static Map<String, HhXtYh> loginUserMap = new HashMap<String, HhXtYh>();
+	public static Map<String, UsUser> loginUserMap = new HashMap<String, UsUser>();
 	public static Map<String, HttpSession> loginUserSession = new HashMap<String, HttpSession>();
 
 	public static Set<String> getLoginUserId() {
 		return loginUserMap.keySet();
 	}
 
-	public static void put(String key, HhXtYh value, HttpSession session) {
+	public static void put(String key, UsUser value, HttpSession session) {
 		loginUserMap.put(key, value);
 		loginUserSession.put(key, session);
 	}
@@ -32,8 +32,8 @@ public class LoginUser {
 		return loginUserMap.size();
 	}
 
-	public static List<HhXtYh> getLoginUserList() {
-		List<HhXtYh> hhXtYhs = new ArrayList<HhXtYh>();
+	public static List<UsUser> getLoginUserList() {
+		List<UsUser> hhXtYhs = new ArrayList<UsUser>();
 		Set<String> set = loginUserMap.keySet();
 		for (String string : set) {
 			hhXtYhs.add(loginUserMap.get(string));

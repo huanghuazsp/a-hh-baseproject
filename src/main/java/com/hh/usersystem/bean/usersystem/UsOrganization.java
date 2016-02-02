@@ -16,10 +16,10 @@ import com.hh.hibernate.util.base.BaseTreeNodeEntity;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "HH_ORG_ORGANIZATION")
+@Table(name = "US_ORGANIZATION")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE,region="eternal")
 @Order(fields = "order", sorts = "asc")
-public class Organization    extends BaseTreeNodeEntity<Organization> implements java.io.Serializable {
+public class UsOrganization    extends BaseTreeNodeEntity<UsOrganization> implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return this.getId();

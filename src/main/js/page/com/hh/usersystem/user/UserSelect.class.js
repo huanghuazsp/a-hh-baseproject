@@ -3,7 +3,7 @@ Ext.define('com.hh.usersystem.user.OrgSelect', {
 			alias : 'widget.widgetOrgSelect',
 			name : 'orgIdsStr',
 			fieldLabel : '岗位',
-			tableName : 'hh_org_organization',
+			tableName : 'US_ORGANIZATION',
 			allowBlank : true,
 			treeMinWidth : 500,
 			multiSelect : true,
@@ -61,7 +61,7 @@ Ext.define('com.hh.usersystem.user.OrgSelect', {
 Ext.define('com.hh.usersystem.user.UserSelect', {
 	extend : 'com.hh.global.widget.ComboBoxMultiTree',
 	alias : 'widget.widgetUserSelect',
-	tableName : 'hh_xt_yh',
+	tableName : 'US_USER',
 	treeMinWidth : 740,
 	mainPanelHeight : 250,
 	columnWidth : 1,

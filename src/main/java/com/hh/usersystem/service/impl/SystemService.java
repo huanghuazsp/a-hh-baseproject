@@ -23,32 +23,32 @@ import com.hh.system.util.Convert;
 import com.hh.system.util.PrimaryKey;
 import com.hh.system.util.SystemUtil;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
-import com.hh.usersystem.bean.usersystem.HhXtCd;
-import com.hh.usersystem.bean.usersystem.HhXtJs;
-import com.hh.usersystem.bean.usersystem.HhXtJsCd;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
-import com.hh.usersystem.bean.usersystem.HhXtYhJs;
+import com.hh.usersystem.bean.usersystem.SysMenu;
+import com.hh.usersystem.bean.usersystem.UsRole;
+import com.hh.usersystem.bean.usersystem.UsRoleMenu;
+import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.bean.usersystem.UsUserRole;
 import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 
 @Service
 public class SystemService implements LoadDataTime ,SystemServiceInf{
 	@Autowired
-	private IHibernateDAO<HhXtYh> xtyhdao;
+	private IHibernateDAO<UsUser> xtyhdao;
 	@Autowired
-	private IHibernateDAO<HhXtJs> roledao;
+	private IHibernateDAO<UsRole> roledao;
 	@Autowired
-	private IHibernateDAO<HhXtJsCd> jscddao;
+	private IHibernateDAO<UsRoleMenu> jscddao;
 	@Autowired
-	private IHibernateDAO<HhXtYhJs> yhjsdao;
+	private IHibernateDAO<UsUserRole> yhjsdao;
 	@Autowired
-	private IHibernateDAO<HhXtCd> menuService;
+	private IHibernateDAO<SysMenu> menuService;
 
 	@Transactional
 	public void initMenuAndUser() {
 		List<String> menuIdList = new ArrayList<String>();
 		initMenu(menuIdList);
-		HhXtJs hhXtJs = initRole(menuIdList);
+		UsRole hhXtJs = initRole(menuIdList);
 		initSysUser(hhXtJs);
 	}
 
@@ -56,9 +56,9 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		saveMenu(StaticProperties.hhXtCds, "root", menuIdList);
 	}
 
-	private void saveMenu(List<HhXtCd> hhXtCds, String node,
+	private void saveMenu(List<SysMenu> hhXtCds, String node,
 			List<String> menuIdList) {
-		for (HhXtCd hhXtCd : hhXtCds) {
+		for (SysMenu hhXtCd : hhXtCds) {
 			menuIdList.add(hhXtCd.getId());
 			hhXtCd.setNode(node);
 			setBeanSysFields(hhXtCd);
@@ -69,8 +69,8 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		}
 	}
 
-	private HhXtJs initRole(List<String> menuIdList) {
-		HhXtJs hhXtJs = new HhXtJs();
+	private UsRole initRole(List<String> menuIdList) {
+		UsRole hhXtJs = new UsRole();
 		setBeanSysFields(hhXtJs);
 		hhXtJs.setId("4c49311b-186e-486b-a837-7d3ad2a8c89f");
 		hhXtJs.setText("超级管理员");
@@ -78,7 +78,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		hhXtJs.setNlx(3);
 		roledao.saveOrUpdateEntity(hhXtJs);
 		for (String string : menuIdList) {
-			HhXtJsCd hhXtJsCd = new HhXtJsCd();
+			UsRoleMenu hhXtJsCd = new UsRoleMenu();
 			setBeanSysFields(hhXtJsCd);
 			hhXtJsCd.setJsId(hhXtJs.getId());
 			hhXtJsCd.setCdId(string);
@@ -88,8 +88,8 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		return hhXtJs;
 	}
 
-	private void initSysUser(HhXtJs hhXtJs) {
-		HhXtYh hhXtYh = new HhXtYh();
+	private void initSysUser(UsRole hhXtJs) {
+		UsUser hhXtYh = new UsUser();
 		hhXtYh.setDsr(new Date());
 		hhXtYh.setNxb(1);
 		hhXtYh.setState(0);
@@ -107,7 +107,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 //		hhXtZmsx.setId(hhXtYh.getId());
 		hhXtYh.setDesktopType("jquerydesktop");
 		hhXtYh.setTheme("base");
-		HhXtYhJs hhXtYhJs = new HhXtYhJs();
+		UsUserRole hhXtYhJs = new UsUserRole();
 		setBeanSysFields(hhXtYhJs);
 		hhXtYhJs.setId(hhXtYh.getId().replaceAll("-", ""));
 		hhXtYhJs.setYhId(hhXtYh.getId());

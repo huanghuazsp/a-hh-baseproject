@@ -15,11 +15,11 @@ import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.ExtTree;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.system.util.statics.StaticVar;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.UserService;
 
 @SuppressWarnings("serial")
-public class Actionuser extends BaseServiceAction<HhXtYh> {
+public class Actionuser extends BaseServiceAction<UsUser> {
 	private String orgs;
 	private String roles;
 	private String groups;
@@ -28,7 +28,7 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 	private String oldPassword;
 
 	@Override
-	public BaseService<HhXtYh> getService() {
+	public BaseService<UsUser> getService() {
 		return userService;
 	}
 
@@ -61,7 +61,7 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 
 	public Object save() {
 		try {
-			HhXtYh hhXtYh = userService.save(this.object);
+			UsUser hhXtYh = userService.save(this.object);
 			return null;
 		} catch (MessageException e) {
 			return e;
@@ -70,7 +70,7 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 
 	public Object save2() {
 		try {
-			HhXtYh hhXtYh = userService.save2(this.object);
+			UsUser hhXtYh = userService.save2(this.object);
 			return null;
 		} catch (MessageException e) {
 			return e;
@@ -92,12 +92,12 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 	}
 
 	public Object findObjectById() {
-		HhXtYh hhXtYh = userService.findObjectById(this.object.getId());
+		UsUser hhXtYh = userService.findObjectById(this.object.getId());
 		return hhXtYh;
 	}
 
 	public Object findObjectById2() {
-		HhXtYh hhXtYh = userService.findObjectById_user(this.object.getId());
+		UsUser hhXtYh = userService.findObjectById_user(this.object.getId());
 		return hhXtYh;
 	}
 
@@ -106,7 +106,7 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 	}
 
 	public Object queryCylxrs() {
-		List<HhXtYh> hhXtYhs = userService.queryCylxrs();
+		List<UsUser> hhXtYhs = userService.queryCylxrs();
 		return hhXtYhs;
 	}
 
@@ -134,19 +134,19 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 	}
 
 	public Object queryUserByOrgId() {
-		List<HhXtYh> hhXtYhList = userService.queryUserByOrgId(request
+		List<UsUser> hhXtYhList = userService.queryUserByOrgId(request
 				.getParameter("code"));
 		return hhXtYhList;
 	}
 
 	public Object queryUserByRole() {
-		List<HhXtYh> hhXtYhList = userService.queryUserByRole(request
+		List<UsUser> hhXtYhList = userService.queryUserByRole(request
 				.getParameter("roleId"));
 		return hhXtYhList;
 	}
 
 	public Object queryUserByGroup() {
-		List<HhXtYh> hhXtYhList = userService.queryUserByGroup(request
+		List<UsUser> hhXtYhList = userService.queryUserByGroup(request
 				.getParameter("groupId"));
 		return hhXtYhList;
 	}
@@ -156,10 +156,10 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 		if (Check.isNoEmpty(object.getId())) {
 			StringBuffer texts = new StringBuffer();
 
-			List<HhXtYh> hhXtYhList = userService.queryList(ParamFactory
+			List<UsUser> hhXtYhList = userService.queryList(ParamFactory
 					.getParamHb().in(StaticVar.entityId,
 							Convert.strToList(object.getId())));
-			for (HhXtYh hhXtYh : hhXtYhList) {
+			for (UsUser hhXtYh : hhXtYhList) {
 				texts.append(hhXtYh.getText() + ",");
 			}
 			if (Check.isNoEmpty(texts)) {
@@ -173,7 +173,7 @@ public class Actionuser extends BaseServiceAction<HhXtYh> {
 	}
 
 	public Object findUserListByIds() {
-		List<HhXtYh> hhXtYhList = userService.queryList(ParamFactory
+		List<UsUser> hhXtYhList = userService.queryList(ParamFactory
 				.getParamHb().in(StaticVar.entityId,
 						Convert.strToList(object.getId())));
 		return hhXtYhList;

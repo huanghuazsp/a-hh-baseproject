@@ -80,7 +80,7 @@
 					<td xtype="label">用户名称：</td>
 					<td><span xtype="text" config=" name : 'text',required :true"></span></td>
 					<td colspan="2" rowspan="6"><span xtype="uploadpic"
-						config="name: 'headpic' , filePath : 'hh_xt_yh/headpic'  ,path:'/hhcommon/images/big/qq' "></span></td>
+						config="name: 'headpic' , filePath : 'us_user/headpic'  ,path:'/hhcommon/images/big/qq' "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">登录帐号：</td>
@@ -109,7 +109,7 @@
 				<tr trtype="systemmanager" >
 					<td xtype="label">角色：</td>
 					<td colspan="3"><span xtype="selectPageList"
-						config="name: 'jsIdsStr'  , url:'usersystem-role-queryPagingData' ,tableName:'HH_XT_JS' "></td>
+						config="name: 'jsIdsStr'  , url:'usersystem-role-queryPagingData' ,tableName:'US_ROLE' "></td>
 				</tr>
 				<tr trtype="systemmanager" >
 					<td xtype="label">机构：</td>

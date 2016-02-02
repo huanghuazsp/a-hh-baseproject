@@ -1,5 +1,5 @@
-<%@page import="com.hh.usersystem.bean.usersystem.HhXtCd"%>
-<%@page import="com.hh.usersystem.bean.usersystem.HhXtYh"%>
+<%@page import="com.hh.usersystem.bean.usersystem.SysMenu"%>
+<%@page import="com.hh.usersystem.bean.usersystem.UsUser"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.SystemUtil"%>
 <%@page import="com.google.gson.Gson"%>
@@ -9,10 +9,10 @@
 <title>添加快捷菜单</title>
 <%=SystemUtil.getBaseJs("ztree","ztree_check")%>
 <%
-Gson gson = new Gson();
-HhXtYh hhXtYh =	(HhXtYh)session.getAttribute("loginuser");
-List<HhXtCd> hhXtCds =  hhXtYh.getHhXtCdList();
-List<HhXtCd> zmtbcd =  hhXtYh.getHhXtYhCdZmtbList();
+	Gson gson = new Gson();
+UsUser hhXtYh =	(UsUser)session.getAttribute("loginuser");
+List<SysMenu> hhXtCds =  hhXtYh.getHhXtCdList();
+List<SysMenu> zmtbcd =  hhXtYh.getHhXtYhCdZmtbList();
 
 String hhxtcdStr =  gson.toJson(hhXtCds);
 String zmtbcdStr =  gson.toJson(zmtbcd);

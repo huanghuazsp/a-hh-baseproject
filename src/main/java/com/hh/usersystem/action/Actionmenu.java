@@ -9,18 +9,18 @@ import com.hh.system.util.MessageException;
 import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.model.ExtCheckTree;
 import com.hh.system.util.model.ReturnModel;
-import com.hh.usersystem.bean.usersystem.HhXtCd;
+import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.service.impl.MenuService;
 import com.hh.usersystem.util.steady.StaticProperties;
 import com.opensymphony.xwork2.ModelDriven;
 
 @SuppressWarnings("serial")
-public class Actionmenu extends BaseServiceAction<HhXtCd> {
+public class Actionmenu extends BaseServiceAction<SysMenu> {
 	private String roleid;
 	@Autowired
 	private MenuService menuService;
 	@Override
-	public BaseService<HhXtCd> getService() {
+	public BaseService<SysMenu> getService() {
 		return menuService;
 	}
 
@@ -30,12 +30,12 @@ public class Actionmenu extends BaseServiceAction<HhXtCd> {
 	}
 
 	public Object findObjectById() {
-		HhXtCd hhXtCd = menuService.findObjectById(this.object.getId());
+		SysMenu hhXtCd = menuService.findObjectById(this.object.getId());
 		return hhXtCd;
 	}
 
 	public Object queryMenuListByPid() {
-		List<HhXtCd> hhxtcdList = menuService.queryMenuListByPid(this.object
+		List<SysMenu> hhxtcdList = menuService.queryMenuListByPid(this.object
 				.getNode());
 		return hhxtcdList;
 	}

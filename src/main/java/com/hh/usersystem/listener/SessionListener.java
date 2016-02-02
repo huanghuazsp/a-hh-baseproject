@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSessionBindingEvent;
 
 import org.apache.log4j.Logger;
 
-import com.hh.usersystem.bean.usersystem.HhXtYh;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.util.app.LoginUser;
 
 public class SessionListener implements HttpSessionAttributeListener
@@ -16,7 +16,7 @@ public class SessionListener implements HttpSessionAttributeListener
 
 	public void attributeAdded(HttpSessionBindingEvent event) {
 		if (event.getName().equals("loginuser")) {
-			HhXtYh object = (HhXtYh) event.getValue();
+			UsUser object = (UsUser) event.getValue();
 			logger.info(object.getText() + "上线了......");
 			LoginUser.put(object.getId(), object, event.getSession());
 			logger.info("当前在线数：" + LoginUser.getLoginUserCount());
@@ -25,7 +25,7 @@ public class SessionListener implements HttpSessionAttributeListener
 
 	public void attributeRemoved(HttpSessionBindingEvent event) {
 		if (event.getName().equals("loginuser")) {
-			HhXtYh object = (HhXtYh) event.getValue();
+			UsUser object = (UsUser) event.getValue();
 			logger.info(object.getText() + "下线了......");
 			LoginUser.remove(object.getId());
 			logger.info("当前在线数：" + LoginUser.getLoginUserCount());
