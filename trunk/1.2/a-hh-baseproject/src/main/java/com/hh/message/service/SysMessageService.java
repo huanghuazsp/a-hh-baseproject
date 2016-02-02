@@ -15,7 +15,7 @@ import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.UserService;
 
@@ -40,7 +40,7 @@ public class SysMessageService extends BaseService<SysMessage> implements
 				pageRange);
 		List<SysMessage> messageList = pagingData.getItems();
 		for (SysMessage sysMessage : messageList) {
-			HhXtYh hhXtYh = userService.findObjectById_user(sysMessage
+			UsUser hhXtYh = userService.findObjectById_user(sysMessage
 					.getShouUser());
 			if (hhXtYh != null) {
 				sysMessage.setShouUserName(hhXtYh.getText());
@@ -52,7 +52,7 @@ public class SysMessageService extends BaseService<SysMessage> implements
 	public PagingData<SysMessage> queryMyMessage(SysMessage entity,
 			PageRange pageRange) {
 
-		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
+		UsUser hhXtYh = loginUserUtilService.findLoginUser();
 		PagingData<SysMessage> pagingData = super.queryPagingData(entity,
 				pageRange,
 				ParamFactory.getParamHb().is("shouUser", hhXtYh.getId())

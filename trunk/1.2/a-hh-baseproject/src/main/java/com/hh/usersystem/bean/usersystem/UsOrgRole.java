@@ -1,9 +1,7 @@
 package com.hh.usersystem.bean.usersystem;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -12,17 +10,27 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import com.hh.hibernate.util.base.BaseTwoEntity;
 
 /**
- * HhXtJsCd entity.
+ * HhXtYhJs entity.
  * 
  * @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "HH_XT_JS_CD")
+@Table(name = "US_ORG_ROLE")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class HhXtJsCd extends BaseTwoEntity implements java.io.Serializable {
+public class UsOrgRole extends BaseTwoEntity implements java.io.Serializable {
 
-	// Fields
+	private String orgId;
 	private String jsId;
+
+	// Constructors
+
+	/** default constructor */
+	public UsOrgRole() {
+	}
+
+
+
+
 
 	@Column(name = "JS_ID", nullable = false, length = 36)
 	public String getJsId() {
@@ -32,14 +40,14 @@ public class HhXtJsCd extends BaseTwoEntity implements java.io.Serializable {
 	public void setJsId(String jsId) {
 		this.jsId = jsId;
 	}
-	private String cdId;
-	@Column(name = "HHXTCD_ID", length = 36)
-	public String getCdId() {
-		return this.cdId;
+	
+	@Column(name = "ORG_ID", nullable = false, length = 36)
+	public String getOrgId() {
+		return orgId;
 	}
 
-	public void setCdId(String cdId) {
-		this.cdId = cdId;
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
 	}
 
 }

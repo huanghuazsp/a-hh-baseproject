@@ -15,9 +15,9 @@ import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.SysParam;
-import com.hh.usersystem.bean.usersystem.HhXtCz;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
-import com.hh.usersystem.bean.usersystem.Organization;
+import com.hh.usersystem.bean.usersystem.SysOper;
+import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.OperateService;
 import com.hh.usersystem.service.impl.OrganizationService;
@@ -34,7 +34,7 @@ public class SecurityInterceptor implements Interceptor {
 
 	private static int isLoadManagerRequest = 0;
 	@Autowired
-	private IHibernateDAO<HhXtCz> hibernateDAO;
+	private IHibernateDAO<SysOper> hibernateDAO;
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 	@Autowired
@@ -49,7 +49,7 @@ public class SecurityInterceptor implements Interceptor {
 	}
 
 	public String intercept(ActionInvocation arg0) throws Exception {
-		if (SysParam.hhSysParam.getPower() == 0) {
+		if (SysParam.sysParam.getPower() == 0) {
 			return powerControl(arg0);
 		} else {
 			return arg0.invoke();
@@ -64,7 +64,7 @@ public class SecurityInterceptor implements Interceptor {
 		}
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
-		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
+		UsUser hhXtYh = loginUserUtilService.findLoginUser();
 		if (hhXtYh == null && Check.isEmpty(request.getParameter("se"))) {
 			if (request.getHeader("x-requested-with") == null ? false : request
 					.getHeader("x-requested-with").equalsIgnoreCase(
@@ -79,9 +79,9 @@ public class SecurityInterceptor implements Interceptor {
 			String requestUri = request.getRequestURI().replace(
 					request.getContextPath() + "/", "");
 			if (all_manage_request.contains(requestUri)) {
-				Map<String, HhXtCz> hhXtCzMap = hhXtYh.getHhXtCzMap();
+				Map<String, SysOper> hhXtCzMap = hhXtYh.getHhXtCzMap();
 				boolean isSecurity = false;
-				HhXtCz hhXtCz = hhXtCzMap.get(requestUri);
+				SysOper hhXtCz = hhXtCzMap.get(requestUri);
 
 				if (hhXtCz == null) {
 					isSecurity = false;
@@ -124,8 +124,8 @@ public class SecurityInterceptor implements Interceptor {
 		}
 	}
 
-	private String valiOrg(HttpServletRequest request, HhXtYh hhXtYh,
-			HhXtCz hhXtCz) {
+	private String valiOrg(HttpServletRequest request, UsUser hhXtYh,
+			SysOper hhXtCz) {
 		String noSecurity;
 		String orgids = Convert.toString(request
 				.getParameter("orgids"));
@@ -135,19 +135,19 @@ public class SecurityInterceptor implements Interceptor {
 				.getParameter("jobids"));
 		if (OperationLevel.BJG.toString().equals(
 				hhXtCz.getOperLevel())) {
-			Organization organization = hhXtYh.getOrg();
+			UsOrganization organization = hhXtYh.getOrg();
 			noSecurity = findNoSecurityStr(orgids,
 					organization,
 					"<br/>您的操作范围是本<font color=red>机构</font>！");
 		} else if (OperationLevel.BBM.toString().equals(
 				hhXtCz.getOperLevel())) {
-			Organization organization = hhXtYh.getDept();
+			UsOrganization organization = hhXtYh.getDept();
 			noSecurity = findNoSecurityStr(deptids,
 					organization,
 					"<br/>您的操作范围是本<font color=red>部门</font>！");
 		} else if (OperationLevel.BGW.toString().equals(
 				hhXtCz.getOperLevel())) {
-			Organization organization = hhXtYh.getJob();
+			UsOrganization organization = hhXtYh.getJob();
 			noSecurity = findNoSecurityStr(jobids,
 					organization,
 					"<br/>您的操作范围是本<font color=red>岗位</font>！");
@@ -157,11 +157,11 @@ public class SecurityInterceptor implements Interceptor {
 		return noSecurity;
 	}
 
-	private String findNoSecurityStr(String deptids, Organization organization,
+	private String findNoSecurityStr(String deptids, UsOrganization organization,
 			String str) {
 		String noSecurity = null;
 		for (String orgid : deptids.split(",")) {
-			Organization dataOrganization = organizationService
+			UsOrganization dataOrganization = organizationService
 					.findObjectById(orgid);
 			if (dataOrganization.getCode_().startsWith(organization.getCode_())) {
 				noSecurity = str + "<br/>您操作的数据时属于<font color=red>"

@@ -8,9 +8,9 @@ import com.google.gson.Gson;
 import com.hh.system.util.Check;
 import com.hh.usersystem.LoginUserServiceInf;
 import com.hh.usersystem.aop.interceptor.SecurityInterceptor;
-import com.hh.usersystem.bean.usersystem.HhXtCz;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
-import com.hh.usersystem.bean.usersystem.Organization;
+import com.hh.usersystem.bean.usersystem.SysOper;
+import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.util.steady.StaticProperties.OperationLevel;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -18,11 +18,11 @@ import com.opensymphony.xwork2.ActionContext;
 public class LoginUserUtilService implements LoginUserServiceInf {
 	private static Gson gson = new Gson();
 
-	public HhXtYh findLoginUser() {
+	public UsUser findLoginUser() {
 		if (ActionContext.getContext() == null) {
 			return null;
 		}
-		HhXtYh hhXtYh = (HhXtYh) ActionContext.getContext().getSession()
+		UsUser hhXtYh = (UsUser) ActionContext.getContext().getSession()
 				.get("loginuser");
 		return hhXtYh;
 	}
@@ -34,14 +34,14 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 		Object object = ActionContext.getContext().getSession()
 				.get("loginuser");
 		if (object != null) {
-			HhXtYh hhXtYh = (HhXtYh) object;
+			UsUser hhXtYh = (UsUser) object;
 			return hhXtYh.getId();
 		}
 		return null;
 	}
 
 	public String findLoginUserText() {
-		HhXtYh hhXtYh = findLoginUser();
+		UsUser hhXtYh = findLoginUser();
 		if (hhXtYh == null) {
 			return null;
 		} else {
@@ -49,15 +49,15 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 		}
 	}
 
-	public Organization queryDataSecurityOrg(String action) {
-		HhXtYh user = findLoginUser();
+	public UsOrganization queryDataSecurityOrg(String action) {
+		UsUser user = findLoginUser();
 		if (user == null) {
 			return null;
 		}
-		Organization organization = null;
-		HhXtYh hhXtYh = findLoginUser();
-		Map<String, HhXtCz> hhXtCzMap = hhXtYh.getHhXtCzMap();
-		HhXtCz hhXtCz = hhXtCzMap.get(action);
+		UsOrganization organization = null;
+		UsUser hhXtYh = findLoginUser();
+		Map<String, SysOper> hhXtCzMap = hhXtYh.getHhXtCzMap();
+		SysOper hhXtCz = hhXtCzMap.get(action);
 		if (hhXtCz != null) {
 			if (OperationLevel.BJG.toString().equals(hhXtCz.getOperLevel())) {
 				organization = hhXtYh.getOrg();
@@ -76,7 +76,7 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 	}
 
 	public String getOperPower() {
-		HhXtYh hhXtYh = findLoginUser();
+		UsUser hhXtYh = findLoginUser();
 		if (hhXtYh != null) {
 			return "<script type=\"text/javascript\">" + "var allOperPower="
 					+ gson.toJson(SecurityInterceptor.all_manage_page_text_map)
@@ -103,9 +103,9 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 
 	@Override
 	public String findOrgId() {
-		HhXtYh hhXtYh = findLoginUser();
+		UsUser hhXtYh = findLoginUser();
 		if (Check.isNoEmpty(hhXtYh)) {
-			Organization organization = hhXtYh.getOrg();
+			UsOrganization organization = hhXtYh.getOrg();
 			if (Check.isNoEmpty(organization)) {
 				return organization.getId();
 			}
@@ -115,9 +115,9 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 
 	@Override
 	public String findDeptId() {
-		HhXtYh hhXtYh = findLoginUser();
+		UsUser hhXtYh = findLoginUser();
 		if (Check.isNoEmpty(hhXtYh)) {
-			Organization organization = hhXtYh.getDept();
+			UsOrganization organization = hhXtYh.getDept();
 			if (Check.isNoEmpty(organization)) {
 				return organization.getId();
 			}
@@ -127,9 +127,9 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 
 	@Override
 	public String findJobId() {
-		HhXtYh hhXtYh = findLoginUser();
+		UsUser hhXtYh = findLoginUser();
 		if (Check.isNoEmpty(hhXtYh)) {
-			Organization organization = hhXtYh.getJob();
+			UsOrganization organization = hhXtYh.getJob();
 			if (Check.isNoEmpty(organization)) {
 				return organization.getId();
 			}

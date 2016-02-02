@@ -5,28 +5,28 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hh.system.bean.HHXtSql;
+import com.hh.system.bean.SysSql;
 import com.hh.system.util.Check;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.UserService;
 
 @Service
-public class SqlService extends BaseService<HHXtSql> {
+public class SqlService extends BaseService<SysSql> {
 	@Autowired
 	private UserService userService;
 	@Override
-	public PagingData<HHXtSql> queryPagingData(HHXtSql entity,
+	public PagingData<SysSql> queryPagingData(SysSql entity,
 			PageRange pageRange) {
-		PagingData<HHXtSql> pageData = super.queryPagingData(entity,
+		PagingData<SysSql> pageData = super.queryPagingData(entity,
 				pageRange);
-		List<HHXtSql> hhXtErrors = pageData.getItems();
-		for (HHXtSql hhXtError : hhXtErrors) {
-			HhXtYh hhXtYh = userService.findObjectById_user(hhXtError
+		List<SysSql> sysErrors = pageData.getItems();
+		for (SysSql sysError : sysErrors) {
+			UsUser hhXtYh = userService.findObjectById_user(sysError
 					.getVcreate());
 			if (Check.isNoEmpty(hhXtYh)) {
-				hhXtError.setCreateUserName(hhXtYh.getText());
+				sysError.setCreateUserName(hhXtYh.getText());
 			}
 		}
 		return pageData;

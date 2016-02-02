@@ -12,9 +12,9 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "HH_XT_CZ")
+@Table(name = "SYS_OPER")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "eternal")
-public class HhXtCz extends BaseTwoEntity {
+public class SysOper extends BaseTwoEntity {
 	private String text;
 	private String vpid;
 	private String menuUrl;

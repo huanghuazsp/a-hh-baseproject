@@ -27,10 +27,10 @@ import com.hh.usersystem.util.steady.StaticProperties;
  * @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "HH_XT_YH")
+@Table(name = "US_USER")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order
-public class HhXtYh extends BaseTwoEntity implements IUser {
+public class UsUser extends BaseTwoEntity implements IUser {
 	@Override
 	public String toString() {
 		return this.getId();
@@ -45,10 +45,10 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	private Date dsr;
 	private String headpic;
 
-	private List<HhXtCd> hhXtCdList = new ArrayList<HhXtCd>();// 菜单
-	private List<HhXtJs> hhXtJsList = new ArrayList<HhXtJs>();// 角色
-	private List<HhXtCd> hhXtYhCdZmtbList = new ArrayList<HhXtCd>();// 桌面快捷方式
-	private Map<String,HhXtCz> hhXtCzMap =new HashMap<String,HhXtCz>();// 用户的操作权限
+	private List<SysMenu> hhXtCdList = new ArrayList<SysMenu>();// 菜单
+	private List<UsRole> hhXtJsList = new ArrayList<UsRole>();// 角色
+	private List<SysMenu> hhXtYhCdZmtbList = new ArrayList<SysMenu>();// 桌面快捷方式
+	private Map<String,SysOper> hhXtCzMap =new HashMap<String,SysOper>();// 用户的操作权限
 	private List<String> hhXtCzUrlList = new ArrayList<String>();
 	private List<String> hhXtCzPageTextList = new ArrayList<String>();
 
@@ -77,10 +77,10 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	// public void setHhXtZmsx(HHXtZmsx hhXtZmsx) {
 	// this.hhXtZmsx = hhXtZmsx;
 	// }
-	private Organization dept;// 部门
-	private Organization org;// 机构
+	private UsOrganization dept;// 部门
+	private UsOrganization org;// 机构
 	// private Organization jt ;// 集团
-	private Organization job;
+	private UsOrganization job;
 	
 	
 	private String jobId;
@@ -88,20 +88,20 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	private String orgId;
 
 	@Transient
-	public Organization getDept() {
+	public UsOrganization getDept() {
 		return dept;
 	}
 
-	public void setDept(Organization bm) {
+	public void setDept(UsOrganization bm) {
 		this.dept = bm;
 	}
 
 	@Transient
-	public Organization getOrg() {
+	public UsOrganization getOrg() {
 		return org;
 	}
 
-	public void setOrg(Organization jg) {
+	public void setOrg(UsOrganization jg) {
 		this.org = jg;
 	}
 
@@ -115,11 +115,11 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	// }
 
 	@Transient
-	public Organization getJob() {
+	public UsOrganization getJob() {
 		return job;
 	}
 
-	public void setJob(Organization gw) {
+	public void setJob(UsOrganization gw) {
 		this.job = gw;
 	}
 
@@ -133,29 +133,29 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	}
 
 	@Transient
-	public List<HhXtCd> getHhXtYhCdZmtbList() {
+	public List<SysMenu> getHhXtYhCdZmtbList() {
 		return hhXtYhCdZmtbList;
 	}
 
-	public void setHhXtYhCdZmtbList(List<HhXtCd> hhXtYhCdZmtbList) {
+	public void setHhXtYhCdZmtbList(List<SysMenu> hhXtYhCdZmtbList) {
 		this.hhXtYhCdZmtbList = hhXtYhCdZmtbList;
 	}
 
 	@Transient
-	public List<HhXtCd> getHhXtCdList() {
+	public List<SysMenu> getHhXtCdList() {
 		return hhXtCdList;
 	}
 
-	public void setHhXtCdList(List<HhXtCd> hhXtCdList) {
+	public void setHhXtCdList(List<SysMenu> hhXtCdList) {
 		this.hhXtCdList = hhXtCdList;
 	}
 
 	@Transient
-	public List<HhXtJs> getHhXtJsList() {
+	public List<UsRole> getHhXtJsList() {
 		return hhXtJsList;
 	}
 
-	public void setHhXtJsList(List<HhXtJs> hhXtJsList) {
+	public void setHhXtJsList(List<UsRole> hhXtJsList) {
 		this.hhXtJsList = hhXtJsList;
 	}
 
@@ -178,7 +178,7 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	}
 
 	/** default constructor */
-	public HhXtYh() {
+	public UsUser() {
 	}
 
 	@Column(name = "TEXT", length = 64)
@@ -390,11 +390,11 @@ public class HhXtYh extends BaseTwoEntity implements IUser {
 	}
 
 	@Transient
-	public Map<String, HhXtCz> getHhXtCzMap() {
+	public Map<String, SysOper> getHhXtCzMap() {
 		return hhXtCzMap;
 	}
 
-	public void setHhXtCzMap(Map<String, HhXtCz> hhXtCzMap) {
+	public void setHhXtCzMap(Map<String, SysOper> hhXtCzMap) {
 		this.hhXtCzMap = hhXtCzMap;
 	}
 

@@ -17,9 +17,9 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
  * @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "HH_XT_JS_CZ")
+@Table(name = "US_ROLE_OPER")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class HhXtJsCz extends BaseTwoEntity implements java.io.Serializable {
+public class UsRoleOper extends BaseTwoEntity implements java.io.Serializable {
 	private String jsId;
 	private String operLevel;
 	
@@ -31,13 +31,13 @@ public class HhXtJsCz extends BaseTwoEntity implements java.io.Serializable {
 	public void setOperLevel(String operLevel) {
 		this.operLevel = operLevel;
 	}
-	private HhXtCz hhXtCz = new HhXtCz();
+	private SysOper hhXtCz = new SysOper();
 	@ManyToOne(cascade={CascadeType.ALL}) 
-	public HhXtCz getHhXtCz() {
+	public SysOper getHhXtCz() {
 		return hhXtCz;
 	}
 
-	public void setHhXtCz(HhXtCz hhXtCz) {
+	public void setHhXtCz(SysOper hhXtCz) {
 		this.hhXtCz = hhXtCz;
 	}
 

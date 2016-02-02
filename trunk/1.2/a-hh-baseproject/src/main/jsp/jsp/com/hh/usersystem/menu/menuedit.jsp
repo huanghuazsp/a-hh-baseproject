@@ -72,7 +72,7 @@
 					<td><span xtype="text" config=" name : 'text',required :true"></span></td>
 					<td xtype="label">父菜单：</td>
 					<td><span id="node_span" xtype="selectTree"
-						config="name: 'node' , params : {isNoLeaf : true}, tableName : 'hh_xt_cd' , url : 'usersystem-menu-queryMenuListByPid'"></span>
+						config="name: 'node' , params : {isNoLeaf : true}, tableName : 'sys_menu' , url : 'usersystem-menu-queryMenuListByPid'"></span>
 					</td>
 				</tr>
 				<tr>

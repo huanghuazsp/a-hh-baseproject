@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.system.util.Convert;
 import com.hh.system.util.base.BaseAction;
-import com.hh.usersystem.bean.usersystem.HhXtCd;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
-import com.hh.usersystem.bean.usersystem.Organization;
+import com.hh.usersystem.bean.usersystem.SysMenu;
+import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.service.impl.LoginService;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.OrganizationService;
@@ -63,13 +63,13 @@ public class ActionApp extends BaseAction {
 //	}
 
 	public Object queryCurrOrgTree() {
-		List<Organization> organizationList = organizationService
+		List<UsOrganization> organizationList = organizationService
 				.queryCurrOrgTree(node, action);
 		return organizationList;
 	}
 	
 	public Object queryZmtb() {
-		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
+		UsUser hhXtYh = loginUserUtilService.findLoginUser();
 		return zmtbService.queryZmtbByUserId(hhXtYh.getId());
 	}
 

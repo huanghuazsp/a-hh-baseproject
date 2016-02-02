@@ -161,7 +161,7 @@ Ext
 									name : 'node',
 									xtype : 'widgetComboBoxTree',
 									fieldLabel : '上级',
-									tableName : 'hh_org_organization',
+									tableName : 'US_ORGANIZATION',
 									allowBlank : true,
 									columnWidth : 1,
 									action : 'usersystem-Org-queryOrgListByPid',

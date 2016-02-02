@@ -13,7 +13,7 @@ import javax.persistence.Transient;
 import com.hh.hibernate.util.base.BaseTwoEntity;
 
 @Entity
-@Table(name = "OA_SCHEDULE")
+@Table(name = "SYS_SCHEDULE")
 public class Schedule extends BaseTwoEntity {
 	private int ctype;
 	private boolean allDay;

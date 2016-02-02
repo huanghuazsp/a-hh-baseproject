@@ -17,10 +17,10 @@ import com.hh.hibernate.util.base.BaseTreeNodeEntity;
  * @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "HH_XT_CD")
+@Table(name = "SYS_MENU")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order(fields = "order", sorts = "asc")
-public class HhXtCd extends BaseTreeNodeEntity<HhXtCd> {
+public class SysMenu extends BaseTreeNodeEntity<SysMenu> {
 	private String vsj;
 	private String vbz;
 	private String vdtp = "/hhcommon/images/big/apple/20.png";
@@ -28,10 +28,10 @@ public class HhXtCd extends BaseTreeNodeEntity<HhXtCd> {
 	private String params;
 	
 	private int openType;
-	public HhXtCd(){
+	public SysMenu(){
 		
 	}
-	public HhXtCd(String id, String text, String vsj, String icon, int exp,
+	public SysMenu(String id, String text, String vsj, String icon, int exp,
 			int leaf) {
 		this.setId(id);
 		this.setText(text);

@@ -17,7 +17,7 @@ import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
-import com.hh.usersystem.bean.usersystem.HhXtYh;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 
 @Service
@@ -34,7 +34,7 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime 
 
 	@Transactional
 	public SysEmail sendEmail(SysEmail entity, String leixing) throws MessageException {
-		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
+		UsUser hhXtYh = loginUserUtilService.findLoginUser();
 		entity.setSendUserId(hhXtYh.getId());
 		entity.setSendUserName(hhXtYh.getText());
 

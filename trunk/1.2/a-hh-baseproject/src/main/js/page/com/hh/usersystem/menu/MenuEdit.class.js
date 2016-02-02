@@ -35,7 +35,7 @@ Ext
 									name : 'node',
 									xtype : 'widgetComboBoxTree',
 									fieldLabel : '父菜单',
-									tableName : 'hh_xt_cd',
+									tableName : 'sys_menu',
 									allowBlank : true,
 									columnWidth : 0.5,
 									value : page.config.parentRecord == null ? vpid

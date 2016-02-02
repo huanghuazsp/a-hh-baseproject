@@ -17,24 +17,24 @@ import com.hh.system.util.model.ExtCheckTree;
 import com.hh.system.util.model.ExtTree;
 import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.aop.interceptor.SecurityInterceptor;
-import com.hh.usersystem.bean.usersystem.HhXtCz;
-import com.hh.usersystem.bean.usersystem.HhXtJsCz;
+import com.hh.usersystem.bean.usersystem.SysOper;
+import com.hh.usersystem.bean.usersystem.UsRoleOper;
 import com.hh.usersystem.util.steady.StaticProperties.OperationLevel;
 
 @Service
-public class OperateService  extends BaseService<HhXtCz> {
+public class OperateService  extends BaseService<SysOper> {
 	@Autowired
-	private IHibernateDAO<HhXtCz> dao;
+	private IHibernateDAO<SysOper> dao;
 	@Autowired
-	private IHibernateDAO<HhXtJsCz> hhxtjsczDao;
+	private IHibernateDAO<UsRoleOper> hhxtjsczDao;
 
 	public List<ExtTree> queryOperateListByPid(String node) {
-		List<HhXtCz> hhXtCzList = new ArrayList<HhXtCz>();
+		List<SysOper> hhXtCzList = new ArrayList<SysOper>();
 		ParamInf hqlParamList = ParamFactory.getParamHb();
-		hhXtCzList = dao.queryList(HhXtCz.class,
+		hhXtCzList = dao.queryList(SysOper.class,
 				hqlParamList.is("vpid", node));
 		List<ExtTree> extTreeList = new ArrayList<ExtTree>();
-		for (HhXtCz hhXtCd : hhXtCzList) {
+		for (SysOper hhXtCd : hhXtCzList) {
 			ExtTree extTree = new ExtTree();
 			extTree.setId(hhXtCd.getId());
 			
@@ -56,14 +56,14 @@ public class OperateService  extends BaseService<HhXtCz> {
 			String roleid, String node) {
 		List<ExtCheckTree> extTreeList = new ArrayList<ExtCheckTree>();
 		if ("root".equals(node)) {
-			List<HhXtCz> hhXtCzList = new ArrayList<HhXtCz>();
+			List<SysOper> hhXtCzList = new ArrayList<SysOper>();
 			ParamInf hqlParamList = ParamFactory.getParamHb();
-			hhXtCzList = dao.queryList(HhXtCz.class,
+			hhXtCzList = dao.queryList(SysOper.class,
 					hqlParamList.is("vpid", vpid));
 
 			List<String> czidList = new ArrayList<String>();
 
-			for (HhXtCz hhXtCd : hhXtCzList) {
+			for (SysOper hhXtCd : hhXtCzList) {
 				ExtCheckTree extTree = new ExtCheckTree();
 				extTree.setId(hhXtCd.getId());
 				String text = hhXtCd.getText();
@@ -85,12 +85,12 @@ public class OperateService  extends BaseService<HhXtCz> {
 				ParamInf hqlParamList2 = ParamFactory.getParamHb();
 				hqlParamList2.in("hhXtCz.id", czidList);
 				hqlParamList2.is("jsId", roleid);
-				List<HhXtJsCz> hhXtJsCdList = hhxtjsczDao.queryList(
-						HhXtJsCz.class, hqlParamList2);
+				List<UsRoleOper> hhXtJsCdList = hhxtjsczDao.queryList(
+						UsRoleOper.class, hqlParamList2);
 
 				List<String> jscdidList = new ArrayList<String>();
 				if (!Check.isEmpty(hhXtJsCdList)) {
-					for (HhXtJsCz hhXtJsCd : hhXtJsCdList) {
+					for (UsRoleOper hhXtJsCd : hhXtJsCdList) {
 						jscdidList.add(hhXtJsCd.getHhXtCz().getId());
 					}
 				}
@@ -109,7 +109,7 @@ public class OperateService  extends BaseService<HhXtCz> {
 				hqlParamList2.is("hhXtCz.id",
 						extCheckTree_parent.getId());
 				hqlParamList2.is("jsId", roleid);
-				HhXtJsCz hhXtJsCz = hhxtjsczDao.findEntity(HhXtJsCz.class,
+				UsRoleOper hhXtJsCz = hhxtjsczDao.findEntity(UsRoleOper.class,
 						hqlParamList2);
 
 				ExtCheckTree extTree5 = new ExtCheckTree();
@@ -160,16 +160,16 @@ public class OperateService  extends BaseService<HhXtCz> {
 		return extTreeList;
 	}
 
-	public HhXtCz findObjectById(String id) {
-		HhXtCz hhXtCz = dao.findEntityByPK(HhXtCz.class, id);
+	public SysOper findObjectById(String id) {
+		SysOper hhXtCz = dao.findEntityByPK(SysOper.class, id);
 		return hhXtCz;
 	}
 	
-	public List<HhXtCz> queryOperateListByPids(List<String> pids) {
+	public List<SysOper> queryOperateListByPids(List<String> pids) {
 		return this.queryList(ParamFactory.getParamHb().in("vpid", pids));
 	}
 
-	public HhXtCz save(HhXtCz hhXtCz) {
+	public SysOper save(SysOper hhXtCz) {
 		if (Check.isEmpty(hhXtCz.getId())) {
 			dao.createEntity(hhXtCz);
 		} else {
@@ -185,16 +185,16 @@ public class OperateService  extends BaseService<HhXtCz> {
 	}
 	public void deleteByIdList(List<String> idList) {
 		if (!Check.isEmpty(idList)) {
-			hhxtjsczDao.deleteEntity(HhXtJsCz.class, "czId", idList);
-			dao.deleteEntity(HhXtCz.class, "id", idList);
+			hhxtjsczDao.deleteEntity(UsRoleOper.class, "czId", idList);
+			dao.deleteEntity(SysOper.class, "id", idList);
 			initOperPower();
 		}
 	}
 	
 	public void deleteByPidList(List<String> pidList) {
 		List<String> idList = new ArrayList<String>();
-		List<HhXtCz> hhXtCzList = queryOperateListByPids(pidList);
-		for (HhXtCz hhXtCz : hhXtCzList) {
+		List<SysOper> hhXtCzList = queryOperateListByPids(pidList);
+		for (SysOper hhXtCz : hhXtCzList) {
 			idList.add(hhXtCz.getId());
 		}
 		deleteByIdList(idList);
@@ -203,8 +203,8 @@ public class OperateService  extends BaseService<HhXtCz> {
 	public void initOperPower() {
 		SecurityInterceptor.all_manage_request.clear();
 		SecurityInterceptor.all_manage_page_text_map.clear();
-		List<HhXtCz> xtczList = dao.queryList(HhXtCz.class);
-		for (HhXtCz hhXtCz : xtczList) {
+		List<SysOper> xtczList = dao.queryList(SysOper.class);
+		for (SysOper hhXtCz : xtczList) {
 			if (Check.isNoEmpty(hhXtCz.getVurl())) {
 				SecurityInterceptor.all_manage_request.add(hhXtCz.getVurl());
 			}

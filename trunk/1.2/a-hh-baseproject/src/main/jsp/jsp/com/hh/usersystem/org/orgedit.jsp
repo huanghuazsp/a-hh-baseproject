@@ -154,7 +154,7 @@
 					<td><span xtype="text" config=" name : 'text',required :true"></span></td>
 					<td xtype="label">父节点：</td>
 					<td><span id="node_span" xtype="selectTree"
-						config="name: 'node' , tableName : 'hh_org_organization' , url : 'usersystem-Org-queryTreeListByLx' ,params :{lx_:2}  , onChange : node_span_change"></span>
+						config="name: 'node' , tableName : 'US_ORGANIZATION' , url : 'usersystem-Org-queryTreeListByLx' ,params :{lx_:2}  , onChange : node_span_change"></span>
 					</td>
 				</tr>
 				<tr>
@@ -181,7 +181,7 @@
 				<tr>
 					<td xtype="label">角色：</td>
 					<td colspan="3"><span xtype="selectPageList"
-						config="name: 'jsIdsStr'  , url:'usersystem-role-queryPagingData' ,tableName:'HH_XT_JS' "></span></td>
+						config="name: 'jsIdsStr'  , url:'usersystem-role-queryPagingData' ,tableName:'US_ROLE' "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">自定义编码：</td>

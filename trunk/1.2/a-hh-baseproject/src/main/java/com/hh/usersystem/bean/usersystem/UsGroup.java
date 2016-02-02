@@ -14,10 +14,10 @@ import com.hh.hibernate.util.base.BaseTreeNodeEntity;
 import com.hh.hibernate.util.base.BaseTwoEntity;
 
 @Entity
-@Table(name = "HH_XT_GROUP")
+@Table(name = "US_GROUP")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order(fields = "order", sorts = "asc")
-public class HhXtGroup  extends BaseTreeNodeEntity<HhXtGroup> {
+public class UsGroup  extends BaseTreeNodeEntity<UsGroup> {
 	private String remark;
 	private String users;
 	

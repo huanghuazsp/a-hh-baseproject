@@ -17,37 +17,37 @@ import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtTree;
-import com.hh.usersystem.bean.usersystem.HhXtCz;
-import com.hh.usersystem.bean.usersystem.HhXtJs;
-import com.hh.usersystem.bean.usersystem.HhXtJsCd;
-import com.hh.usersystem.bean.usersystem.HhXtJsCz;
-import com.hh.usersystem.bean.usersystem.HhXtOrgJs;
-import com.hh.usersystem.bean.usersystem.HhXtYhJs;
+import com.hh.usersystem.bean.usersystem.SysOper;
+import com.hh.usersystem.bean.usersystem.UsRole;
+import com.hh.usersystem.bean.usersystem.UsRoleMenu;
+import com.hh.usersystem.bean.usersystem.UsRoleOper;
+import com.hh.usersystem.bean.usersystem.UsOrgRole;
+import com.hh.usersystem.bean.usersystem.UsUserRole;
 
 @Service
-public class RoleService extends BaseService<HhXtJs> {
+public class RoleService extends BaseService<UsRole> {
 	@Autowired
-	private IHibernateDAO<HhXtJs> xtjsdao;
+	private IHibernateDAO<UsRole> xtjsdao;
 	@Autowired
-	private IHibernateDAO<HhXtYhJs> hhXtYhJsdao;
+	private IHibernateDAO<UsUserRole> hhXtYhJsdao;
 	@Autowired
-	private IHibernateDAO<HhXtJsCd> hhXtJsCddao;
+	private IHibernateDAO<UsRoleMenu> hhXtJsCddao;
 	@Autowired
-	private IHibernateDAO<HhXtJsCz> hhxtjsczDao;
+	private IHibernateDAO<UsRoleOper> hhxtjsczDao;
 	@Autowired
-	private IHibernateDAO<HhXtCz> xtczdao;
+	private IHibernateDAO<SysOper> xtczdao;
 	@Autowired
-	private IHibernateDAO<HhXtOrgJs> hhxtorgjsdao;
+	private IHibernateDAO<UsOrgRole> hhxtorgjsdao;
 	
 	@Autowired
 	private OperateService operateService;
 
-	public List<HhXtJs> queryAllRoleList() {
-		return xtjsdao.queryList(HhXtJs.class,
+	public List<UsRole> queryAllRoleList() {
+		return xtjsdao.queryList(UsRole.class,
 				ParamFactory.getParamHb().nis("state", 1));
 	}
 
-	public PagingData<HhXtJs> queryPagingData(HhXtJs hhXtJs, String roles,
+	public PagingData<UsRole> queryPagingData(UsRole hhXtJs, String roles,
 			PageRange pageRange) {
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (!Check.isEmpty(hhXtJs.getText())) {
@@ -61,17 +61,17 @@ public class RoleService extends BaseService<HhXtJs> {
 		if (hhXtJs.getState()==1) {
 			hqlParamList.nis("state", 1);
 		}
-		return xtjsdao.queryPagingData(HhXtJs.class, hqlParamList, pageRange);
+		return xtjsdao.queryPagingData(UsRole.class, hqlParamList, pageRange);
 	}
 
 	public void deleteByIds(String ids) {
 		List<String> idList = Convert.strToList(ids);
 		if (!Check.isEmpty(idList)) {
-			xtjsdao.deleteEntity(HhXtJs.class, "id", idList);
-			hhXtYhJsdao.deleteEntity(HhXtYhJs.class, "jsId", idList);
-			hhXtJsCddao.deleteEntity(HhXtJsCd.class, "jsId", idList);
-			hhxtjsczDao.deleteEntity(HhXtJsCz.class, "jsId", idList);
-			hhxtorgjsdao.deleteEntity(HhXtOrgJs.class, "jsId", idList);
+			xtjsdao.deleteEntity(UsRole.class, "id", idList);
+			hhXtYhJsdao.deleteEntity(UsUserRole.class, "jsId", idList);
+			hhXtJsCddao.deleteEntity(UsRoleMenu.class, "jsId", idList);
+			hhxtjsczDao.deleteEntity(UsRoleOper.class, "jsId", idList);
+			hhxtorgjsdao.deleteEntity(UsOrgRole.class, "jsId", idList);
 		}
 
 	}
@@ -79,7 +79,7 @@ public class RoleService extends BaseService<HhXtJs> {
 	public void insertOrdeleteMenu(Map<String, String> paramsMap) {
 
 		if ("true".equals(paramsMap.get("checked"))) {
-			HhXtJsCd hhXtJsCd = new HhXtJsCd();
+			UsRoleMenu hhXtJsCd = new UsRoleMenu();
 			// HhXtCd hhXtCd = xtcddao.loadEntityByPK(HhXtCd.class,
 			// paramsMap.get("menuid"));
 			// hhXtCd.setId(paramsMap
@@ -94,11 +94,11 @@ public class RoleService extends BaseService<HhXtJs> {
 		}
 	}
 
-	public void saveJsMenu(HhXtJs object, String menuIds) {
-		hhXtJsCddao.deleteEntity(HhXtJsCd.class, "jsId", object.getId());
+	public void saveJsMenu(UsRole object, String menuIds) {
+		hhXtJsCddao.deleteEntity(UsRoleMenu.class, "jsId", object.getId());
 		List<String> menuList = Convert.strToList(menuIds);
 		for (String menuId : menuList) {
-			HhXtJsCd hhXtJsCd = new HhXtJsCd();
+			UsRoleMenu hhXtJsCd = new UsRoleMenu();
 			hhXtJsCd.setCdId(menuId);
 			hhXtJsCd.setJsId(object.getId());
 			hhXtJsCddao.createEntity(hhXtJsCd);
@@ -123,8 +123,8 @@ public class RoleService extends BaseService<HhXtJs> {
 			if (czid_oper.split("_").length>1) {
 				operlevel = czid_oper.split("_")[1];
 			}
-			HhXtJsCz hhXtJsCd = new HhXtJsCz();
-			HhXtCz hhXtCd = xtczdao.loadEntityByPK(HhXtCz.class, czid);
+			UsRoleOper hhXtJsCd = new UsRoleOper();
+			SysOper hhXtCd = xtczdao.loadEntityByPK(SysOper.class, czid);
 			hhXtJsCd.setHhXtCz(hhXtCd);
 			hhXtJsCd.setJsId(jsid);
 			hhXtJsCd.setOperLevel(operlevel);
@@ -135,8 +135,8 @@ public class RoleService extends BaseService<HhXtJs> {
 
 	public void insertOrdeleteOperate(Map<String, String> paramsMap) {
 		if ("true".equals(paramsMap.get("checked"))) {
-			HhXtJsCz hhXtJsCd = new HhXtJsCz();
-			HhXtCz hhXtCd = xtczdao.loadEntityByPK(HhXtCz.class,
+			UsRoleOper hhXtJsCd = new UsRoleOper();
+			SysOper hhXtCd = xtczdao.loadEntityByPK(SysOper.class,
 					paramsMap.get("menuid"));
 			// hhXtCd.setId(paramsMap
 			// .get("menuid"));

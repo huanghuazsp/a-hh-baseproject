@@ -27,14 +27,14 @@ import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.system.util.statics.StaticVar;
-import com.hh.usersystem.bean.usersystem.HhXtJs;
-import com.hh.usersystem.bean.usersystem.HhXtOrgJs;
-import com.hh.usersystem.bean.usersystem.Organization;
+import com.hh.usersystem.bean.usersystem.UsRole;
+import com.hh.usersystem.bean.usersystem.UsOrgRole;
+import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.service.impl.OrganizationService;
 import com.hh.usersystem.service.impl.RoleService;
 
 @SuppressWarnings("serial")
-public class ActionOrg extends BaseServiceAction<Organization> {
+public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	private String orgs;
 	private String selectType;
 
@@ -43,7 +43,7 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 	
 
 	@Override
-	public BaseService<Organization> getService() {
+	public BaseService<UsOrganization> getService() {
 		return organizationService;
 	}
 
@@ -53,7 +53,7 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 	}
 
 	public Object queryOrgListByPidAndLx() {
-		List<Organization> organizationList = organizationService
+		List<UsOrganization> organizationList = organizationService
 				.queryOrgListByPidAndLx(object, paramsMap.get("node"));
 		return organizationList;
 	}
@@ -63,13 +63,13 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 	}
 
 	public Object queryOrgListByPid() {
-		List<Organization> organizationList = organizationService
+		List<UsOrganization> organizationList = organizationService
 				.queryOrgListByPid(object, orgs, selectType);
 		return organizationList;
 	}
 
 	public Object findObjectById() {
-		Organization hhXtCd = organizationService.findObjectById(this.object
+		UsOrganization hhXtCd = organizationService.findObjectById(this.object
 				.getId());
 		return hhXtCd;
 	}
@@ -95,7 +95,7 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 
 	public Object save() {
 		try {
-			Organization hhXtYh = organizationService.save(this.object);
+			UsOrganization hhXtYh = organizationService.save(this.object);
 			return null;
 		} catch (MessageException e) {
 			return new ReturnModel(e.getMessage());
@@ -107,10 +107,10 @@ public class ActionOrg extends BaseServiceAction<Organization> {
 		String returnTextString = "";
 		if (Check.isNoEmpty(object.getId())) {
 			StringBuffer texts = new StringBuffer();
-			List<Organization> organizationList = organizationService
+			List<UsOrganization> organizationList = organizationService
 					.queryList(ParamFactory.getParamHb().in(StaticVar.entityId,
 							Convert.strToList(object.getId())));
-			for (Organization organization : organizationList) {
+			for (UsOrganization organization : organizationList) {
 				texts.append(organization.getText() + ",");
 			}
 			if (Check.isNoEmpty(texts)) {

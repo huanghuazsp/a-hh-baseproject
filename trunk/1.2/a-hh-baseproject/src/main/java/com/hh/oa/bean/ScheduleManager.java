@@ -13,7 +13,7 @@ import javax.persistence.Transient;
 import com.hh.hibernate.util.base.BaseTwoEntity;
 
 @Entity
-@Table(name = "OA_SCHEDULE_MANAGER")
+@Table(name = "SYS_SCHEDULE_MANAGER")
 public class ScheduleManager extends BaseTwoEntity {
 	
 	private String userId;

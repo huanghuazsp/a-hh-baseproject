@@ -1,6 +1,6 @@
 package com.hh.system.service.impl;
 
-import com.hh.system.bean.HHXtSql;
+import com.hh.system.bean.SysSql;
 import com.hh.system.util.MessageException;
 
 public class SaveSqlThread extends Thread {
@@ -26,7 +26,7 @@ public class SaveSqlThread extends Thread {
 	}
 
 	private void save() {
-		HHXtSql sqlObject = new HHXtSql();
+		SysSql sqlObject = new SysSql();
 		sqlObject.setElapsedTime(elapsedTime);
 		sqlObject.setSql(sql);
 		sqlObject.setVcreate(userid);

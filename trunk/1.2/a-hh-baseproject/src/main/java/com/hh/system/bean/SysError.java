@@ -10,8 +10,8 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 
 @Entity
 @Order
-@Table(name = "HH_XT_ERROR")
-public class HHXtError extends BaseTwoEntity {
+@Table(name = "SYS_ERROR")
+public class SysError extends BaseTwoEntity {
 	private String name;
 	private String message;
 	private String allMessage;

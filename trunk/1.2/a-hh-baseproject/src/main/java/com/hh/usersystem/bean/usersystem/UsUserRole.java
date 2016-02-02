@@ -15,9 +15,9 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
  * @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "HH_XT_YH_JS")
+@Table(name = "US_USER_ROLE")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class HhXtYhJs extends BaseTwoEntity implements java.io.Serializable {
+public class UsUserRole extends BaseTwoEntity implements java.io.Serializable {
 
 	private String yhId;
 	private String jsId;
@@ -25,7 +25,7 @@ public class HhXtYhJs extends BaseTwoEntity implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public HhXtYhJs() {
+	public UsUserRole() {
 	}
 
 

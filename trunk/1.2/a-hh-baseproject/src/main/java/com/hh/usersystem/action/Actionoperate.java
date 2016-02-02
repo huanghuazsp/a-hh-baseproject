@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.model.ExtCheckTree;
 import com.hh.system.util.model.ExtTree;
-import com.hh.usersystem.bean.usersystem.HhXtCz;
+import com.hh.usersystem.bean.usersystem.SysOper;
 import com.hh.usersystem.service.impl.OperateService;
 
 @SuppressWarnings("serial")
-public class Actionoperate extends BaseServiceAction<HhXtCz> {
+public class Actionoperate extends BaseServiceAction<SysOper> {
 	private String roleid;
 	@Autowired
 	private OperateService operateService;
@@ -31,12 +31,12 @@ public class Actionoperate extends BaseServiceAction<HhXtCz> {
 	}
 
 	public Object findObjectById() {
-		HhXtCz hhXtCz = operateService.findObjectById(this.object.getId());
+		SysOper hhXtCz = operateService.findObjectById(this.object.getId());
 		return hhXtCz;
 	}
 
 	public Object save() {
-		HhXtCz hhXtCz = operateService.save(this.object);
+		SysOper hhXtCz = operateService.save(this.object);
 		return null;
 	}
 
