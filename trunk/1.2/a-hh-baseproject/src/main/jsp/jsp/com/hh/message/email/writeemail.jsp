@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>写邮件</title>
-<%=SystemUtil.getBaseJs("checkform", "ckeditor")%>
+<%=SystemUtil.getBaseJs("checkform", "ckeditor","fileUpload")%>
 <script type="text/javascript">
 	var params = BaseUtil.getIframeParams();
 	var width = 800;
@@ -96,6 +96,11 @@
 					<td xtype="label">附件：</td>
 					<td><span xtype="file"
 						config="name: 'files' ,filePath:'sys_send_email#sys_shou_email/files' "></span></td>
+				</tr>
+				<tr>
+					<td xtype="label">附件：</td>
+					<td><span xtype="fileUpload"
+						config="name: 'files' , type:'email' "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">内容：</td>
