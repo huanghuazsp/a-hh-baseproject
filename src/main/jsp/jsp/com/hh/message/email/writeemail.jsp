@@ -63,6 +63,7 @@
 					id : objectid
 				},
 				callback : function(result) {
+					result.file = result.id;
 					$('#form').setValue(result);
 				}
 			});
