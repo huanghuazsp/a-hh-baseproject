@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>收邮件</title>
-<%=SystemUtil.getBaseJs("checkform")%>
+<%=SystemUtil.getBaseJs("checkform","fileUpload")%>
 <script type="text/javascript">
 	var params = BaseUtil.getIframeParams();
 	var width = 800;
@@ -96,8 +96,9 @@
 				</tr>
 				<tr>
 					<td xtype="label">附件：</td>
-					<td   colspan="3"><span xtype="file"
-						config="name: 'files' ,filePath:'task/sys_send_email#sys_shou_email/files' "></span></td>
+					<td  colspan="3">
+					<span xtype="fileUpload"
+						config="name: 'file' , type:'email' "></span></td>
 				</tr>
 			</table>
 			<div>
