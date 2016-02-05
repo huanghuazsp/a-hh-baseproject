@@ -21,6 +21,7 @@
 					id : objectid
 				},
 				callback : function(result) {
+					result.file=result.id;
 					shouObject = result;
 					$('#form').setValue(result, {view:true});
 				}
