@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.PrimaryKey"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.SystemUtil"%>
 <%@page import="com.hh.system.util.Convert"%>
@@ -66,6 +67,9 @@
 				}
 			});
 		}else{
+			writeObject = writeObject || {}; 
+			writeObject.bid = uuid;
+			writeObject.file = uuid;
 			$('#form').setValue(writeObject);
 		}
 	}
@@ -83,6 +87,7 @@
 	<div xtype="hh_content">
 		<form id="form" xtype="form">
 			<span xtype="text" config=" hidden:true,name : 'id'"></span>
+			<span id="bidspan" xtype="text" config=" hidden:true,name : 'bid' "></span>
 			<table xtype="form">
 				<tr>
 					<td xtype="label" style="width: 80px;">标题：</td>
@@ -94,13 +99,8 @@
 				</tr>
 				<tr>
 					<td xtype="label">附件：</td>
-					<td><span xtype="file"
-						config="name: 'files' ,filePath:'sys_send_email#sys_shou_email/files' "></span></td>
-				</tr>
-				<tr>
-					<td xtype="label">附件：</td>
 					<td><span xtype="fileUpload"
-						config="name: 'files' , type:'email' "></span></td>
+						config=" name : 'file',type:'email' "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">内容：</td>
