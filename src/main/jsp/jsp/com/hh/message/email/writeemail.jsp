@@ -105,7 +105,7 @@
 				</tr>
 				<tr>
 					<td xtype="label">内容：</td>
-					<td><span xtype="ckeditor" config="name: 'content' "></span></td>
+					<td><span xtype="ckeditor" config="name: 'content' ,nheight:300 ,mheight:200"></span></td>
 				</tr>
 			</table>
 		</form>
