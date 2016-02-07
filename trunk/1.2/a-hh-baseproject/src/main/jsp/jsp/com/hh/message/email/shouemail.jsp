@@ -99,7 +99,7 @@
 					<td xtype="label">附件：</td>
 					<td  colspan="3">
 					<span xtype="fileUpload"
-						config="name: 'file' , type:'email' "></span></td>
+						config="name: 'file' , type:'email' ,request:true"></span></td>
 				</tr>
 			</table>
 			<div>
