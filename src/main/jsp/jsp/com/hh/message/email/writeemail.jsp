@@ -101,7 +101,7 @@
 				<tr>
 					<td xtype="label">附件：</td>
 					<td><span xtype="fileUpload"
-						config=" name : 'file',type:'email' "></span></td>
+						config=" name : 'file',type:'email' ,request:true"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">内容：</td>
