@@ -80,7 +80,7 @@
 					<td xtype="label">用户名称：</td>
 					<td><span xtype="text" config=" name : 'text',required :true"></span></td>
 					<td colspan="2" rowspan="6"><span xtype="uploadpic"
-						config="name: 'headpic' , filePath : 'us_user/headpic'  ,path:'/hhcommon/images/big/qq' "></span></td>
+						config="name: 'headpic' , type : 'headpic'  ,path:'/hhcommon/images/big/qq' "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">登录帐号：</td>

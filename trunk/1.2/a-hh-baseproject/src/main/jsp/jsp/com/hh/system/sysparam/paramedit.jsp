@@ -59,16 +59,16 @@
 				<tr>
 					<td xtype="label">系统图标img</td>
 					<td><span xtype="uploadpic"
-						config=" width:36,height:36, name: 'sysImg' , filePath : 'hh_sys_param/SYS_IMG'  , path:'/hhcommon/images/big' "></span></td>
+						config=" width:36,height:36, name: 'sysImg' , type : 'param'  , path:'/hhcommon/images/big' "></span></td>
 					<td xtype="label">系统图标icon</td>
 					<td><span xtype="uploadpic"
-						config=" width:36,height:36, name: 'sysIcon' , filePath : 'hh_sys_param/SYS_ICON'  , path:'/hhcommon/images/extjsico' "></span></td>
+						config=" width:36,height:36, name: 'sysIcon' , type : 'param'  , path:'/hhcommon/images/extjsico' "></span></td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<td xtype="label">登陆背景图片</td>
 					<td colspan="3"><span xtype="uploadpic"
-						config=" width:550,height:400, name: 'loginBackImg' , filePath : 'hh_sys_param/SYS_ICON'  , path:'/hhcommon/images/background' "></span></td>
-				</tr>
+						config=" width:550,height:400, name: 'loginBackImg' , type : 'param'  , path:'/hhcommon/images/background' "></span></td>
+				</tr> -->
 			</table>
 		</form>
 	</div>

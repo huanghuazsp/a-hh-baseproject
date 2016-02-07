@@ -8,6 +8,8 @@ import javax.persistence.Transient;
 
 import com.hh.hibernate.util.base.BaseOneEntity;
 import com.hh.system.util.Check;
+import com.hh.system.util.Convert;
+import com.hh.system.util.SysParam;
 
 @SuppressWarnings("serial")
 @Entity
@@ -51,6 +53,17 @@ public class SysParams extends BaseOneEntity {
 	public String getSysIcon() {
 		return sysIcon;
 	}
+	
+	@Transient
+	public String getSysIcon2() {
+		String href = Convert.toString(sysIcon);
+		if (href.indexOf(".") == -1) {
+			href = "system-File-download?system_open_page_file_form_params={id:'"
+					+ href + "'}";
+		}
+		return href;
+	}
+	
 	public void setSysIcon(String sysIcon) {
 		this.sysIcon = sysIcon;
 	}
@@ -64,6 +77,17 @@ public class SysParams extends BaseOneEntity {
 	public String getSysImg() {
 		return sysImg;
 	}
+	
+	@Transient
+	public String getSysImg2() {
+		String href = Convert.toString(sysImg);
+		if (href.indexOf(".") == -1) {
+			href = "system-File-download?system_open_page_file_form_params={id:'"
+					+ href + "'}";
+		}
+		return href;
+	}
+	
 	public void setSysImg(String sysImg) {
 		this.sysImg = sysImg;
 	}

@@ -86,6 +86,9 @@ public class ActionGroup extends BaseServiceAction<UsGroup> {
 					extTree.setIcon(StaticProperties.HHXT_NO_ON_LINE_USER_ICON);
 				}
 				extTree.setLeaf(1);
+				if (userGroup.getChildren()==null) {
+					userGroup.setChildren(new ArrayList<UsGroup>());
+				}
 				userGroup.getChildren().add(extTree);
 			}
 		}
