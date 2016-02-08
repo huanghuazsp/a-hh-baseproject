@@ -93,7 +93,7 @@
 						config="name: 'nxb' ,defaultValue : 1, data :[{id:1,text:'男'},{id:0,text:'女'}]"></span></td>
 				</tr>
 				<tr>
-					<td xtype="label">电话：</td>
+					<td xtype="label">联系电话：</td>
 					<td><span xtype="text" config="name: 'vdh' ,maxSize:20 "></td>
 				</tr>
 				<tr>

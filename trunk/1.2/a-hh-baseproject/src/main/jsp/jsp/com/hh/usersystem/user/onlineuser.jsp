@@ -51,7 +51,7 @@
 			text : '电子邮件'
 		},{
 			name : 'vdh' ,
-			text : '电话'
+			text : '联系电话'
 		}
 	]">
 	</div>
