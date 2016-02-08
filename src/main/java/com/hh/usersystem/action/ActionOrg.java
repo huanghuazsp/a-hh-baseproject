@@ -141,43 +141,21 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 		this.selectType = selectType;
 	}
 
-	private byte[] bytes = null;
-	private String name;
 	private File attachment;
 	private String attachmentFileName;
 	private String type;
 
-	public Object importData() {
+	public Object importData() throws Exception {
 		response.setContentType("text/html");
 		String path = FileUpload.uploadFile(attachment, attachmentFileName,
 				type);
 		File file = new File(StaticVar.filepath + path);
-
-		try {
-			List<Map<String, Object>> mapList = ExcelUtil.getMapList(file, 1);
-			organizationService.save(mapList);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		List<Map<String, Object>> mapList = ExcelUtil.getMapList(file, 1);
+		organizationService.save(mapList);
 		Map<String, String> returnMap = new HashMap<String, String>();
 		returnMap.put("path", path);
 		returnMap.put("attachmentFileName", attachmentFileName);
-		returnMap.put("name", name);
 		return returnMap;
-	}
-
-	public String download() {
-		this.setName("test");
-		return "file";
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public File getAttachment() {
@@ -194,14 +172,6 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 
 	public void setAttachmentFileName(String attachmentFileName) {
 		this.attachmentFileName = attachmentFileName;
-	}
-
-	public byte[] getBytes() {
-		return bytes;
-	}
-
-	public void setBytes(byte[] bytes) {
-		this.bytes = bytes;
 	}
 
 	public String getType() {

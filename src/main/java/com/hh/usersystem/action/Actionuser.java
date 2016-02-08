@@ -1,8 +1,11 @@
 package com.hh.usersystem.action;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javassist.expr.NewArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,6 +14,8 @@ import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.base.BaseServiceAction;
+import com.hh.system.util.document.ExcelUtil;
+import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.ExtTree;
 import com.hh.system.util.model.ReturnModel;
@@ -33,22 +38,22 @@ public class Actionuser extends BaseServiceAction<UsUser> {
 	}
 
 	public Object queryPagingData() {
-		return userService.queryPagingData(object,
-				this.getPageRange(), this.getIds(), orgs, roles, groups);
+		return userService.queryPagingData(object, this.getPageRange(),
+				this.getIds(), orgs, roles, groups);
 	}
 
 	public Object queryPagingDataCombox() {
 		if (Check.isNoEmpty(this.object.getId())) {
 			return userService.queryItemsByIdsStr(object.getId());
 		} else {
-			return userService.queryPagingData(object,
-					this.getPageRange(), null, null, null, null);
+			return userService.queryPagingData(object, this.getPageRange(),
+					null, null, null, null);
 		}
 	}
 
 	public Object queryPagingDataList() {
-		return userService.queryPagingData(object,
-				this.getPageRange(), null, null, null, null);
+		return userService.queryPagingData(object, this.getPageRange(), null,
+				null, null, null);
 	}
 
 	public Object queryOnLinePagingData() {
@@ -178,14 +183,58 @@ public class Actionuser extends BaseServiceAction<UsUser> {
 						Convert.strToList(object.getId())));
 		return hhXtYhList;
 	}
-	
-	
+
 	public void updateZmbj() {
 		userService.updateZmbj(object);
 	}
-	
+
 	public void updateTheme() {
 		userService.updateTheme(object);
+	}
+
+	public Object importData() throws Exception {
+		response.setContentType("text/html");
+		String path = FileUpload.uploadFile(attachment, attachmentFileName,
+				type);
+		File file = new File(StaticVar.filepath + path);
+		try {
+			List<Map<String, Object>> mapList = ExcelUtil.getMapList(file, 1);
+			userService.save(mapList);
+		} catch (MessageException e) {
+			return e;
+		}
+		Map<String, String> returnMap = new HashMap<String, String>();
+		returnMap.put("path", path);
+		returnMap.put("attachmentFileName", attachmentFileName);
+		return returnMap;
+	}
+
+	private File attachment;
+	private String attachmentFileName;
+	private String type;
+
+	public File getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(File attachment) {
+		this.attachment = attachment;
+	}
+
+	public String getAttachmentFileName() {
+		return attachmentFileName;
+	}
+
+	public void setAttachmentFileName(String attachmentFileName) {
+		this.attachmentFileName = attachmentFileName;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getOldPassword() {
