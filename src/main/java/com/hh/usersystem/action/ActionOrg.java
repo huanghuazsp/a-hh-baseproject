@@ -40,7 +40,6 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 
 	@Autowired
 	private OrganizationService organizationService;
-	
 
 	@Override
 	public BaseService<UsOrganization> getService() {
@@ -48,8 +47,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	}
 
 	public Object queryPagingData() {
-		return organizationService.queryPagingData(object,
-				this.getPageRange());
+		return organizationService.queryPagingData(object, this.getPageRange());
 	}
 
 	public Object queryOrgListByPidAndLx() {
@@ -83,9 +81,10 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 		return organizationService.queryTreeList(object,
 				Convert.toBoolean(request.getParameter("isNoLeaf")));
 	}
-	
+
 	public Object queryStateTreeList() {
-		return organizationService.queryTreeList(ParamFactory.getParamHb().is("state", 0).is("node", object.getNode()));
+		return organizationService.queryTreeList(ParamFactory.getParamHb()
+				.is("state", 0).is("node", object.getNode()));
 	}
 
 	public Object queryTreeListByLx() {
@@ -100,7 +99,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 		} catch (MessageException e) {
 			return new ReturnModel(e.getMessage());
 		}
-		
+
 	}
 
 	public Object findOrgTextByIds() {
@@ -138,36 +137,32 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	public void setSelectType(String selectType) {
 		this.selectType = selectType;
 	}
-	
-	
+
 	private byte[] bytes = null;
 	private String name;
 	private File attachment;
 	private String attachmentFileName;
-	private String filePath;
+	private String type;
+
 	public Object importData() {
 		response.setContentType("text/html");
 		String path = FileUpload.uploadFile(attachment, attachmentFileName,
-				filePath);
-		File file = new File(StaticVar.filepath+path);
-		
-		
-		
+				type);
+		File file = new File(StaticVar.filepath + path);
+
 		try {
 			List<Map<String, Object>> mapList = ExcelUtil.getMapList(file, 1);
 			organizationService.save(mapList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		Map<String, String> returnMap = new HashMap<String, String>();
 		returnMap.put("path", path);
 		returnMap.put("attachmentFileName", attachmentFileName);
 		returnMap.put("name", name);
 		return returnMap;
 	}
-
-	
 
 	public String download() {
 		this.setName("test");
@@ -198,14 +193,6 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 		this.attachmentFileName = attachmentFileName;
 	}
 
-	public String getFilePath() {
-		return filePath;
-	}
-
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-	}
-
 	public byte[] getBytes() {
 		return bytes;
 	}
@@ -214,6 +201,12 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 		this.bytes = bytes;
 	}
 
+	public String getType() {
+		return type;
+	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }
