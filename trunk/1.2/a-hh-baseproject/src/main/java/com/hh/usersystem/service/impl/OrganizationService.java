@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.persistence.Transient;
+
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.service.impl.BaseService;
@@ -204,9 +207,13 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		return organization;
 	}
 	
+	@Transactional
 	public void restCode(String node) {
 		UsOrganization parentOrganization = new UsOrganization();
 		parentOrganization.setId(node);
+		if (!"root".equals(node)) {
+			parentOrganization = findObjectById(node);
+		}
 		updateSubCode(parentOrganization);
 	}
 
