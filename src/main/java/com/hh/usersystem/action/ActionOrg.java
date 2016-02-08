@@ -99,7 +99,10 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 		} catch (MessageException e) {
 			return new ReturnModel(e.getMessage());
 		}
+	}
 
+	public void restCode() {
+		organizationService.restCode(this.object.getNode());
 	}
 
 	public Object findOrgTextByIds() {

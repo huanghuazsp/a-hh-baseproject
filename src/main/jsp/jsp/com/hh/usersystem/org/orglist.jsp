@@ -34,6 +34,18 @@
 			}
 		});
 	}
+	function restCode(){
+		var selectNode = $.hh.tree.getSelectNode('orgTree');
+		var node='root';
+		if(selectNode){
+			node=selectNode.id;
+		}
+		Request.request('usersystem-Org-restCode', {
+			data : {
+				'node' : node
+			}
+		});
+	}
 	function doEdit(treeNode) {
 		Dialog.open({
 			url : 'jsp-usersystem-org-orgedit',
@@ -111,7 +123,8 @@
 					config="onClick: $.hh.tree.doDown , params:{treeid:'orgTree',action:'usersystem-Org-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
 				<span xtype="button"
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'orgTree'  "></span>
-				<span xtype=menu    config=" id:'menu1', data : [ { img : StaticVar.img_excel , text : '导入' , onClick : inExcel } ,{ img : StaticVar.img_excel ,text : '下载模板' , onClick : downloadExcel } ]"></span>
+				<span xtype=menu    config=" id:'menu1', data : [ { img : StaticVar.img_excel , text : '导入' , onClick : inExcel } ,{ img : StaticVar.img_excel ,text : '下载模板' , onClick : downloadExcel } 
+				 ,{ text : '重置编码' , onClick : restCode }  ]"></span>
 				<span xtype="button"
 					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 			</div>

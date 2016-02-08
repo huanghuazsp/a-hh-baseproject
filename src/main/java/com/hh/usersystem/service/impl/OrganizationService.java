@@ -193,17 +193,21 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			}
 		}
 
-		UsOrganization parentOrganization = new UsOrganization();
-		parentOrganization.setId("root");
-
-		if (!"root".equals(organization.getNode())) {
-			parentOrganization = dao.findEntityByPK(UsOrganization.class,
-					organization.getNode());
-		}
-
-		updateSubCode(parentOrganization);
-
+//		UsOrganization parentOrganization = new UsOrganization();
+//		parentOrganization.setId("root");
+//
+//		if (!"root".equals(organization.getNode())) {
+//			parentOrganization = dao.findEntityByPK(UsOrganization.class,
+//					organization.getNode());
+//		}
+//		updateSubCode(parentOrganization);
 		return organization;
+	}
+	
+	public void restCode(String node) {
+		UsOrganization parentOrganization = new UsOrganization();
+		parentOrganization.setId(node);
+		updateSubCode(parentOrganization);
 	}
 
 	public void updateSubCode(UsOrganization parentOrganization) {
@@ -238,17 +242,17 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			dao.deleteEntity(UsOrganization.class, "id", idList);
 			hhxtorgjsdao.deleteEntity(UsOrgRole.class, "orgId", idList);
 
-			List<UsOrganization> organizations = dao.queryList(
-					UsOrganization.class,
-					ParamFactory.getParamHb().in("id", nodeList));
-			if (nodeList.contains("root")) {
-				UsOrganization parentOrganization = new UsOrganization();
-				parentOrganization.setId("root");
-				updateSubCode(parentOrganization);
-			}
-			for (UsOrganization organization2 : organizations) {
-				updateSubCode(organization2);
-			}
+//			List<UsOrganization> organizations = dao.queryList(
+//					UsOrganization.class,
+//					ParamFactory.getParamHb().in("id", nodeList));
+//			if (nodeList.contains("root")) {
+//				UsOrganization parentOrganization = new UsOrganization();
+//				parentOrganization.setId("root");
+//				updateSubCode(parentOrganization);
+//			}
+//			for (UsOrganization organization2 : organizations) {
+//				updateSubCode(organization2);
+//			}
 
 		}
 
@@ -439,9 +443,9 @@ public class OrganizationService extends BaseService<UsOrganization> {
 
 		}
 
-		UsOrganization parentOrganization = new UsOrganization();
-		parentOrganization.setId("root");
-		updateSubCode(parentOrganization);
+//		UsOrganization parentOrganization = new UsOrganization();
+//		parentOrganization.setId("root");
+//		updateSubCode(parentOrganization);
 	}
 
 }
