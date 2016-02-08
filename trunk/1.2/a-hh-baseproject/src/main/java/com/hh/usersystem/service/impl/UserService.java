@@ -464,7 +464,10 @@ public class UserService extends BaseService<UsUser> {
 				zt = 1;
 			}
 			String srName = Convert.toString(map.get("生日"));
-			Date sr = DateFormat.strToDate(srName, "yyyy-MM-dd");
+			Date sr = null;
+			if (Check.isNoEmpty(srName)) {
+				sr = DateFormat.strToDate(srName, "yyyy-MM-dd");
+			}
 
 			String jsName = Convert.toString(map.get("角色"));
 			String jgName = Convert.toString(map.get("机构"));

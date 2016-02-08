@@ -144,6 +144,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	private File attachment;
 	private String attachmentFileName;
 	private String type;
+	
 
 	public Object importData() throws Exception {
 		response.setContentType("text/html");
@@ -156,6 +157,28 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 		returnMap.put("path", path);
 		returnMap.put("attachmentFileName", attachmentFileName);
 		return returnMap;
+	}
+	
+	private byte[] bytes = null;
+	private String name;
+	public byte[] getBytes() {
+		return bytes;
+	}
+
+	public void setBytes(byte[] bytes) {
+		this.bytes = bytes;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String download() {
+		this.setName("机构数据.xlsx");
+		return "file";
 	}
 
 	public File getAttachment() {

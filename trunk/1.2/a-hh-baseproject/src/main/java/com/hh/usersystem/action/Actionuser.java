@@ -208,6 +208,28 @@ public class Actionuser extends BaseServiceAction<UsUser> {
 		returnMap.put("attachmentFileName", attachmentFileName);
 		return returnMap;
 	}
+	
+	private byte[] bytes = null;
+	private String name;
+	public byte[] getBytes() {
+		return bytes;
+	}
+
+	public void setBytes(byte[] bytes) {
+		this.bytes = bytes;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String download() {
+		this.setName("用户数据.xlsx");
+		return "file";
+	}
 
 	private File attachment;
 	private String attachmentFileName;
