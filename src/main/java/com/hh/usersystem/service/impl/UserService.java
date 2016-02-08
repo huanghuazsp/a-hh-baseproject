@@ -554,7 +554,7 @@ public class UserService extends BaseService<UsUser> {
 			user.setOrgId(jg);
 			user.setDeptId(bm);
 			user.setJobId(gw);
-			save2(user);
+			save(user);
 		}
 	}
 
