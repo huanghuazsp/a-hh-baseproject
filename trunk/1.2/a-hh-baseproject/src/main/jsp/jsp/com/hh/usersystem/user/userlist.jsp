@@ -48,6 +48,25 @@
 			params : $('#queryForm').getValue()
 		});
 	}
+	
+	function inExcel(){
+		Dialog.open({
+			url : 'jsp-system-tools-file',
+			width : 450,
+			height : 270,
+			params : {
+				saveUrl : 'usersystem-user-importData',
+				type : 'user',
+				callback : function(data) {
+					doQuery();
+				}
+			}
+		});
+	}
+	
+	function downloadExcel(){
+		Request.downloadFile('system-File-downloadFile',{path:'temp/用户模板.xlsx'});
+	}
 </script>
 </head>
 <body>
@@ -60,6 +79,10 @@
 			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'usersystem-user-order'}  ,  icon : 'hh_up' "></span>
 		<span xtype="button"
 			config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'usersystem-user-order'} , icon : 'hh_down' "></span>
+		<span xtype=menu    config=" id:'menu1', data : [ { img : StaticVar.img_excel , text : '导入' , onClick : inExcel } ,{ img : StaticVar.img_excel ,text : '下载模板' , onClick : downloadExcel } 
+				  ]"></span>
+		<span xtype="button"
+					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 	</div>
 	<table xtype="form" id="queryForm" style="width:600px;">
 		<tr>

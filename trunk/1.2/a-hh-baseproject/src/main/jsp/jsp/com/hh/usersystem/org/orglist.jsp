@@ -95,7 +95,7 @@
 			height : 270,
 			params : {
 				saveUrl : 'usersystem-Org-importData',
-				filePath : 'temp/file/org',
+				type : 'org',
 				callback : function(data) {
 					$.hh.tree.refresh('orgTree');
 				}
