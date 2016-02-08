@@ -18,6 +18,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
 import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.system.util.PinYinUtil;
 import com.hh.usersystem.IUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 
@@ -44,11 +45,12 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	private String vdh;
 	private Date dsr;
 	private String headpic;
+	private String textpinyin;
 
 	private List<SysMenu> hhXtCdList = new ArrayList<SysMenu>();// 菜单
 	private List<UsRole> hhXtJsList = new ArrayList<UsRole>();// 角色
 	private List<SysMenu> hhXtYhCdZmtbList = new ArrayList<SysMenu>();// 桌面快捷方式
-	private Map<String,SysOper> hhXtCzMap =new HashMap<String,SysOper>();// 用户的操作权限
+	private Map<String, SysOper> hhXtCzMap = new HashMap<String, SysOper>();// 用户的操作权限
 	private List<String> hhXtCzUrlList = new ArrayList<String>();
 	private List<String> hhXtCzPageTextList = new ArrayList<String>();
 
@@ -81,8 +83,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	private UsOrganization org;// 机构
 	// private Organization jt ;// 集团
 	private UsOrganization job;
-	
-	
+
 	private String jobId;
 	private String deptId;
 	private String orgId;
@@ -187,6 +188,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	}
 
 	public void setText(String text) {
+		textpinyin = PinYinUtil.getPinYin(text);
 		this.text = text;
 	}
 
@@ -343,7 +345,6 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.pageSize = pageSize;
 	}
 
-
 	@Column(name = "THEME_", length = 36)
 	public String getTheme() {
 		return theme;
@@ -362,7 +363,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.desktopType = desktopType;
 	}
 
-	@Column(name="JOB_ID",length=36)
+	@Column(name = "JOB_ID", length = 36)
 	public String getJobId() {
 		return jobId;
 	}
@@ -371,7 +372,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.jobId = jobId;
 	}
 
-	@Column(name="DEPT_ID",length=36)
+	@Column(name = "DEPT_ID", length = 36)
 	public String getDeptId() {
 		return deptId;
 	}
@@ -380,7 +381,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.deptId = deptId;
 	}
 
-	@Column(name="ORG_ID",length=36)
+	@Column(name = "ORG_ID", length = 36)
 	public String getOrgId() {
 		return orgId;
 	}
@@ -398,5 +399,13 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.hhXtCzMap = hhXtCzMap;
 	}
 
-	
+	@Column(name = "TEXT_PINYIN")
+	public String getTextpinyin() {
+		return textpinyin;
+	}
+
+	public void setTextpinyin(String textpinyin) {
+		this.textpinyin = textpinyin;
+	}
+
 }
