@@ -342,6 +342,24 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		Map<String, String> orgMapNameId = new HashMap<String, String>();
 		Map<String, String> roleMapNameId = new HashMap<String, String>();
 		for (Map<String, Object> map : mapList) {
+			
+			String node = "root";
+			String sjmc = Convert.toString(map.get("上级名称"));
+			if (Check.isNoEmpty(sjmc)) {
+				if (!orgMapNameId.containsKey(sjmc)) {
+					List<UsOrganization> organizationList = queryListByProperty(
+							"text", sjmc);
+					if (organizationList.size() > 0) {
+						orgMapNameId.put(sjmc, organizationList.get(0).getId());
+					} else {
+						orgMapNameId.put(sjmc, "root");
+					}
+				}
+
+				node = orgMapNameId.get(sjmc);
+			} 
+			
+			
 			UsOrganization organization = null;
 			String id = PrimaryKey.getPrimaryKeyUUID();
 			String name = Convert.toString(map.get("名称"));
@@ -349,8 +367,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				id = Convert.toString(map.get("标识"));
 				organization = findObjectById(id);
 			} else {
-				List<UsOrganization> organizations = queryListByProperty("text",
-						name);
+				List<UsOrganization> organizations = queryList(ParamFactory.getParamHb().is("text", name).is("node", node));
 				if (organizations.size() > 0) {
 					organization = organizations.get(0);
 				}
@@ -387,23 +404,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			}
 			organization.setLx_(lx);
 
-			String sjmc = Convert.toString(map.get("上级名称"));
-
-			if (Check.isNoEmpty(sjmc)) {
-				if (!orgMapNameId.containsKey(sjmc)) {
-					List<UsOrganization> organizationList = queryListByProperty(
-							"text", sjmc);
-					if (organizationList.size() > 0) {
-						orgMapNameId.put(sjmc, organizationList.get(0).getId());
-					} else {
-						orgMapNameId.put(sjmc, "root");
-					}
-				}
-
-				organization.setNode(orgMapNameId.get(sjmc));
-			} else {
-				organization.setNode("root");
-			}
+			organization.setNode(node);
 
 			String jgjs = Convert.toString(map.get("机构角色"));
 			if (Check.isNoEmpty(jgjs)) {
