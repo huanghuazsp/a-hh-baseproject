@@ -106,7 +106,9 @@
 	function downloadExcel(){
 		Request.downloadFile('system-File-downloadFile',{path:'temp/机构模板.xlsx'});
 	}
-	
+	function outExcel(){
+		Request.downloadFile('usersystem-Org-download',{});
+	}
 	function init(){
 		$('#centerdiv').disabled('请选择要编辑的机构树或添加新的数据！！');
 	}
@@ -123,7 +125,8 @@
 					config="onClick: $.hh.tree.doDown , params:{treeid:'orgTree',action:'usersystem-Org-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
 				<span xtype="button"
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'orgTree'  "></span>
-				<span xtype=menu    config=" id:'menu1', data : [ { img : StaticVar.img_excel , text : '导入' , onClick : inExcel } ,{ img : StaticVar.img_excel ,text : '下载模板' , onClick : downloadExcel } 
+				<span xtype=menu    config=" id:'menu1', data : [ { img : StaticVar.img_excel , text : '导入' , onClick : inExcel } 
+				,{ img : StaticVar.img_excel ,text : '导出' , onClick : outExcel } ,{ img : StaticVar.img_excel ,text : '下载模板' , onClick : downloadExcel } 
 				 ,{ text : '重置编码' , onClick : restCode }  ]"></span>
 				<span xtype="button"
 					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
