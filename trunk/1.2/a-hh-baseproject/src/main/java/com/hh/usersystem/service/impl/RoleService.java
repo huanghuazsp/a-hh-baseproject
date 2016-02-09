@@ -21,23 +21,17 @@ import com.hh.usersystem.bean.usersystem.SysOper;
 import com.hh.usersystem.bean.usersystem.UsRole;
 import com.hh.usersystem.bean.usersystem.UsRoleMenu;
 import com.hh.usersystem.bean.usersystem.UsRoleOper;
-import com.hh.usersystem.bean.usersystem.UsOrgRole;
-import com.hh.usersystem.bean.usersystem.UsUserRole;
 
 @Service
 public class RoleService extends BaseService<UsRole> {
 	@Autowired
 	private IHibernateDAO<UsRole> xtjsdao;
 	@Autowired
-	private IHibernateDAO<UsUserRole> hhXtYhJsdao;
-	@Autowired
 	private IHibernateDAO<UsRoleMenu> hhXtJsCddao;
 	@Autowired
 	private IHibernateDAO<UsRoleOper> hhxtjsczDao;
 	@Autowired
 	private IHibernateDAO<SysOper> xtczdao;
-	@Autowired
-	private IHibernateDAO<UsOrgRole> hhxtorgjsdao;
 	
 	@Autowired
 	private OperateService operateService;
@@ -68,12 +62,9 @@ public class RoleService extends BaseService<UsRole> {
 		List<String> idList = Convert.strToList(ids);
 		if (!Check.isEmpty(idList)) {
 			xtjsdao.deleteEntity(UsRole.class, "id", idList);
-			hhXtYhJsdao.deleteEntity(UsUserRole.class, "jsId", idList);
 			hhXtJsCddao.deleteEntity(UsRoleMenu.class, "jsId", idList);
 			hhxtjsczDao.deleteEntity(UsRoleOper.class, "jsId", idList);
-			hhxtorgjsdao.deleteEntity(UsOrgRole.class, "jsId", idList);
 		}
-
 	}
 
 	public void insertOrdeleteMenu(Map<String, String> paramsMap) {

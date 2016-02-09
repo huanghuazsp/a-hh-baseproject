@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,7 +62,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	// private List<Organization> organizationList = new
 	// ArrayList<Organization>();// 岗位
 	private String orgIdsStr;
-	private String jsIdsStr;
+	private String roleIds;
 
 	// private Map<String, Organization> organization;
 
@@ -256,15 +257,6 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.orgIdsStr = orgIdsStr;
 	}
 
-	@Transient
-	public String getJsIdsStr() {
-		return jsIdsStr;
-	}
-
-	public void setJsIdsStr(String jsIdsStr) {
-		this.jsIdsStr = jsIdsStr;
-	}
-
 	public String getHeadpic() {
 		return headpic;
 	}
@@ -408,4 +400,15 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.textpinyin = textpinyin;
 	}
 
+	@Lob
+	@Column(name="ROLE_IDS")
+	public String getRoleIds() {
+		return roleIds;
+	}
+
+	public void setRoleIds(String roleIds) {
+		this.roleIds = roleIds;
+	}
+
+	
 }

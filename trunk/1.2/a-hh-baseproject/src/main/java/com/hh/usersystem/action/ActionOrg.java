@@ -1,37 +1,24 @@
 package com.hh.usersystem.action;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-import org.apache.log4j.Logger;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hh.system.action.ActionFile;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
-import com.hh.system.util.FileUtil;
-import com.hh.system.util.Json;
 import com.hh.system.util.MessageException;
-import com.hh.system.util.PrimaryKey;
 import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.document.ExcelUtil;
 import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.dto.ParamFactory;
-import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.system.util.statics.StaticVar;
-import com.hh.usersystem.bean.usersystem.UsRole;
-import com.hh.usersystem.bean.usersystem.UsOrgRole;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.service.impl.OrganizationService;
-import com.hh.usersystem.service.impl.RoleService;
 
 @SuppressWarnings("serial")
 public class ActionOrg extends BaseServiceAction<UsOrganization> {

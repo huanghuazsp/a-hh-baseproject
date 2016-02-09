@@ -21,13 +21,11 @@ import com.hh.system.service.inf.SystemServiceInf;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.PrimaryKey;
-import com.hh.system.util.SystemUtil;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.bean.usersystem.UsRole;
 import com.hh.usersystem.bean.usersystem.UsRoleMenu;
 import com.hh.usersystem.bean.usersystem.UsUser;
-import com.hh.usersystem.bean.usersystem.UsUserRole;
 import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 
@@ -39,8 +37,6 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 	private IHibernateDAO<UsRole> roledao;
 	@Autowired
 	private IHibernateDAO<UsRoleMenu> jscddao;
-	@Autowired
-	private IHibernateDAO<UsUserRole> yhjsdao;
 	@Autowired
 	private IHibernateDAO<SysMenu> menuService;
 
@@ -107,12 +103,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 //		hhXtZmsx.setId(hhXtYh.getId());
 		hhXtYh.setDesktopType("jquerydesktop");
 		hhXtYh.setTheme("base");
-		UsUserRole hhXtYhJs = new UsUserRole();
-		setBeanSysFields(hhXtYhJs);
-		hhXtYhJs.setId(hhXtYh.getId().replaceAll("-", ""));
-		hhXtYhJs.setYhId(hhXtYh.getId());
-		hhXtYhJs.setJsId(hhXtJs.getId());
-		yhjsdao.saveOrUpdateEntity(hhXtYhJs);
+		hhXtYh.setRoleIds(hhXtJs.getId());
 		xtyhdao.saveOrUpdateEntity(hhXtYh);
 	}
 
