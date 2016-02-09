@@ -104,7 +104,7 @@
 	}
 	
 	function downloadExcel(){
-		Request.downloadFile('system-File-downloadFile',{path:'temp/机构模板.xlsx'});
+		Request.downloadFile('system-File-downloadFile',{path:'temp/机构数据.xls'});
 	}
 	function outExcel(){
 		Request.downloadFile('usersystem-Org-download',{});
