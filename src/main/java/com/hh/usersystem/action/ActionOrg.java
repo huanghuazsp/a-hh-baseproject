@@ -1,32 +1,45 @@
 package com.hh.usersystem.action;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.hh.system.inf.IFileAction;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.base.BaseServiceAction;
+import com.hh.system.util.date.DateFormat;
 import com.hh.system.util.document.ExcelUtil;
+import com.hh.system.util.document.ExportSetInfo;
 import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
+import com.hh.usersystem.bean.usersystem.UsRole;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.OrganizationService;
+import com.hh.usersystem.service.impl.RoleService;
 
 @SuppressWarnings("serial")
-public class ActionOrg extends BaseServiceAction<UsOrganization> {
+public class ActionOrg extends BaseServiceAction<UsOrganization> implements
+		IFileAction {
 	private String orgs;
 	private String selectType;
 
 	@Autowired
 	private OrganizationService organizationService;
+	
+	@Autowired
+	private RoleService roleService;
 
 	@Override
 	public BaseService<UsOrganization> getService() {
@@ -131,7 +144,6 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	private File attachment;
 	private String attachmentFileName;
 	private String type;
-	
 
 	public Object importData() throws Exception {
 		response.setContentType("text/html");
@@ -145,9 +157,10 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 		returnMap.put("attachmentFileName", attachmentFileName);
 		return returnMap;
 	}
-	
+
 	private byte[] bytes = null;
-	private String name;
+	private String title;
+
 	public byte[] getBytes() {
 		return bytes;
 	}
@@ -156,16 +169,102 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 		this.bytes = bytes;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
+
 	public String download() {
-		this.setName("机构数据.xlsx");
-		return "file";
+
+		Map<String, String> orgMapNameId = new HashMap<String, String>();
+		Map<String, String> roleMapNameId = new HashMap<String, String>();
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		String title = "用户数据";
+		ExportSetInfo setInfo = new ExportSetInfo();
+		Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>();
+
+		List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
+		List<String[]> headNameList = new ArrayList<String[]>();
+		List<String[]> fieldNameList = new ArrayList<String[]>();
+		headNameList.add(new String[] { "标识", "名称", "上级名称", "类型", "状态", "机构角色",
+				"自定义编码", "简称", "备注"});
+		fieldNameList.add(new String[] { "id", "text", "sjmc", "lx", "zt",
+				"jgjs", "zdybm", "jc", "bz" });
+		
+		
+		List<UsOrganization> organizations =new ArrayList<UsOrganization>();
+		organizationService.queryAllList(organizations,"root");
+		for (UsOrganization organization : organizations) {
+			Map<String, Object> map2 = new HashMap<String, Object>();
+			map2.put("id", organization.getId());
+			map2.put("text", organization.getText());
+			map2.put("zdybm", organization.getZdybm_());
+			map2.put("jc", organization.getJc_());
+			map2.put("bz", organization.getMs_());
+			map2.put("zt", organization.getState() == 1 ? "禁用" : "正常");
+			
+			String lx = "机构";
+			if (organization.getLx_()==1) {
+				lx = "机构";
+			}else if (organization.getLx_()==2) {
+				lx = "部门";
+			}else if (organization.getLx_()==3) {
+				lx = "岗位";
+			}
+			
+			map2.put("lx", lx);
+			
+			
+			if (Check.isNoEmpty(organization.getNode())) {
+				if (orgMapNameId.keySet().contains(organization.getNode())) {
+					map2.put("sjmc", orgMapNameId.get(organization.getNode()));
+				}else {
+					List<UsOrganization> usRoles = organizationService.queryListByIds(Convert
+							.strToList(organization.getNode()));
+					String text = Convert.objectListToString(usRoles, "text");
+					map2.put("sjmc", text);
+					orgMapNameId.put(organization.getNode(), text);
+				}
+			}
+			
+			if (Check.isNoEmpty(organization.getRoleIds())) {
+				if (roleMapNameId.keySet().contains(organization.getRoleIds())) {
+					map2.put("jgjs", roleMapNameId.get(organization.getRoleIds()));
+				}else {
+					List<UsRole> usRoles = roleService.queryListByIds(Convert
+							.strToList(organization.getRoleIds()));
+					String text = Convert.objectListToString(usRoles, "text");
+					map2.put("jgjs", text);
+					roleMapNameId.put(organization.getRoleIds(), text);
+				}
+			}
+			
+			dataList.add(map2);
+		}
+
+		map.put(title, dataList);
+		setInfo.setObjsMap(map);
+		setInfo.setFieldNames(fieldNameList);
+		setInfo.setTitles(new String[] { title });
+		setInfo.setHeadNames(headNameList);
+		setInfo.setOut(baos);
+		try {
+			ExcelUtil.export2Excel(setInfo);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+
+		this.setBytes(baos.toByteArray());
+		this.setTitle("机构数据");
+		return "excel";
 	}
 
 	public File getAttachment() {

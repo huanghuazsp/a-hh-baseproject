@@ -43,12 +43,11 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				queryTreeList(object.getNode(), isNoLeaf,
 						ParamFactory.getParamHb()), null);
 	}
-	
-	public List<UsOrganization> queryTreeList(ParamInf paramList) {
-		
-		return organizationToIconCls(super.queryTreeList( paramList), null);
-	}
 
+	public List<UsOrganization> queryTreeList(ParamInf paramList) {
+
+		return organizationToIconCls(super.queryTreeList(paramList), null);
+	}
 
 	public List<UsOrganization> queryTreeListByLx(UsOrganization object,
 			boolean isNoLeaf) {
@@ -85,13 +84,13 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		return organizationList;
 	}
 
-	public PagingData<UsOrganization> queryPagingData(UsOrganization organization,
-			PageRange pageRange) {
+	public PagingData<UsOrganization> queryPagingData(
+			UsOrganization organization, PageRange pageRange) {
 		return dao.queryPagingData(UsOrganization.class, pageRange);
 	}
 
-	public List<UsOrganization> queryOrgListByPidAndLx(UsOrganization organization,
-			String node) {
+	public List<UsOrganization> queryOrgListByPidAndLx(
+			UsOrganization organization, String node) {
 		String pid = !Check.isEmpty(node)
 				&& "root".equals(organization.getNode()) ? node : organization
 				.getNode();
@@ -115,7 +114,8 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		hqlParamList.nis("lx_", 3);
 		hqlParamList.nis("state", 1);
 		hqlParamList.order("lx_");
-		organizationList = dao.queryTreeList(UsOrganization.class, hqlParamList);
+		organizationList = dao
+				.queryTreeList(UsOrganization.class, hqlParamList);
 		return organizationToIconCls(organizationList, selectType);
 	}
 
@@ -125,7 +125,8 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		return organizationResult;
 	}
 
-	public UsOrganization save(UsOrganization organization) throws MessageException {
+	public UsOrganization save(UsOrganization organization)
+			throws MessageException {
 
 		if (Check.isEmpty(organization.getNode())) {
 			organization.setNode("root");
@@ -157,17 +158,17 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			}
 			dao.mergeEntity(organization);
 		}
-//		UsOrganization parentOrganization = new UsOrganization();
-//		parentOrganization.setId("root");
-//
-//		if (!"root".equals(organization.getNode())) {
-//			parentOrganization = dao.findEntityByPK(UsOrganization.class,
-//					organization.getNode());
-//		}
-//		updateSubCode(parentOrganization);
+		// UsOrganization parentOrganization = new UsOrganization();
+		// parentOrganization.setId("root");
+		//
+		// if (!"root".equals(organization.getNode())) {
+		// parentOrganization = dao.findEntityByPK(UsOrganization.class,
+		// organization.getNode());
+		// }
+		// updateSubCode(parentOrganization);
 		return organization;
 	}
-	
+
 	@Transactional
 	public void restCode(String node) {
 		UsOrganization parentOrganization = new UsOrganization();
@@ -201,7 +202,8 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		if (!Check.isEmpty(idList)) {
 
 			List<String> nodeList = new ArrayList<String>();
-			List<UsOrganization> hhxtcdList = dao.queryList(UsOrganization.class,
+			List<UsOrganization> hhxtcdList = dao.queryList(
+					UsOrganization.class,
 					Restrictions.in("id", Convert.strToList(ids)));
 			for (UsOrganization organization2 : hhxtcdList) {
 				nodeList.add(organization2.getNode());
@@ -209,17 +211,17 @@ public class OrganizationService extends BaseService<UsOrganization> {
 
 			dao.deleteEntity(UsOrganization.class, "id", idList);
 
-//			List<UsOrganization> organizations = dao.queryList(
-//					UsOrganization.class,
-//					ParamFactory.getParamHb().in("id", nodeList));
-//			if (nodeList.contains("root")) {
-//				UsOrganization parentOrganization = new UsOrganization();
-//				parentOrganization.setId("root");
-//				updateSubCode(parentOrganization);
-//			}
-//			for (UsOrganization organization2 : organizations) {
-//				updateSubCode(organization2);
-//			}
+			// List<UsOrganization> organizations = dao.queryList(
+			// UsOrganization.class,
+			// ParamFactory.getParamHb().in("id", nodeList));
+			// if (nodeList.contains("root")) {
+			// UsOrganization parentOrganization = new UsOrganization();
+			// parentOrganization.setId("root");
+			// updateSubCode(parentOrganization);
+			// }
+			// for (UsOrganization organization2 : organizations) {
+			// updateSubCode(organization2);
+			// }
 
 		}
 
@@ -228,8 +230,8 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	private void deleteYzNode(List<String> idList) {
 		List<String> yzIdList = new ArrayList<String>();
 		if (!Check.isEmpty(idList)) {
-			List<UsOrganization> hhxtcdList = dao.queryList(UsOrganization.class,
-					Restrictions.in("node", idList));
+			List<UsOrganization> hhxtcdList = dao.queryList(
+					UsOrganization.class, Restrictions.in("node", idList));
 			for (UsOrganization hhXtCd : hhxtcdList) {
 				yzIdList.add(hhXtCd.getId());
 			}
@@ -242,7 +244,8 @@ public class OrganizationService extends BaseService<UsOrganization> {
 
 	}
 
-	public List<UsOrganization> queryOrgAndUsersList(UsOrganization organization1) {
+	public List<UsOrganization> queryOrgAndUsersList(
+			UsOrganization organization1) {
 		List<UsOrganization> organizations = this.queryOrgListByPid(
 				organization1, null, null);
 		for (UsOrganization organization : organizations) {
@@ -308,7 +311,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		Map<String, String> orgMapNameId = new HashMap<String, String>();
 		Map<String, String> roleMapNameId = new HashMap<String, String>();
 		for (Map<String, Object> map : mapList) {
-			
+
 			String node = "root";
 			String sjmc = Convert.toString(map.get("上级名称"));
 			if (Check.isNoEmpty(sjmc)) {
@@ -323,9 +326,8 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				}
 
 				node = orgMapNameId.get(sjmc);
-			} 
-			
-			
+			}
+
 			UsOrganization organization = null;
 			String id = PrimaryKey.getPrimaryKeyUUID();
 			String name = Convert.toString(map.get("名称"));
@@ -333,7 +335,8 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				id = Convert.toString(map.get("标识"));
 				organization = findObjectById(id);
 			} else {
-				List<UsOrganization> organizations = queryList(ParamFactory.getParamHb().is("text", name).is("node", node));
+				List<UsOrganization> organizations = queryList(ParamFactory
+						.getParamHb().is("text", name).is("node", node));
 				if (organizations.size() > 0) {
 					organization = organizations.get(0);
 				}
@@ -345,7 +348,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				iscreate = 1;
 				organization = new UsOrganization();
 				organization.setId(id);
-			} 
+			}
 
 			organization.setText(name);
 			organization.setJc_(Convert.toString(map.get("简称")));
@@ -373,13 +376,13 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			if (Check.isNoEmpty(jgjs)) {
 				if (roleMapNameId.keySet().contains(jgjs)) {
 					organization.setRoleIds(roleMapNameId.get(jgjs));
-				}else {
+				} else {
 					String[] jsArr = jgjs.split(",");
 					List<UsRole> usRoles = roleService.queryListByProperty(
 							"text", Convert.arrayToList(jsArr));
-					String roleIds  = Convert.objectListToString(usRoles, "id");
+					String roleIds = Convert.objectListToString(usRoles, "id");
 					organization.setRoleIds(roleIds);
-					roleMapNameId.put(jgjs,roleIds);
+					roleMapNameId.put(jgjs, roleIds);
 				}
 			}
 			if (iscreate == 1) {
@@ -390,9 +393,18 @@ public class OrganizationService extends BaseService<UsOrganization> {
 
 		}
 
-//		UsOrganization parentOrganization = new UsOrganization();
-//		parentOrganization.setId("root");
-//		updateSubCode(parentOrganization);
+		// UsOrganization parentOrganization = new UsOrganization();
+		// parentOrganization.setId("root");
+		// updateSubCode(parentOrganization);
+	}
+
+	public void queryAllList(List<UsOrganization> organizations, String node) {
+		List<UsOrganization> usOrganizations = this.queryList(ParamFactory
+				.getParamHb().is("node", node));
+		organizations.addAll(usOrganizations);
+		for (UsOrganization usOrganization : usOrganizations) {
+			queryAllList(organizations, usOrganization.getId());
+		}
 	}
 
 }
