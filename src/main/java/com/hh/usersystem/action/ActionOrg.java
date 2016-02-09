@@ -183,7 +183,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 		Map<String, String> roleMapNameId = new HashMap<String, String>();
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		String title = "用户数据";
+		String title = "机构数据";
 		ExportSetInfo setInfo = new ExportSetInfo();
 		Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>();
 
