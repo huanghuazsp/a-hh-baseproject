@@ -1,35 +1,45 @@
 package com.hh.usersystem.action;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javassist.expr.NewArray;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.hh.system.inf.IFileAction;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.base.BaseServiceAction;
+import com.hh.system.util.date.DateFormat;
 import com.hh.system.util.document.ExcelUtil;
+import com.hh.system.util.document.ExportSetInfo;
 import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.ExtTree;
-import com.hh.system.util.model.ReturnModel;
 import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.service.impl.OrganizationService;
+import com.hh.usersystem.service.impl.RoleService;
 import com.hh.usersystem.service.impl.UserService;
 
 @SuppressWarnings("serial")
-public class Actionuser extends BaseServiceAction<UsUser> {
+public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction {
 	private String orgs;
 	private String roles;
 	private String groups;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleService roleService;
+	@Autowired
+	private OrganizationService organizationService;
+	
 	private String oldPassword;
 
 	@Override
@@ -208,9 +218,10 @@ public class Actionuser extends BaseServiceAction<UsUser> {
 		returnMap.put("attachmentFileName", attachmentFileName);
 		return returnMap;
 	}
-	
+
 	private byte[] bytes = null;
-	private String name;
+	private String title;
+
 	public byte[] getBytes() {
 		return bytes;
 	}
@@ -219,16 +230,69 @@ public class Actionuser extends BaseServiceAction<UsUser> {
 		this.bytes = bytes;
 	}
 
-	public String getName() {
-		return name;
+
+	public String download() {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		String title = "用户数据";
+		ExportSetInfo setInfo = new ExportSetInfo();
+		Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>();
+
+		List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
+		List<String[]> headNameList = new ArrayList<String[]>();
+		List<String[]> fieldNameList = new ArrayList<String[]>();
+		headNameList.add(new String[]{"标识","名称","账号","性别","状态","联系电话","电子邮件","生日","角色","机构","部门","岗位"});
+		fieldNameList.add(new String[]{"id","text","zh","xb","zt","lxdh","dzyj","sr","js","jg","bm","gw"});
+		
+		List<UsUser> users = userService.queryAllList();
+		for (UsUser usUser : users) {
+			Map<String, Object> map2 = new HashMap<String, Object>();
+			map2.put("id", usUser.getId());
+			map2.put("text", usUser.getText());
+			map2.put("zh", usUser.getVdlzh());
+			map2.put("xb", usUser.getNxb()==1?"男":"女");
+			map2.put("zt", usUser.getState()==1?"禁用":"正常");
+			map2.put("lxdh", usUser.getVdh());
+			map2.put("dzyj", usUser.getVdzyj());
+			if (usUser.getDsr()==null) {
+				map2.put("sr","" );
+			}else {
+				map2.put("sr",DateFormat.dateToStr(usUser.getDsr(), "yyyy-MM-dd") );
+			}
+//			Convert.strToList(usUser.getJsIdsStr())
+//			roleService.queryListByIds(ids)
+			
+			dataList.add(map2);
+		}
+		
+		map.put(title, dataList);
+		setInfo.setObjsMap(map);
+		setInfo.setFieldNames(fieldNameList);
+		setInfo.setTitles(new String[] { title });
+		setInfo.setHeadNames(headNameList);
+		setInfo.setOut(baos);
+		try {
+			ExcelUtil.export2Excel(setInfo);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+
+		this.setBytes(baos.toByteArray());
+		this.setTitle("用户数据");
+		return "excel";
+	}
+	
+	
+
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String download() {
-		this.setName("用户数据.xlsx");
-		return "file";
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	private File attachment;
@@ -290,5 +354,6 @@ public class Actionuser extends BaseServiceAction<UsUser> {
 	public void setGroups(String groups) {
 		this.groups = groups;
 	}
+
 
 }
