@@ -181,7 +181,7 @@
 				<tr>
 					<td xtype="label">角色：</td>
 					<td colspan="3"><span xtype="selectPageList"
-						config="name: 'jsIdsStr'  , url:'usersystem-role-queryPagingData' ,tableName:'US_ROLE' "></span></td>
+						config="name: 'roleIds'  , url:'usersystem-role-queryPagingData' ,tableName:'US_ROLE' "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">自定义编码：</td>

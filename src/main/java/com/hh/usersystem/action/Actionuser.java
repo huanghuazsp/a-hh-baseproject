@@ -23,13 +23,16 @@ import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.ExtTree;
 import com.hh.system.util.statics.StaticVar;
+import com.hh.usersystem.bean.usersystem.UsOrganization;
+import com.hh.usersystem.bean.usersystem.UsRole;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.OrganizationService;
 import com.hh.usersystem.service.impl.RoleService;
 import com.hh.usersystem.service.impl.UserService;
 
 @SuppressWarnings("serial")
-public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction {
+public class Actionuser extends BaseServiceAction<UsUser> implements
+		IFileAction {
 	private String orgs;
 	private String roles;
 	private String groups;
@@ -39,7 +42,7 @@ public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction
 	private RoleService roleService;
 	@Autowired
 	private OrganizationService organizationService;
-	
+
 	private String oldPassword;
 
 	@Override
@@ -85,7 +88,7 @@ public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction
 
 	public Object save2() {
 		try {
-			UsUser hhXtYh = userService.save2(this.object);
+			UsUser hhXtYh = userService.save(this.object);
 			return null;
 		} catch (MessageException e) {
 			return e;
@@ -151,12 +154,6 @@ public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction
 	public Object queryUserByOrgId() {
 		List<UsUser> hhXtYhList = userService.queryUserByOrgId(request
 				.getParameter("code"));
-		return hhXtYhList;
-	}
-
-	public Object queryUserByRole() {
-		List<UsUser> hhXtYhList = userService.queryUserByRole(request
-				.getParameter("roleId"));
 		return hhXtYhList;
 	}
 
@@ -230,8 +227,11 @@ public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction
 		this.bytes = bytes;
 	}
 
-
 	public String download() {
+
+		Map<String, String> orgMapNameId = new HashMap<String, String>();
+		Map<String, String> roleMapNameId = new HashMap<String, String>();
+		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		String title = "用户数据";
 		ExportSetInfo setInfo = new ExportSetInfo();
@@ -240,30 +240,78 @@ public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction
 		List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
 		List<String[]> headNameList = new ArrayList<String[]>();
 		List<String[]> fieldNameList = new ArrayList<String[]>();
-		headNameList.add(new String[]{"标识","名称","账号","性别","状态","联系电话","电子邮件","生日","角色","机构","部门","岗位"});
-		fieldNameList.add(new String[]{"id","text","zh","xb","zt","lxdh","dzyj","sr","js","jg","bm","gw"});
-		
+		headNameList.add(new String[] { "标识", "名称", "账号", "性别", "状态", "联系电话",
+				"电子邮件", "生日", "角色", "机构", "部门", "岗位" });
+		fieldNameList.add(new String[] { "id", "text", "zh", "xb", "zt",
+				"lxdh", "dzyj", "sr", "js", "jg", "bm", "gw" });
 		List<UsUser> users = userService.queryAllList();
 		for (UsUser usUser : users) {
 			Map<String, Object> map2 = new HashMap<String, Object>();
 			map2.put("id", usUser.getId());
 			map2.put("text", usUser.getText());
 			map2.put("zh", usUser.getVdlzh());
-			map2.put("xb", usUser.getNxb()==1?"男":"女");
-			map2.put("zt", usUser.getState()==1?"禁用":"正常");
+			map2.put("xb", usUser.getNxb() == 1 ? "男" : "女");
+			map2.put("zt", usUser.getState() == 1 ? "禁用" : "正常");
 			map2.put("lxdh", usUser.getVdh());
 			map2.put("dzyj", usUser.getVdzyj());
-			if (usUser.getDsr()==null) {
-				map2.put("sr","" );
-			}else {
-				map2.put("sr",DateFormat.dateToStr(usUser.getDsr(), "yyyy-MM-dd") );
+			if (usUser.getDsr() == null) {
+				map2.put("sr", "");
+			} else {
+				map2.put("sr",
+						DateFormat.dateToStr(usUser.getDsr(), "yyyy-MM-dd"));
 			}
-//			Convert.strToList(usUser.getJsIdsStr())
-//			roleService.queryListByIds(ids)
 			
+			if (Check.isNoEmpty(usUser.getRoleIds())) {
+				if (roleMapNameId.keySet().contains(usUser.getRoleIds())) {
+					map2.put("js", roleMapNameId.get(usUser.getRoleIds()));
+				}else {
+					List<UsRole> usRoles = roleService.queryListByIds(Convert
+							.strToList(usUser.getRoleIds()));
+					String text = Convert.objectListToString(usRoles, "text");
+					map2.put("js", text);
+					roleMapNameId.put(usUser.getRoleIds(), text);
+				}
+			}
+			
+			if (Check.isNoEmpty(usUser.getOrgId())) {
+				if (orgMapNameId.keySet().contains(usUser.getOrgId())) {
+					map2.put("jg", orgMapNameId.get(usUser.getOrgId()));
+				}else {
+					List<UsOrganization> usRoles = organizationService.queryListByIds(Convert
+							.strToList(usUser.getOrgId()));
+					String text = Convert.objectListToString(usRoles, "text");
+					map2.put("jg", text);
+					orgMapNameId.put(usUser.getOrgId(), text);
+				}
+			}
+			
+			if (Check.isNoEmpty(usUser.getDeptId())) {
+				if (orgMapNameId.keySet().contains(usUser.getDeptId())) {
+					map2.put("bm", orgMapNameId.get(usUser.getDeptId()));
+				}else {
+					List<UsOrganization> usRoles = organizationService.queryListByIds(Convert
+							.strToList(usUser.getDeptId()));
+					String text = Convert.objectListToString(usRoles, "text");
+					map2.put("bm", text);
+					orgMapNameId.put(usUser.getDeptId(), text);
+				}
+			}
+			
+			if (Check.isNoEmpty(usUser.getJobId())) {
+				if (orgMapNameId.keySet().contains(usUser.getJobId())) {
+					map2.put("gw", orgMapNameId.get(usUser.getJobId()));
+				}else {
+					List<UsOrganization> usRoles = organizationService.queryListByIds(Convert
+							.strToList(usUser.getJobId()));
+					String text = Convert.objectListToString(usRoles, "text");
+					map2.put("gw", text);
+					orgMapNameId.put(usUser.getJobId(), text);
+				}
+			}
+
 			dataList.add(map2);
 		}
-		
+
 		map.put(title, dataList);
 		setInfo.setObjsMap(map);
 		setInfo.setFieldNames(fieldNameList);
@@ -284,8 +332,6 @@ public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction
 		this.setTitle("用户数据");
 		return "excel";
 	}
-	
-	
 
 	public String getTitle() {
 		return title;
@@ -354,6 +400,5 @@ public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction
 	public void setGroups(String groups) {
 		this.groups = groups;
 	}
-
 
 }

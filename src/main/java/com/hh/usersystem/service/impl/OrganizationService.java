@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.persistence.Transient;
-
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +21,9 @@ import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
-import com.hh.usersystem.bean.usersystem.UsRole;
-import com.hh.usersystem.bean.usersystem.UsOrgRole;
-import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
+import com.hh.usersystem.bean.usersystem.UsRole;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 
@@ -34,8 +31,6 @@ import com.hh.usersystem.util.steady.StaticProperties;
 public class OrganizationService extends BaseService<UsOrganization> {
 	@Autowired
 	private IHibernateDAO<UsUser> xtyhdao;
-	@Autowired
-	private IHibernateDAO<UsOrgRole> hhxtorgjsdao;
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 
@@ -127,21 +122,6 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	public UsOrganization findObjectById(String id) {
 		UsOrganization organizationResult = dao.findEntityByPK(
 				UsOrganization.class, id);
-		if (organizationResult != null) {
-			List<UsOrgRole> hhXtYhJsList = hhxtorgjsdao.queryList(
-					UsOrgRole.class, ParamFactory.getParamHb().is("orgId", id));
-
-			String jss = "";
-
-			for (UsOrgRole hhXtOrgJs : hhXtYhJsList) {
-				jss += hhXtOrgJs.getJsId() + ",";
-				organizationResult.getJsList().add(hhXtOrgJs.getJsId());
-			}
-			if (Check.isNoEmpty(jss)) {
-				jss = jss.substring(0, jss.length() - 1);
-				organizationResult.setJsIdsStr(jss);
-			}
-		}
 		return organizationResult;
 	}
 
@@ -176,26 +156,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				throw new MessageException("不能选自己为上级！");
 			}
 			dao.mergeEntity(organization);
-
-			hhxtorgjsdao.deleteEntity(UsOrgRole.class, "orgId",
-					organization.getId());
 		}
-		List<String> jsList = organization.getJsList();
-		if (Check.isEmpty(jsList)) {
-			jsList = Convert.strToList(organization.getJsIdsStr());
-		}
-		if (!Check.isEmpty(jsList)) {
-			for (String jsid : jsList) {
-				if (Check.isEmpty(jsid)) {
-					continue;
-				}
-				UsOrgRole hhXtOrgJs = new UsOrgRole();
-				hhXtOrgJs.setOrgId(organization.getId());
-				hhXtOrgJs.setJsId(jsid);
-				hhxtorgjsdao.createEntity(hhXtOrgJs);
-			}
-		}
-
 //		UsOrganization parentOrganization = new UsOrganization();
 //		parentOrganization.setId("root");
 //
@@ -247,7 +208,6 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			}
 
 			dao.deleteEntity(UsOrganization.class, "id", idList);
-			hhxtorgjsdao.deleteEntity(UsOrgRole.class, "orgId", idList);
 
 //			List<UsOrganization> organizations = dao.queryList(
 //					UsOrganization.class,
@@ -275,7 +235,6 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			}
 			if (!Check.isEmpty(yzIdList)) {
 				dao.deleteEntity(UsOrganization.class, "id", yzIdList);
-				hhxtorgjsdao.deleteEntity(UsOrgRole.class, "orgId", yzIdList);
 			}
 			deleteYzNode(yzIdList);
 
@@ -345,10 +304,6 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		return organizationToIconCls(organizations, null);
 	}
 
-	public IHibernateDAO<UsOrgRole> getHhxtorgjsdao() {
-		return hhxtorgjsdao;
-	}
-
 	public void save(List<Map<String, Object>> mapList) {
 		Map<String, String> orgMapNameId = new HashMap<String, String>();
 		Map<String, String> roleMapNameId = new HashMap<String, String>();
@@ -390,10 +345,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				iscreate = 1;
 				organization = new UsOrganization();
 				organization.setId(id);
-			} else {
-				getHhxtorgjsdao().deleteEntity(UsOrgRole.class, "orgId",
-						organization.getId());
-			}
+			} 
 
 			organization.setText(name);
 			organization.setJc_(Convert.toString(map.get("简称")));
@@ -419,28 +371,16 @@ public class OrganizationService extends BaseService<UsOrganization> {
 
 			String jgjs = Convert.toString(map.get("机构角色"));
 			if (Check.isNoEmpty(jgjs)) {
-				String[] jgjsArr = jgjs.split(",");
-				for (String jgjsname : jgjsArr) {
-					if (!roleMapNameId.containsKey(jgjsname)) {
-						List<UsRole> hhXtJsList = roleService
-								.queryListByProperty("text", jgjsname);
-						if (hhXtJsList.size() > 0) {
-							roleMapNameId.put(jgjsname, hhXtJsList.get(0)
-									.getId());
-						} else {
-							roleMapNameId.put(jgjsname, "");
-						}
-					}
-
-					if (Check.isNoEmpty(roleMapNameId.get(jgjsname))) {
-						UsOrgRole hhXtOrgJs = new UsOrgRole();
-						hhXtOrgJs.setOrgId(organization.getId());
-						hhXtOrgJs.setJsId(roleMapNameId.get(jgjsname));
-						getHhxtorgjsdao().createEntity(hhXtOrgJs);
-					}
-
+				if (roleMapNameId.keySet().contains(jgjs)) {
+					organization.setRoleIds(roleMapNameId.get(jgjs));
+				}else {
+					String[] jsArr = jgjs.split(",");
+					List<UsRole> usRoles = roleService.queryListByProperty(
+							"text", Convert.arrayToList(jsArr));
+					String roleIds  = Convert.objectListToString(usRoles, "id");
+					organization.setRoleIds(roleIds);
+					roleMapNameId.put(jgjs,roleIds);
 				}
-
 			}
 			if (iscreate == 1) {
 				createEntity(organization);

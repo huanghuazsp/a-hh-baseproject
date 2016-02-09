@@ -5,16 +5,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.util.Check;
+import com.hh.system.util.Convert;
 import com.hh.system.util.base.BaseAction;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.MsgProperties;
@@ -22,22 +21,18 @@ import com.hh.system.util.model.ReturnModel;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.bean.usersystem.SysOper;
+import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.bean.usersystem.UsRole;
 import com.hh.usersystem.bean.usersystem.UsRoleMenu;
 import com.hh.usersystem.bean.usersystem.UsRoleOper;
-import com.hh.usersystem.bean.usersystem.UsOrgRole;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UsUserMenuZmtb;
-import com.hh.usersystem.bean.usersystem.UsUserRole;
-import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 import com.opensymphony.xwork2.ActionContext;
 
 @Service
 public class LoginService {
-	@Autowired
-	private IHibernateDAO<UsUserRole> xtyhjsdao;
 	@Autowired
 	private IHibernateDAO<UsUser> xtyhdao;
 	@Autowired
@@ -54,8 +49,7 @@ public class LoginService {
 	private IHibernateDAO<SysMenu> hhxtcdDao;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private IHibernateDAO<UsOrgRole> hhxtorgjsdao;
+	
 	private static final Logger logger = Logger.getLogger(BaseAction.class);
 
 	public ReturnModel savefindLogin(UsUser xtYh) {
@@ -95,40 +89,19 @@ public class LoginService {
 					}
 					returnModel.setHref("webapp-desktop-" + desktop);
 
-					List<UsUserRole> hhXtYhJsList = xtyhjsdao.queryList(
-							UsUserRole.class,
-							ParamFactory.getParamHb()
-									.is("yhId", hhXtYh.getId()));
 
-					List<String> jsids = new ArrayList<String>();
-					for (UsUserRole hhXtYhJs : hhXtYhJsList) {
-						if (!jsids.contains(hhXtYhJs.getJsId())) {
-							jsids.add(hhXtYhJs.getJsId());
-						}
-					}
+					List<String> jsids = Convert.strToList(hhXtYh.getRoleIds());
 
-					List<String> orgIdList = new ArrayList<String>();
 					addOrg(hhXtYh);
-					if (hhXtYh.getJob() != null) {
-						orgIdList.add(hhXtYh.getJob().getId());
-					}
-					if (hhXtYh.getDept() != null) {
-						orgIdList.add(hhXtYh.getDept().getId());
-					}
-					if (hhXtYh.getOrg() != null) {
-						orgIdList.add(hhXtYh.getOrg().getId());
-					}
 
-					List<UsOrgRole> hhXtOrgJsList = new ArrayList<UsOrgRole>();
-
-					if (Check.isNoEmpty(orgIdList)) {
-						hhxtorgjsdao.queryList(UsOrgRole.class, "orgId",
-								orgIdList);
-						for (UsOrgRole hhXtOrgJs : hhXtOrgJsList) {
-							if (!jsids.contains(hhXtOrgJs.getJsId())) {
-								jsids.add(hhXtOrgJs.getJsId());
-							}
-						}
+					if (hhXtYh.getOrg()!=null) {
+						jsids.addAll(Convert.strToList(hhXtYh.getOrg().getRoleIds()));
+					}
+					if (hhXtYh.getDept()!=null) {
+						jsids.addAll(Convert.strToList(hhXtYh.getDept().getRoleIds()));
+					}
+					if (hhXtYh.getJob()!=null) {
+						jsids.addAll(Convert.strToList(hhXtYh.getJob().getRoleIds()));
 					}
 
 					List<UsRole> hhXtJsList = new ArrayList<UsRole>();

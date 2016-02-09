@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -38,8 +39,7 @@ public class UsOrganization    extends BaseTreeNodeEntity<UsOrganization> implem
 //	private Organization bm;// 部门
 //	private Organization jg ;// 机构
 //	private Organization jt ;// 集团
-	private List<String> jsList = new ArrayList<String>();// 角色ID
-	private String jsIdsStr;
+	private String roleIds;
 //	@Transient
 //	public Organization getBm() {
 //		return bm;
@@ -156,21 +156,14 @@ public class UsOrganization    extends BaseTreeNodeEntity<UsOrganization> implem
 	public void setSjbm_(String sjbm_) {
 		this.sjbm_ = sjbm_;
 	}
-	@Transient
-	public List<String> getJsList() {
-		return jsList;
-	}
-
-	public void setJsList(List<String> jsList) {
-		this.jsList = jsList;
-	}
-	@Transient
-	public String getJsIdsStr() {
-		return jsIdsStr;
-	}
-
-	public void setJsIdsStr(String jsIdsStr) {
-		this.jsIdsStr = jsIdsStr;
-	}
 	
+	@Lob
+	@Column(name="ROLE_IDS")
+	public String getRoleIds() {
+		return roleIds;
+	}
+
+	public void setRoleIds(String roleIds) {
+		this.roleIds = roleIds;
+	}
 }

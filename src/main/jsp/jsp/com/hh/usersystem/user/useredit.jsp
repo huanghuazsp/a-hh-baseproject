@@ -109,7 +109,7 @@
 				<tr trtype="systemmanager" >
 					<td xtype="label">角色：</td>
 					<td colspan="3"><span xtype="selectPageList"
-						config="name: 'jsIdsStr'  , url:'usersystem-role-queryPagingData' ,tableName:'US_ROLE' "></td>
+						config="name: 'roleIds'  , url:'usersystem-role-queryPagingData' ,tableName:'US_ROLE' "></td>
 				</tr>
 				<tr trtype="systemmanager" >
 					<td xtype="label">机构：</td>
