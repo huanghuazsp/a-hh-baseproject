@@ -85,9 +85,11 @@
 				</tr>
 				<tr>
 					<td xtype="label">小图标：</td>
-					<td><span xtype="selectPic" config=" name : 'icon' "></span></td>
+					<td colspan="3"><span xtype="selectPic" config=" name : 'icon' "></span></td>
+				</tr>
+				<tr>
 					<td xtype="label">大图标：</td>
-					<td><span xtype="selectPic"
+					<td colspan="3"><span xtype="selectPic"
 						config=" name : 'vdtp' ,params :{path:'/hhcommon/images/big'} ,selectType:'big' "></span></td>
 				</tr>
 				<tr>
