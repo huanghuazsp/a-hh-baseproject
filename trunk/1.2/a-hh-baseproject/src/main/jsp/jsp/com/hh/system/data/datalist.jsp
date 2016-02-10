@@ -97,7 +97,7 @@
 </head>
 <body>
 	<div xtype="border_layout">
-		<div config="render : 'west'">
+		<div config="render : 'west' ,width:'50%' ">
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button" config="onClick:addType,text:'添加'"></span>
 				<span xtype="button"
