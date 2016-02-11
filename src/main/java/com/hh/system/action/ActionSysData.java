@@ -27,5 +27,15 @@ public class ActionSysData extends BaseServiceAction<SysData> {
 				ParamFactory.getParamHb().is("dataTypeId",
 						object.getDataTypeId()));
 	}
+	
+	public Object queryTreeListCode() {
+		return sysDataService.queryTreeListCode(this.object,
+				Convert.toBoolean(request.getParameter("isNoLeaf")),
+				ParamFactory.getParamHb().is("dataTypeId",
+						object.getDataTypeId()));
+	}
+	public Object findObjectByCode() {
+		return sysDataService.findObjectByProperty("code", object.getId());
+	}
 
 }
