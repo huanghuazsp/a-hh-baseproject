@@ -39,6 +39,12 @@
 					$('#form').setValue(result);
 				}
 			});
+		}else{
+			if (params.treeNode) {
+				if (params.treeNode.isParent) {
+					$("#node_span").setValue(params.treeNode);
+				}
+			}
 		}
 	}
 

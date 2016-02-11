@@ -36,16 +36,17 @@
 					$('#form').setValue(result);
 				}
 			});
+		}else{
+			if (params.selectNode) {
+				if (params.selectNode.isParent) {
+					$("#node_span").setValue(params.selectNode);
+				}
+			}
 		}
 	}
 
 	function init() {
 		findData();
-		if (params.selectNode) {
-			if (params.selectNode.isParent) {
-				$("#node_span").setValue(params.selectNode);
-			}
-		}
 	}
 	function zwblur(){
 		if(!$('#span_code').getValue()){
