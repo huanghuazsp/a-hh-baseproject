@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.hh.system.bean.SysDataType;
+import com.hh.system.util.Check;
+import com.hh.system.util.MessageException;
 
 @Service
 public class SysDataTypeService  extends BaseService<SysDataType>{
@@ -25,5 +27,24 @@ public class SysDataTypeService  extends BaseService<SysDataType>{
 		}
 	}
 
+	protected boolean checkCodeOnly(SysDataType hhXtData) {
+		return dao
+				.findWhetherData(
+						"select count(o) from "
+								+ hhXtData.getClass().getName()
+								+ " o "
+								+ "where o.code=:code and (o.id!=:id or :id is null)  ",
+						hhXtData);
+	}
+	@Override
+	public SysDataType saveTree(SysDataType hhXtData) throws MessageException {
+		if (Check.isEmpty(hhXtData.getNode())) {
+			hhXtData.setNode("root");
+		}
+		if (checkCodeOnly(hhXtData)) {
+			throw new MessageException("标识不能重复，请更换！");
+		}
+		return super.saveTree(hhXtData);
+	}
 	
 }

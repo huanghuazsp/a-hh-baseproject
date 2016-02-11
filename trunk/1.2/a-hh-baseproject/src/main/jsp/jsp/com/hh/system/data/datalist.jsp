@@ -48,7 +48,7 @@
 	}
 
 	function typeTreeClick( treeNode) {
-		if (treeNode.leaf == 1) {
+		//if (treeNode.leaf == 1) {
 			selectTypeNode = treeNode;
 			$('#msgspan').html(selectTypeNode.text);
 			$("#datacenter").undisabled();
@@ -57,7 +57,7 @@
 					dataTypeId : treeNode.code
 				}
 			});
-		}
+		//}
 	}
 
 	function addData() {
