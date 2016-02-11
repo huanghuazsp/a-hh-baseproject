@@ -95,10 +95,6 @@ public class SetupInitializerSystem {
 						"jsp-form-ckeditor-formmodel",
 						"/hhcommon/images/icons/world/world.png", 0, 1));
 		
-		menurootHhXtCd.getChildren().add(
-				new SysMenu("8bc6e72d-27b2-46eb-aef7-d073d8123456", "表单数据字典",
-						"jsp-form-data-datalist",
-						"/hhcommon/images/icons/world/world.png", 0, 1));
 
 		for (SysMenu hhXtCd : StaticProperties.hhXtCds) {
 			if ("系统管理".equals(hhXtCd.getText())) {
