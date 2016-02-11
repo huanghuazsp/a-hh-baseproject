@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>数据编辑</title>
-<%=SystemUtil.getBaseJs("checkform")%>
+<%=SystemUtil.getBaseJs("checkform","pinyin")%>
 <script type="text/javascript">
 	var params = BaseUtil.getIframeParams();
 	var width = 600;
@@ -12,7 +12,7 @@
 
 	var objectid = params.treeNode ? params.treeNode.id : '';
 	var selectTypeNode = params.selectTypeNode;
-	var dataTypeId = selectTypeNode.id;
+	var dataTypeId = selectTypeNode.code;
 
 	function save() {
 		$.hh.validation.check('form', function(formData) {
@@ -50,6 +50,16 @@
 			}
 		}
 	}
+	function zwblur(){
+		if(!$('#span_code').getValue()){
+			$('#span_code').setValue(pinyin.getPinyin($('#span_text').getValue()));
+		}
+	}
+	$(function(){
+		$('#refreshName').click(function(){
+			$('#span_code').setValue(pinyin.getPinyin($('#span_text').getValue()));
+		});
+	});
 </script>
 </head>
 <body>
@@ -60,7 +70,7 @@
 				<tbody>
 					<tr>
 						<td xtype="label">名称：</td>
-						<td><span xtype="text" config=" name : 'text',required :true"></span></td>
+						<td><span xtype="text" config=" name : 'text',required :true,blur: zwblur "></span></td>
 						<td xtype="label">父节点：</td>
 						<td><span xtype="selectTree" id="node_span"
 							config="name: 'node' , tableName : 'SYS_DATA', params : {isNoLeaf : true,dataTypeId:dataTypeId},  url : 'system-SysData-queryTreeList'"></span>
@@ -73,6 +83,10 @@
 						<td xtype="label">是否展开：</td>
 						<td><span xtype="radio"
 							config="name: 'expanded' ,defaultValue : 1,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
+					</tr>
+					<tr>
+						<td xtype="label">标识：<img id="refreshName" style="cursor:pointer;"  src="/hhcommon/opensource/jquery/image/16/refresh.png"  title="根据中文名获取拼音"  /></td>
+						<td colspan="3"><span xtype="text" config=" required :true,name : 'code'"></span></td>
 					</tr>
 				</tbody>
 			</table>
