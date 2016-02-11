@@ -13,15 +13,14 @@ import com.hh.hibernate.util.base.BaseTreeNodeEntity;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order
 public class SysDataType extends BaseTreeNodeEntity {
-	private String type;
+	private String code;
 
-	@Column(name = "TYPE_", length = 32)
-	public String getType() {
-		return type;
+	@Column(name = "CODE_", length = 1024)
+	public String getCode() {
+		return code;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setCode(String code) {
+		this.code = code;
 	}
-
 }

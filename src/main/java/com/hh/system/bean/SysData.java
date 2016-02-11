@@ -23,5 +23,16 @@ public class SysData extends BaseTreeNodeEntity {
 	public void setDataTypeId(String dataTypeId) {
 		this.dataTypeId = dataTypeId;
 	}
+	
+	private String code;
+
+	@Column(name = "CODE_", length = 1024)
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 }
