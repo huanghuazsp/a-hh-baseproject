@@ -54,7 +54,7 @@
 			$("#datacenter").undisabled();
 			$.hh.tree.loadData('dataTree', {
 				params : {
-					dataTypeId : treeNode.id
+					dataTypeId : treeNode.code
 				}
 			});
 		}
