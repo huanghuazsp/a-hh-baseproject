@@ -225,10 +225,13 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 				if (orgMapNameId.keySet().contains(organization.getNode())) {
 					map2.put("sjmc", orgMapNameId.get(organization.getNode()));
 				} else {
-					List<UsOrganization> usRoles = organizationService
+					List<UsOrganization> usOrganizations = organizationService
 							.queryListByIds(Convert.strToList(organization
 									.getNode()));
-					String text = Convert.objectListToString(usRoles, "text");
+					String text = "";
+					if (usOrganizations.size() > 0) {
+						text = usOrganizations.get(0).getText();
+					}
 					map2.put("sjmc", text);
 					orgMapNameId.put(organization.getNode(), text);
 				}

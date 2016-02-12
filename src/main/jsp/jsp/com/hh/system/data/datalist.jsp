@@ -114,7 +114,7 @@
 	}
 	
 	function downloadExcel(){
-		Request.downloadFile('system-File-downloadFile',{path:'temp/用户数据.xls'});
+		Request.downloadFile('system-File-downloadFile',{path:'temp/数据字典.xls'});
 	}
 	function outExcel(){
 		Request.downloadFile('system-SysDataType-download',{});

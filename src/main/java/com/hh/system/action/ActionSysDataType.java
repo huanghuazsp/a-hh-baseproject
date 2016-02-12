@@ -10,24 +10,23 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.hh.system.bean.SysData;
 import com.hh.system.bean.SysDataType;
+import com.hh.system.inf.IFileAction;
 import com.hh.system.service.impl.BaseService;
+import com.hh.system.service.impl.SysDataService;
 import com.hh.system.service.impl.SysDataTypeService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.base.BaseServiceAction;
-import com.hh.system.util.date.DateFormat;
 import com.hh.system.util.document.ExcelUtil;
 import com.hh.system.util.document.ExportSetInfo;
 import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.statics.StaticVar;
-import com.hh.usersystem.bean.usersystem.UsOrganization;
-import com.hh.usersystem.bean.usersystem.UsRole;
-import com.hh.usersystem.bean.usersystem.UsUser;
 
 @SuppressWarnings("serial")
-public class ActionSysDataType extends BaseServiceAction<SysDataType> {
+public class ActionSysDataType extends BaseServiceAction<SysDataType> implements IFileAction{
 
 	public BaseService<SysDataType> getService() {
 		return sysDataTypeService;
@@ -36,14 +35,17 @@ public class ActionSysDataType extends BaseServiceAction<SysDataType> {
 	@Autowired
 	private SysDataTypeService sysDataTypeService;
 
+	@Autowired
+	private SysDataService sysDataService;
+	
 	public Object queryTreeListCode() {
 		return sysDataTypeService.queryTreeListCode(this.object,
 				Convert.toBoolean(request.getParameter("isNoLeaf")));
 	}
+
 	public Object findObjectByCode() {
 		return sysDataTypeService.findObjectByProperty("code", object.getId());
 	}
-	
 
 	private byte[] bytes = null;
 	private String title;
@@ -58,6 +60,7 @@ public class ActionSysDataType extends BaseServiceAction<SysDataType> {
 	public void setBytes(byte[] bytes) {
 		this.bytes = bytes;
 	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -81,13 +84,15 @@ public class ActionSysDataType extends BaseServiceAction<SysDataType> {
 	public void setAttachmentFileName(String attachmentFileName) {
 		this.attachmentFileName = attachmentFileName;
 	}
-	
+
 	public String getType() {
 		return type;
 	}
+
 	public void setType(String type) {
 		this.type = type;
 	}
+
 	public Object importData() throws Exception {
 		response.setContentType("text/html");
 		String path = FileUpload.uploadFile(attachment, attachmentFileName,
@@ -106,22 +111,70 @@ public class ActionSysDataType extends BaseServiceAction<SysDataType> {
 	}
 
 	public String download() {
+		Map<String, String> typeMapNameId = new HashMap<String, String>();
+		Map<String, String> dataMapNameId = new HashMap<String, String>();
+		Map<String, String> typeMapCodeName = new HashMap<String, String>();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		String title = "用户数据";
+		String title = "数据字典";
 		ExportSetInfo setInfo = new ExportSetInfo();
 		Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>();
 
 		List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
 		List<String[]> headNameList = new ArrayList<String[]>();
 		List<String[]> fieldNameList = new ArrayList<String[]>();
-		headNameList.add(new String[] { "标识", "名称", "账号", "性别", "状态", "联系电话",
-				"电子邮件", "生日", "角色", "机构", "部门", "岗位" });
-		fieldNameList.add(new String[] { "id", "text", "zh", "xb", "zt",
-				"lxdh", "dzyj", "sr", "js", "jg", "bm", "gw" });
+		headNameList.add(new String[] { "标识", "名称", "上级名称", "类型", "所属类别", "编码" });
+		fieldNameList
+				.add(new String[] { "id", "text", "sjmc", "lx", "sxlb", "code" });
 		List<SysDataType> sysDataTypeList = sysDataTypeService.queryAllList();
 		for (SysDataType sysDataType : sysDataTypeList) {
 			Map<String, Object> map2 = new HashMap<String, Object>();
-
+			map2.put("id", sysDataType.getId());
+			map2.put("text", sysDataType.getText());
+			map2.put("code", sysDataType.getCode());
+			map2.put("lx", "类别");
+			if (Check.isNoEmpty(sysDataType.getNode())) {
+				if (typeMapNameId.keySet().contains(sysDataType.getNode())) {
+					map2.put("sjmc", typeMapNameId.get(sysDataType.getNode()));
+				} else {
+					List<SysDataType> sysDataTypes = sysDataTypeService
+							.queryListByIds(Convert.strToList(sysDataType
+									.getNode()));
+					String text = "";
+					if (sysDataTypes.size() > 0) {
+						text = sysDataTypes.get(0).getText();
+					}
+					map2.put("sjmc", text);
+					typeMapNameId.put(sysDataType.getNode(), text);
+				}
+			}
+			typeMapCodeName.put( sysDataType.getCode(), sysDataType.getText());
+			map2.put("sxlb", "");
+			dataList.add(map2);
+		}
+		
+		List<SysData> sysDataList = sysDataService.queryAllList();
+		for (SysData sysData : sysDataList) {
+			Map<String, Object> map2 = new HashMap<String, Object>();
+			map2.put("id", sysData.getId());
+			map2.put("text", sysData.getText());
+			map2.put("code", sysData.getCode());
+			map2.put("lx", "字典");
+			if (Check.isNoEmpty(sysData.getNode())) {
+				if (dataMapNameId.keySet().contains(sysData.getNode())) {
+					map2.put("sjmc", dataMapNameId.get(sysData.getNode()));
+				} else {
+					List<SysData> sysDataTypes = sysDataService
+							.queryListByIds(Convert.strToList(sysData
+									.getNode()));
+					String text = "";
+					if (sysDataTypes.size() > 0) {
+						text = sysDataTypes.get(0).getText();
+					}
+					map2.put("sjmc", text);
+					dataMapNameId.put(sysData.getNode(), text);
+				}
+			}
+			map2.put("sxlb", Convert.toString(typeMapCodeName.get(sysData.getDataTypeId())));
 			dataList.add(map2);
 		}
 
@@ -142,10 +195,8 @@ public class ActionSysDataType extends BaseServiceAction<SysDataType> {
 		}
 
 		this.setBytes(baos.toByteArray());
-		this.setTitle("用户数据");
+		this.setTitle("数据字典");
 		return "excel";
 	}
-
-	
 
 }
