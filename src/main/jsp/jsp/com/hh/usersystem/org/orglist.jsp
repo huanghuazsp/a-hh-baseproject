@@ -97,7 +97,11 @@
 				saveUrl : 'usersystem-Org-importData',
 				type : 'org',
 				callback : function(data) {
-					$.hh.tree.refresh('orgTree');
+					if(data.returnModel && data.returnModel.msg){
+						Dialog.alert(data.returnModel.msg);
+					}else{
+						$.hh.tree.refresh('orgTree');
+					}
 				}
 			}
 		});

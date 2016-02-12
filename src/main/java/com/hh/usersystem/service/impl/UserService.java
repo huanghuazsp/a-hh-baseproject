@@ -178,7 +178,7 @@ public class UserService extends BaseService<UsUser> {
 
 	public UsUser save(UsUser hhXtYh) throws MessageException {
 		if (checkVdlzhOnly(hhXtYh)) {
-			throw new MessageException("用户名已存在，请更换！");
+			throw new MessageException("登陆账号已存在，请更换！"+hhXtYh.getVdlzh());
 		}
 		if (Check.isEmpty(hhXtYh.getId())) {
 			// HHXtZmsx hhXtZmsx = new HHXtZmsx();

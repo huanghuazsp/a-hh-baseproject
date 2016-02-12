@@ -134,9 +134,6 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		if (checkTextOnly(organization)) {
 			throw new MessageException("同级下名称不能一样，请更换！");
 		}
-		if (organization.getId().equals(organization.getNode())) {
-			throw new MessageException("父节点不能选择自己，请更换！");
-		}
 		if (checkParentNotLeaf(organization)) {
 			throw new MessageException("父节点不能是自己的子节点，请更换！");
 		}
@@ -341,12 +338,12 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				}
 			}
 
-			int iscreate = 0;
+//			int iscreate = 0;
 
 			if (organization == null) {
-				iscreate = 1;
+//				iscreate = 1;
 				organization = new UsOrganization();
-				organization.setId(id);
+//				organization.setId(id);
 			}
 
 			organization.setText(name);
@@ -384,12 +381,12 @@ public class OrganizationService extends BaseService<UsOrganization> {
 					roleMapNameId.put(jgjs, roleIds);
 				}
 			}
-			if (iscreate == 1) {
-				createEntity(organization);
-			} else {
-				getDao().updateEntity(organization);
+			
+			try {
+				save(organization);
+			} catch (MessageException e) {
+				throw new MessageException(e.getMessage()+"["+organization.getText()+"]");
 			}
-
 		}
 
 		// UsOrganization parentOrganization = new UsOrganization();

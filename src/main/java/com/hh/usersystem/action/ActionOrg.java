@@ -37,7 +37,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 
 	@Autowired
 	private OrganizationService organizationService;
-	
+
 	@Autowired
 	private RoleService roleService;
 
@@ -151,7 +151,11 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 				type);
 		File file = new File(StaticVar.filepath + path);
 		List<Map<String, Object>> mapList = ExcelUtil.getMapList(file, 1);
-		organizationService.save(mapList);
+		try {
+			organizationService.save(mapList);
+		} catch (MessageException e) {
+			return e;
+		}
 		Map<String, String> returnMap = new HashMap<String, String>();
 		returnMap.put("path", path);
 		returnMap.put("attachmentFileName", attachmentFileName);
@@ -181,7 +185,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 
 		Map<String, String> orgMapNameId = new HashMap<String, String>();
 		Map<String, String> roleMapNameId = new HashMap<String, String>();
-		
+
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		String title = "机构数据";
 		ExportSetInfo setInfo = new ExportSetInfo();
@@ -191,13 +195,12 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 		List<String[]> headNameList = new ArrayList<String[]>();
 		List<String[]> fieldNameList = new ArrayList<String[]>();
 		headNameList.add(new String[] { "标识", "名称", "上级名称", "类型", "状态", "机构角色",
-				"自定义编码", "简称", "备注"});
+				"自定义编码", "简称", "备注" });
 		fieldNameList.add(new String[] { "id", "text", "sjmc", "lx", "zt",
 				"jgjs", "zdybm", "jc", "bz" });
-		
-		
-		List<UsOrganization> organizations =new ArrayList<UsOrganization>();
-		organizationService.queryAllList(organizations,"root");
+
+		List<UsOrganization> organizations = new ArrayList<UsOrganization>();
+		organizationService.queryAllList(organizations, "root");
 		for (UsOrganization organization : organizations) {
 			Map<String, Object> map2 = new HashMap<String, Object>();
 			map2.put("id", organization.getId());
@@ -206,35 +209,36 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 			map2.put("jc", organization.getJc_());
 			map2.put("bz", organization.getMs_());
 			map2.put("zt", organization.getState() == 1 ? "禁用" : "正常");
-			
+
 			String lx = "机构";
-			if (organization.getLx_()==1) {
+			if (organization.getLx_() == 1) {
 				lx = "机构";
-			}else if (organization.getLx_()==2) {
+			} else if (organization.getLx_() == 2) {
 				lx = "部门";
-			}else if (organization.getLx_()==3) {
+			} else if (organization.getLx_() == 3) {
 				lx = "岗位";
 			}
-			
+
 			map2.put("lx", lx);
-			
-			
+
 			if (Check.isNoEmpty(organization.getNode())) {
 				if (orgMapNameId.keySet().contains(organization.getNode())) {
 					map2.put("sjmc", orgMapNameId.get(organization.getNode()));
-				}else {
-					List<UsOrganization> usRoles = organizationService.queryListByIds(Convert
-							.strToList(organization.getNode()));
+				} else {
+					List<UsOrganization> usRoles = organizationService
+							.queryListByIds(Convert.strToList(organization
+									.getNode()));
 					String text = Convert.objectListToString(usRoles, "text");
 					map2.put("sjmc", text);
 					orgMapNameId.put(organization.getNode(), text);
 				}
 			}
-			
+
 			if (Check.isNoEmpty(organization.getRoleIds())) {
 				if (roleMapNameId.keySet().contains(organization.getRoleIds())) {
-					map2.put("jgjs", roleMapNameId.get(organization.getRoleIds()));
-				}else {
+					map2.put("jgjs",
+							roleMapNameId.get(organization.getRoleIds()));
+				} else {
 					List<UsRole> usRoles = roleService.queryListByIds(Convert
 							.strToList(organization.getRoleIds()));
 					String text = Convert.objectListToString(usRoles, "text");
@@ -242,7 +246,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 					roleMapNameId.put(organization.getRoleIds(), text);
 				}
 			}
-			
+
 			dataList.add(map2);
 		}
 
