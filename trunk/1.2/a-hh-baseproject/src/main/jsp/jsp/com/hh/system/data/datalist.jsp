@@ -93,6 +93,32 @@
 			id : treeNode.id
 		});
 	}
+	
+	function inExcel(){
+		Dialog.open({
+			url : 'jsp-system-tools-file',
+			width : 450,
+			height : 270,
+			params : {
+				saveUrl : 'system-SysDataType-importData',
+				type : 'user',
+				callback : function(data) {
+					if(data.returnModel && data.returnModel.msg){
+						Dialog.alert(data.returnModel.msg);
+					}else{
+						typeTreeObject.refresh();
+					}
+				}
+			}
+		});
+	}
+	
+	function downloadExcel(){
+		Request.downloadFile('system-File-downloadFile',{path:'temp/用户数据.xls'});
+	}
+	function outExcel(){
+		Request.downloadFile('system-SysDataType-download',{});
+	}
 </script>
 </head>
 <body>
@@ -102,6 +128,13 @@
 				<span xtype="button" config="onClick:addType,text:'添加'"></span>
 				<span xtype="button"
 					config="onClick : function(){typeTreeObject.refresh()},text : '刷新'"></span>
+					
+				<span xtype="button"
+					config="onClick : inExcel ,text : '导入'"></span>
+				<span xtype="button"
+					config="onClick : outExcel ,text : '导出'"></span>
+				<span xtype="button"
+					config="onClick : downloadExcel ,text : '下载模板'"></span>
 			</div>
 			<span id="typeTreeSpan" xtype="tree"
 				config=" id:'typeTree' , url:'system-SysDataType-queryTreeList' , remove : removeType , edit : editType , onClick : typeTreeClick"></span>

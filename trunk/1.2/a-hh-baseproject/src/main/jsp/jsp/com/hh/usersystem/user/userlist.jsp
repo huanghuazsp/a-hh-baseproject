@@ -58,7 +58,11 @@
 				saveUrl : 'usersystem-user-importData',
 				type : 'user',
 				callback : function(data) {
-					doQuery();
+					if(data.returnModel && data.returnModel.msg){
+						Dialog.alert(data.returnModel.msg);
+					}else{
+						doQuery();
+					}
 				}
 			}
 		});
@@ -111,6 +115,9 @@
 		},{
 			name : 'text' ,
 			text : '用户名称'
+		},{
+			name : 'vdlzh' ,
+			text : '账号'
 		},{
 			name : 'vdzyj' ,
 			text : '电子邮件'

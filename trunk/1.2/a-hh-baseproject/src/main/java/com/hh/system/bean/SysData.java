@@ -11,7 +11,7 @@ import com.hh.hibernate.util.base.BaseTreeNodeEntity;
 
 @Entity(name = "SYS_DATA")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Order
+@Order(fields = "order", sorts = "asc")
 public class SysData extends BaseTreeNodeEntity {
 	private String dataTypeId;
 

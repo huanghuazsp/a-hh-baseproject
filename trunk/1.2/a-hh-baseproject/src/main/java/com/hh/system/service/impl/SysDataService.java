@@ -49,13 +49,21 @@ public class SysDataService  extends BaseService<SysData> {
 	}
 	@Override
 	public SysData saveTree(SysData hhXtData) throws MessageException {
+		String msg = "["+hhXtData.getText()+"]";
 		if (Check.isEmpty(hhXtData.getNode())) {
 			hhXtData.setNode("root");
 		}
-		if (checkCodeOnly(hhXtData)) {
-			throw new MessageException("标识不能重复，请更换！");
+		if (Check.isEmpty(hhXtData.getDataTypeId())) {
+			throw new MessageException("所属类别不能为空！"+msg);
 		}
-		return super.saveTree(hhXtData);
+		if (checkCodeOnly(hhXtData)) {
+			throw new MessageException("标识不能重复，请更换！"+msg);
+		}
+		try {
+			return super.saveTree(hhXtData);
+		} catch (MessageException e) {
+			throw new MessageException(e.getMessage()+msg);
+		}
 	}
 	
 }

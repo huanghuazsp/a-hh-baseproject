@@ -83,7 +83,7 @@
 							config="name: 'expanded' ,defaultValue : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
 					</tr>
 					<tr>
-						<td xtype="label">标识：<img id="refreshName" style="cursor:pointer;"  src="/hhcommon/opensource/jquery/image/16/refresh.png"  title="根据中文名获取拼音"  /></td>
+						<td xtype="label">编码：<img id="refreshName" style="cursor:pointer;"  src="/hhcommon/opensource/jquery/image/16/refresh.png"  title="根据中文名获取拼音"  /></td>
 						<td colspan="3"><span xtype="text" config=" required :true,name : 'code'"></span></td>
 					</tr>
 				</tbody>
