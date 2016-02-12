@@ -248,22 +248,24 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			UsOrganization organization1) {
 		List<UsOrganization> organizations = this.queryOrgListByPid(
 				organization1, null, null);
-		for (UsOrganization organization : organizations) {
-			addOrgUser(organization);
-		}
+//		for (UsOrganization organization : organizations) {
+//			addOrgUser(organization1);
+//		}
+		organizations.addAll(addOrgUser(organization1.getNode()));
 		return organizations;
 	}
 
-	private void addOrgUser(UsOrganization organization) {
-		if (organization.getChildren() != null) {
-			for (UsOrganization organization2 : organization.getChildren()) {
-				addOrgUser(organization2);
-			}
-		}
+	private List<UsOrganization> addOrgUser(String orgId) {
+//		if (organization.getChildren() != null) {
+//			for (UsOrganization organization2 : organization.getChildren()) {
+//				addOrgUser(organization2);
+//			}
+//		}
+		List<UsOrganization> organizations = new ArrayList<UsOrganization>();
 		List<UsUser> hhXtYhs = xtyhdao.queryList(UsUser.class, ParamFactory
-				.getParamHb().in("deptId", organization.getId().split(",")));
+				.getParamHb().in("deptId", orgId.split(",")));
 		if (!Check.isEmpty(hhXtYhs)) {
-			organization.setExpanded(1);
+//			organization.setExpanded(1);
 			for (UsUser hhXtYh : hhXtYhs) {
 				UsOrganization extTree = new UsOrganization();
 				extTree.setId(hhXtYh.getId());
@@ -275,18 +277,15 @@ public class OrganizationService extends BaseService<UsOrganization> {
 					extTree.setIcon(StaticProperties.HHXT_NO_ON_LINE_USER_ICON);
 				}
 				extTree.setLeaf(1);
-
-				if (organization.getChildren() == null) {
-					organization
-							.setChildren(organizationToIconCls(
-									this.queryList(ParamFactory.getParamHb()
-											.is("node", organization.getId())
-											.nis("lx_", 3).nis("state", 1)
-											.order("lx_")), null));
-				}
-				organization.getChildren().add(extTree);
+				organizations.add(extTree);
+//				organizations.addAll(	organizationToIconCls(
+//						this.queryList(ParamFactory.getParamHb()
+//								.is("node", orgId)
+//								.nis("lx_", 3).nis("state", 1)
+//								.order("lx_")), null));
 			}
 		}
+		return organizations;
 	}
 
 	public List<UsOrganization> queryCurrOrgTree(String node, String action) {
