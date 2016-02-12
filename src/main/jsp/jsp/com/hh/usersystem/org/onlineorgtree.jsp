@@ -116,15 +116,21 @@
 					usernames = BaseUtil.objsToStr(result, 'text');
 				});
 
-				Dialog.open({
-					url : 'jsp-message-email-writeemail',
-					params : {
-						shouuser : {
-							id : userids,
-							text : usernames
+				var data = {
+						id:'e9fa8689-c362-4c66-bd75-d1b132bd5211',
+						text:'个人邮件',
+						vsj:'jsp-message-email-emailmain?type=write',
+						params:{
+							userids : userids,
+							usernames : usernames
 						}
-					}
-				});
+				}
+
+				if (BaseUtil.getRootFrame().addTab) {
+					BaseUtil.addTab(data)
+				} else {
+					Request.href(data.vsj);
+				}
 
 			}
 		},{
