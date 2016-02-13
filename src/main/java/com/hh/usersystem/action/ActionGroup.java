@@ -48,7 +48,7 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 			userGroup.setText("自定义组");
 			userGroup.setExpanded(1);
 			userGroup.setIcon("/hhcommon/images/myimage/org/dept.png");
-			
+			userGroup.setType("zdy");
 			List<UsGroup> userGroups =	userGroupService.queryAllTreeList();
 			
 			for (UsGroup userGroup2 : userGroups) {
@@ -79,6 +79,7 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 				UsSysGroup extTree = new UsSysGroup();
 				extTree.setId( hhXtYh.getId());
 				extTree.setText(hhXtYh.getText());
+				extTree.setType("user");
 				if (LoginUser.getLoginUserId().contains(hhXtYh.getId())) {
 					extTree.setIcon(hhXtYh.getNxb() == 0 ? StaticProperties.HHXT_USERSYSTEM_NV
 							: StaticProperties.HHXT_USERSYSTEM_NAN);
@@ -107,6 +108,7 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 				UsGroup extTree = new UsGroup();
 				extTree.setId( hhXtYh.getId());
 				extTree.setText(hhXtYh.getText());
+				extTree.setType("user");
 				if (LoginUser.getLoginUserId().contains(hhXtYh.getId())) {
 					extTree.setIcon(hhXtYh.getNxb() == 0 ? StaticProperties.HHXT_USERSYSTEM_NV
 							: StaticProperties.HHXT_USERSYSTEM_NAN);

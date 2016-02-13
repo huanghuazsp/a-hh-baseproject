@@ -21,7 +21,7 @@ public class UsSysGroup  extends BaseTreeNodeEntity<UsSysGroup> {
 	private String remark;
 	private String users;
 	
-	private String type;
+	private String type="sysgroup";
 
 	@Column(length = 1024)
 	public String getRemark() {

@@ -106,15 +106,21 @@
 			onClick : function(data) {
 				var userids = '';
 				var usernames = '';
-				Request.request('usersystem-user-queryUserByGroup', {
-					data : {
-						groupId : data.id
-					},
-					async : false
-				}, function(result) {
-					userids = BaseUtil.objsToStr(result);
-					usernames = BaseUtil.objsToStr(result, 'text');
-				});
+				if(data.type!='user'){
+					Request.request('usersystem-user-queryUserByGroup', {
+						data : {
+							groupId : data.id
+						},
+						async : false
+					}, function(result) {
+						userids = BaseUtil.objsToStr(result);
+						usernames = BaseUtil.objsToStr(result, 'text');
+					});
+				}else{
+					userids = data.id;
+					usernames = data.text;
+				}
+				
 
 				var data = {
 						id:'e9fa8689-c362-4c66-bd75-d1b132bd5211',
