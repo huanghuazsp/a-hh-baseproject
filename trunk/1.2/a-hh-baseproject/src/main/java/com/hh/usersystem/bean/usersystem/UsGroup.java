@@ -19,7 +19,7 @@ import com.hh.hibernate.util.base.BaseTreeNodeEntity;
 public class UsGroup  extends BaseTreeNodeEntity<UsGroup> {
 	private String remark;
 	private String users;
-	private String type;
+	private String type="usgroup";
 	@Column(length = 1024)
 	public String getRemark() {
 		return remark;
