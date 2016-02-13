@@ -165,22 +165,26 @@ public class Actionuser extends BaseServiceAction<UsUser> implements
 
 	public Object findUserTextByIds() {
 		String returnTextString = "";
+		String returnIdString = "";
 		if (Check.isNoEmpty(object.getId())) {
 			StringBuffer texts = new StringBuffer();
+			StringBuffer ids = new StringBuffer();
 
 			List<UsUser> hhXtYhList = userService.queryList(ParamFactory
 					.getParamHb().in(StaticVar.entityId,
 							Convert.strToList(object.getId())));
 			for (UsUser hhXtYh : hhXtYhList) {
 				texts.append(hhXtYh.getText() + ",");
+				ids.append(hhXtYh.getId() + ",");
 			}
 			if (Check.isNoEmpty(texts)) {
 				returnTextString = texts.substring(0, texts.length() - 1);
+				returnIdString = ids.substring(0, ids.length() - 1);
 			}
 		}
 		Map<String, String> returnMap = new HashMap<String, String>();
 		returnMap.put("text", returnTextString);
-		returnMap.put("id", object.getId());
+		returnMap.put("id",returnIdString);
 		return returnMap;
 	}
 

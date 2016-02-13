@@ -9,9 +9,9 @@ import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.base.BaseServiceAction;
-import com.hh.usersystem.bean.usersystem.UsGroup;
+import com.hh.usersystem.bean.usersystem.UsSysGroup;
 import com.hh.usersystem.bean.usersystem.UsUser;
-import com.hh.usersystem.bean.usersystem.UserGroup;
+import com.hh.usersystem.bean.usersystem.UsGroup;
 import com.hh.usersystem.service.impl.GroupService;
 import com.hh.usersystem.service.impl.UserGroupService;
 import com.hh.usersystem.service.impl.UserService;
@@ -19,7 +19,7 @@ import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
 
 @SuppressWarnings("serial")
-public class ActionGroup extends BaseServiceAction<UsGroup> {
+public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 
 	private String groups;
 	@Autowired
@@ -31,7 +31,7 @@ public class ActionGroup extends BaseServiceAction<UsGroup> {
 	@Autowired
 	private UserService userService;
 
-	public BaseService<UsGroup> getService() {
+	public BaseService<UsSysGroup> getService() {
 		return service;
 	}
 
@@ -44,31 +44,31 @@ public class ActionGroup extends BaseServiceAction<UsGroup> {
 		
 		List<Object> returnObjects = new ArrayList<Object>();
 		if ("root".equals(this.object.getNode())) {
-			UserGroup userGroup = new UserGroup();
+			UsGroup userGroup = new UsGroup();
 			userGroup.setText("自定义组");
 			userGroup.setExpanded(1);
 			userGroup.setIcon("/hhcommon/images/myimage/org/dept.png");
 			
-			List<UserGroup> userGroups =	userGroupService.queryAllTreeList();
+			List<UsGroup> userGroups =	userGroupService.queryAllTreeList();
 			
-			for (UserGroup userGroup2 : userGroups) {
+			for (UsGroup userGroup2 : userGroups) {
 				addUserGroup(userGroup2);
 			}
 			
 			userGroup.setChildren(userGroups);
 			returnObjects.add(userGroup);
 		}
-		List<UsGroup> groupList=	service.queryTreeList(this.object.getNode(),Convert.toBoolean(request.getParameter("isNoLeaf")));
-		for (UsGroup hhXtGroup : groupList) {
+		List<UsSysGroup> groupList=	service.queryTreeList(this.object.getNode(),Convert.toBoolean(request.getParameter("isNoLeaf")));
+		for (UsSysGroup hhXtGroup : groupList) {
 			addXtGroup(hhXtGroup);
 		}
 		returnObjects.addAll(groupList);
 		return returnObjects;
 	}
 	
-	private void addXtGroup(UsGroup userGroup) {
+	private void addXtGroup(UsSysGroup userGroup) {
 		if (userGroup.getChildren() != null) {
-			for (UsGroup userGroup2 : userGroup.getChildren()) {
+			for (UsSysGroup userGroup2 : userGroup.getChildren()) {
 				addXtGroup(userGroup2);
 			}
 		}
@@ -76,7 +76,7 @@ public class ActionGroup extends BaseServiceAction<UsGroup> {
 			List<String> userIds = Convert.strToList(userGroup.getUsers());
 			List<UsUser> hhXtYhs = userService.queryListByIds(userIds);
 			for (UsUser hhXtYh : hhXtYhs) {
-				UsGroup extTree = new UsGroup();
+				UsSysGroup extTree = new UsSysGroup();
 				extTree.setId( hhXtYh.getId());
 				extTree.setText(hhXtYh.getText());
 				if (LoginUser.getLoginUserId().contains(hhXtYh.getId())) {
@@ -87,16 +87,16 @@ public class ActionGroup extends BaseServiceAction<UsGroup> {
 				}
 				extTree.setLeaf(1);
 				if (userGroup.getChildren()==null) {
-					userGroup.setChildren(new ArrayList<UsGroup>());
+					userGroup.setChildren(new ArrayList<UsSysGroup>());
 				}
 				userGroup.getChildren().add(extTree);
 			}
 		}
 	}
 
-	private void addUserGroup(UserGroup userGroup) {
+	private void addUserGroup(UsGroup userGroup) {
 		if (userGroup.getChildren() != null) {
-			for (UserGroup userGroup2 : userGroup.getChildren()) {
+			for (UsGroup userGroup2 : userGroup.getChildren()) {
 				addUserGroup(userGroup2);
 			}
 		}
@@ -104,7 +104,7 @@ public class ActionGroup extends BaseServiceAction<UsGroup> {
 			List<String> userIds = Convert.strToList(userGroup.getUsers());
 			List<UsUser> hhXtYhs = userService.queryListByIds(userIds);
 			for (UsUser hhXtYh : hhXtYhs) {
-				UserGroup extTree = new UserGroup();
+				UsGroup extTree = new UsGroup();
 				extTree.setId( hhXtYh.getId());
 				extTree.setText(hhXtYh.getText());
 				if (LoginUser.getLoginUserId().contains(hhXtYh.getId())) {

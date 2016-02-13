@@ -11,7 +11,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
 import com.hh.hibernate.util.base.BaseTreeNodeEntity;
-import com.hh.hibernate.util.base.BaseTwoEntity;
 
 @Entity
 @Table(name = "US_GROUP")
@@ -20,29 +19,23 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 public class UsGroup  extends BaseTreeNodeEntity<UsGroup> {
 	private String remark;
 	private String users;
-	
 	private String type;
-
 	@Column(length = 1024)
 	public String getRemark() {
 		return remark;
 	}
-
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
-	
 	@Lob
 	@Column(name="USERS")
 	public String getUsers() {
 		return users;
 	}
-
 	public void setUsers(String users) {
 		this.users = users;
 	}
-
+	
 	@Transient
 	public String getType() {
 		return type;
@@ -51,5 +44,4 @@ public class UsGroup  extends BaseTreeNodeEntity<UsGroup> {
 	public void setType(String type) {
 		this.type = type;
 	}
-
 }

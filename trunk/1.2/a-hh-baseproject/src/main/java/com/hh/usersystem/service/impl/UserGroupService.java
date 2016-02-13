@@ -10,15 +10,15 @@ import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.MessageException;
-import com.hh.usersystem.bean.usersystem.UserGroup;
+import com.hh.usersystem.bean.usersystem.UsGroup;
 
 @Service
-public class UserGroupService extends BaseService<UserGroup> {
+public class UserGroupService extends BaseService<UsGroup> {
 
 
 	@Override
-	public UserGroup findObjectById(String id) {
-		UserGroup hhXtGroup = super.findObjectById(id);
+	public UsGroup findObjectById(String id) {
+		UsGroup hhXtGroup = super.findObjectById(id);
 		return hhXtGroup;
 	}
 
@@ -29,8 +29,8 @@ public class UserGroupService extends BaseService<UserGroup> {
 	}
 
 	@Override
-	public UserGroup saveTree(UserGroup entity) throws MessageException {
-		UserGroup hhXtGroup = super.saveTree(entity);
+	public UsGroup saveTree(UsGroup entity) throws MessageException {
+		UsGroup hhXtGroup = super.saveTree(entity);
 		return hhXtGroup;
 	}
 
