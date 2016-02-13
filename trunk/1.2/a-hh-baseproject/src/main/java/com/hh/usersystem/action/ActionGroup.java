@@ -22,12 +22,13 @@ import com.hh.usersystem.util.steady.StaticProperties;
 public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 
 	private String groups;
+	private int andUser = 1;
 	@Autowired
 	private GroupService service;
 
 	@Autowired
 	private UserGroupService userGroupService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -36,12 +37,11 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 	}
 
 	public Object queryPagingData() {
-		return service.queryPagingData(object, groups,
-				this.getPageRange());
+		return service.queryPagingData(object, groups, this.getPageRange());
 	}
 
 	public Object queryListAndUserGroup() {
-		
+
 		List<Object> returnObjects = new ArrayList<Object>();
 		if ("root".equals(this.object.getNode())) {
 			UsGroup userGroup = new UsGroup();
@@ -49,23 +49,27 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 			userGroup.setExpanded(1);
 			userGroup.setIcon("/hhcommon/images/myimage/org/dept.png");
 			userGroup.setType("zdy");
-			List<UsGroup> userGroups =	userGroupService.queryAllTreeList();
-			
-			for (UsGroup userGroup2 : userGroups) {
-				addUserGroup(userGroup2);
+			List<UsGroup> userGroups = userGroupService.queryAllTreeList();
+			if (andUser == 1) {
+				for (UsGroup userGroup2 : userGroups) {
+					addUserGroup(userGroup2);
+				}
 			}
-			
+
 			userGroup.setChildren(userGroups);
 			returnObjects.add(userGroup);
 		}
-		List<UsSysGroup> groupList=	service.queryTreeList(this.object.getNode(),Convert.toBoolean(request.getParameter("isNoLeaf")));
-		for (UsSysGroup hhXtGroup : groupList) {
-			addXtGroup(hhXtGroup);
+		List<UsSysGroup> groupList = service.queryTreeList(this.object.getNode(),
+				Convert.toBoolean(request.getParameter("isNoLeaf")));
+		if (andUser == 1) {
+			for (UsSysGroup hhXtGroup : groupList) {
+				addXtGroup(hhXtGroup);
+			}
 		}
 		returnObjects.addAll(groupList);
 		return returnObjects;
 	}
-	
+
 	private void addXtGroup(UsSysGroup userGroup) {
 		if (userGroup.getChildren() != null) {
 			for (UsSysGroup userGroup2 : userGroup.getChildren()) {
@@ -77,7 +81,7 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 			List<UsUser> hhXtYhs = userService.queryListByIds(userIds);
 			for (UsUser hhXtYh : hhXtYhs) {
 				UsSysGroup extTree = new UsSysGroup();
-				extTree.setId( hhXtYh.getId());
+				extTree.setId(hhXtYh.getId());
 				extTree.setText(hhXtYh.getText());
 				extTree.setType("user");
 				if (LoginUser.getLoginUserId().contains(hhXtYh.getId())) {
@@ -87,7 +91,7 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 					extTree.setIcon(StaticProperties.HHXT_NO_ON_LINE_USER_ICON);
 				}
 				extTree.setLeaf(1);
-				if (userGroup.getChildren()==null) {
+				if (userGroup.getChildren() == null) {
 					userGroup.setChildren(new ArrayList<UsSysGroup>());
 				}
 				userGroup.getChildren().add(extTree);
@@ -106,7 +110,7 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 			List<UsUser> hhXtYhs = userService.queryListByIds(userIds);
 			for (UsUser hhXtYh : hhXtYhs) {
 				UsGroup extTree = new UsGroup();
-				extTree.setId( hhXtYh.getId());
+				extTree.setId(hhXtYh.getId());
 				extTree.setText(hhXtYh.getText());
 				extTree.setType("user");
 				if (LoginUser.getLoginUserId().contains(hhXtYh.getId())) {
@@ -128,4 +132,13 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 	public void setGroups(String groups) {
 		this.groups = groups;
 	}
+
+	public int getAndUser() {
+		return andUser;
+	}
+
+	public void setAndUser(int andUser) {
+		this.andUser = andUser;
+	}
+
 }
