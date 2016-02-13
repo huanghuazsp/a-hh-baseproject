@@ -26,6 +26,7 @@ import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtTree;
 import com.hh.usersystem.bean.usersystem.UsSysGroup;
+import com.hh.usersystem.bean.usersystem.UsGroup;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.bean.usersystem.UsRole;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
@@ -58,6 +59,9 @@ public class UserService extends BaseService<UsUser> {
 
 	@Autowired
 	private GroupService groupService;
+	@Autowired
+	private UserGroupService usGoupService;
+
 
 	public Map<? extends String, ? extends Object> queryOnLinePagingData(UsUser hhXtYh, PageRange pageRange) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -75,7 +79,7 @@ public class UserService extends BaseService<UsUser> {
 	}
 
 	public PagingData<UsUser> queryPagingData(UsUser hhXtYh, PageRange pageRange, String ids, String orgs, String roles,
-			String groups) {
+			String groups, String usgroups) {
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (!Check.isEmpty(hhXtYh.getText())) {
 			hqlParamList.or(ParamFactory.getParamHb().like("text", hhXtYh.getText()),
@@ -110,6 +114,10 @@ public class UserService extends BaseService<UsUser> {
 		if (Check.isNoEmpty(groups)) {
 			param = true;
 			idList.addAll(queryUserIdListByGroup(groups));
+		}
+		if (Check.isNoEmpty(usgroups)) {
+			param = true;
+			idList.addAll(queryUserIdListByUsGroup(usgroups));
 		}
 
 		List<String> idParamList = new ArrayList<String>();
@@ -321,6 +329,24 @@ public class UserService extends BaseService<UsUser> {
 		}
 		List<UsUser> hhXtYhList = xtyhdao.queryList(UsUser.class, Restrictions.in("id", yhIdList));
 		return hhXtYhList;
+	}
+	
+	public List<UsUser> queryUserByUsGroup(String groupId) {
+		List<String> yhIdList = queryUserIdListByUsGroup(groupId);
+		if (Check.isEmpty(yhIdList)) {
+			return new ArrayList<UsUser>();
+		}
+		List<UsUser> hhXtYhList = xtyhdao.queryList(UsUser.class, Restrictions.in("id", yhIdList));
+		return hhXtYhList;
+	}
+	
+	private List<String> queryUserIdListByUsGroup(String groupId) {
+		List<String> yhIdList = new ArrayList<String>();
+		UsGroup hhXtGroup = usGoupService.findObjectById(groupId);
+		if (hhXtGroup != null && Check.isNoEmpty(hhXtGroup.getUsers())) {
+			yhIdList = Convert.strToList(hhXtGroup.getUsers());
+		}
+		return yhIdList;
 	}
 
 	private List<String> queryUserIdListByGroup(String groupId) {

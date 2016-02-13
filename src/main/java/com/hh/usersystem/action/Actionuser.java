@@ -31,11 +31,11 @@ import com.hh.usersystem.service.impl.RoleService;
 import com.hh.usersystem.service.impl.UserService;
 
 @SuppressWarnings("serial")
-public class Actionuser extends BaseServiceAction<UsUser> implements
-		IFileAction {
+public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction {
 	private String orgs;
 	private String roles;
 	private String groups;
+	private String usgroups;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -51,22 +51,19 @@ public class Actionuser extends BaseServiceAction<UsUser> implements
 	}
 
 	public Object queryPagingData() {
-		return userService.queryPagingData(object, this.getPageRange(),
-				this.getIds(), orgs, roles, groups);
+		return userService.queryPagingData(object, this.getPageRange(), this.getIds(), orgs, roles, groups,usgroups);
 	}
 
 	public Object queryPagingDataCombox() {
 		if (Check.isNoEmpty(this.object.getId())) {
 			return userService.queryItemsByIdsStr(object.getId());
 		} else {
-			return userService.queryPagingData(object, this.getPageRange(),
-					null, null, null, null);
+			return userService.queryPagingData(object, this.getPageRange(), null, null, null, null,null);
 		}
 	}
 
 	public Object queryPagingDataList() {
-		return userService.queryPagingData(object, this.getPageRange(), null,
-				null, null, null);
+		return userService.queryPagingData(object, this.getPageRange(), null, null, null, null,null);
 	}
 
 	public Object queryOnLinePagingData() {
@@ -152,14 +149,12 @@ public class Actionuser extends BaseServiceAction<UsUser> implements
 	}
 
 	public Object queryUserByOrgId() {
-		List<UsUser> hhXtYhList = userService.queryUserByOrgId(request
-				.getParameter("code"));
+		List<UsUser> hhXtYhList = userService.queryUserByOrgId(request.getParameter("code"));
 		return hhXtYhList;
 	}
 
 	public Object queryUserByGroup() {
-		List<UsUser> hhXtYhList = userService.queryUserByGroup(request
-				.getParameter("groupId"));
+		List<UsUser> hhXtYhList = userService.queryUserByGroup(request.getParameter("groupId"));
 		return hhXtYhList;
 	}
 
@@ -170,9 +165,8 @@ public class Actionuser extends BaseServiceAction<UsUser> implements
 			StringBuffer texts = new StringBuffer();
 			StringBuffer ids = new StringBuffer();
 
-			List<UsUser> hhXtYhList = userService.queryList(ParamFactory
-					.getParamHb().in(StaticVar.entityId,
-							Convert.strToList(object.getId())));
+			List<UsUser> hhXtYhList = userService
+					.queryList(ParamFactory.getParamHb().in(StaticVar.entityId, Convert.strToList(object.getId())));
 			for (UsUser hhXtYh : hhXtYhList) {
 				texts.append(hhXtYh.getText() + ",");
 				ids.append(hhXtYh.getId() + ",");
@@ -184,14 +178,13 @@ public class Actionuser extends BaseServiceAction<UsUser> implements
 		}
 		Map<String, String> returnMap = new HashMap<String, String>();
 		returnMap.put("text", returnTextString);
-		returnMap.put("id",returnIdString);
+		returnMap.put("id", returnIdString);
 		return returnMap;
 	}
 
 	public Object findUserListByIds() {
-		List<UsUser> hhXtYhList = userService.queryList(ParamFactory
-				.getParamHb().in(StaticVar.entityId,
-						Convert.strToList(object.getId())));
+		List<UsUser> hhXtYhList = userService
+				.queryList(ParamFactory.getParamHb().in(StaticVar.entityId, Convert.strToList(object.getId())));
 		return hhXtYhList;
 	}
 
@@ -205,8 +198,7 @@ public class Actionuser extends BaseServiceAction<UsUser> implements
 
 	public Object importData() throws Exception {
 		response.setContentType("text/html");
-		String path = FileUpload.uploadFile(attachment, attachmentFileName,
-				type);
+		String path = FileUpload.uploadFile(attachment, attachmentFileName, type);
 		File file = new File(StaticVar.filepath + path);
 		try {
 			List<Map<String, Object>> mapList = ExcelUtil.getMapList(file, 1);
@@ -235,7 +227,7 @@ public class Actionuser extends BaseServiceAction<UsUser> implements
 
 		Map<String, String> orgMapNameId = new HashMap<String, String>();
 		Map<String, String> roleMapNameId = new HashMap<String, String>();
-		
+
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		String title = "用户数据";
 		ExportSetInfo setInfo = new ExportSetInfo();
@@ -244,10 +236,9 @@ public class Actionuser extends BaseServiceAction<UsUser> implements
 		List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
 		List<String[]> headNameList = new ArrayList<String[]>();
 		List<String[]> fieldNameList = new ArrayList<String[]>();
-		headNameList.add(new String[] { "标识", "名称", "账号", "性别", "状态", "联系电话",
-				"电子邮件", "生日", "角色", "机构", "部门", "岗位" });
-		fieldNameList.add(new String[] { "id", "text", "zh", "xb", "zt",
-				"lxdh", "dzyj", "sr", "js", "jg", "bm", "gw" });
+		headNameList.add(new String[] { "标识", "名称", "账号", "性别", "状态", "联系电话", "电子邮件", "生日", "角色", "机构", "部门", "岗位" });
+		fieldNameList
+				.add(new String[] { "id", "text", "zh", "xb", "zt", "lxdh", "dzyj", "sr", "js", "jg", "bm", "gw" });
 		List<UsUser> users = userService.queryAllList();
 		for (UsUser usUser : users) {
 			Map<String, Object> map2 = new HashMap<String, Object>();
@@ -261,52 +252,50 @@ public class Actionuser extends BaseServiceAction<UsUser> implements
 			if (usUser.getDsr() == null) {
 				map2.put("sr", "");
 			} else {
-				map2.put("sr",
-						DateFormat.dateToStr(usUser.getDsr(), "yyyy-MM-dd"));
+				map2.put("sr", DateFormat.dateToStr(usUser.getDsr(), "yyyy-MM-dd"));
 			}
-			
+
 			if (Check.isNoEmpty(usUser.getRoleIds())) {
 				if (roleMapNameId.keySet().contains(usUser.getRoleIds())) {
 					map2.put("js", roleMapNameId.get(usUser.getRoleIds()));
-				}else {
-					List<UsRole> usRoles = roleService.queryListByIds(Convert
-							.strToList(usUser.getRoleIds()));
+				} else {
+					List<UsRole> usRoles = roleService.queryListByIds(Convert.strToList(usUser.getRoleIds()));
 					String text = Convert.objectListToString(usRoles, "text");
 					map2.put("js", text);
 					roleMapNameId.put(usUser.getRoleIds(), text);
 				}
 			}
-			
+
 			if (Check.isNoEmpty(usUser.getOrgId())) {
 				if (orgMapNameId.keySet().contains(usUser.getOrgId())) {
 					map2.put("jg", orgMapNameId.get(usUser.getOrgId()));
-				}else {
-					List<UsOrganization> usRoles = organizationService.queryListByIds(Convert
-							.strToList(usUser.getOrgId()));
+				} else {
+					List<UsOrganization> usRoles = organizationService
+							.queryListByIds(Convert.strToList(usUser.getOrgId()));
 					String text = Convert.objectListToString(usRoles, "text");
 					map2.put("jg", text);
 					orgMapNameId.put(usUser.getOrgId(), text);
 				}
 			}
-			
+
 			if (Check.isNoEmpty(usUser.getDeptId())) {
 				if (orgMapNameId.keySet().contains(usUser.getDeptId())) {
 					map2.put("bm", orgMapNameId.get(usUser.getDeptId()));
-				}else {
-					List<UsOrganization> usRoles = organizationService.queryListByIds(Convert
-							.strToList(usUser.getDeptId()));
+				} else {
+					List<UsOrganization> usRoles = organizationService
+							.queryListByIds(Convert.strToList(usUser.getDeptId()));
 					String text = Convert.objectListToString(usRoles, "text");
 					map2.put("bm", text);
 					orgMapNameId.put(usUser.getDeptId(), text);
 				}
 			}
-			
+
 			if (Check.isNoEmpty(usUser.getJobId())) {
 				if (orgMapNameId.keySet().contains(usUser.getJobId())) {
 					map2.put("gw", orgMapNameId.get(usUser.getJobId()));
-				}else {
-					List<UsOrganization> usRoles = organizationService.queryListByIds(Convert
-							.strToList(usUser.getJobId()));
+				} else {
+					List<UsOrganization> usRoles = organizationService
+							.queryListByIds(Convert.strToList(usUser.getJobId()));
 					String text = Convert.objectListToString(usRoles, "text");
 					map2.put("gw", text);
 					orgMapNameId.put(usUser.getJobId(), text);
@@ -403,6 +392,14 @@ public class Actionuser extends BaseServiceAction<UsUser> implements
 
 	public void setGroups(String groups) {
 		this.groups = groups;
+	}
+
+	public String getUsgroups() {
+		return usgroups;
+	}
+
+	public void setUsgroups(String usgroups) {
+		this.usgroups = usgroups;
 	}
 
 }
