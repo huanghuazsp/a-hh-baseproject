@@ -95,7 +95,7 @@
 	<table xtype="form" id="queryForm" style="width:700px;">
 		<tr>
 			<td xtype="label">名称：</td>
-			<td><span xtype="text" config=" name : 'text'"></span></td>
+			<td><span xtype="text" config=" name : 'text' ,enter: doQuery "></span></td>
 			<td xtype="label">性别：</td>
 			<td><span xtype="radio"
 				config="name: 'nxb'  ,defaultValue : 2 , data :[{id:2,text:'所有'},{id:1,text:'男'},{id:0,text:'女'}]"></span></td>
