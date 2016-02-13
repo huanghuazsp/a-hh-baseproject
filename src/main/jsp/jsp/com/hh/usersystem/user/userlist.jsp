@@ -80,8 +80,7 @@
 	<div xtype="toolbar" config="type:'head'">
 		<span xtype="button" config="onClick:doAdd,text:'添加' , itype :'add' "></span> <span
 			xtype="button" config="onClick:doEdit,text:'修改' , itype :'edit' "></span> <span
-			xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span> <span
-			xtype="button" config="onClick: doQuery ,text:'查询' , itype :'query' "></span> <span
+			xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span>  <span
 			xtype="button"
 			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'usersystem-user-order'}  ,  icon : 'hh_up' "></span>
 		<span xtype="button"
@@ -93,13 +92,15 @@
 		<span xtype="button"
 					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 	</div>
-	<table xtype="form" id="queryForm" style="width:600px;">
+	<table xtype="form" id="queryForm" style="width:700px;">
 		<tr>
 			<td xtype="label">名称：</td>
 			<td><span xtype="text" config=" name : 'text'"></span></td>
 			<td xtype="label">性别：</td>
 			<td><span xtype="radio"
 				config="name: 'nxb'  ,defaultValue : 2 , data :[{id:2,text:'所有'},{id:1,text:'男'},{id:0,text:'女'}]"></span></td>
+			<td><span
+			xtype="button" config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
 		</tr>
 	</table>
 	<div id="pagelist" xtype="pagelist"
