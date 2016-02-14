@@ -31,19 +31,19 @@
 			<table xtype="form">
 				<tbody>
 					<tr>
-						<td class="label">旧密码：</td>
+						<td xtype="label">旧密码：</td>
 						<td><span
 							config="required :true, name : 'oldPassword' "
 							xtype="password"></span></td>
 					</tr>
 					<tr>
-						<td class="label">新密码：</td>
+						<td xtype="label">新密码：</td>
 						<td><span
 							config=" required :true , name : 'vmm' "
 							xtype="password"></span></td>
 					</tr>
 					<tr>
-						<td class="label">重复新密码：</td>
+						<td xtype="label">重复新密码：</td>
 						<td><span
 							config=" required :true , name : 'mm' "
 							xtype="password"></span></td>
