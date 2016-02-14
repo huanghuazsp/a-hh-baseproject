@@ -1,3 +1,5 @@
+<%@page import="com.hh.message.service.EmailService"%>
+<%@page import="com.hh.system.service.impl.BeanFactoryHelper"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.SystemUtil"%>
 <%=SystemUtil.getBaseDoctype()%>
@@ -5,6 +7,14 @@
 <head>
 <title>个人邮件</title>
 <%=SystemUtil.getBaseJs("layout")%>
+<% 
+	EmailService emailService = BeanFactoryHelper.getBean( EmailService.class);
+
+	Map<String, Object> map =emailService.load();
+	
+	Object count = ((Map<String, Object>)map.get("email")).get("count");
+
+%>
 <script type="text/javascript">
 	var emailMenu = {
 		data : [ {
@@ -15,7 +25,7 @@
 				$('#email').attr('src','jsp-message-email-writeemail');
 			}
 		},{
-			text : '收件',
+			text : '收件<font color=red>(<%=count%>)</font>',
 			img : '/hhcommon/images/icons/email/email_close.gif',
 			onClick : function() {
 				shoujianlist();
