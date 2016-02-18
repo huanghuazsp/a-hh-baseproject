@@ -22,9 +22,7 @@
 				data : formData,
 				callback : function(result) {
 					if (result.success!=false) {
-						if (result.success!=false) {
 							callback(formData);
-						}
 					}
 				}
 			});
