@@ -59,10 +59,10 @@
 				<tr>
 					<td xtype="label">系统图标img</td>
 					<td><span xtype="uploadpic"
-						config=" width:36,height:36, name: 'sysImg' , type : 'param'  , path:'/hhcommon/images/big' "></span></td>
+						config=" width:50,height:50, name: 'sysImg' , type : 'param'  , path:'/hhcommon/images/big' "></span></td>
 					<td xtype="label">系统图标icon</td>
 					<td><span xtype="uploadpic"
-						config=" width:36,height:36, name: 'sysIcon' , type : 'param'  , path:'/hhcommon/images/extjsico' "></span></td>
+						config=" width:50,height:50, name: 'sysIcon' , type : 'param'  , path:'/hhcommon/images/extjsico' "></span></td>
 				</tr>
 				<!-- <tr>
 					<td xtype="label">登陆背景图片</td>
