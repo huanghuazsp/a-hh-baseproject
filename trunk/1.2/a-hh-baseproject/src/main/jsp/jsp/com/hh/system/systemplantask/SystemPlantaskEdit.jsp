@@ -48,9 +48,9 @@
 
 	var formulaConfig = {
 		name : 'formula',
-		trhtml : '<tr><td xtype="label">类型：</td><td><span xtype="combobox" valuekey="type" '
+		trhtml : '<table width=100%><tr><td style="width:60px;text-align:right;">类型：</td><td><span xtype="combobox" valuekey="type" '
 		+' config=" data : [ {id : \'sql\',		text : \'sql\'		}, {		id : \'class\',text : \'class\'} ] "></span></td>'
-		+ '<td xtype="label">执行：</td><td><span xtype="text" valuekey="value" config=" "></span></td></tr>'
+		+ '<td style="width:60px;text-align:right;">执行：</td><td><span xtype="text" valuekey="value" config=" "></span></td></tr></table>'
 	}
 </script>
 </head>
