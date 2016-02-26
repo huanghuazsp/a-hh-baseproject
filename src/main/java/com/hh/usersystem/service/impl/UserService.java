@@ -225,7 +225,7 @@ public class UserService extends BaseService<UsUser> {
 	}
 
 	public void updatePassWord(UsUser hhXtYh, String oldPass) throws MessageException {
-		hhXtYh.setId(loginUserUtilService.findLoginUserId());
+		hhXtYh.setId(loginUserUtilService.findUserId());
 		boolean as = xtyhdao.isExist("select count(o) from HhXtYh o where o.id=? and o.vmm=?",
 				new Object[] { hhXtYh.getId(), oldPass });
 		if (!as) {

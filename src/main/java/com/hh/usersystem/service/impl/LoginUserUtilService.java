@@ -27,7 +27,7 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 		return hhXtYh;
 	}
 
-	public String findLoginUserId() {
+	public String findUserId() {
 		if (ActionContext.getContext() == null) {
 			return null;
 		}
@@ -133,6 +133,15 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 			if (Check.isNoEmpty(organization)) {
 				return organization.getId();
 			}
+		}
+		return "";
+	}
+
+	@Override
+	public String findUserName() {
+		UsUser user = findLoginUser();
+		if (user != null) {
+			return user.getText();
 		}
 		return "";
 	}

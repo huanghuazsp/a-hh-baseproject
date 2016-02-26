@@ -52,7 +52,7 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 	@Transactional
 	public void orderIds(String ids) {
 		List<String> idList = Convert.strToList(ids);
-		String userid = loginUserService.findLoginUserId();
+		String userid = loginUserService.findUserId();
 		deleteByProperty("yhId", userid);
 		for (int i = idList.size() - 1; i > -1; i--) {
 			UsUserMenuZmtb hhXtYhCdZmtb = new UsUserMenuZmtb();

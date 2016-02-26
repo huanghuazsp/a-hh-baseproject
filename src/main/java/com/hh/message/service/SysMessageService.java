@@ -76,7 +76,7 @@ public class SysMessageService extends BaseService<SysMessage> implements
 	public Map<String, Object> load() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int shouCount = findCount(ParamFactory.getParamHb()
-				.is("shouUser", loginUserUtilService.findLoginUserId())
+				.is("shouUser", loginUserUtilService.findUserId())
 				.is("isRead", 0));
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("count", shouCount);
