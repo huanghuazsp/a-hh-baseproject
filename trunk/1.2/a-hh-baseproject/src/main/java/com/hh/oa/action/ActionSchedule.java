@@ -29,7 +29,7 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 
 	@Override
 	public Object save() {
-		this.object.setUserId(loginUserUtilService.findLoginUserId());
+		this.object.setUserId(loginUserUtilService.findUserId());
 		return super.save();
 	}
 
@@ -38,7 +38,7 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 		// Date end = DateFormat.strToDate("2013-11", "yyyy-MM");
 		List<Schedule> schedules = scheduleService.queryList(ParamFactory
 				.getParamHb().ge("start", startDate).le("end", endDate)
-				.is("userId", loginUserUtilService.findLoginUserId()));
+				.is("userId", loginUserUtilService.findUserId()));
 		return schedules;
 	}
 
