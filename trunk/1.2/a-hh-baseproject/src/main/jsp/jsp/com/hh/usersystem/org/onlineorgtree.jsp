@@ -11,7 +11,7 @@
 <script type="text/javascript">
 	var params = BaseUtil.getIframeParams();
 	var orgtreeconfig = {
-		id : 'orgTree',nheight:45,
+		id : 'orgTree',nheight:36,
 		url : 'usersystem-Org-queryOrgAndUsersList',
 		rightMenu :[{
 			text:'刷新',
@@ -90,7 +90,7 @@
 	}
 
 	var groupTreeConfig = {
-		id : 'groupTree',nheight:45,
+		id : 'groupTree',nheight:36,
 		url : 'usersystem-Group-queryListAndUserGroup',
 		render : false,
 		rightMenu : [{

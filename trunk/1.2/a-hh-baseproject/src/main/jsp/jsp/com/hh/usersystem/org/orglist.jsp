@@ -136,7 +136,7 @@
 					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 			</div>
 			<span xtype="tree"
-				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick ,nheight:38 "></span>
+				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick ,nheight:36 "></span>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="orgeditiframe" name="orgeditiframe" width=100%
