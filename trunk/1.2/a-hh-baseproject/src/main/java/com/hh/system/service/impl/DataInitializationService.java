@@ -73,10 +73,10 @@ public class DataInitializationService {
 	}
 
 	private void initProperties() throws IOException {
-		String classPath = Thread.currentThread().getContextClassLoader()
+		String classPath = "/"+Thread.currentThread().getContextClassLoader()
 				.getResource("").getPath();
 		classPath = classPath.substring(1, classPath.indexOf("/WEB-INF"));
-		StaticVar.contextPath = classPath;
+		StaticVar.contextPath =  classPath;
 		logger.info("项目绝对路径：" + StaticVar.contextPath);
 		classPath = classPath.substring(0, classPath.lastIndexOf("/"));
 		StaticVar.webappPath = classPath;
