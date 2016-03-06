@@ -71,7 +71,7 @@
 
 	function doSave() {
 		if (saveRoleId) {
-			var menuids = BaseUtil.objsToStr($.hh.tree
+			var menuids = $.hh.objsToStr($.hh.tree
 					.getCheckedNodes('menuTree'), 'id');
 			Request.request('usersystem-role-saveJsMenu', {
 				data : {
@@ -124,7 +124,7 @@
 		var menuId = cztreeconfig.params.vpid;
 		var roleId = cztreeconfig.params.roleid;
 		if (roleId && menuId) {
-			var czid_operLevel = BaseUtil.objsToStr($.hh.tree
+			var czid_operLevel = $.hh.objsToStr($.hh.tree
 					.getCheckedNodes('cztree'), 'id');
 			Request.request('usersystem-role-saveJsOper', {
 				data : {

@@ -7,8 +7,8 @@
 <%=SystemUtil.getBaseJs()%>
 <script type="text/javascript">
 	function readrender(value) {
-		return value == 0 ? '<img src="'+StaticVar.img_email_close+'" />'
-				: '<img src="'+StaticVar.img_email_open+'" />';
+		return value == 0 ? '<img src="'+$.hh.property.img_email_close+'" />'
+				: '<img src="'+$.hh.property.img_email_open+'" />';
 	}
 
 	function doView() {

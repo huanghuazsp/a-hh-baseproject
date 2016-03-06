@@ -9,20 +9,20 @@
 <title>组织机构树</title>
 <%=SystemUtil.getBaseJs("layout","ztree")%>
 <script type="text/javascript">
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	var orgtreeconfig = {
 		id : 'orgTree',nheight:36,
 		url : 'usersystem-Org-queryOrgAndUsersList',
 		rightMenu :[{
 			text:'刷新',
-			img : StaticVar.img_refresh,
+			img : $.hh.property.img_refresh,
 			onClick:function(){
 					$.hh.tree.refresh('orgTree');
 			}
 		}],
 		itemRightMenu : [ {
 			text : '发送邮件',
-			img : StaticVar.img_email,
+			img : $.hh.property.img_email,
 			onClick : function(data) {
 				var userids = '';
 				var usernames = '';
@@ -33,8 +33,8 @@
 						},
 						async : false
 					}, function(result) {
-						userids = BaseUtil.objsToStr(result);
-						usernames = BaseUtil.objsToStr(result, 'text');
+						userids = $.hh.objsToStr(result);
+						usernames = $.hh.objsToStr(result, 'text');
 					});
 				} else {
 					userids = data.id;
@@ -51,8 +51,8 @@
 						}
 				}
 
-				if (BaseUtil.getRootFrame().addTab) {
-					BaseUtil.addTab(data)
+				if ($.hh.getRootFrame().addTab) {
+					$.hh.addTab(data)
 				} else {
 					Request.href(data.vsj);
 				}
@@ -70,7 +70,7 @@
 			}
 		},{
 			text:'刷新',
-			img : StaticVar.img_refresh,
+			img : $.hh.property.img_refresh,
 			onClick:function(){
 					$.hh.tree.refresh('orgTree');
 			}
@@ -95,14 +95,14 @@
 		render : false,
 		rightMenu : [{
 			text:'刷新',
-			img : StaticVar.img_refresh,
+			img : $.hh.property.img_refresh,
 			onClick:function(){
 					$.hh.tree.refresh('groupTree');
 			}
 		}],
 		itemRightMenu : [ {
 			text : '发送邮件',
-			img : StaticVar.img_email,
+			img : $.hh.property.img_email,
 			onClick : function(data) {
 				var userids = '';
 				var usernames = '';
@@ -113,8 +113,8 @@
 						},
 						async : false
 					}, function(result) {
-						userids = BaseUtil.objsToStr(result);
-						usernames = BaseUtil.objsToStr(result, 'text');
+						userids = $.hh.objsToStr(result);
+						usernames = $.hh.objsToStr(result, 'text');
 					});
 				}else{
 					userids = data.id;
@@ -132,8 +132,8 @@
 						}
 				}
 
-				if (BaseUtil.getRootFrame().addTab) {
-					BaseUtil.addTab(data)
+				if ($.hh.getRootFrame().addTab) {
+					$.hh.addTab(data)
 				} else {
 					Request.href(data.vsj);
 				}
@@ -141,7 +141,7 @@
 			}
 		},{
 			text:'刷新',
-			img : StaticVar.img_refresh,
+			img : $.hh.property.img_refresh,
 			onClick:function(){
 					$.hh.tree.refresh('groupTree');
 			}

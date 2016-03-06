@@ -10,7 +10,7 @@
 	int ctype = Convert.toInt(request.getParameter("ctype"));
 %>
 <script type="text/javascript">
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	var width = 650;
 	var height = 300
 
@@ -65,8 +65,8 @@
 			}, function(result) {
 				if (result.success!=false) {
 					object.isOk = ok;
-					object.start = BaseUtil.stringToDate(object.start);
-					object.end = BaseUtil.stringToDate(object.end);
+					object.start = $.hh.stringToDate(object.start);
+					object.end = $.hh.stringToDate(object.end);
 					params.callback(object);
 					Dialog.close();
 				}

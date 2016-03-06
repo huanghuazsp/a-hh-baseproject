@@ -120,7 +120,7 @@
 </head>
 <body>
 	<div xtype="border_layout">
-		<div config="render : 'west' ,width:280">
+		<div config="render : 'west' ,width:290">
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span> <span
 					xtype="button"
@@ -129,8 +129,8 @@
 					config="onClick: $.hh.tree.doDown , params:{treeid:'orgTree',action:'usersystem-Org-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
 				<span xtype="button"
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'orgTree'  "></span>
-				<span xtype=menu    config=" id:'menu1', data : [ { img : StaticVar.img_excel , text : '导入' , onClick : inExcel } 
-				,{ img : StaticVar.img_excel ,text : '导出' , onClick : outExcel } ,{ img : StaticVar.img_excel ,text : '下载模板' , onClick : downloadExcel } 
+				<span xtype=menu    config=" id:'menu1', data : [ { img : $.hh.property.img_excel , text : '导入' , onClick : inExcel } 
+				,{ img : $.hh.property.img_excel ,text : '导出' , onClick : outExcel } ,{ img : $.hh.property.img_excel ,text : '下载模板' , onClick : downloadExcel } 
 				 ,{ text : '重置编码' , onClick : restCode }  ]"></span>
 				<span xtype="button"
 					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>

@@ -16,8 +16,8 @@
 	function doView() {
 		$.hh.pagelist.callRow("pagelist", function(row) {
 			Dialog.open({
-				width : Browser.getWidth() * 0.9,
-				height : Browser.getHeight() * 0.85,
+				width : $.hh.browser.getWidth() * 0.9,
+				height : $.hh.browser.getHeight() * 0.85,
 				url : 'jsp-system-sql-sqlview',
 				params : row
 			});

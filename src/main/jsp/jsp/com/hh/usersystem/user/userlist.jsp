@@ -85,9 +85,9 @@
 			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'usersystem-user-order'}  ,  icon : 'hh_up' "></span>
 		<span xtype="button"
 			config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'usersystem-user-order'} , icon : 'hh_down' "></span>
-		<span xtype=menu    config=" id:'menu1', data : [ { img : StaticVar.img_excel , text : '导入' , onClick : inExcel } 
-		,{ img : StaticVar.img_excel ,text : '导出' , onClick : outExcel } 
-		,{ img : StaticVar.img_excel ,text : '下载模板' , onClick : downloadExcel } 
+		<span xtype=menu    config=" id:'menu1', data : [ { img : $.hh.property.img_excel , text : '导入' , onClick : inExcel } 
+		,{ img : $.hh.property.img_excel ,text : '导出' , onClick : outExcel } 
+		,{ img : $.hh.property.img_excel ,text : '下载模板' , onClick : downloadExcel } 
 				  ]"></span>
 		<span xtype="button"
 					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>

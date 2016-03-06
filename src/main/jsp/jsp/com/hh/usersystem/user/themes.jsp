@@ -21,7 +21,7 @@
 						message : '修改样式成功，是否刷新页面？',
 						callback : function(result) {
 							if(result==1){
-								BaseUtil.getRootFrame().document.location.reload();
+								$.hh.getRootFrame().document.location.reload();
 							}else{
 								Dialog.close();
 							}

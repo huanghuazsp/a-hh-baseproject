@@ -11,7 +11,7 @@
 			Dialog.confirm({
 				message : '您确认要强制选中的用户下线吗？',
 				yes : function(result) {
-					var ids = BaseUtil.objsToStr(rows);
+					var ids = $.hh.objsToStr(rows);
 					Request.request('usersystem-user-deleteOnLineByIds', {
 						data : {
 							ids : ids

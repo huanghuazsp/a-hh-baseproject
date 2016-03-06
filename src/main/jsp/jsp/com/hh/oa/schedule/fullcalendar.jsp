@@ -52,8 +52,8 @@
 		if (data) {
 			var data = $.extend(data, {
 				title : data.content,
-				start : BaseUtil.dateTimeToString(data.start),
-				end : BaseUtil.dateTimeToString(data.end),
+				start : $.hh.dateTimeToString(data.start),
+				end : $.hh.dateTimeToString(data.end),
 				color : getBackground(data.isOk),
 				className : getClassName(data.level),
 				textColor : getType(data.ctype),

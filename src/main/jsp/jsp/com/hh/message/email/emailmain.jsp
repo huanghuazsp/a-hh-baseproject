@@ -72,7 +72,7 @@
 		$('#email').attr('src','jsp-message-email-shouemail?'+$.param(params));
 	}
 	
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	var paramsData = {
 			
 	};

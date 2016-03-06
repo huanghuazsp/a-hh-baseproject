@@ -19,7 +19,7 @@ String zmtbcdStr =  gson.toJson(zmtbcd);
 %>
 <script type="text/javascript">
 	var height = 400;
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	var Menu = {
 		getTreeChildrens : function(menuid) {
 			var hhXtCdList = hhxtcds;
@@ -95,7 +95,7 @@ String zmtbcdStr =  gson.toJson(zmtbcd);
 	}
 	function save(){
 		var nodes = $.hh.tree.getCheckedNodes('menuTreeId');
-		var ids = BaseUtil.objsToStr(nodes);
+		var ids = $.hh.objsToStr(nodes);
 		if(ids){
 			Request.request('usersystem-menu-addZmtb', {
 				data : {id:ids},

@@ -6,7 +6,7 @@
 <title>异常查看</title>
 <%=SystemUtil.getBaseJs()%>
 <script type="text/javascript">
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	function init() {
 		$("#table").setValueName(params);
 	}

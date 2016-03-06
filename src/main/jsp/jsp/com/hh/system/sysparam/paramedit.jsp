@@ -6,7 +6,7 @@
 <title>系统参数</title>
 <%=SystemUtil.getBaseJs("checkform")%>
 <script type="text/javascript">
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	function init() {
 		findData();
 	}

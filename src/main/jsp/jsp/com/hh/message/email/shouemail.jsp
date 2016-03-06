@@ -7,7 +7,7 @@
 <title>收邮件</title>
 <%=SystemUtil.getBaseJs("checkform","fileUpload")%>
 <script type="text/javascript">
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	var width = 800;
 	var height = 450;
 
@@ -38,7 +38,7 @@
 		//var content = $('#form').html()||'';
 		var data = $('#form').getValue();
 		var filehtml='';
-		var files = BaseUtil.toObject(data.files);
+		var files = $.hh.toObject(data.files);
 		if(files){
 			for(var i=0;i<files.length;i++){
 				var fileitem = files[i];

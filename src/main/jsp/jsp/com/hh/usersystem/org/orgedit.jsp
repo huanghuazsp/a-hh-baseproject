@@ -6,7 +6,7 @@
 <title>数据编辑</title>
 <%=SystemUtil.getBaseJs("checkform")%>
 <script type="text/javascript">
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	var width = 720;
 	var height = 400;
 
@@ -132,7 +132,7 @@
 		}*/
 	}
 	function init() {
-		//$('#spancode_').setValue(BaseUtil.getUUID(3));
+		//$('#spancode_').setValue($.hh.getUUID(3));
 	}
 	/* function init() {
 		if (params.selectNode) {

@@ -9,7 +9,7 @@
 	function recovery() {
 		var data = {};
 		$.hh.pagelist.callRows('pagelist', function(rows) {
-			var ids = BaseUtil.objsToStr(rows);
+			var ids = $.hh.objsToStr(rows);
 			data.ids = ids;
 			Request.request('message-Email-recovery', {
 				data : data
@@ -26,7 +26,7 @@
 			Dialog.confirm({
 				message : '您确认要删除数据吗？',
 				yes : function(result) {
-					var ids = BaseUtil.objsToStr(rows);
+					var ids = $.hh.objsToStr(rows);
 					data.ids = ids;
 					Request.request('message-Email-thoroughDelete', {
 						data : data
