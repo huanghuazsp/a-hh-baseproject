@@ -6,7 +6,7 @@
 <title>数据编辑</title>
 <%=SystemUtil.getBaseJs("checkform","pinyin")%>
 <script type="text/javascript">
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	var width = 600;
 	var height = 400
 

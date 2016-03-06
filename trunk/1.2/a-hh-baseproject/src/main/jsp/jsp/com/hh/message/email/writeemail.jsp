@@ -8,7 +8,7 @@
 <title>写邮件</title>
 <%=SystemUtil.getBaseJs("checkform", "ckeditor","fileUpload")%>
 <script type="text/javascript">
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	var width = 800;
 	var height = 450;
 	var objectid = '<%=Convert.toString(request.getParameter("id"))%>';
@@ -19,7 +19,7 @@
 			formData.type = 'cgx';
 			var userData = $('#shoujianrenspan').getValueData();
 			if(userData){
-				formData.userNames = BaseUtil.objsToStr(userData,'text');
+				formData.userNames = $.hh.objsToStr(userData,'text');
 			}
 			Request.request('message-Email-sendEmail', {
 				data : formData,
@@ -40,7 +40,7 @@
 			formData.type = 'yfs';
 			var userData = $('#shoujianrenspan').getValueData();
 			if(userData){
-				formData.userNames = BaseUtil.objsToStr(userData,'text');
+				formData.userNames = $.hh.objsToStr(userData,'text');
 			}
 			Request.request('message-Email-sendEmail', {
 				data : formData,

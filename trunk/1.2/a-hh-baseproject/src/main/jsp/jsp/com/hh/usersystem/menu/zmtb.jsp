@@ -40,7 +40,7 @@ String hhxtcdStr =  gson.toJson(hhXtCds);
 		margin : 10,
 		rightMenu : [ {
 			text : '删除',
-			img : StaticVar.img_delete,
+			img : $.hh.property.img_delete,
 			onClick : function(resultObject) {
 				var content = resultObject.content;
 				var id = $(content).attr('id');
@@ -56,8 +56,8 @@ String hhxtcdStr =  gson.toJson(hhXtCds);
 			}
 		} ],
 		onClick : function(data) {
-			if (BaseUtil.getRootFrame().addTab) {
-				BaseUtil.getRootFrame().addTab(data);
+			if ($.hh.getRootFrame().addTab) {
+				$.hh.getRootFrame().addTab(data);
 			} else {
 				Request.href(data.vsj);
 			}
@@ -74,7 +74,7 @@ String hhxtcdStr =  gson.toJson(hhXtCds);
 	var rightMenuConfig = {
 		data : [ {
 			text : '新建',
-			img : StaticVar.img_add,
+			img : $.hh.property.img_add,
 			onClick : function() {
 				Dialog.open({
 					url : 'jsp-usersystem-menu-zmtbadd',

@@ -6,7 +6,7 @@
 <title>岗位切换</title>
 <%=SystemUtil.getBaseJs("checkform")%>
 <script type="text/javascript">
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	var data = [];
 	for (var i = 0; i < params.currOrg.length; i++) {
 		data.push({id:params.currOrg[i].id,text:params.currOrg[i].text});

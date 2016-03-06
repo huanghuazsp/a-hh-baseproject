@@ -6,7 +6,7 @@
 <title>消息编辑</title>
 <%=SystemUtil.getBaseJs("checkform")%>
 <script type="text/javascript">
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	var width = 600;
 	var height = 400
 

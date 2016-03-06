@@ -6,7 +6,7 @@
 <title>数据编辑</title>
 <%=SystemUtil.getBaseJs("checkform")%>
 <script type="text/javascript">
-	var params = BaseUtil.getIframeParams();
+	var params = $.hh.getIframeParams();
 	var width = 720;
 	var height = 450
 
