@@ -24,6 +24,11 @@ public class SetupInitializerSystem {
 
 		
 		rootHhXtCd.getChildren().add(
+				new SysMenu("61339c25-708a-4ff6-ad9c-efdcf48085cb", "操作日志",
+						"jsp-system-operlog-OperLogList",
+						"/hhcommon/images/icons/world/world.png", 0, 1));
+		
+		rootHhXtCd.getChildren().add(
 				new SysMenu("d45831d2-b887-40f1-9a3f-450298ac3f92", "计划任务",
 						"jsp-system-systemplantask-SystemPlantaskList",
 						"/hhcommon/images/icons/world/world.png", 0, 1));

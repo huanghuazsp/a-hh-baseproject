@@ -13,4 +13,9 @@
     <column defaultValue="" empty="true" id="df0af942-047f-4616-a093-b545ea926e62" length="" name="secondRegister" primary="false" text="secondRegister" type="String"/>
     <column defaultValue="" empty="true" id="e35086d9-f9e3-4296-baef-a49ce9e2d888" length="" name="formula" primary="false" text="formula" type="String"/>
   </table>
+  <table id="f5164e99-63f6-47ef-aeeb-f016c601c2d4" name="OperLog" text="OperLog" type="table">
+    <column defaultValue="" empty="true" id="9878132e-bb86-42ee-9184-c9b33d96c3b8" length="" name="userName" primary="false" text="userName" type="String"/>
+    <column defaultValue="" empty="true" id="d31744ec-6d2e-4fe0-8834-cff19fcea6d8" length="" name="userId" primary="false" text="userId" type="String"/>
+    <column defaultValue="" empty="true" id="572aa988-dfbe-4169-8217-270b9f88cc63" length="" name="message" primary="false" text="message" type="String"/>
+  </table>
 </project>
