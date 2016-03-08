@@ -1,15 +1,12 @@
 package com.hh.usersystem.service.impl;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Timer;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hh.message.task.SysMessageTask;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.util.steady.StaticProperties;
 
@@ -83,16 +80,6 @@ public class SetupInitializerUserSystem {
 
 		StaticProperties.hhXtCds.add(rootHhXtCd);
 
-		initTask();
 	}
 
-	private void initTask() {
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 24);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		Timer sysMessageTask = new Timer();
-		sysMessageTask.schedule(new SysMessageTask(), cal.getTime(),
-				24 * 60 * 60 * 1000);
-	}
 }
