@@ -36,46 +36,35 @@
 		});
 	}
 	
-	function renderRead(value){
-		return value == 1 ? '<font class=hh_green >是</font>'
-				: '<font class=hh_red>否</font>';
-	}
 </script>
 </head>
 <body>
-	<div xtype="toolbar" config="type:'head'">
+	<!-- <div xtype="toolbar" config="type:'head'">
 		<span xtype="button" config="onClick:doAdd,text:'添加'"></span> <span
 			xtype="button" config="onClick:doEdit,text:'修改'"></span> <span
 			xtype="button" config="onClick:doDelete,text:'删除'"></span>
-	</div>
+	</div> -->
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'message-SysMessage-queryPagingData' ,column : [
 		{
 			name : 'title' ,
 			text : '标题'
 		},{
-			name : 'isRead' ,
-			text : '已读',
-			width:40,
-			render : renderRead
+			name : 'content' ,
+			text : '内容'
 		},{
-			name : 'createUserName' ,
+			name : 'type' ,
+			text : '类型'
+		},{
+			name : 'dcreate' ,
+			text : '时间',
+			render:'datetime'
+		},{
+			name : 'sendUserName' ,
 			text : '发送人'
 		},{
-			name : 'shouUserName' ,
+			name : 'userNames' ,
 			text : '接收人'
-		},{
-			name : 'path' ,
-			text : '地址',
-			contentwidth: '150'
-		},{
-			name : 'jsCode' ,
-			text : 'js代码',
-			contentwidth: '150'
-		},{
-			name : 'params' ,
-			text : '参数',
-			contentwidth: '150'
 		}
 	]">
 	</div>
