@@ -14,6 +14,7 @@ import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
+import com.hh.system.util.ThreadUtil;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
@@ -47,18 +48,24 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime 
 	}
 
 	public Map<String, Object> load() {
+		return load2(loginUserUtilService.findUserId());
+	}
+	
+	@Transactional
+	public Map<String, Object> load2(String userId) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		int shouCount = findCount(ParamFactory.getParamHb().like("users", loginUserUtilService.findUserId())
-				.nolike("readUserId", loginUserUtilService.findUserId())
-				.nolike("deleteUserId", loginUserUtilService.findUserId()).is("type", "yfs")
-				.nolike("thoroughDeleteUserId", loginUserUtilService.findUserId()));
+		int shouCount = findCount(ParamFactory.getParamHb().like("users", userId)
+				.nolike("readUserId", userId)
+				.nolike("deleteUserId",userId).is("type", "yfs")
+				.nolike("thoroughDeleteUserId", userId));
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("count", shouCount);
 		map2.put("id", "93bb64fe-e50a-40b2-ab59-b1ae543cd107");
 		map2.put("text", "收件箱");
 		map2.put("vsj", "jsp-message-email-emailmain");
 		map.put("email", map2);
+		map.put("userId", userId);
 		return map;
 	}
 
@@ -69,6 +76,7 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime 
 		if (Convert.toString(sysEmail.getReadUserId()).indexOf(userId) == -1) {
 			sysEmail.setReadUserId(sysEmail.getReadUserId() + "," + userId);
 			dao.updateEntity(sysEmail);
+			ThreadUtil.getThreadPool().execute(new EmailThread(loginUserUtilService.findUserId()));
 		}
 		return sysEmail;
 	}
