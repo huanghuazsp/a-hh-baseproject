@@ -7,7 +7,7 @@
 <html>
 <head>
 <title>组织机构树</title>
-<%=SystemUtil.getBaseJs("layout","ztree")%>
+<%=SystemUtil.getBaseJs("layout","ztree","ckeditor")%>
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
 	var orgtreeconfig = {
@@ -148,8 +148,12 @@
 		} ]
 	}
 
+	function doSendMessage(){
+		
+	}
+	
 	function setHeight(height) {
-		//$('#tabs').render();
+		$('#himessagediv').height(height-218);
 	}
 </script>
 </head>
@@ -169,7 +173,60 @@
 				</div>
 			</div>
 		</div>
-		<div></div>
+		<div>
+		
+		<div xtype="border_layout">
+			<div>
+				<div id="userdiv" xtype="toolbar" config="type:'head'" style="text-align:center;height:28px;vertical-align:middle;">
+				</div>
+				<div id="himessagediv" style="padding:10px;overflow-y:auto;overflow-x:hidden;">
+				
+					<div >
+						<table style="width:100%;">
+							<tr>
+								<td style="width:40px;text-align:center;">
+									<img width="32" height="32"  src="/hhcommon/images/icons/user/100/no_on_line_user.jpg"/>
+									<br/>
+									黄华
+								</td>
+								<td >
+									<div style="-moz-border-radius:5px;	-webkit-border-radius:5px;	border-radius:5px;	background-color:#bdeea3;	width:340px;	height:auto;	display:block;	padding: 5px;	float:left;	color:#333333;">
+										<font style="font-size: 14px; "><b>我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？</b></font>
+										<br/>
+										<div style="padding-top:6px;color:#a9b4a2;">2014-09-15 15:06</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+						<table style="width:100%;">
+							<tr>
+								<td >
+									<div style="-moz-border-radius:5px;	-webkit-border-radius:5px;	border-radius:5px;	background-color:#d4eede;	width:340px;	height:auto;	display:block;	padding: 5px;	float:right;	color:#333333;">
+										<font style="font-size: 14px; "><b>我的问题是：1+1=？</b></font>
+										<br/>
+										<div style="padding-top:6px;color:#a9b4a2;">2014-09-15 15:06</div>
+									</div>
+								</td>
+								<td style="width:40px;text-align:center;">
+									<img width="32" height="32"  src="/hhcommon/images/icons/user/100/no_on_line_user.jpg"/>
+									<br/>
+									黄华
+								</td>
+							</tr>
+						</table>
+					</div>
+				
+				</div>
+			</div>
+			<div config="render : 'south' ,width:160,spacing_open:0 ">
+				<span config=" height:80,bottom:'hidden', name:'message' ,toolbar : ['Format',	'Font', 'FontSize', 'Styles'] "  xtype="ckeditor" ></span>
+				<div xtype="toolbar" config="type:'head'" style="text-align:right;">
+					<span id="backbtn" xtype="button"
+						config="onClick: doSendMessage ,text:'发送'   "></span>
+				</div>
+			</div>
+		</div>
+		</div>
 	</div>
 
 </body>
