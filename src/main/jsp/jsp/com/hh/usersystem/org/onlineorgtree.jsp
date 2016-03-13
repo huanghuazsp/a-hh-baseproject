@@ -164,9 +164,13 @@
 	function onPageLoad() {
 		var userId = loginUser.id;
 		var userName = loginUser.text;
+		var deptId = loginUser.deptId;
+		var orgId = loginUser.orgId;
 		message.onPageLoad($.hh.toString({
 			'userId' : userId,
-			'userName' : userName
+			'userName' : userName,
+			'orgId' : orgId,
+			'deptId' : deptId
 		}));
 	}
 	function showMessage(autoMessage) {
