@@ -22,10 +22,10 @@ public class ActionSystem extends BaseAction {
 	
 	public Object loadDataTime() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<LoadDataTime> loadDataTimeList = StaticProperties.loadDataTimeList;
-		for (LoadDataTime loadDataTime : loadDataTimeList) {
-			map.putAll(loadDataTime.load());
-		}
+//		List<LoadDataTime> loadDataTimeList = StaticProperties.loadDataTimeList;
+//		for (LoadDataTime loadDataTime : loadDataTimeList) {
+//			map.putAll(loadDataTime.load());
+//		}
 		return map;
 	}
 	

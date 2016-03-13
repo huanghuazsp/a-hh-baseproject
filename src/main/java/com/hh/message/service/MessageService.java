@@ -16,6 +16,7 @@ import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.Convert;
 import com.hh.system.util.Json;
 import com.hh.system.util.StaticProperties;
+import com.hh.system.util.date.DateFormat;
 
 public class MessageService {
 	static {
@@ -49,8 +50,13 @@ public class MessageService {
 	public void sendMessageAuto(String config) {
 		
 		Map<String,Object> paramMap = Json.toMap(config);
+		paramMap.put("date", DateFormat.getDate("yyyy-MM-dd HH::mm:ss"));
+		paramMap.put("type", "you");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("message", paramMap);
+		
 		final String userId = Convert.toString(paramMap.get("userId"));
-		final String config2 = config;
+		final String config2 = Json.toStr(map);
 		
 		Browser.withAllSessionsFiltered(new ScriptSessionFilter() {
 			public boolean match(ScriptSession session) {

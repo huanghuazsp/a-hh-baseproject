@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.Json"%>
 <%@page import="com.hh.usersystem.bean.usersystem.SysMenu"%>
 <%@page import="com.hh.usersystem.bean.usersystem.UsUser"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
@@ -7,19 +8,31 @@
 <html>
 <head>
 <title>组织机构树</title>
-<%=SystemUtil.getBaseJs("layout","ztree","ckeditor")%>
+<%=SystemUtil.getBaseJs("layout", "ztree", "ckeditor")%>
+<script type="text/javascript" src="/hhcommon/opensource/dwr/engine.js"></script>
+<script type="text/javascript" src="/hhcommon/opensource/dwr/message.js"></script>
+<script type="text/javascript" src="/hhcommon/opensource/dwr/util.js"></script>
 <script type="text/javascript">
+
+	loginUser = <%=Json.toStr(session.getAttribute("loginuser"))%>;
+
 	var params = $.hh.getIframeParams();
 	var orgtreeconfig = {
-		id : 'orgTree',nheight:42,
+		id : 'orgTree',
+		nheight : 42,
 		url : 'usersystem-Org-queryOrgAndUsersList',
-		rightMenu :[{
-			text:'刷新',
+		onClick : function(node) {
+			$('#userdiv').html(
+					'<div style="margin-top:5px;">' + node.name + '</div>');
+			$('#userdiv').data('data', node);
+		},
+		rightMenu : [ {
+			text : '刷新',
 			img : $.hh.property.img_refresh,
-			onClick:function(){
-					$.hh.tree.refresh('orgTree');
+			onClick : function() {
+				$.hh.tree.refresh('orgTree');
 			}
-		}],
+		} ],
 		itemRightMenu : [ {
 			text : '发送邮件',
 			img : $.hh.property.img_email,
@@ -40,15 +53,15 @@
 					userids = data.id;
 					usernames = data.text;
 				}
-				
+
 				var data = {
-						id:'e9fa8689-c362-4c66-bd75-d1b132bd5211',
-						text:'个人邮件',
-						vsj:'jsp-message-email-emailmain?type=write',
-						params:{
-							userids : userids,
-							usernames : usernames
-						}
+					id : 'e9fa8689-c362-4c66-bd75-d1b132bd5211',
+					text : '个人邮件',
+					vsj : 'jsp-message-email-emailmain?type=write',
+					params : {
+						userids : userids,
+						usernames : usernames
+					}
 				}
 
 				if ($.hh.getRootFrame().addTab) {
@@ -56,7 +69,7 @@
 				} else {
 					Request.href(data.vsj);
 				}
-				
+
 				/*Dialog.open({
 					url : 'jsp-message-email-writeemail',
 					params : {
@@ -68,11 +81,11 @@
 				});*/
 
 			}
-		},{
-			text:'刷新',
+		}, {
+			text : '刷新',
 			img : $.hh.property.img_refresh,
-			onClick:function(){
-					$.hh.tree.refresh('orgTree');
+			onClick : function() {
+				$.hh.tree.refresh('orgTree');
 			}
 		} ]
 	}
@@ -90,23 +103,24 @@
 	}
 
 	var groupTreeConfig = {
-		id : 'groupTree',nheight:42,
+		id : 'groupTree',
+		nheight : 42,
 		url : 'usersystem-Group-queryListAndUserGroup',
 		render : false,
-		rightMenu : [{
-			text:'刷新',
+		rightMenu : [ {
+			text : '刷新',
 			img : $.hh.property.img_refresh,
-			onClick:function(){
-					$.hh.tree.refresh('groupTree');
+			onClick : function() {
+				$.hh.tree.refresh('groupTree');
 			}
-		}],
+		} ],
 		itemRightMenu : [ {
 			text : '发送邮件',
 			img : $.hh.property.img_email,
 			onClick : function(data) {
 				var userids = '';
 				var usernames = '';
-				if(data.type!='user'){
+				if (data.type != 'user') {
 					Request.request('usersystem-user-queryUserByGroup', {
 						data : {
 							groupId : data.id
@@ -116,20 +130,19 @@
 						userids = $.hh.objsToStr(result);
 						usernames = $.hh.objsToStr(result, 'text');
 					});
-				}else{
+				} else {
 					userids = data.id;
 					usernames = data.text;
 				}
-				
 
 				var data = {
-						id:'e9fa8689-c362-4c66-bd75-d1b132bd5211',
-						text:'个人邮件',
-						vsj:'jsp-message-email-emailmain?type=write',
-						params:{
-							userids : userids,
-							usernames : usernames
-						}
+					id : 'e9fa8689-c362-4c66-bd75-d1b132bd5211',
+					text : '个人邮件',
+					vsj : 'jsp-message-email-emailmain?type=write',
+					params : {
+						userids : userids,
+						usernames : usernames
+					}
 				}
 
 				if ($.hh.getRootFrame().addTab) {
@@ -139,22 +152,139 @@
 				}
 
 			}
-		},{
-			text:'刷新',
+		}, {
+			text : '刷新',
 			img : $.hh.property.img_refresh,
-			onClick:function(){
-					$.hh.tree.refresh('groupTree');
+			onClick : function() {
+				$.hh.tree.refresh('groupTree');
 			}
 		} ]
 	}
 
-	function doSendMessage(){
+	function onPageLoad() {
+		var userId = loginUser.id;
+		var userName = loginUser.text;
+		message.onPageLoad($.hh.toString({
+			'userId' : userId,
+			'userName' : userName
+		}));
+	}
+	function showMessage(autoMessage) {
+		var result = $.hh.toObject(autoMessage);
+		var email = result.email;
+		if (email) {
+			var email_span = $.hh.getRootFrame().$('#email_span');
+			email_span.render({
+				'text' : '<font color=red>(' + email.count + ')</font>',
+				params : email,
+				onClick : openEmail
+			});
+		}
+
+		var message = result.message;
+		if (message && message.message) {
+			$('#himessageDiv').append(getMyMsg(message));
+			$('#himessagediv').animate({scrollTop:5000},100);
+		}
+	}
+
+	function openEmail(params) {
+		$.hh.getRootFrame().addTab(params);
+	}
+
+	function getMyMsg(config) {
+		var message = config.message || '';
+		var date = config.date || '';
+		var type = config.type;
+		var text = config.sendUserName;
+		var userId = config.userId;
+		var headpic = config.sendHeadpic;
 		
+		if(headpic &&  headpic.indexOf('hhcomm')==-1){
+	    	headpic =	"system-File-download?system_open_page_file_form_params={id:'"+headpic+"'}";
+	    }
+		
+		if(headpic){
+	    	headpic=" <img id='headpicimg' onClick='updateUser()' style=\"cursor: pointer;\" width=\"50\"		height=\"50\"		src=\""+headpic+"\" />";
+	    }else{
+	    	headpic="<img id='headpicimg' onClick='updateUser()' style=\"cursor: pointer;\" width=\"50\"		height=\"50\"		src=\"/hhcommon/images/icons/user/100/no_on_line_user.jpg\" />";
+	    }
+		
+		var tdStr = '';
+
+		var align = 'right';
+		var backColor = '#d4eede';
+		if (type == 'my') {
+			align = 'left';
+			backColor = '#bdeea3';
+		}
+
+		var td1 = '<td style="width: 40px; text-align: center;">'+headpic+' <br />'
+				+ text+'</td>';
+		var td2 = '<td>'
+				+ '<div style="-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; background-color: '+backColor+'; width: 340px; height: auto; display: block; padding: 5px; float: '+align+'; color: #333333;">'
+				+ '<font style="font-size: 14px;"><b>' + message
+				+ '</b></font>' + '<br />'
+				+ '<div style="padding-top: 6px; color: #a9b4a2;">' + date
+				+ '</div>' + '</div>' + '</td>';
+		if (type == 'my') {
+			tdStr = td1 + td2;
+		} else {
+			tdStr = td2 + td1;
+		}
+		return '<table style="width: 100%;">' + '<tr>' + tdStr + '</tr>'
+				+ '</table>';
+	}
+
+	function init() {
+		dwr.engine.setActiveReverseAjax(true);
+		dwr.engine.setNotifyServerOnPageUnload(true, true);
+		onPageLoad();
+		dwr.engine.setErrorHandler(function() {
+		});
+	}
+
+	function setHeight(height) {
+		$('#himessagediv').height(height - 218);
 	}
 	
-	function setHeight(height) {
-		$('#himessagediv').height(height-218);
+	function doSendMessage() {
+		var data = $('#userdiv').data('data');
+		if(data){
+			var messageData = {};
+			var userId = '';
+			var deptId = '';
+			var orgId = '';
+			if (data.lx_ == 1) {
+				messageData.orgId = data.id;
+			} else if (data.lx_ == 2) {
+				messageData.deptId = data.id;
+			} else {
+				messageData.userId = data.id;
+			}
+			messageData.message = $('#messageSpan').getValue();
+			if(!messageData.message){
+				Dialog.infomsg('请输入内容！');
+				return;
+			}
+			
+			messageData.sendUserId = loginUser.id;
+			messageData.sendUserName = loginUser.text;
+			messageData.sendHeadpic = loginUser.headpic;
+			
+			messageData.date = $.hh.dateTimeToString($.hh.getDate());
+			messageData.type='my';
+			$('#himessageDiv').append(getMyMsg(messageData));
+			$('#himessagediv').animate({scrollTop:5000},100);
+			
+			
+			message.sendMessageAuto($.hh.toString(messageData));
+			$('#messageSpan').setValue('');
+		}else{
+			Dialog.infomsg('请选择发送对象！');
+		}
 	}
+
 </script>
 </head>
 <body>
@@ -174,58 +304,30 @@
 			</div>
 		</div>
 		<div>
-		
-		<div xtype="border_layout">
-			<div>
-				<div id="userdiv" xtype="toolbar" config="type:'head'" style="text-align:center;height:28px;vertical-align:middle;">
-				</div>
-				<div id="himessagediv" style="padding:10px;overflow-y:auto;overflow-x:hidden;">
-				
-					<div >
-						<table style="width:100%;">
-							<tr>
-								<td style="width:40px;text-align:center;">
-									<img width="32" height="32"  src="/hhcommon/images/icons/user/100/no_on_line_user.jpg"/>
-									<br/>
-									黄华
-								</td>
-								<td >
-									<div style="-moz-border-radius:5px;	-webkit-border-radius:5px;	border-radius:5px;	background-color:#bdeea3;	width:340px;	height:auto;	display:block;	padding: 5px;	float:left;	color:#333333;">
-										<font style="font-size: 14px; "><b>我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？我的问题是：1+1=？</b></font>
-										<br/>
-										<div style="padding-top:6px;color:#a9b4a2;">2014-09-15 15:06</div>
-									</div>
-								</td>
-							</tr>
-						</table>
-						<table style="width:100%;">
-							<tr>
-								<td >
-									<div style="-moz-border-radius:5px;	-webkit-border-radius:5px;	border-radius:5px;	background-color:#d4eede;	width:340px;	height:auto;	display:block;	padding: 5px;	float:right;	color:#333333;">
-										<font style="font-size: 14px; "><b>我的问题是：1+1=？</b></font>
-										<br/>
-										<div style="padding-top:6px;color:#a9b4a2;">2014-09-15 15:06</div>
-									</div>
-								</td>
-								<td style="width:40px;text-align:center;">
-									<img width="32" height="32"  src="/hhcommon/images/icons/user/100/no_on_line_user.jpg"/>
-									<br/>
-									黄华
-								</td>
-							</tr>
-						</table>
+
+			<div xtype="border_layout">
+				<div>
+					<div id="userdiv" xtype="toolbar" config="type:'head'"
+						style="text-align: center; height: 28px; vertical-align: middle;">
 					</div>
-				
+					<div id="himessagediv"
+						style="padding: 10px; overflow-y: auto; overflow-x: hidden;">
+
+						<div id="himessageDiv"></div>
+
+					</div>
+				</div>
+				<div config="render : 'south' ,width:160,spacing_open:0 ">
+					<span id="messageSpan"
+						config=" height:78,bottom:'hidden', name:'message' ,toolbar : ['Format',	'Font', 'FontSize', 'Styles'] "
+						xtype="ckeditor"></span>
+					<div xtype="toolbar" config="type:'head'"
+						style="text-align: right;">
+						<span id="backbtn" xtype="button"
+							config="onClick: doSendMessage ,text:'发送'   "></span>
+					</div>
 				</div>
 			</div>
-			<div config="render : 'south' ,width:160,spacing_open:0 ">
-				<span config=" height:80,bottom:'hidden', name:'message' ,toolbar : ['Format',	'Font', 'FontSize', 'Styles'] "  xtype="ckeditor" ></span>
-				<div xtype="toolbar" config="type:'head'" style="text-align:right;">
-					<span id="backbtn" xtype="button"
-						config="onClick: doSendMessage ,text:'发送'   "></span>
-				</div>
-			</div>
-		</div>
 		</div>
 	</div>
 

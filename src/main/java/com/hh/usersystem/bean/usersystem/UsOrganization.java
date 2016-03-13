@@ -35,6 +35,8 @@ public class UsOrganization    extends BaseTreeNodeEntity<UsOrganization> implem
 	private int lx_;
 	private String pname_;
 	private String sjbm_;
+	
+	private String headpic;
 
 //	private Organization bm;// 部门
 //	private Organization jg ;// 机构
@@ -165,5 +167,14 @@ public class UsOrganization    extends BaseTreeNodeEntity<UsOrganization> implem
 
 	public void setRoleIds(String roleIds) {
 		this.roleIds = roleIds;
+	}
+
+	@Transient
+	public String getHeadpic() {
+		return headpic;
+	}
+
+	public void setHeadpic(String headpic) {
+		this.headpic = headpic;
 	}
 }
