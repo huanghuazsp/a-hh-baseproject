@@ -267,6 +267,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				UsOrganization extTree = new UsOrganization();
 				extTree.setId(hhXtYh.getId());
 				extTree.setText(hhXtYh.getText());
+				extTree.setHeadpic(hhXtYh.getHeadpic());
 				if (LoginUser.getLoginUserId().contains(hhXtYh.getId())) {
 					extTree.setIcon(hhXtYh.getNxb() == 0 ? StaticProperties.HHXT_USERSYSTEM_NV
 							: StaticProperties.HHXT_USERSYSTEM_NAN);
