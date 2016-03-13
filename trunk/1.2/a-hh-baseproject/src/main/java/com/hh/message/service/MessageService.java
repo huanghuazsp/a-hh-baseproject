@@ -28,50 +28,62 @@ public class MessageService {
 	}
 
 	public void onPageLoad(String config) {
-		
-		Map<String,Object> paramMap = Json.toMap(config);
-		
-		ScriptSession scriptSession = WebContextFactory.get().getScriptSession();
+
+		Map<String, Object> paramMap = Json.toMap(config);
+
+		ScriptSession scriptSession = WebContextFactory.get()
+				.getScriptSession();
 		scriptSession.setAttribute("user", paramMap);
-		 ScriptBuffer script = new ScriptBuffer();
-		 
+		ScriptBuffer script = new ScriptBuffer();
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<LoadDataTime> loadDataTimeList = StaticProperties.loadDataTimeList;
 		for (LoadDataTime loadDataTime : loadDataTimeList) {
 			map.putAll(loadDataTime.load());
 		}
-		 
-		 String autoMessage = Json.toStr(map);
-		 script.appendCall("showMessage", autoMessage);
-		 
-		 scriptSession.addScript(script);
+
+		String autoMessage = Json.toStr(map);
+		script.appendCall("showMessage", autoMessage);
+
+		scriptSession.addScript(script);
 	}
 
 	public void sendMessageAuto(String config) {
-		
-		Map<String,Object> paramMap = Json.toMap(config);
+
+		Map<String, Object> paramMap = Json.toMap(config);
 		paramMap.put("date", DateFormat.getDate("yyyy-MM-dd HH::mm:ss"));
 		paramMap.put("type", "you");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("message", paramMap);
-		
+
 		final String userId = Convert.toString(paramMap.get("userId"));
+		final String orgId = Convert.toString(paramMap.get("orgId"));
+		final String deptId = Convert.toString(paramMap.get("deptId"));
+		final String sendUserId = Convert.toString(paramMap.get("sendUserId"));
 		final String config2 = Json.toStr(map);
-		
+
 		Browser.withAllSessionsFiltered(new ScriptSessionFilter() {
 			public boolean match(ScriptSession session) {
 				if (session.getAttribute("user") == null)
 					return false;
-				else{
-					Map<String, Object> userMap = (Map<String, Object>) session.getAttribute("user");
-					return (Convert.toString(userMap.get("userId"))).equals(userId);
+				else {
+					Map<String, Object> userMap = (Map<String, Object>) session
+							.getAttribute("user");
+					return ((Convert.toString(userMap.get("userId")))
+							.equals(userId)
+							|| (Convert.toString(userMap.get("orgId")))
+									.equals(orgId)
+							|| (Convert.toString(userMap.get("deptId")))
+									.equals(deptId)) && !sendUserId.equals(userMap.get("userId")) ;
 				}
 			}
 		}, new Runnable() {
 			private ScriptBuffer script = new ScriptBuffer();
+
 			public void run() {
 				script.appendCall("showMessage", config2);
-				Collection<ScriptSession> sessions = Browser.getTargetSessions();
+				Collection<ScriptSession> sessions = Browser
+						.getTargetSessions();
 				for (ScriptSession scriptSession : sessions) {
 					System.out.println(scriptSession.getAttribute("user"));
 					scriptSession.addScript(script);

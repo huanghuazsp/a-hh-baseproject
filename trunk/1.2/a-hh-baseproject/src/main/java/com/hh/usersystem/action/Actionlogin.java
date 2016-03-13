@@ -1,5 +1,6 @@
 package com.hh.usersystem.action;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hh.system.util.Check;
 import com.hh.system.util.base.BaseAction;
 import com.hh.system.util.model.ReturnModel;
-import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginService;
 import com.hh.usersystem.service.impl.UserService;
 //import com.hh.usersystem.service.impl.ZmsxService;
@@ -109,7 +110,7 @@ public class Actionlogin extends BaseAction {
 		// if (Check.isNoEmpty(cookie)) {
 		maxAge = 60 * 60 * 24 * 30;
 		// }
-		Cookie cookie = new Cookie("xtYh.vdlzh", xtYh.getVdlzh());
+		Cookie cookie = new Cookie("xtYh.vdlzh",URLEncoder.encode( xtYh.getVdlzh()));
 		cookie.setMaxAge(maxAge); // cookie 保存30天
 		response.addCookie(cookie);
 		// cookie = new Cookie("xtYh.vmm", xtYh.getVmm());
