@@ -10,18 +10,25 @@ import org.directwebremoting.ScriptBuffer;
 import org.directwebremoting.ScriptSession;
 import org.directwebremoting.ScriptSessionFilter;
 import org.directwebremoting.WebContextFactory;
-import org.springframework.stereotype.Service;
 
+import com.hh.message.bean.SysMessage;
+import com.hh.system.service.impl.BeanFactoryHelper;
 import com.hh.system.service.inf.LoadDataTime;
+import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.Json;
 import com.hh.system.util.StaticProperties;
+import com.hh.system.util.ThreadUtil;
 import com.hh.system.util.date.DateFormat;
+import com.hh.usersystem.service.impl.LoginUserUtilService;
 
 public class MessageService {
 	static {
 		DwrScriptSessionManagerUtil.baseInit();
 	}
+
+	private LoginUserUtilService loginUserUtilService = BeanFactoryHelper.getBeanFactory()
+			.getBean(LoginUserUtilService.class);
 
 	public String message() {
 		return "test";
@@ -31,8 +38,7 @@ public class MessageService {
 
 		Map<String, Object> paramMap = Json.toMap(config);
 
-		ScriptSession scriptSession = WebContextFactory.get()
-				.getScriptSession();
+		ScriptSession scriptSession = WebContextFactory.get().getScriptSession();
 		scriptSession.setAttribute("user", paramMap);
 		ScriptBuffer script = new ScriptBuffer();
 
@@ -61,20 +67,18 @@ public class MessageService {
 		final String deptId = Convert.toString(paramMap.get("deptId"));
 		final String sendUserId = Convert.toString(paramMap.get("sendUserId"));
 		final String config2 = Json.toStr(map);
+		saveMessage(paramMap, userId, orgId, deptId);
 
 		Browser.withAllSessionsFiltered(new ScriptSessionFilter() {
 			public boolean match(ScriptSession session) {
 				if (session.getAttribute("user") == null)
 					return false;
 				else {
-					Map<String, Object> userMap = (Map<String, Object>) session
-							.getAttribute("user");
-					return ((Convert.toString(userMap.get("userId")))
-							.equals(userId)
-							|| (Convert.toString(userMap.get("orgId")))
-									.equals(orgId)
-							|| (Convert.toString(userMap.get("deptId")))
-									.equals(deptId)) && !sendUserId.equals(userMap.get("userId")) ;
+					Map<String, Object> userMap = (Map<String, Object>) session.getAttribute("user");
+					return ((Convert.toString(userMap.get("userId"))).equals(userId)
+							|| (Convert.toString(userMap.get("orgId"))).equals(orgId)
+							|| (Convert.toString(userMap.get("deptId"))).equals(deptId))
+							&& !sendUserId.equals(userMap.get("userId"));
 				}
 			}
 		}, new Runnable() {
@@ -82,13 +86,48 @@ public class MessageService {
 
 			public void run() {
 				script.appendCall("showMessage", config2);
-				Collection<ScriptSession> sessions = Browser
-						.getTargetSessions();
+				Collection<ScriptSession> sessions = Browser.getTargetSessions();
 				for (ScriptSession scriptSession : sessions) {
 					System.out.println(scriptSession.getAttribute("user"));
 					scriptSession.addScript(script);
 				}
 			}
 		});
+	}
+
+	private void saveMessage(Map<String, Object> paramMap, final String userId, final String orgId,
+			final String deptId) {
+		SysMessage message = new SysMessage();
+		message.setUserId(userId);
+		message.setUserName(Convert.toString(paramMap.get("userName")));
+		message.setDeptId(deptId);
+		message.setDeptName(Convert.toString(paramMap.get("deptName")));
+		message.setOrgId(orgId);
+		message.setOrgName(Convert.toString(paramMap.get("orgName")));
+
+		String currUserId = loginUserUtilService.findUserId();
+		message.setSendUserId(currUserId);
+		message.setSendUserName(loginUserUtilService.findUserName());
+		message.setVcreate(currUserId);
+		message.setVupdate(currUserId);
+		message.setVorgid(loginUserUtilService.findOrgId());
+		message.setVdeptid(loginUserUtilService.findDeptId());
+		message.setVjobid(loginUserUtilService.findJobId());
+		
+		message.setContent(Convert.toString(paramMap.get("message")));
+		
+		String title = "";
+		
+		if (Check.isNoEmpty(message.getOrgName())) {
+			title=message.getOrgName();
+		}else if (Check.isNoEmpty(message.getDeptName())) {
+			title=message.getDeptName();
+		}else {
+			title=message.getSendUserName();
+		}
+		
+		message.setTitle(title);
+
+		ThreadUtil.getThreadPool().execute(new MessageThread(message));
 	}
 }

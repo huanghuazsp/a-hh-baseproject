@@ -266,12 +266,21 @@
 			var userId = '';
 			var deptId = '';
 			var orgId = '';
+			
+			
+			var userName = '';
+			var deptName = '';
+			var orgName = '';
+			
 			if (data.lx_ == 1) {
 				messageData.orgId = data.id;
+				messageData.orgName = data.text;
 			} else if (data.lx_ == 2) {
 				messageData.deptId = data.id;
+				messageData.deptName = data.text;
 			} else {
 				messageData.userId = data.id;
+				messageData.userName = data.text;
 			}
 			messageData.message = $('#messageSpan').getValue();
 			if(!messageData.message){
