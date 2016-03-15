@@ -23,8 +23,7 @@ import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.UserService;
 
 @Service
-public class SysMessageService extends BaseService<SysMessage> implements
-		LoadDataTime {
+public class SysMessageService extends BaseService<SysMessage> implements LoadDataTime {
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 
@@ -35,11 +34,15 @@ public class SysMessageService extends BaseService<SysMessage> implements
 	}
 
 	@Transactional
-	public SysMessage sendEmail(SysMessage entity, String leixing) throws MessageException {
+	public SysMessage save(SysMessage entity, String leixing) throws MessageException {
 		UsUser hhXtYh = loginUserUtilService.findLoginUser();
-		entity.setSendUserId(hhXtYh.getId());
-		entity.setSendUserName(hhXtYh.getText());
-
+		if (Check.isEmpty(entity.getSendUserId())) {
+			entity.setSendUserId(hhXtYh.getId());
+		}
+		if (Check.isEmpty(hhXtYh.getText())) {
+			entity.setSendUserName(hhXtYh.getText());
+		}
+		
 		if (Check.isEmpty(entity.getId())) {
 			dao.createEntity(entity);
 		} else {
@@ -51,7 +54,10 @@ public class SysMessageService extends BaseService<SysMessage> implements
 	public Map<String, Object> load() {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		int shouCount = findCount(ParamFactory.getParamHb().like("users", loginUserUtilService.findUserId())
+		int shouCount = findCount(ParamFactory.getParamHb().is("userId", loginUserUtilService.findUserId())
+
+				.is("deptId", loginUserUtilService.findDeptId()).is("orgId", loginUserUtilService.findOrgId())
+
 				.nolike("readUserId", loginUserUtilService.findUserId())
 				.nolike("deleteUserId", loginUserUtilService.findUserId()));
 		Map<String, Object> map2 = new HashMap<String, Object>();
@@ -76,27 +82,25 @@ public class SysMessageService extends BaseService<SysMessage> implements
 
 	public PagingData<SysMessage> queryDeletePage(SysMessage object, PageRange pageRange) {
 		return dao.queryPagingData(this.getGenericType(0),
-				ParamFactory.getParamHb().like("deleteUserId", loginUserUtilService.findUserId())
-						.orderDesc("dcreate"),
+				ParamFactory.getParamHb().like("deleteUserId", loginUserUtilService.findUserId()).orderDesc("dcreate"),
 				pageRange, new String[] { "id", "title", "dcreate", "type" });
 	}
-
-
 
 	public PagingData<SysMessage> querySendPage(SysMessage object, PageRange pageRange) {
 		return dao.queryPagingData(this.getGenericType(0),
 				ParamFactory.getParamHb().is("sendUserId", loginUserUtilService.findUserId())
-						.nolike("deleteUserId", loginUserUtilService.findUserId())
-						.orderDesc("dcreate"),
+						.nolike("deleteUserId", loginUserUtilService.findUserId()).orderDesc("dcreate"),
 				pageRange, new String[] { "id", "title", "dcreate", "type" });
 	}
 
 	public PagingData<SysMessage> queryShouPage(SysMessage object, PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
 		PagingData<SysMessage> page = dao.queryPagingData(this.getGenericType(0),
-				ParamFactory.getParamHb().like("users", loginUserUtilService.findUserId())
+				ParamFactory.getParamHb().is("userId", loginUserUtilService.findUserId())
+
+						.is("deptId", loginUserUtilService.findDeptId()).is("orgId", loginUserUtilService.findOrgId())
 						.nolike("deleteUserId", loginUserUtilService.findUserId())
-						
+
 						.orderDesc("dcreate"),
 				pageRange, new String[] { "id", "title", "dcreate", "type", "readUserId" });
 
@@ -122,7 +126,6 @@ public class SysMessageService extends BaseService<SysMessage> implements
 			}
 		}
 	}
-
 
 	@Transactional
 	public void recovery(String ids) {

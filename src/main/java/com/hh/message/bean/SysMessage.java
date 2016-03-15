@@ -18,23 +18,31 @@ public class SysMessage extends BaseTwoEntity {
 	private String content;
 	private String title;
 	private String files;
-	
-	private String users="";
-	private String userNames="";
-	private String sendUserId="";
-	private String sendUserName="";
-	private String readUserId="";
-	private String deleteUserId="";
-	
-	
-	
-	private int read=0;
+
+	private String sendUserId = "";
+	private String sendUserName = "";
+
+	private String userId = "";
+	private String userName = "";
+
+	private String deptId = "";
+	private String deptName = "";
+
+	private String orgId = "";
+	private String orgName = "";
+
+	private String groupId = "";
+	private String groupName = "";
+
+	private String readUserId = "";
+	private String deleteUserId = "";
+
+	private int read = 0;
 
 	private enum Type {
 		message
 	}
 
-	
 	@Column(name = "TYPE_", length = 16)
 	public String getType() {
 		return type;
@@ -45,17 +53,7 @@ public class SysMessage extends BaseTwoEntity {
 	}
 
 	@Lob
-	@Column(name="USERS")
-	public String getUsers() {
-		return users;
-	}
-
-	public void setUsers(String users) {
-		this.users = users;
-	}
-
-	@Lob
-	@Column(name="CONTENT")
+	@Column(name = "CONTENT")
 	public String getContent() {
 		return content;
 	}
@@ -64,7 +62,7 @@ public class SysMessage extends BaseTwoEntity {
 		this.content = content;
 	}
 
-	@Column(length = 128,name="TITLE")
+	@Column(length = 128, name = "TITLE")
 	public String getTitle() {
 		return title;
 	}
@@ -74,7 +72,7 @@ public class SysMessage extends BaseTwoEntity {
 	}
 
 	@Lob
-	@Column(name="FILES")
+	@Column(name = "FILES")
 	public String getFiles() {
 		return files;
 	}
@@ -83,17 +81,7 @@ public class SysMessage extends BaseTwoEntity {
 		this.files = files;
 	}
 
-	@Lob
-	@Column(name="USER_NAMES")
-	public String getUserNames() {
-		return userNames;
-	}
-
-	public void setUserNames(String userNames) {
-		this.userNames = userNames;
-	}
-
-	@Column(name="SEND_USERID",length=36)
+	@Column(name = "SEND_USERID", length = 36)
 	public String getSendUserId() {
 		return sendUserId;
 	}
@@ -102,7 +90,7 @@ public class SysMessage extends BaseTwoEntity {
 		this.sendUserId = sendUserId;
 	}
 
-	@Column(name="SEND_USERNAME",length=128)
+	@Column(name = "SEND_USERNAME", length = 128)
 	public String getSendUserName() {
 		return sendUserName;
 	}
@@ -112,7 +100,7 @@ public class SysMessage extends BaseTwoEntity {
 	}
 
 	@Lob
-	@Column(name="READ_USERID")
+	@Column(name = "READ_USERID")
 	public String getReadUserId() {
 		return readUserId;
 	}
@@ -122,7 +110,7 @@ public class SysMessage extends BaseTwoEntity {
 	}
 
 	@Lob
-	@Column(name="DELETE_USERID")
+	@Column(name = "DELETE_USERID")
 	public String getDeleteUserId() {
 		return deleteUserId;
 	}
@@ -130,7 +118,6 @@ public class SysMessage extends BaseTwoEntity {
 	public void setDeleteUserId(String deleteUserId) {
 		this.deleteUserId = deleteUserId;
 	}
-
 
 	@Transient
 	public int getRead() {
@@ -141,5 +128,76 @@ public class SysMessage extends BaseTwoEntity {
 		this.read = read;
 	}
 
-	
+	@Column(name = "USER_ID", length = 36)
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	@Column(name = "USER_NAME", length = 128)
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	@Column(name = "DEPT_ID", length = 36)
+	public String getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
+
+	@Column(name = "DEPT_NAME", length = 128)
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	@Column(name = "ORG_ID", length = 36)
+	public String getOrgId() {
+		return orgId;
+	}
+
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
+	}
+
+	@Column(name = "ORG_NAME", length = 128)
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
+	@Column(name = "GROUP_ID", length = 36)
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
+	@Column(name = "GROUP_NAME", length = 128)
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
 }
