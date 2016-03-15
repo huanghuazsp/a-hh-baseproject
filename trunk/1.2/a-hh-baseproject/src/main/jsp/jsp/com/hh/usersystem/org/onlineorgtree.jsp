@@ -243,9 +243,16 @@
 	function init() {
 		dwr.engine.setActiveReverseAjax(true);
 		dwr.engine.setNotifyServerOnPageUnload(true, true);
-		onPageLoad();
+		
 		dwr.engine.setErrorHandler(function() {
 		});
+		onPageLoad();
+		
+		/* if ($.hh.browser.type.indexOf('IE') > -1) {
+			setTimeout(function() {
+				mysetInterval = setInterval(onPageLoad, 1000 * 60*4);
+			}, 3000); 
+		} */
 	}
 
 	function setHeight(height) {
