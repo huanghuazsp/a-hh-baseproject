@@ -29,7 +29,8 @@ public class MessageService {
 
 	private LoginUserUtilService loginUserUtilService = BeanFactoryHelper.getBeanFactory()
 			.getBean(LoginUserUtilService.class);
-
+	private SysMessageService sysMessageService = BeanFactoryHelper.getBeanFactory()
+			.getBean(SysMessageService.class);
 	public String message() {
 		return "test";
 	}
@@ -42,15 +43,20 @@ public class MessageService {
 		scriptSession.setAttribute("user", paramMap);
 		ScriptBuffer script = new ScriptBuffer();
 
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		List<LoadDataTime> loadDataTimeList = StaticProperties.loadDataTimeList;
+//		for (LoadDataTime loadDataTime : loadDataTimeList) {
+//			map.putAll(loadDataTime.load());
+//		}
+//		String autoMessage = Json.toStr(map);
+//		script.appendCall("showMessage", autoMessage);
+		
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<LoadDataTime> loadDataTimeList = StaticProperties.loadDataTimeList;
-		for (LoadDataTime loadDataTime : loadDataTimeList) {
-			map.putAll(loadDataTime.load());
-		}
-
+		map.put("allMessage", sysMessageService.load().get("allMessage"));
 		String autoMessage = Json.toStr(map);
 		script.appendCall("showMessage", autoMessage);
-
+		
 		scriptSession.addScript(script);
 	}
 
@@ -120,10 +126,16 @@ public class MessageService {
 		
 		if (Check.isNoEmpty(message.getOrgName())) {
 			title=message.getOrgName();
+			message.setSendObjectId(message.getOrgId());
+			message.setSendObjectName(message.getOrgName());
 		}else if (Check.isNoEmpty(message.getDeptName())) {
 			title=message.getDeptName();
+			message.setSendObjectId(message.getDeptId());
+			message.setSendObjectName(message.getDeptName());
 		}else {
 			title=message.getSendUserName();
+			message.setSendObjectId(message.getSendUserId());
+			message.setSendObjectName(message.getSendUserName());
 		}
 		
 		message.setTitle(title);

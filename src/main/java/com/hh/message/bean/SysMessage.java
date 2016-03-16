@@ -38,6 +38,12 @@ public class SysMessage extends BaseTwoEntity {
 	private String deleteUserId = "";
 
 	private int read = 0;
+	
+	
+	private String sendObjectId = "";
+	private String sendObjectName = "";
+	
+	private int sendObjectType = 0;
 
 	private enum Type {
 		message
@@ -199,5 +205,35 @@ public class SysMessage extends BaseTwoEntity {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
+
+	@Column(name="SEND_OBJECT_ID",length=36)
+	public String getSendObjectId() {
+		return sendObjectId;
+	}
+
+	public void setSendObjectId(String sendObjectId) {
+		this.sendObjectId = sendObjectId;
+	}
+
+	@Column(name="SEND_OBJECT_NAME",length=128)
+	public String getSendObjectName() {
+		return sendObjectName;
+	}
+
+	public void setSendObjectName(String sendObjectName) {
+		this.sendObjectName = sendObjectName;
+	}
+
+	
+	@Column(name="SEND_OBJECT_TYPE")
+	public int getSendObjectType() {
+		return sendObjectType;
+	}
+
+	public void setSendObjectType(int sendObjectType) {
+		this.sendObjectType = sendObjectType;
+	}
+	
+	
 
 }

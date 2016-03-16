@@ -14,6 +14,7 @@ import com.hh.system.service.impl.BaseService;
 import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
+import com.hh.system.util.Json;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
@@ -42,7 +43,7 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 		if (Check.isEmpty(hhXtYh.getText())) {
 			entity.setSendUserName(hhXtYh.getText());
 		}
-		
+
 		if (Check.isEmpty(entity.getId())) {
 			dao.createEntity(entity);
 		} else {
@@ -54,17 +55,38 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 	public Map<String, Object> load() {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		int shouCount = findCount(ParamFactory.getParamHb().is("userId", loginUserUtilService.findUserId())
+		
+		Map<String, Object> mapparam = new HashMap<String, Object>();
 
-				.is("deptId", loginUserUtilService.findDeptId()).is("orgId", loginUserUtilService.findOrgId())
+		mapparam.put("userId", loginUserUtilService.findUserId());
+		mapparam.put("orgId", loginUserUtilService.findOrgId());
+		mapparam.put("deptId", loginUserUtilService.findDeptId());
 
-				.nolike("readUserId", loginUserUtilService.findUserId())
-				.nolike("deleteUserId", loginUserUtilService.findUserId()));
+		List<Map<String, Object>> sysMessagesList = this.getDao().queryList(
+				"select sendObjectType as lx_,sendObjectId as id,sendObjectName as text,count(id) as count  from "
+						+ SysMessage.class.getName()
+						+ " where (userId=:userId or orgId=:orgId or deptId=:deptId) and sendUserId!=:userId and readUserId not like '%"
+						+ loginUserUtilService.findUserId() + "%' GROUP BY sendObjectType,sendObjectId,sendObjectName",
+						mapparam);
+		int shouCount = 0;
+		for (Map<String, Object> map2 : sysMessagesList) {
+			shouCount += Convert.toInt(map2.get("count"));
+		}
+		// queryList(ParamFactory.getParamHb().is("userId",
+		// loginUserUtilService.findUserId())
+		// .is("deptId", loginUserUtilService.findDeptId()).is("orgId",
+		// loginUserUtilService.findOrgId())
+		// .nis("sendUserId", loginUserUtilService.findUserId())
+		// .nolike("readUserId", loginUserUtilService.findUserId())
+		// .nolike("deleteUserId", loginUserUtilService.findUserId()));
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("count", shouCount);
 		map2.put("id", "93bb64fe-e50a-40b2-ab59-b1ae543cd101");
 		map2.put("text", "消息提醒");
 		map2.put("vsj", "jsp-message-message-messagelistview");
+		map2.put("message", "jsp-message-message-messagelistview");
+		
+		map.put("allMessage", sysMessagesList);
 		map.put("message", map2);
 		return map;
 	}

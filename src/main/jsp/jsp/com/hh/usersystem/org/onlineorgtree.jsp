@@ -18,6 +18,7 @@
 
 	var params = $.hh.getIframeParams();
 	var orgtreeconfig = {
+		render : false,
 		id : 'orgTree',
 		nheight : 42,
 		url : 'usersystem-Org-queryOrgAndUsersList',
@@ -89,8 +90,13 @@
 			}
 		} ]
 	}
+	
+	var messConfig = {
+			
+	}
 
 	var grouprender = false;
+	var orgrender = false;
 	var tabconfig = {
 		activate : function(ui) {
 			var newPanel = ui.newPanel;
@@ -98,6 +104,9 @@
 			if (id == 'grooupDiv' && grouprender == false) {
 				grouprender = true;
 				$('#span_groupTree').render();
+			}else if (id == 'orgDiv' && orgrender == false) {
+				orgrender = true;
+				$('#span_orgTree').render();
 			}
 		}
 	}
@@ -175,20 +184,28 @@
 	}
 	function showMessage(autoMessage) {
 		var result = $.hh.toObject(autoMessage);
-		var email = result.email;
-		if (email) {
-			var email_span = $.hh.getRootFrame().$('#email_span');
-			email_span.render({
-				'text' : '<font color=red>(' + email.count + ')</font>',
-				params : email,
-				onClick : openEmail
-			});
-		}
-
 		var message = result.message;
 		if (message && message.message) {
-			$('#himessageDiv').append(getMyMsg(message));
+			renderMsg(message);
 			$('#himessagediv').animate({scrollTop:5000},100);
+		}
+		
+		
+		var allMessage = result.allMessage;
+		if (allMessage) {
+			$('#messDivspan').render({data:allMessage});
+		}
+	}
+	
+	
+	function renderMsg(message){
+		console.log(message);
+		var selectData = $('#userdiv').data('data');
+		if(selectData && (message.orgId== selectData.id || message.deptId== selectData.id || message.userId== selectData.id || message.groupId== selectData.id)){
+			$('#himessageDiv').append(getMyMsg(message));
+		}else{
+			
+			alert(11);
 		}
 	}
 
@@ -312,10 +329,14 @@
 		<div config="render : 'west' ,width:260 ">
 			<div id="tabs" xtype="tab" configVar="tabconfig">
 				<ul>
-					<li><a href="#tabs-1">机构</a></li>
+					<li><a href="#messDiv">消息</a></li>
+					<li><a href="#orgDiv">机构</a></li>
 					<li><a href="#grooupDiv">组</a></li>
 				</ul>
-				<div id="tabs-1">
+				<div id="messDiv">
+					<span xtype=menu id="messDivspan" configVar=" messConfig "></span>
+				</div>
+				<div id="orgDiv">
 					<span xtype="tree" configVar="orgtreeconfig"></span>
 				</div>
 				<div id="grooupDiv">
