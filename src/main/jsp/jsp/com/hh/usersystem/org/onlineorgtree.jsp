@@ -190,11 +190,14 @@
 			$('#himessagediv').animate({scrollTop:5000},100);
 		}
 		
-		
 		var allMessage = result.allMessage;
 		if (allMessage) {
-			$('#messDivspan').render({data:allMessage});
+			renderAllMessage(allMessage);
 		}
+	}
+	
+	function renderAllMessage(allMessage){
+		$('#messDivspan').render({data: allMessage});
 	}
 	
 	
