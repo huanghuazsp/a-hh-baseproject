@@ -197,6 +197,9 @@
 	}
 	
 	function renderAllMessage(allMessage){
+		for(var i =0;i<allMessage.length;i++){
+			allMessage[i].rightText = '<font class="hh_red">'+allMessage[i].count+'</font>';
+		}
 		$('#messDivspan').render({data: allMessage});
 	}
 	
