@@ -25,7 +25,8 @@
 				$('#email').attr('src','jsp-message-email-writeemail');
 			}
 		},{
-			text : '收件<font color=red>(<%=count%>)</font>',
+			text : '收件',
+			rightText:'<font class="hh_red"><%=count%></font>',
 			img : '/hhcommon/images/icons/email/email_close.gif',
 			onClick : function() {
 				shoujianlist();
