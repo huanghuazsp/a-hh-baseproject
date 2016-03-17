@@ -124,7 +124,7 @@
 		$('#himessageDiv').empty();
 		for(var i=0;i<dataList.length;i++){
 			var data =dataList[i];
-			data.date = data.dcreate;
+			data.date = $.hh.dateTimeToString(data.dcreate);
 			data.message = data.content;
 			data.type = data.sendUserId == loginUser.id ? 'my' : 'you';
 			appendMessage(data);
