@@ -23,9 +23,7 @@
 		nheight : 42,
 		url : 'usersystem-Org-queryOrgAndUsersList',
 		onClick : function(node) {
-			$('#userdiv').html(
-					'<div style="margin-top:5px;">' + node.name + '</div>');
-			$('#userdiv').data('data', node);
+			clickMenu(node);
 		},
 		rightMenu : [ {
 			text : '刷新',
@@ -92,7 +90,45 @@
 	}
 	
 	var messConfig = {
+			onClick : function(data){
+				clickMenu(data);
+			}
+	}
+	
+	function clickMenu(data){
+		$('#userdiv').html(
+				'<div style="margin-top:5px;">' + data.text + '</div>');
+		$('#userdiv').data('data', data);
+		
+		var limit = 30;
+		var page = 1;
+		var start =  limit * page - limit;
+		
+		Request.request('message-SysMessage-queryMyPagingDataBySendObjectId', {
+			data : {
+				limit:limit,
+				page:page,
+				start:start,
+				sendObjectId : data.id
+			},
+			defaultMsg : false
+		}, function(dataList) {
 			
+			 loadData(dataList);
+		});
+		
+		
+	}
+	
+	function loadData(dataList){
+		$('#himessageDiv').empty();
+		for(var i=0;i<dataList.length;i++){
+			var data =dataList[i];
+			data.date = data.dcreate;
+			data.message = data.content;
+			data.type = data.sendUserId == loginUser.id ? 'my' : 'you';
+			appendMessage(data);
+		}
 	}
 
 	var grouprender = false;
@@ -205,13 +241,11 @@
 	
 	
 	function renderMsg(message){
-		console.log(message);
 		var selectData = $('#userdiv').data('data');
-		if(selectData && (message.orgId== selectData.id || message.deptId== selectData.id || message.userId== selectData.id || message.groupId== selectData.id)){
-			$('#himessageDiv').append(getMyMsg(message));
+		if(selectData && (message.sendObjectId== selectData.id )){
+			appendMessage(message);
 		}else{
-			
-			alert(11);
+			console.log(message);
 		}
 	}
 
@@ -317,8 +351,8 @@
 			
 			messageData.date = $.hh.dateTimeToString($.hh.getDate());
 			messageData.type='my';
-			$('#himessageDiv').append(getMyMsg(messageData));
-			$('#himessagediv').animate({scrollTop:5000},100);
+			
+			appendMessage(messageData);
 			
 			
 			message.sendMessageAuto($.hh.toString(messageData));
@@ -326,6 +360,11 @@
 		}else{
 			Dialog.infomsg('请选择发送对象！');
 		}
+	}
+	
+	function appendMessage (data){
+		$('#himessageDiv').append(getMyMsg(data));
+		$('#himessagediv').animate({scrollTop:5000},100);
 	}
 
 </script>

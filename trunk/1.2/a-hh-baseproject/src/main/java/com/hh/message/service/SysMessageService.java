@@ -19,6 +19,7 @@ import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.dto.ParamInf;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.UserService;
@@ -55,7 +56,7 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 	public Map<String, Object> load() {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		Map<String, Object> mapparam = new HashMap<String, Object>();
 
 		mapparam.put("userId", loginUserUtilService.findUserId());
@@ -67,7 +68,7 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 						+ SysMessage.class.getName()
 						+ " where (userId=:userId or orgId=:orgId or deptId=:deptId) and sendUserId!=:userId and readUserId not like '%"
 						+ loginUserUtilService.findUserId() + "%' GROUP BY sendObjectType,sendObjectId,sendObjectName",
-						mapparam);
+				mapparam);
 		int shouCount = 0;
 		for (Map<String, Object> map2 : sysMessagesList) {
 			shouCount += Convert.toInt(map2.get("count"));
@@ -85,7 +86,7 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 		map2.put("text", "消息提醒");
 		map2.put("vsj", "jsp-message-message-messagelistview");
 		map2.put("message", "jsp-message-message-messagelistview");
-		
+
 		map.put("allMessage", sysMessagesList);
 		map.put("message", map2);
 		return map;
@@ -161,5 +162,20 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 				}
 			}
 		}
+	}
+
+	public List<SysMessage> queryMyPagingDataBySendObjectId(SysMessage object, PageRange pageRange) {
+		
+//		ParamInf paramInf = ParamFactory.getParamHb();
+		
+		ParamInf paramInf2 = ParamFactory.getParamHb();
+		paramInf2.or(ParamFactory.getParamHb().is("sendObjectId",object.getSendObjectId()),ParamFactory.getParamHb().is("sendObjectId", loginUserUtilService.findDeptId()));
+		
+//		ParamInf paramInf3 = ParamFactory.getParamHb();
+//		paramInf3.or(ParamFactory.getParamHb().is("sendObjectId", loginUserUtilService.findOrgId()),ParamFactory.getParamHb().is("sendUserId", loginUserUtilService.findUserId()));
+//		
+//		paramInf.or(paramInf2,paramInf3);
+		
+		return queryList(paramInf2, pageRange);
 	}
 }
