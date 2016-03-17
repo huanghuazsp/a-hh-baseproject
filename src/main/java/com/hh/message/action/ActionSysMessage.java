@@ -16,6 +16,10 @@ public class ActionSysMessage extends BaseServiceAction<SysMessage> {
 		return service;
 	}
 
-
+	
+	public Object queryMyPagingDataBySendObjectId() {
+		return service.queryMyPagingDataBySendObjectId(object,
+				this.getPageRange());
+	}
 	
 }

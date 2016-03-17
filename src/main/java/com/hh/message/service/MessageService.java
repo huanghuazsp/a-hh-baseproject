@@ -72,8 +72,10 @@ public class MessageService {
 		final String orgId = Convert.toString(paramMap.get("orgId"));
 		final String deptId = Convert.toString(paramMap.get("deptId"));
 		final String sendUserId = Convert.toString(paramMap.get("sendUserId"));
+		SysMessage sysMessage = saveMessage(paramMap, userId, orgId, deptId);
+		paramMap.put("sendObjectId", sysMessage.getSendObjectId());
 		final String config2 = Json.toStr(map);
-		saveMessage(paramMap, userId, orgId, deptId);
+		
 
 		Browser.withAllSessionsFiltered(new ScriptSessionFilter() {
 			public boolean match(ScriptSession session) {
@@ -101,7 +103,7 @@ public class MessageService {
 		});
 	}
 
-	private void saveMessage(Map<String, Object> paramMap, final String userId, final String orgId,
+	private SysMessage saveMessage(Map<String, Object> paramMap, final String userId, final String orgId,
 			final String deptId) {
 		SysMessage message = new SysMessage();
 		message.setUserId(userId);
@@ -128,18 +130,22 @@ public class MessageService {
 			title=message.getOrgName();
 			message.setSendObjectId(message.getOrgId());
 			message.setSendObjectName(message.getOrgName());
+			message.setSendObjectType(1);
 		}else if (Check.isNoEmpty(message.getDeptName())) {
 			title=message.getDeptName();
 			message.setSendObjectId(message.getDeptId());
 			message.setSendObjectName(message.getDeptName());
+			message.setSendObjectType(2);
 		}else {
 			title=message.getSendUserName();
 			message.setSendObjectId(message.getSendUserId());
 			message.setSendObjectName(message.getSendUserName());
+			message.setSendObjectType(0);
 		}
 		
 		message.setTitle(title);
 
 		ThreadUtil.getThreadPool().execute(new MessageThread(message));
+		return message;
 	}
 }
