@@ -25,18 +25,22 @@ import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.UserService;
 
 @Service
-public class SysMessageService extends BaseService<SysMessage> implements LoadDataTime {
+public class SysMessageService extends BaseService<SysMessage> implements
+		LoadDataTime {
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 
 	@Override
-	public PagingData<SysMessage> queryPagingData(SysMessage entity, PageRange pageRange) {
-		return dao.queryPagingData(this.getGenericType(0), ParamFactory.getParamHb().orderDesc("dcreate"), pageRange,
-				new String[] { "id", "title", "dcreate", "type" });
+	public PagingData<SysMessage> queryPagingData(SysMessage entity,
+			PageRange pageRange) {
+		return dao.queryPagingData(this.getGenericType(0), ParamFactory
+				.getParamHb().orderDesc("dcreate"), pageRange, new String[] {
+				"id", "title", "dcreate", "type" });
 	}
 
 	@Transactional
-	public SysMessage save(SysMessage entity, String leixing) throws MessageException {
+	public SysMessage save(SysMessage entity, String leixing)
+			throws MessageException {
 		UsUser hhXtYh = loginUserUtilService.findLoginUser();
 		if (Check.isEmpty(entity.getSendUserId())) {
 			entity.setSendUserId(hhXtYh.getId());
@@ -63,12 +67,15 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 		mapparam.put("orgId", loginUserUtilService.findOrgId());
 		mapparam.put("deptId", loginUserUtilService.findDeptId());
 
-		List<Map<String, Object>> sysMessagesList = this.getDao().queryList(
-				"select sendObjectType as lx_,sendObjectId as id,sendObjectName as text,count(id) as count  from "
-						+ SysMessage.class.getName()
-						+ " where (userId=:userId or orgId=:orgId or deptId=:deptId) and sendUserId!=:userId and readUserId not like '%"
-						+ loginUserUtilService.findUserId() + "%' GROUP BY sendObjectType,sendObjectId,sendObjectName",
-				mapparam);
+		List<Map<String, Object>> sysMessagesList = this
+				.getDao()
+				.queryList(
+						"select sendObjectType as lx_,sendObjectId as id,sendObjectName as text,count(id) as count  from "
+								+ SysMessage.class.getName()
+								+ " where (userId=:userId or orgId=:orgId or deptId=:deptId) and sendUserId!=:userId and readUserId not like '%"
+								+ loginUserUtilService.findUserId()
+								+ "%' GROUP BY sendObjectType,sendObjectId,sendObjectName",
+						mapparam);
 		int shouCount = 0;
 		for (Map<String, Object> map2 : sysMessagesList) {
 			shouCount += Convert.toInt(map2.get("count"));
@@ -103,29 +110,48 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 		return sysEmail;
 	}
 
-	public PagingData<SysMessage> queryDeletePage(SysMessage object, PageRange pageRange) {
-		return dao.queryPagingData(this.getGenericType(0),
-				ParamFactory.getParamHb().like("deleteUserId", loginUserUtilService.findUserId()).orderDesc("dcreate"),
-				pageRange, new String[] { "id", "title", "dcreate", "type" });
+	public PagingData<SysMessage> queryDeletePage(SysMessage object,
+			PageRange pageRange) {
+		return dao
+				.queryPagingData(
+						this.getGenericType(0),
+						ParamFactory
+								.getParamHb()
+								.like("deleteUserId",
+										loginUserUtilService.findUserId())
+								.orderDesc("dcreate"), pageRange, new String[] {
+								"id", "title", "dcreate", "type" });
 	}
 
-	public PagingData<SysMessage> querySendPage(SysMessage object, PageRange pageRange) {
-		return dao.queryPagingData(this.getGenericType(0),
-				ParamFactory.getParamHb().is("sendUserId", loginUserUtilService.findUserId())
-						.nolike("deleteUserId", loginUserUtilService.findUserId()).orderDesc("dcreate"),
-				pageRange, new String[] { "id", "title", "dcreate", "type" });
+	public PagingData<SysMessage> querySendPage(SysMessage object,
+			PageRange pageRange) {
+		return dao.queryPagingData(
+				this.getGenericType(0),
+				ParamFactory
+						.getParamHb()
+						.is("sendUserId", loginUserUtilService.findUserId())
+						.nolike("deleteUserId",
+								loginUserUtilService.findUserId())
+						.orderDesc("dcreate"), pageRange, new String[] { "id",
+						"title", "dcreate", "type" });
 	}
 
-	public PagingData<SysMessage> queryShouPage(SysMessage object, PageRange pageRange) {
+	public PagingData<SysMessage> queryShouPage(SysMessage object,
+			PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
-		PagingData<SysMessage> page = dao.queryPagingData(this.getGenericType(0),
-				ParamFactory.getParamHb().is("userId", loginUserUtilService.findUserId())
+		PagingData<SysMessage> page = dao.queryPagingData(
+				this.getGenericType(0),
+				ParamFactory
+						.getParamHb()
+						.is("userId", loginUserUtilService.findUserId())
 
-						.is("deptId", loginUserUtilService.findDeptId()).is("orgId", loginUserUtilService.findOrgId())
-						.nolike("deleteUserId", loginUserUtilService.findUserId())
+						.is("deptId", loginUserUtilService.findDeptId())
+						.is("orgId", loginUserUtilService.findOrgId())
+						.nolike("deleteUserId",
+								loginUserUtilService.findUserId())
 
-						.orderDesc("dcreate"),
-				pageRange, new String[] { "id", "title", "dcreate", "type", "readUserId" });
+						.orderDesc("dcreate"), pageRange, new String[] { "id",
+						"title", "dcreate", "type", "readUserId" });
 
 		for (SysMessage sysEmail : page.getItems()) {
 			if (Convert.toString(sysEmail.getReadUserId()).indexOf(userId) > -1) {
@@ -142,8 +168,10 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 			String userId = loginUserUtilService.findUserId();
 			List<SysMessage> sysEmails = queryListByIds(Convert.strToList(ids));
 			for (SysMessage sysEmail : sysEmails) {
-				if (Convert.toString(sysEmail.getDeleteUserId()).indexOf(userId) == -1) {
-					sysEmail.setDeleteUserId(sysEmail.getDeleteUserId() + "," + userId);
+				if (Convert.toString(sysEmail.getDeleteUserId())
+						.indexOf(userId) == -1) {
+					sysEmail.setDeleteUserId(sysEmail.getDeleteUserId() + ","
+							+ userId);
 					dao.updateEntity(sysEmail);
 				}
 			}
@@ -156,26 +184,48 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 			String userId = loginUserUtilService.findUserId();
 			List<SysMessage> sysEmails = queryListByIds(Convert.strToList(ids));
 			for (SysMessage sysEmail : sysEmails) {
-				if (Convert.toString(sysEmail.getDeleteUserId()).indexOf(userId) > -1) {
-					sysEmail.setDeleteUserId(sysEmail.getDeleteUserId().replaceAll("," + userId, ""));
+				if (Convert.toString(sysEmail.getDeleteUserId())
+						.indexOf(userId) > -1) {
+					sysEmail.setDeleteUserId(sysEmail.getDeleteUserId()
+							.replaceAll("," + userId, ""));
 					dao.updateEntity(sysEmail);
 				}
 			}
 		}
 	}
 
-	public List<SysMessage> queryMyPagingDataBySendObjectId(SysMessage object, PageRange pageRange) {
-		
-//		ParamInf paramInf = ParamFactory.getParamHb();
-		
-		ParamInf paramInf2 = ParamFactory.getParamHb();
-		paramInf2.or(ParamFactory.getParamHb().is("sendObjectId",object.getSendObjectId()),ParamFactory.getParamHb().is("sendObjectId", loginUserUtilService.findDeptId()));
-		
-//		ParamInf paramInf3 = ParamFactory.getParamHb();
-//		paramInf3.or(ParamFactory.getParamHb().is("sendObjectId", loginUserUtilService.findOrgId()),ParamFactory.getParamHb().is("sendUserId", loginUserUtilService.findUserId()));
-//		
-//		paramInf.or(paramInf2,paramInf3);
-		
-		return queryList(paramInf2, pageRange);
+	public List<SysMessage> queryMyPagingDataBySendObjectId(SysMessage object,
+			PageRange pageRange) {
+
+		ParamInf paramInf = ParamFactory.getParamHb();
+
+		ParamInf paramInf2 = ParamFactory
+				.getParamHb()
+				.and(ParamFactory.getParamHb()
+						.is("sendUserId", loginUserUtilService.findUserId())
+						.is("sendObjectId", object.getSendObjectId()))
+				.is("sendObjectId", object.getSendObjectId());
+		paramInf.or(paramInf2);
+
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		paramsMap.put("userId", loginUserUtilService.findUserId());
+		paramsMap.put("sendObjectId", object.getSendObjectId());
+
+		this.getDao()
+				.updateEntity(
+						"update "
+								+ SysMessage.class.getName()
+								+ " set readUserId = CONCAT(readUserId,:userId,',') where sendObjectId=:sendObjectId and readUserId not like '%"
+								+ loginUserUtilService.findUserId() + "%'",
+						paramsMap);
+
+		// ParamInf paramInf3 = ParamFactory.getParamHb();
+		// paramInf3.or(ParamFactory.getParamHb().is("sendObjectId",
+		// loginUserUtilService.findOrgId()),ParamFactory.getParamHb().is("sendUserId",
+		// loginUserUtilService.findUserId()));
+		//
+		// paramInf.or(paramInf2,paramInf3);
+
+		return queryList(paramInf, pageRange);
 	}
 }
