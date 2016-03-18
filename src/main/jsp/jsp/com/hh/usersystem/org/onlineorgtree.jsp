@@ -7,7 +7,7 @@
 <%=SystemUtil.getBaseDoctype()%>
 <html>
 <head>
-<title>组织机构树</title>
+<title>即时通讯</title>
 <%=SystemUtil.getBaseJs("layout", "ztree", "ckeditor")%>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/engine.js"></script>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/message.js"></script>
@@ -122,7 +122,7 @@
 	
 	function loadData(dataList){
 		$('#himessageDiv').empty();
-		for(var i=0;i<dataList.length;i++){
+		for(var i=dataList.length-1;i>-1;i--){
 			var data =dataList[i];
 			data.date = $.hh.dateTimeToString(data.dcreate);
 			data.message = data.content;

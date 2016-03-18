@@ -62,8 +62,8 @@ public class UserService extends BaseService<UsUser> {
 	@Autowired
 	private UserGroupService usGoupService;
 
-
-	public Map<? extends String, ? extends Object> queryOnLinePagingData(UsUser hhXtYh, PageRange pageRange) {
+	public Map<? extends String, ? extends Object> queryOnLinePagingData(
+			UsUser hhXtYh, PageRange pageRange) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("items", LoginUser.getLoginUserList());
 		resultMap.put("total", LoginUser.getLoginUserCount());
@@ -78,12 +78,14 @@ public class UserService extends BaseService<UsUser> {
 		}
 	}
 
-	public PagingData<UsUser> queryPagingData(UsUser hhXtYh, PageRange pageRange, String ids, String orgs, String roles,
+	public PagingData<UsUser> queryPagingData(UsUser hhXtYh,
+			PageRange pageRange, String ids, String orgs, String roles,
 			String groups, String usgroups) {
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (!Check.isEmpty(hhXtYh.getText())) {
-			hqlParamList.or(ParamFactory.getParamHb().like("text", hhXtYh.getText()),
-					ParamFactory.getParamHb().like("textpinyin", hhXtYh.getText()));
+			hqlParamList.or(ParamFactory.getParamHb()
+					.like("text", hhXtYh.getText())
+					.like("textpinyin", hhXtYh.getText()));
 		}
 
 		if (hhXtYh.getNxb() != 2) {
@@ -97,12 +99,10 @@ public class UserService extends BaseService<UsUser> {
 		if (Check.isNoEmpty(orgs)) {
 			ParamInf hqlParamList2 = ParamFactory.getParamHb();
 			hqlParamList2.is("orgId", orgs);
-			ParamInf hqlParamList3 = ParamFactory.getParamHb();
-			hqlParamList3.is("jobId", orgs);
-			ParamInf hqlParamList4 = ParamFactory.getParamHb();
-			hqlParamList4.is("deptId", orgs);
+			hqlParamList2.is("jobId", orgs);
+			hqlParamList2.is("deptId", orgs);
 			ParamInf hqlParamList5 = ParamFactory.getParamHb();
-			hqlParamList.or(hqlParamList5.or(hqlParamList2, hqlParamList3), hqlParamList4);
+			hqlParamList.or(hqlParamList5.or(hqlParamList2));
 		}
 
 		if (Check.isNoEmpty(roles)) {
@@ -144,11 +144,13 @@ public class UserService extends BaseService<UsUser> {
 		return xtyhdao.queryPagingData(UsUser.class, hqlParamList, pageRange);
 	}
 
-	private void tiaojian(String orgs, String roles, String users, String groups, ParamInf hqlParamList) {
+	private void tiaojian(String orgs, String roles, String users,
+			String groups, ParamInf hqlParamList) {
 		List<Criterion> orCriterion = new ArrayList<Criterion>();
 
 		if (Check.isNoEmpty(users)) {
-			Criterion userCriterion = Restrictions.in("id", Convert.strToList(users));
+			Criterion userCriterion = Restrictions.in("id",
+					Convert.strToList(users));
 			orCriterion.add(userCriterion);
 		}
 
@@ -167,7 +169,8 @@ public class UserService extends BaseService<UsUser> {
 			Criterion criterion = null;
 			for (int i = 1; i < orCriterion.size(); i++) {
 				if (criterion == null) {
-					criterion = Restrictions.or(orCriterion.get(i - 1), orCriterion.get(i));
+					criterion = Restrictions.or(orCriterion.get(i - 1),
+							orCriterion.get(i));
 				} else {
 					criterion = Restrictions.or(criterion, orCriterion.get(i));
 				}
@@ -199,8 +202,13 @@ public class UserService extends BaseService<UsUser> {
 	}
 
 	public boolean checkVdlzhOnly(UsUser hhXtYh) {
-		return xtyhdao.findWhetherData("select count(o) from " + hhXtYh.getClass().getName() + " o "
-				+ "where o.vdlzh=:vdlzh and (o.id!=:id or :id is null)", hhXtYh);
+		return xtyhdao
+				.findWhetherData(
+						"select count(o) from "
+								+ hhXtYh.getClass().getName()
+								+ " o "
+								+ "where o.vdlzh=:vdlzh and (o.id!=:id or :id is null)",
+						hhXtYh);
 	}
 
 	public UsUser findObjectById(String id) {
@@ -224,14 +232,17 @@ public class UserService extends BaseService<UsUser> {
 
 	}
 
-	public void updatePassWord(UsUser hhXtYh, String oldPass) throws MessageException {
+	public void updatePassWord(UsUser hhXtYh, String oldPass)
+			throws MessageException {
 		hhXtYh.setId(loginUserUtilService.findUserId());
-		boolean as = xtyhdao.isExist("select count(o) from HhXtYh o where o.id=? and o.vmm=?",
+		boolean as = xtyhdao.isExist(
+				"select count(o) from HhXtYh o where o.id=? and o.vmm=?",
 				new Object[] { hhXtYh.getId(), oldPass });
 		if (!as) {
 			throw new MessageException("旧密码错误！");
 		} else {
-			xtyhdao.updateEntity("update HhXtYh o set o.vmm=:vmm where o.id=:id", hhXtYh);
+			xtyhdao.updateEntity(
+					"update HhXtYh o set o.vmm=:vmm where o.id=:id", hhXtYh);
 		}
 	}
 
@@ -246,7 +257,8 @@ public class UserService extends BaseService<UsUser> {
 		}
 
 		if (!Check.isEmpty(cylxrIdList)) {
-			return xtyhdao.queryList(UsUser.class, ParamFactory.getParamHb().in("id", cylxrIdList));
+			return xtyhdao.queryList(UsUser.class, ParamFactory.getParamHb()
+					.in("id", cylxrIdList));
 		} else {
 			return new ArrayList<UsUser>();
 		}
@@ -276,7 +288,8 @@ public class UserService extends BaseService<UsUser> {
 	}
 
 	public void addCylxr(String string) throws MessageException {
-		boolean as = cylxrdao.isExist("select count(o) from HhXtYhCyLxr o where o.cylxrId = ?",
+		boolean as = cylxrdao.isExist(
+				"select count(o) from HhXtYhCyLxr o where o.cylxrId = ?",
 				new Object[] { string });
 		if (as) {
 			throw new MessageException("此人已经是您的常用联系人了！");
@@ -294,31 +307,31 @@ public class UserService extends BaseService<UsUser> {
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("yhId", hhXtYh.getId());
 		paramsMap.put("cylxrId", string);
-		cylxrdao.deleteEntity("delete HhXtYhCyLxr o where o.yhId=:yhId and o.cylxrId=:cylxrId", paramsMap);
+		cylxrdao.deleteEntity(
+				"delete HhXtYhCyLxr o where o.yhId=:yhId and o.cylxrId=:cylxrId",
+				paramsMap);
 	}
 
 	public List<UsUser> queryListByIds(String[] users) {
-		return xtyhdao.queryList(UsUser.class, ParamFactory.getParamHb().in("id", users));
+		return xtyhdao.queryList(UsUser.class,
+				ParamFactory.getParamHb().in("id", users));
 	}
 
 	public List<UsUser> queryItemsByIdsStr(String ids) {
 		if (Check.isEmpty(ids)) {
 			return null;
 		}
-		return xtyhdao.queryList(UsUser.class, ParamFactory.getParamHb().in("id", Convert.strToList(ids)));
+		return xtyhdao.queryList(UsUser.class,
+				ParamFactory.getParamHb().in("id", Convert.strToList(ids)));
 	}
 
 	public List<UsUser> queryUserByOrgId(String orgs) {
 		ParamInf hqlParamList2 = ParamFactory.getParamHb();
 		hqlParamList2.is("orgId", orgs);
-		ParamInf hqlParamList3 = ParamFactory.getParamHb();
-		hqlParamList3.is("jobId", orgs);
-		ParamInf hqlParamList4 = ParamFactory.getParamHb();
-		hqlParamList4.is("deptId", orgs);
-		ParamInf hqlParamList5 = ParamFactory.getParamHb();
+		hqlParamList2.is("jobId", orgs);
+		hqlParamList2.is("deptId", orgs);
 
-		List<UsUser> hhXtYhList = queryList(
-				ParamFactory.getParamHb().or(hqlParamList5.or(hqlParamList2, hqlParamList3), hqlParamList4));
+		List<UsUser> hhXtYhList = queryList(ParamFactory.getParamHb().or(hqlParamList2));
 		return hhXtYhList;
 	}
 
@@ -327,19 +340,21 @@ public class UserService extends BaseService<UsUser> {
 		if (Check.isEmpty(yhIdList)) {
 			return new ArrayList<UsUser>();
 		}
-		List<UsUser> hhXtYhList = xtyhdao.queryList(UsUser.class, Restrictions.in("id", yhIdList));
+		List<UsUser> hhXtYhList = xtyhdao.queryList(UsUser.class,
+				Restrictions.in("id", yhIdList));
 		return hhXtYhList;
 	}
-	
+
 	public List<UsUser> queryUserByUsGroup(String groupId) {
 		List<String> yhIdList = queryUserIdListByUsGroup(groupId);
 		if (Check.isEmpty(yhIdList)) {
 			return new ArrayList<UsUser>();
 		}
-		List<UsUser> hhXtYhList = xtyhdao.queryList(UsUser.class, Restrictions.in("id", yhIdList));
+		List<UsUser> hhXtYhList = xtyhdao.queryList(UsUser.class,
+				Restrictions.in("id", yhIdList));
 		return hhXtYhList;
 	}
-	
+
 	private List<String> queryUserIdListByUsGroup(String groupId) {
 		List<String> yhIdList = new ArrayList<String>();
 		UsGroup hhXtGroup = usGoupService.findObjectById(groupId);
@@ -360,18 +375,21 @@ public class UserService extends BaseService<UsUser> {
 
 	public void updateZmbj(UsUser hhXtZmsx) {
 		hhXtZmsx.setId(loginUserUtilService.findLoginUser().getId());
-		dao.updateEntity("update " + UsUser.class.getName() + " o set o.vzmbj=:vzmbj where o.id=:id", hhXtZmsx);
+		dao.updateEntity("update " + UsUser.class.getName()
+				+ " o set o.vzmbj=:vzmbj where o.id=:id", hhXtZmsx);
 	}
 
 	public void updateDefaultOrg(String userId, String orgid) {
-		dao.updateEntity("update " + UsUser.class.getName() + " o set o.defaultOrgId=? where o.id=?",
-				new Object[] { orgid, userId });
+		dao.updateEntity("update " + UsUser.class.getName()
+				+ " o set o.defaultOrgId=? where o.id=?", new Object[] { orgid,
+				userId });
 	}
 
 	public void updateTheme(UsUser hhXtZmsx) {
 		UsUser hhXtYh = loginUserUtilService.findLoginUser();
 		hhXtZmsx.setId(hhXtYh.getId());
-		dao.updateEntity("update " + UsUser.class.getName() + " o set o.theme=:theme where o.id=:id", hhXtZmsx);
+		dao.updateEntity("update " + UsUser.class.getName()
+				+ " o set o.theme=:theme where o.id=:id", hhXtZmsx);
 		hhXtYh.setTheme(hhXtZmsx.getTheme());
 		ActionContext.getContext().getSession().put("loginuser", hhXtYh);
 	}
@@ -416,7 +434,8 @@ public class UserService extends BaseService<UsUser> {
 					js = roleMapNameId.get(jsName);
 				} else {
 					String[] jsArr = jsName.split(",");
-					List<UsRole> usRoles = roleService.queryListByProperty("text", Convert.arrayToList(jsArr));
+					List<UsRole> usRoles = roleService.queryListByProperty(
+							"text", Convert.arrayToList(jsArr));
 					js = Convert.objectListToString(usRoles, "id");
 					roleMapNameId.put(jsName, js);
 				}
@@ -426,8 +445,9 @@ public class UserService extends BaseService<UsUser> {
 					jg = orgMapNameId.get(jgName);
 				} else {
 					String[] jsArr = jgName.split(",");
-					List<UsOrganization> usOrganizations = organizationService.queryListByProperty("text",
-							Convert.arrayToList(jsArr));
+					List<UsOrganization> usOrganizations = organizationService
+							.queryListByProperty("text",
+									Convert.arrayToList(jsArr));
 					jg = Convert.objectListToString(usOrganizations, "id");
 					orgMapNameId.put(jgName, jg);
 				}
@@ -439,7 +459,9 @@ public class UserService extends BaseService<UsUser> {
 				} else {
 					String[] jsArr = bmName.split(",");
 					List<UsOrganization> usOrganizations = organizationService
-							.queryList(ParamFactory.getParamHb().in("text", Convert.arrayToList(jsArr)).is("node", jg));
+							.queryList(ParamFactory.getParamHb()
+									.in("text", Convert.arrayToList(jsArr))
+									.is("node", jg));
 					bm = Convert.objectListToString(usOrganizations, "id");
 					orgMapNameId.put(bmkey, bm);
 				}
@@ -451,7 +473,9 @@ public class UserService extends BaseService<UsUser> {
 				} else {
 					String[] jsArr = gwName.split(",");
 					List<UsOrganization> usOrganizations = organizationService
-							.queryList(ParamFactory.getParamHb().in("text", Convert.arrayToList(jsArr)).is("node", bm));
+							.queryList(ParamFactory.getParamHb()
+									.in("text", Convert.arrayToList(jsArr))
+									.is("node", bm));
 					gw = Convert.objectListToString(usOrganizations, "id");
 					orgMapNameId.put(gwkey, gw);
 				}
@@ -461,7 +485,8 @@ public class UserService extends BaseService<UsUser> {
 			if (Check.isNoEmpty(id)) {
 				user = findObjectById(id);
 			} else {
-				List<UsUser> users = queryList(ParamFactory.getParamHb().is("text", name));
+				List<UsUser> users = queryList(ParamFactory.getParamHb().is(
+						"text", name));
 				for (UsUser usUser : users) {
 					user = usUser;
 				}

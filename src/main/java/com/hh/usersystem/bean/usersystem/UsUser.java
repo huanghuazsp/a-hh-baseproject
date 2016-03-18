@@ -257,6 +257,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.orgIdsStr = orgIdsStr;
 	}
 
+	@Column(name="HEADPIC")
 	public String getHeadpic() {
 		return headpic;
 	}

@@ -121,7 +121,7 @@ public class MessageService {
 		message.setVorgid(loginUserUtilService.findOrgId());
 		message.setVdeptid(loginUserUtilService.findDeptId());
 		message.setVjobid(loginUserUtilService.findJobId());
-		
+		message.setHeadpic(Convert.toString(paramMap.get("headpic")));
 		message.setContent(Convert.toString(paramMap.get("message")));
 		
 		String title = "";
