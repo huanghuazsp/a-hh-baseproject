@@ -68,6 +68,13 @@ public class SysMessageService extends BaseService<SysMessage> implements
 		this.save(sysMessage);
 		if (addCylxr == 1) {
 			UsUserCyLxr usUserCyLxr = new UsUserCyLxr();
+			
+			usUserCyLxr.setVcreate(sysMessage.getVcreate());
+			usUserCyLxr.setVupdate(sysMessage.getVupdate());
+			usUserCyLxr.setVorgid(sysMessage.getVorgid());
+			usUserCyLxr.setVdeptid(sysMessage.getDeptId());
+			usUserCyLxr.setVjobid(sysMessage.getVjobid());
+			
 			usUserCyLxr.setYhId(sysMessage.getSendUserId());
 			if (Convert.toString(sysMessage.getSendObjectId()).equals(
 					sysMessage.getSendUserId())) {
