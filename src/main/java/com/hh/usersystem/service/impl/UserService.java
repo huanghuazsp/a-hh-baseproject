@@ -495,7 +495,7 @@ public class UserService extends BaseService<UsUser> {
 
 	public void addCylxrObject(UsUserCyLxr usUserCyLxr) {
 		List<UsUserCyLxr> userCyLxrs = cylxrdao.queryList(UsUserCyLxr.class,
-				ParamFactory.getParamHb().is("cylxrId", "").is("yhId", ""));
+				ParamFactory.getParamHb().is("cylxrId", usUserCyLxr.getCylxrId()).is("yhId", usUserCyLxr.getYhId()));
 		if (userCyLxrs.size()==0) {
 			cylxrdao.createEntity(usUserCyLxr);
 		}
