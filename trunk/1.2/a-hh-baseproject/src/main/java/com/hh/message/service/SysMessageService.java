@@ -114,7 +114,7 @@ public class SysMessageService extends BaseService<SysMessage> implements
 		List<Map<String, Object>> sysMessagesList = this
 				.getDao()
 				.queryList(
-						"select sendObjectType as lx_,sendObjectId as id,sendObjectName as text,headpic as headpic,count(id) as count  from "
+						"select sendObjectType as lx_,sendObjectId as id,sendObjectName as text,sendObjectHeadpic as headpic,count(id) as count  from "
 								+ SysMessage.class.getName()
 								+ " where (userId=:userId or orgId=:orgId or deptId=:deptId) and sendUserId!=:userId and readUserId not like '%"
 								+ userId

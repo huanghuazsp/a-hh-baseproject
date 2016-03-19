@@ -255,7 +255,7 @@
 		if(selectData && (message.sendObjectId== selectData.id )){
 			appendMessage(message);
 		}else{
-			console.log(message);
+			//console.log(message);
 		}
 	}
 
