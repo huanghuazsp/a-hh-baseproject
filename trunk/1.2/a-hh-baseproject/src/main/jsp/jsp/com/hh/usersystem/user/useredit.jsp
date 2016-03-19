@@ -98,7 +98,7 @@
 				</tr>
 				<tr>
 					<td xtype="label">电子邮件：</td>
-					<td><span xtype="text" config="name: 'vdzyj'  ,email:true"></span>
+					<td><span xtype="text" config="name: 'vdzyj'  ,email:true,required :true"></span>
 					</td>
 
 				</tr>

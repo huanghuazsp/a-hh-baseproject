@@ -21,6 +21,7 @@ import com.hh.system.service.inf.SystemServiceInf;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.PrimaryKey;
+import com.hh.system.util.statics.StaticVar;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.bean.usersystem.UsRole;
@@ -64,15 +65,24 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 			}
 		}
 	}
-
+	
 	private UsRole initRole(List<String> menuIdList) {
 		UsRole hhXtJs = new UsRole();
 		setBeanSysFields(hhXtJs);
-		hhXtJs.setId("4c49311b-186e-486b-a837-7d3ad2a8c89f");
+		hhXtJs.setId(StaticVar.role_cjgly_id);
 		hhXtJs.setText("超级管理员");
 		hhXtJs.setVbz("超级管理员");
 		hhXtJs.setNlx(3);
 		roledao.saveOrUpdateEntity(hhXtJs);
+		
+		UsRole hhXtJs2 = new UsRole();
+		setBeanSysFields(hhXtJs2);
+		hhXtJs2.setId(StaticVar.role_zcyh_id);
+		hhXtJs2.setText("注册用户");
+		hhXtJs2.setVbz("注册用户");
+		hhXtJs2.setNlx(3);
+		roledao.saveOrUpdateEntity(hhXtJs2);
+		
 		for (String string : menuIdList) {
 			UsRoleMenu hhXtJsCd = new UsRoleMenu();
 			setBeanSysFields(hhXtJsCd);
