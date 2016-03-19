@@ -44,7 +44,7 @@ public class SysMessage extends BaseTwoEntity {
 	
 	private String sendObjectId = "";
 	private String sendObjectName = "";
-	
+	private String sendObjectHeadpic = "";
 	private int sendObjectType = 0;
 
 	private enum Type {
@@ -244,6 +244,14 @@ public class SysMessage extends BaseTwoEntity {
 	public void setHeadpic(String headpic) {
 		this.headpic = headpic;
 	}
-	
+
+	@Column(name="SEND_OBJECT_HEADPIC")
+	public String getSendObjectHeadpic() {
+		return sendObjectHeadpic;
+	}
+
+	public void setSendObjectHeadpic(String sendObjectHeadpic) {
+		this.sendObjectHeadpic = sendObjectHeadpic;
+	}
 
 }

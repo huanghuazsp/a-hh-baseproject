@@ -124,6 +124,8 @@ public class MessageService {
 		message.setHeadpic(Convert.toString(paramMap.get("headpic")));
 		message.setContent(Convert.toString(paramMap.get("message")));
 		
+		message.setSendObjectHeadpic(Convert.toString(paramMap.get("sendObjectHeadpic")));
+		
 		String title = "";
 		
 		if (Check.isNoEmpty(message.getOrgName())) {
@@ -145,7 +147,7 @@ public class MessageService {
 		
 		message.setTitle(title);
 
-		ThreadUtil.getThreadPool().execute(new MessageThread(message));
+		ThreadUtil.getThreadPool().execute(new MessageThread(message,Convert.toInt(paramMap.get("addCylxr"))));
 		return message;
 	}
 }

@@ -9,19 +9,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hh.message.bean.SysMessage;
-import com.hh.message.bean.SysMessage;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
-import com.hh.system.util.Json;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.bean.usersystem.UsUserCyLxr;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
+import com.hh.usersystem.service.impl.UsUserCylxrService;
 import com.hh.usersystem.service.impl.UserService;
 
 @Service
@@ -29,6 +29,12 @@ public class SysMessageService extends BaseService<SysMessage> implements
 		LoadDataTime {
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private UsUserCylxrService usUserCylxrService;
 
 	@Override
 	public PagingData<SysMessage> queryPagingData(SysMessage entity,
@@ -57,29 +63,92 @@ public class SysMessageService extends BaseService<SysMessage> implements
 		return entity;
 	}
 
+	@Transactional
+	public void save(SysMessage sysMessage, int addCylxr) {
+		this.save(sysMessage);
+		if (addCylxr == 1) {
+			UsUserCyLxr usUserCyLxr = new UsUserCyLxr();
+			usUserCyLxr.setYhId(sysMessage.getSendUserId());
+			if (Convert.toString(sysMessage.getSendObjectId()).equals(
+					sysMessage.getSendUserId())) {
+				usUserCyLxr.setCylxrId(sysMessage.getUserId());
+				usUserCyLxr.setCylxrName(sysMessage.getUserName());
+			} else {
+				usUserCyLxr.setCylxrId(sysMessage.getSendObjectId());
+				usUserCyLxr.setCylxrName(sysMessage.getSendObjectName());
+			}
+			usUserCyLxr.setHeadpic(sysMessage.getSendObjectHeadpic());
+			usUserCyLxr.setType(sysMessage.getSendObjectType());
+			userService.addCylxrObject(usUserCyLxr);
+		}
+	}
+
 	public Map<String, Object> load() {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		Map<String, Object> mapparam = new HashMap<String, Object>();
+		String userId = loginUserUtilService.findUserId();
 
-		mapparam.put("userId", loginUserUtilService.findUserId());
-		mapparam.put("orgId", loginUserUtilService.findOrgId());
-		mapparam.put("deptId", loginUserUtilService.findDeptId());
+		String orgId = loginUserUtilService.findOrgId();
+		String deptId = loginUserUtilService.findDeptId();
+
+		if (Check.isEmpty(orgId)) {
+			orgId = "1111111";
+		}
+		if (Check.isEmpty(deptId)) {
+			deptId = "1111111";
+		}
+
+		mapparam.put("userId", userId);
+		mapparam.put("orgId", orgId);
+		mapparam.put("deptId", deptId);
 
 		List<Map<String, Object>> sysMessagesList = this
 				.getDao()
 				.queryList(
-						"select sendObjectType as lx_,sendObjectId as id,sendObjectName as text,count(id) as count  from "
+						"select sendObjectType as lx_,sendObjectId as id,sendObjectName as text,headpic as headpic,count(id) as count  from "
 								+ SysMessage.class.getName()
 								+ " where (userId=:userId or orgId=:orgId or deptId=:deptId) and sendUserId!=:userId and readUserId not like '%"
-								+ loginUserUtilService.findUserId()
-								+ "%' GROUP BY sendObjectType,sendObjectId,sendObjectName",
+								+ userId
+								+ "%' GROUP BY sendObjectType,sendObjectId,sendObjectName,sendObjectHeadpic",
 						mapparam);
+
+		Map<String, Map<String, Object>> mapMap = Convert.listMapToMap(
+				sysMessagesList, "id");
+
+		List<UsUserCyLxr> usUserCyLxrList = usUserCylxrService
+				.queryListByProperty("yhId", userId);
+
+		Map<String, UsUserCyLxr> usUserCyLxrMap = Convert.listToMap(
+				usUserCyLxrList, "getCylxrId");
+
 		int shouCount = 0;
 		for (Map<String, Object> map2 : sysMessagesList) {
 			shouCount += Convert.toInt(map2.get("count"));
+			UsUserCyLxr usUserCyLxr = usUserCyLxrMap.get(Convert.toString(map2
+					.get("id")));
+			if (usUserCyLxr == null) {
+				usUserCyLxr = new UsUserCyLxr();
+				usUserCyLxr.setYhId(userId);
+				usUserCyLxr.setCylxrId(Convert.toString(map2.get("id")));
+				usUserCyLxr.setCylxrName(Convert.toString(map2.get("text")));
+				usUserCyLxr.setHeadpic(Convert.toString(map2.get("headpic")));
+				usUserCyLxr.setType(Convert.toInt(map2.get("lx_")));
+				userService.addCylxrObject(usUserCyLxr);
+			}
 		}
+		for (UsUserCyLxr usUserCyLxr : usUserCyLxrList) {
+			if (mapMap.get(usUserCyLxr.getCylxrId()) == null) {
+				Map<String, Object> map2 = new HashMap<String, Object>();
+				map2.put("id", usUserCyLxr.getCylxrId());
+				map2.put("text", usUserCyLxr.getCylxrName());
+				map2.put("headpic", usUserCyLxr.getHeadpic());
+				map2.put("lx_", usUserCyLxr.getType());
+				sysMessagesList.add(map2);
+			}
+		}
+
 		// queryList(ParamFactory.getParamHb().is("userId",
 		// loginUserUtilService.findUserId())
 		// .is("deptId", loginUserUtilService.findDeptId()).is("orgId",
@@ -196,16 +265,24 @@ public class SysMessageService extends BaseService<SysMessage> implements
 
 	public List<SysMessage> queryMyPagingDataBySendObjectId(SysMessage object,
 			PageRange pageRange) {
-
+		UsUser user = loginUserUtilService.findLoginUser();
 		ParamInf paramInf = ParamFactory.getParamHb();
+		if (object.getSendObjectType() == 0) {
+			ParamInf paramInf2 = ParamFactory.getParamHb();
+			paramInf2.is("sendUserId", user.getId());
+			paramInf2.is("userId", user.getId());
 
-		ParamInf paramInf2 = ParamFactory
-				.getParamHb()
-				.and(ParamFactory.getParamHb()
-						.is("sendUserId", loginUserUtilService.findUserId())
-						.is("sendObjectId", object.getSendObjectId()))
-				.is("sendObjectId", object.getSendObjectId());
-		paramInf.or(paramInf2);
+			ParamInf paramInf3 = ParamFactory.getParamHb();
+			paramInf3.is("sendUserId", object.getSendObjectId());
+			paramInf3.is("userId", object.getSendObjectId());
+
+			paramInf.or(paramInf2).or(paramInf3).is("sendObjectType", 0);
+		} else {
+			ParamInf paramInf2 = ParamFactory.getParamHb();
+			paramInf2.is("sendUserId", user.getId());
+			paramInf2.is("sendObjectId", object.getSendObjectId());
+			paramInf.or(paramInf2).nis("sendObjectType", 0);
+		}
 
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
 		paramsMap.put("userId", loginUserUtilService.findUserId());

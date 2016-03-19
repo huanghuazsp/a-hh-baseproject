@@ -15,7 +15,6 @@
 <script type="text/javascript">
 
 	loginUser = <%=Json.toStr(session.getAttribute("loginuser"))%>;
-
 	var params = $.hh.getIframeParams();
 	var orgtreeconfig = {
 		render : false,
@@ -91,11 +90,18 @@
 	
 	var messConfig = {
 			onClick : function(data){
+				data.li.find('.hh_red').remove();
 				clickMenu(data);
 			}
 	}
 	
 	function clickMenu(data){
+		var objectMap = $.hh.listToObject($('#messDivspan').data('data'));
+		if(objectMap[data.id]==null){
+			data.addCylxr = 1;
+		}else{
+			data.addCylxr = 0;
+		}
 		$('#userdiv').html(
 				'<div style="margin-top:5px;">' + data.text + '</div>');
 		$('#userdiv').data('data', data);
@@ -109,7 +115,8 @@
 				limit:limit,
 				page:page,
 				start:start,
-				sendObjectId : data.id
+				sendObjectId : data.id,
+				sendObjectType : data.lx_
 			},
 			defaultMsg : false
 		}, function(dataList) {
@@ -127,6 +134,7 @@
 			data.date = $.hh.dateTimeToString(data.dcreate);
 			data.message = data.content;
 			data.type = data.sendUserId == loginUser.id ? 'my' : 'you';
+			data.sendHeadpic = data.headpic;
 			appendMessage(data);
 		}
 	}
@@ -234,7 +242,9 @@
 	
 	function renderAllMessage(allMessage){
 		for(var i =0;i<allMessage.length;i++){
-			allMessage[i].rightText = '<font class="hh_red">'+allMessage[i].count+'</font>';
+			if(allMessage[i].count){
+				allMessage[i].rightText = '<font class="hh_red">'+allMessage[i].count+'</font>';
+			}
 		}
 		$('#messDivspan').render({data: allMessage});
 	}
@@ -259,6 +269,8 @@
 		var type = config.type;
 		var text = config.sendUserName;
 		var userId = config.userId;
+		
+		
 		var headpic = config.sendHeadpic;
 		
 		if(headpic &&  headpic.indexOf('hhcomm')==-1){
@@ -347,10 +359,17 @@
 			
 			messageData.sendUserId = loginUser.id;
 			messageData.sendUserName = loginUser.text;
+			
+			messageData.sendObjectHeadpic =data.headpic;
+			messageData.headpic =  loginUser.headpic;
+			
 			messageData.sendHeadpic = loginUser.headpic;
 			
 			messageData.date = $.hh.dateTimeToString($.hh.getDate());
 			messageData.type='my';
+			
+			messageData.addCylxr=data.addCylxr;
+			
 			
 			appendMessage(messageData);
 			
