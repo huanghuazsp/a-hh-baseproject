@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +23,10 @@ import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtTree;
-import com.hh.usersystem.bean.usersystem.UsSysGroup;
 import com.hh.usersystem.bean.usersystem.UsGroup;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.bean.usersystem.UsRole;
+import com.hh.usersystem.bean.usersystem.UsSysGroup;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UsUserCyLxr;
@@ -287,21 +285,6 @@ public class UserService extends BaseService<UsUser> {
 		return extTrees;
 	}
 
-	public void addCylxr(String string) throws MessageException {
-		boolean as = cylxrdao.isExist(
-				"select count(o) from HhXtYhCyLxr o where o.cylxrId = ?",
-				new Object[] { string });
-		if (as) {
-			throw new MessageException("此人已经是您的常用联系人了！");
-		} else {
-			UsUser hhXtYh = loginUserUtilService.findLoginUser();
-			UsUserCyLxr hhXtYhCyLxr = new UsUserCyLxr();
-			hhXtYhCyLxr.setCylxrId(string);
-			hhXtYhCyLxr.setYhId(hhXtYh.getId());
-			cylxrdao.createEntity(hhXtYhCyLxr);
-		}
-	}
-
 	public void deleteCylxr(String string) throws MessageException {
 		UsUser hhXtYh = loginUserUtilService.findLoginUser();
 		Map<String, String> paramsMap = new HashMap<String, String>();
@@ -331,7 +314,8 @@ public class UserService extends BaseService<UsUser> {
 		hqlParamList2.is("jobId", orgs);
 		hqlParamList2.is("deptId", orgs);
 
-		List<UsUser> hhXtYhList = queryList(ParamFactory.getParamHb().or(hqlParamList2));
+		List<UsUser> hhXtYhList = queryList(ParamFactory.getParamHb().or(
+				hqlParamList2));
 		return hhXtYhList;
 	}
 
@@ -506,6 +490,14 @@ public class UserService extends BaseService<UsUser> {
 			user.setDeptId(bm);
 			user.setJobId(gw);
 			save(user);
+		}
+	}
+
+	public void addCylxrObject(UsUserCyLxr usUserCyLxr) {
+		List<UsUserCyLxr> userCyLxrs = cylxrdao.queryList(UsUserCyLxr.class,
+				ParamFactory.getParamHb().is("cylxrId", "").is("yhId", ""));
+		if (userCyLxrs.size()==0) {
+			cylxrdao.createEntity(usUserCyLxr);
 		}
 	}
 

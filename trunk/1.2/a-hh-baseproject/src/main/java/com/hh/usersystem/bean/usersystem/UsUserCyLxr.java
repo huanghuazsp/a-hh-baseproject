@@ -7,27 +7,20 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.hh.hibernate.util.base.BaseOneEntity;
+import com.hh.hibernate.dao.inf.Order;
+import com.hh.hibernate.util.base.BaseTwoEntity;
 
-/**
- * HhXtYhJs entity.
- * 
- * @author MyEclipse Persistence Tools
- */
 @Entity
 @Table(name = "US_USER_CYLXR")
-public class UsUserCyLxr extends BaseOneEntity implements java.io.Serializable {
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Order
+public class UsUserCyLxr extends BaseTwoEntity {
 
 	private String yhId;
 	private String cylxrId;
-
-	// Constructors
-
-	/** default constructor */
-	public UsUserCyLxr() {
-	}
-
-
+	private String cylxrName;
+	private String headpic;
+	private int type;
 
 	@Column(name = "YH_ID", nullable = false, length = 36)
 	public String getYhId() {
@@ -38,7 +31,6 @@ public class UsUserCyLxr extends BaseOneEntity implements java.io.Serializable {
 		this.yhId = yhId;
 	}
 
-
 	@Column(name = "CYLXR_ID", nullable = false, length = 36)
 	public String getCylxrId() {
 		return cylxrId;
@@ -47,7 +39,32 @@ public class UsUserCyLxr extends BaseOneEntity implements java.io.Serializable {
 	public void setCylxrId(String cylxrId) {
 		this.cylxrId = cylxrId;
 	}
-	
 
+	@Column(name = "CYLXR_NAME", length = 64)
+	public String getCylxrName() {
+		return cylxrName;
+	}
+
+	public void setCylxrName(String cylxrName) {
+		this.cylxrName = cylxrName;
+	}
+
+	@Column(name = "HEADPIC")
+	public String getHeadpic() {
+		return headpic;
+	}
+
+	public void setHeadpic(String headpic) {
+		this.headpic = headpic;
+	}
+
+	@Column(name = "TYPE_")
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 }

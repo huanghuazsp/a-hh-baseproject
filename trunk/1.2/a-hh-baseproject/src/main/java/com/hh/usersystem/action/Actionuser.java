@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.system.inf.IFileAction;
 import com.hh.system.service.impl.BaseService;
+import com.hh.system.util.BeanUtils;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
@@ -26,6 +27,7 @@ import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.bean.usersystem.UsRole;
 import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.bean.usersystem.UsUserCyLxr;
 import com.hh.usersystem.service.impl.OrganizationService;
 import com.hh.usersystem.service.impl.RoleService;
 import com.hh.usersystem.service.impl.UserService;
@@ -130,9 +132,12 @@ public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction
 		return hhXtYhs;
 	}
 
-	public Object addCylxr() {
+	
+	public Object addCylxrObject() {
 		try {
-			userService.addCylxr(this.getParamsMap().get("cylxrid"));
+			UsUserCyLxr usUserCyLxr = new UsUserCyLxr();
+			BeanUtils.copyMap(usUserCyLxr, this.getParamsMap());
+			userService.addCylxrObject(usUserCyLxr);
 			return null;
 		} catch (MessageException e) {
 			return e;
