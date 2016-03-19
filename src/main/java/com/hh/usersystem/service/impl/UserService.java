@@ -185,6 +185,9 @@ public class UserService extends BaseService<UsUser> {
 		if (checkVdlzhOnly(hhXtYh)) {
 			throw new MessageException("登陆账号已存在，请更换！" + hhXtYh.getVdlzh());
 		}
+		if (checkEmailOnly(hhXtYh)) {
+			throw new MessageException("电子邮箱已存在，请更换！" + hhXtYh.getVdlzh());
+		}
 		if (Check.isEmpty(hhXtYh.getId())) {
 			// HHXtZmsx hhXtZmsx = new HHXtZmsx();
 			// hhXtYh.setHhXtZmsx(hhXtZmsx);
@@ -197,6 +200,16 @@ public class UserService extends BaseService<UsUser> {
 			xtyhdao.updateEntity(hhXtYh);
 		}
 		return hhXtYh;
+	}
+
+	private boolean checkEmailOnly(UsUser hhXtYh) {
+		return xtyhdao
+				.findWhetherData(
+						"select count(o) from "
+								+ hhXtYh.getClass().getName()
+								+ " o "
+								+ "where o.vdzyj=:vdzyj and (o.id!=:id or :id is null)",
+						hhXtYh);
 	}
 
 	public boolean checkVdlzhOnly(UsUser hhXtYh) {
