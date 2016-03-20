@@ -30,8 +30,7 @@ import com.hh.usersystem.service.impl.OrganizationService;
 import com.hh.usersystem.service.impl.RoleService;
 
 @SuppressWarnings("serial")
-public class ActionOrg extends BaseServiceAction<UsOrganization> implements
-		IFileAction {
+public class ActionOrg extends BaseServiceAction<UsOrganization> implements IFileAction {
 	private String orgs;
 	private String selectType;
 
@@ -51,8 +50,8 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 	}
 
 	public Object queryOrgListByPidAndLx() {
-		List<UsOrganization> organizationList = organizationService
-				.queryOrgListByPidAndLx(object, paramsMap.get("node"));
+		List<UsOrganization> organizationList = organizationService.queryOrgListByPidAndLx(object,
+				paramsMap.get("node"));
 		return organizationList;
 	}
 
@@ -61,14 +60,12 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 	}
 
 	public Object queryOrgListByPid() {
-		List<UsOrganization> organizationList = organizationService
-				.queryOrgListByPid(object, orgs, selectType);
+		List<UsOrganization> organizationList = organizationService.queryOrgListByPid(object, orgs, selectType);
 		return organizationList;
 	}
 
 	public Object findObjectById() {
-		UsOrganization hhXtCd = organizationService.findObjectById(this.object
-				.getId());
+		UsOrganization hhXtCd = organizationService.findObjectById(this.object.getId());
 		return hhXtCd;
 	}
 
@@ -78,18 +75,25 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 
 	@Override
 	public Object queryTreeList() {
-		return organizationService.queryTreeList(object,
+		List<UsOrganization> organizationList = organizationService.queryTreeList(object,
 				Convert.toBoolean(request.getParameter("isNoLeaf")));
+		if ("root".equals(object.getNode())) {
+			UsOrganization usOrganization = new UsOrganization();
+			usOrganization.setId("default");
+			usOrganization.setText("未分配机构人员");
+			usOrganization.setNode("root");
+			usOrganization.setIcon("/hhcommon/images/myimage/org/org.png");
+			organizationList.add(usOrganization);
+		}
+		return organizationList;
 	}
 
 	public Object queryStateTreeList() {
-		return organizationService.queryTreeList(ParamFactory.getParamHb()
-				.is("state", 0).is("node", object.getNode()));
+		return organizationService.queryTreeList(ParamFactory.getParamHb().is("state", 0).is("node", object.getNode()));
 	}
 
 	public Object queryTreeListByLx() {
-		return organizationService.queryTreeListByLx(object,
-				Convert.toBoolean(request.getParameter("isNoLeaf")));
+		return organizationService.queryTreeListByLx(object, Convert.toBoolean(request.getParameter("isNoLeaf")));
 	}
 
 	public Object save() {
@@ -110,8 +114,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 		if (Check.isNoEmpty(object.getId())) {
 			StringBuffer texts = new StringBuffer();
 			List<UsOrganization> organizationList = organizationService
-					.queryList(ParamFactory.getParamHb().in(StaticVar.entityId,
-							Convert.strToList(object.getId())));
+					.queryList(ParamFactory.getParamHb().in(StaticVar.entityId, Convert.strToList(object.getId())));
 			for (UsOrganization organization : organizationList) {
 				texts.append(organization.getText() + ",");
 			}
@@ -147,8 +150,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 
 	public Object importData() throws Exception {
 		response.setContentType("text/html");
-		String path = FileUpload.uploadFile(attachment, attachmentFileName,
-				type);
+		String path = FileUpload.uploadFile(attachment, attachmentFileName, type);
 		File file = new File(StaticVar.filepath + path);
 		List<Map<String, Object>> mapList = ExcelUtil.getMapList(file, 1);
 		try {
@@ -194,10 +196,8 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 		List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
 		List<String[]> headNameList = new ArrayList<String[]>();
 		List<String[]> fieldNameList = new ArrayList<String[]>();
-		headNameList.add(new String[] { "标识", "名称", "上级名称", "类型", "状态", "机构角色",
-				"自定义编码", "简称", "备注" });
-		fieldNameList.add(new String[] { "id", "text", "sjmc", "lx", "zt",
-				"jgjs", "zdybm", "jc", "bz" });
+		headNameList.add(new String[] { "标识", "名称", "上级名称", "类型", "状态", "机构角色", "自定义编码", "简称", "备注" });
+		fieldNameList.add(new String[] { "id", "text", "sjmc", "lx", "zt", "jgjs", "zdybm", "jc", "bz" });
 
 		List<UsOrganization> organizations = new ArrayList<UsOrganization>();
 		organizationService.queryAllList(organizations, "root");
@@ -226,8 +226,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 					map2.put("sjmc", orgMapNameId.get(organization.getNode()));
 				} else {
 					List<UsOrganization> usOrganizations = organizationService
-							.queryListByIds(Convert.strToList(organization
-									.getNode()));
+							.queryListByIds(Convert.strToList(organization.getNode()));
 					String text = "";
 					if (usOrganizations.size() > 0) {
 						text = usOrganizations.get(0).getText();
@@ -239,11 +238,9 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements
 
 			if (Check.isNoEmpty(organization.getRoleIds())) {
 				if (roleMapNameId.keySet().contains(organization.getRoleIds())) {
-					map2.put("jgjs",
-							roleMapNameId.get(organization.getRoleIds()));
+					map2.put("jgjs", roleMapNameId.get(organization.getRoleIds()));
 				} else {
-					List<UsRole> usRoles = roleService.queryListByIds(Convert
-							.strToList(organization.getRoleIds()));
+					List<UsRole> usRoles = roleService.queryListByIds(Convert.strToList(organization.getRoleIds()));
 					String text = Convert.objectListToString(usRoles, "text");
 					map2.put("jgjs", text);
 					roleMapNameId.put(organization.getRoleIds(), text);
