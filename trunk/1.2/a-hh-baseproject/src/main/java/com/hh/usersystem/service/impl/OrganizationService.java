@@ -248,6 +248,20 @@ public class OrganizationService extends BaseService<UsOrganization> {
 //		for (UsOrganization organization : organizations) {
 //			addOrgUser(organization1);
 //		}
+		
+		
+		if ("root".equals(organization1.getNode())) {
+			UsOrganization usOrganization = new UsOrganization();
+			usOrganization.setId("default");
+			usOrganization.setText("未分配部门人员");
+			usOrganization.setNode("root");
+			usOrganization.setIcon("/hhcommon/images/myimage/org/org.png");
+			List<UsUser> hhXtYhs = xtyhdao.queryList(UsUser.class, ParamFactory
+					.getParamHb().isNull("deptId"));
+			usOrganization.setChildren(addOrgUser(hhXtYhs));
+			organizations.add(usOrganization);
+		}
+		
 		organizations.addAll(addOrgUser(organization1.getNode()));
 		return organizations;
 	}
@@ -258,9 +272,15 @@ public class OrganizationService extends BaseService<UsOrganization> {
 //				addOrgUser(organization2);
 //			}
 //		}
-		List<UsOrganization> organizations = new ArrayList<UsOrganization>();
 		List<UsUser> hhXtYhs = xtyhdao.queryList(UsUser.class, ParamFactory
 				.getParamHb().in("deptId", orgId.split(",")));
+		
+		
+		return addOrgUser(hhXtYhs);
+	}
+
+	private List<UsOrganization> addOrgUser(List<UsUser> hhXtYhs) {
+		List<UsOrganization> organizations = new ArrayList<UsOrganization>();
 		if (!Check.isEmpty(hhXtYhs)) {
 //			organization.setExpanded(1);
 			for (UsUser hhXtYh : hhXtYhs) {

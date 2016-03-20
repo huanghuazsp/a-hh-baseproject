@@ -22,6 +22,10 @@
 		nheight : 42,
 		url : 'usersystem-Org-queryOrgAndUsersList',
 		onClick : function(node) {
+			if(node.id=='default'){
+				//Dialog.infomsg('请输入内容！');
+				return;
+			}
 			clickMenu(node);
 		},
 		rightMenu : [ {
