@@ -77,14 +77,6 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements IFil
 	public Object queryTreeList() {
 		List<UsOrganization> organizationList = organizationService.queryTreeList(object,
 				Convert.toBoolean(request.getParameter("isNoLeaf")));
-		if ("root".equals(object.getNode())) {
-			UsOrganization usOrganization = new UsOrganization();
-			usOrganization.setId("default");
-			usOrganization.setText("未分配机构人员");
-			usOrganization.setNode("root");
-			usOrganization.setIcon("/hhcommon/images/myimage/org/org.png");
-			organizationList.add(usOrganization);
-		}
 		return organizationList;
 	}
 
