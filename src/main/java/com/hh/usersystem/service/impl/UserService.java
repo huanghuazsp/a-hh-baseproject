@@ -239,6 +239,7 @@ public class UserService extends BaseService<UsUser> {
 			xtyhcdzmtb.deleteEntity(UsUserMenuZmtb.class, "yhId", idList);
 			// zmsxdao.deleteEntity(HHXtZmsx.class, "id", idList);
 			cylxrdao.deleteEntity(UsUserCyLxr.class, "yhId", idList);
+			cylxrdao.deleteEntity(UsUserCyLxr.class, "cylxrId", idList);
 		}
 
 	}
