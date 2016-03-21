@@ -103,6 +103,7 @@ public class Actionlogin extends BaseAction {
 	public Object reg() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			xtYh.setNxb(1);
 			UsReg usReg2 = usRegService.findObjectByProperty("email", xtYh.getVdzyj());
 			if (usReg2==null) {
 				map.put("msg", "注册码未获取");
