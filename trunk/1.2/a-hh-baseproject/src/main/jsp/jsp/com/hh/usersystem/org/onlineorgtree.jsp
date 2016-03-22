@@ -17,7 +17,7 @@
 	loginUser = <%=Json.toStr(session.getAttribute("loginuser"))%>;
 	var params = $.hh.getIframeParams();
 	var orgtreeconfig = {
-		render : false,
+		//render : false,
 		id : 'orgTree',
 		nheight : 42,
 		url : 'usersystem-Org-queryOrgAndUsersList',
@@ -93,6 +93,7 @@
 	}
 	
 	var messConfig = {
+			render:false,
 			onClick : function(data){
 				data.li.find('.hh_red').remove();
 				clickMenu(data);
@@ -145,6 +146,7 @@
 
 	var grouprender = false;
 	var orgrender = false;
+	var messrender = false;
 	var tabconfig = {
 		activate : function(ui) {
 			var newPanel = ui.newPanel;
@@ -155,6 +157,9 @@
 			}else if (id == 'orgDiv' && orgrender == false) {
 				orgrender = true;
 				$('#span_orgTree').render();
+			}else if (id == 'orgDiv' && orgrender == false) {
+				messrender = true;
+				$('#messDivspan').render();
 			}
 		}
 	}
@@ -397,8 +402,8 @@
 		<div config="render : 'west' ,width:260 ">
 			<div id="tabs" xtype="tab" configVar="tabconfig">
 				<ul>
-					<li><a href="#messDiv">消息</a></li>
 					<li><a href="#orgDiv">机构</a></li>
+					<li><a href="#messDiv">消息</a></li>
 					<li><a href="#grooupDiv">组</a></li>
 				</ul>
 				<div id="messDiv">
