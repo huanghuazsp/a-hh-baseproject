@@ -55,7 +55,7 @@
 		},{
 			name : 'remark' ,
 			text : '备注',
-			contentwidth: '250'
+			width: 250
 		}
 	]">
 	</div>

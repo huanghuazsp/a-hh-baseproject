@@ -177,15 +177,16 @@
 					},{
 						name : 'nlx' ,
 						text : '类型',
-						render : 'rendernlx'
+						render : 'rendernlx',
+						width: 150
 					},{
 						name : 'vbz' ,
 						text : '备注',
-						contentwidth: '150'
+						width: 150
 					},{
 						name : 'id' ,
 						text : '操作',
-						width: '40',
+						width: 55,
 						render : 'renderoper'
 					}
 				]">
