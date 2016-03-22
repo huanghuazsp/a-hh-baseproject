@@ -35,7 +35,7 @@
 		{
 			name : 'sql' ,
 			text : 'sql',
-			contentwidth: '200'
+			width: 200
 		},{
 			name : 'elapsedTime' ,
 			text : '耗时（毫秒）'

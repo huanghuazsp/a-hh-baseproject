@@ -38,7 +38,7 @@
 		{
 			name : 'read' ,
 			text : '状态',
-			contentwidth:30,
+			width :30,
 			render : 'readrender'
 		},{
 			name : 'title' ,
