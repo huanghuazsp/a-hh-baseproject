@@ -316,7 +316,7 @@ public class UserService extends BaseService<UsUser> {
 
 	public List<UsUser> queryItemsByIdsStr(String ids) {
 		if (Check.isEmpty(ids)) {
-			return null;
+			return new ArrayList<UsUser>();
 		}
 		return xtyhdao.queryList(UsUser.class,
 				ParamFactory.getParamHb().in("id", Convert.strToList(ids)));
