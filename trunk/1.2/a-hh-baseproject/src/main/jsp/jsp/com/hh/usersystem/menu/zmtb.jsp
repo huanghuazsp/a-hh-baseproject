@@ -1,3 +1,9 @@
+<%@page import="com.hh.usersystem.service.impl.ZmtbService"%>
+<%@page import="com.hh.system.service.impl.BeanFactoryHelper"%>
+<%@page import="com.hh.usersystem.service.impl.MenuService"%>
+<%@page import="com.hh.system.util.statics.StaticVar"%>
+<%@page import="com.hh.system.util.dto.ParamFactory"%>
+<%@page import="com.hh.usersystem.bean.usersystem.UsUserMenuZmtb"%>
 <%@page import="com.hh.usersystem.bean.usersystem.SysMenu"%>
 <%@page import="com.hh.usersystem.bean.usersystem.UsUser"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
@@ -12,6 +18,13 @@
 	Gson gson = new Gson();
 UsUser hhXtYh =	(UsUser)session.getAttribute("loginuser");
 List<SysMenu> hhXtCds =  hhXtYh.getHhXtYhCdZmtbList();
+
+MenuService menuService = BeanFactoryHelper.getBean(MenuService.class);
+ZmtbService zmtbService = BeanFactoryHelper.getBean(ZmtbService.class);
+if (hhXtCds.size() == 0) {
+	hhXtCds = menuService.addZmtb(StaticVar.systemProperties.get("menu.default_quickmenu"));
+}
+
 String hhxtcdStr =  gson.toJson(hhXtCds);
 %>
 <script type="text/javascript">

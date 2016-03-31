@@ -44,16 +44,16 @@ public class MenuService extends BaseService<SysMenu> {
 	private ZmtbService zmtbService;
 	@Autowired
 	private OperateService operateService;
-	
+
 	public SysMenu findObjectById(String id) {
 		SysMenu hhXtCd = dao.findEntityByPK(SysMenu.class, id);
 		if (!"root".equals(hhXtCd.getNode())) {
-			SysMenu parenthhXtCd = dao.findEntityByPK(SysMenu.class,
-					hhXtCd.getNode());
+			SysMenu parenthhXtCd = dao.findEntityByPK(SysMenu.class, hhXtCd.getNode());
 			hhXtCd.setVpname(parenthhXtCd.getText());
 		}
 		return hhXtCd;
 	}
+
 	public SysMenu findObjectById2(String id) {
 		SysMenu hhXtCd = dao.findEntityByPK(SysMenu.class, id);
 		return hhXtCd;
@@ -75,9 +75,8 @@ public class MenuService extends BaseService<SysMenu> {
 
 		List<String> yzIdList = new ArrayList<String>();
 		if (!Check.isEmpty(idList)) {
-		 	operateService.deleteByPidList(idList);
-			List<SysMenu> hhxtcdList = dao.queryList(SysMenu.class,
-					Restrictions.in("node", idList));
+			operateService.deleteByPidList(idList);
+			List<SysMenu> hhxtcdList = dao.queryList(SysMenu.class, Restrictions.in("node", idList));
 			for (SysMenu hhXtCd : hhxtcdList) {
 				yzIdList.add(hhXtCd.getId());
 			}
@@ -93,14 +92,11 @@ public class MenuService extends BaseService<SysMenu> {
 
 	public List<SysMenu> queryMenuListByPid(String node) {
 		List<SysMenu> hhxtcdList = new ArrayList<SysMenu>();
-		ParamInf hqlParamList =ParamFactory.getParamHb()
-				.is("leaf", 0);
+		ParamInf hqlParamList = ParamFactory.getParamHb().is("leaf", 0);
 		if (Check.isEmpty(node) || "root".equals(node)) {
-			hhxtcdList = dao.queryTreeList(SysMenu.class,
-					ParamFactory.getParamHb().is("node", "root"));
+			hhxtcdList = dao.queryTreeList(SysMenu.class, ParamFactory.getParamHb().is("node", "root"));
 		} else {
-			hhxtcdList = dao.queryTreeList(SysMenu.class,
-					ParamFactory.getParamHb().is("node", node));
+			hhxtcdList = dao.queryTreeList(SysMenu.class, ParamFactory.getParamHb().is("node", node));
 		}
 
 		return hhxtcdList;
@@ -108,13 +104,11 @@ public class MenuService extends BaseService<SysMenu> {
 
 	public List<ExtCheckTree> queryMenuAllListByPid(String node, String roleid) {
 		List<SysMenu> hhxtcdList = new ArrayList<SysMenu>();
-		ParamInf hqlParamList =ParamFactory.getParamHb();
+		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (Check.isEmpty(node) || "root".equals(node)) {
-			hhxtcdList = dao.queryAllTreeList(SysMenu.class,
-					hqlParamList.is("node", "root"));
+			hhxtcdList = dao.queryAllTreeList(SysMenu.class, hqlParamList.is("node", "root"));
 		} else {
-			hhxtcdList = dao.queryAllTreeList(SysMenu.class,
-					hqlParamList.is("node", node));
+			hhxtcdList = dao.queryAllTreeList(SysMenu.class, hqlParamList.is("node", node));
 		}
 		List<ExtCheckTree> extTreeList = new ArrayList<ExtCheckTree>();
 
@@ -136,11 +130,10 @@ public class MenuService extends BaseService<SysMenu> {
 		}
 
 		if (!Check.isEmpty(cdidList)) {
-			ParamInf hqlParamList2 =ParamFactory.getParamHb();
+			ParamInf hqlParamList2 = ParamFactory.getParamHb();
 			hqlParamList2.in("cdId", cdidList);
 			hqlParamList2.is("jsId", roleid);
-			List<UsRoleMenu> hhXtJsCdList = xtjscddao.queryList(UsRoleMenu.class,
-					hqlParamList2);
+			List<UsRoleMenu> hhXtJsCdList = xtjscddao.queryList(UsRoleMenu.class, hqlParamList2);
 
 			List<String> jscdidList = new ArrayList<String>();
 			if (!Check.isEmpty(hhXtJsCdList)) {
@@ -162,8 +155,7 @@ public class MenuService extends BaseService<SysMenu> {
 		return extTreeList;
 	}
 
-	private void checkMenuByCdId(List<ExtCheckTree> children,
-			List<String> jscdidList) {
+	private void checkMenuByCdId(List<ExtCheckTree> children, List<String> jscdidList) {
 		for (ExtCheckTree extCheckTree : children) {
 			if (jscdidList.contains(extCheckTree.getId())) {
 				extCheckTree.setChecked(true);
@@ -174,8 +166,7 @@ public class MenuService extends BaseService<SysMenu> {
 		}
 	}
 
-	private void addChildren(ExtCheckTree parentextTree, List<SysMenu> children,
-			List<String> cdidList) {
+	private void addChildren(ExtCheckTree parentextTree, List<SysMenu> children, List<String> cdidList) {
 		for (SysMenu hhXtCd : children) {
 			ExtCheckTree extTree = new ExtCheckTree();
 			extTree.setId(hhXtCd.getId());
@@ -192,24 +183,27 @@ public class MenuService extends BaseService<SysMenu> {
 		}
 	}
 
-	public void addZmtb(String ids) {
-		List<String> idList = Convert.strToList(ids);
-		for (String id : idList) {
-			UsUserMenuZmtb hhXtYhCdZmtb = new UsUserMenuZmtb();
-			SysMenu hhXtCd = dao.findEntityByPK(SysMenu.class, id);
-			hhXtYhCdZmtb.setHhXtCd(hhXtCd);
-			hhXtYhCdZmtb.setYhId(loginUserUtilService.findLoginUser().getId());
-			xtyhcdzmtb.createEntity(hhXtYhCdZmtb);
+	public List<SysMenu> addZmtb(String ids) {
+		if (Check.isNoEmpty(ids)) {
+			List<String> idList = Convert.strToList(ids);
+			for (String id : idList) {
+				UsUserMenuZmtb hhXtYhCdZmtb = new UsUserMenuZmtb();
+				SysMenu hhXtCd = dao.findEntityByPK(SysMenu.class, id);
+				hhXtYhCdZmtb.setHhXtCd(hhXtCd);
+				hhXtYhCdZmtb.setYhId(loginUserUtilService.findLoginUser().getId());
+				xtyhcdzmtb.createEntity(hhXtYhCdZmtb);
+			}
+			UsUser hhXtYh = loginUserService.findLoginUser();
+			hhXtYh.setHhXtYhCdZmtbList(zmtbService.queryZmtbByUserId(hhXtYh.getId()));
+			ActionContext.getContext().getSession().put("loginuser", hhXtYh);
+			return hhXtYh.getHhXtYhCdZmtbList();
 		}
-		UsUser hhXtYh = loginUserService.findLoginUser();
-		hhXtYh.setHhXtYhCdZmtbList(zmtbService.queryZmtbByUserId(hhXtYh.getId()));
-		ActionContext.getContext().getSession().put("loginuser", hhXtYh);
+		return new ArrayList<SysMenu>();
 	}
 
 	public void deleteZmtb(String id) {
 		if (Check.isNoEmpty(id)) {
-			xtyhcdzmtb.deleteEntity(UsUserMenuZmtb.class, "cdId",
-					Convert.strToList(id));
+			xtyhcdzmtb.deleteEntity(UsUserMenuZmtb.class, "cdId", Convert.strToList(id));
 			UsUser hhXtYh = loginUserService.findLoginUser();
 			hhXtYh.setHhXtYhCdZmtbList(zmtbService.queryZmtbByUserId(hhXtYh.getId()));
 			ActionContext.getContext().getSession().put("loginuser", hhXtYh);
