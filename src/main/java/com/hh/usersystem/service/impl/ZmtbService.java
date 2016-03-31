@@ -12,6 +12,7 @@ import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Convert;
 import com.hh.system.util.PrimaryKey;
 import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UsUserMenuZmtb;
@@ -25,29 +26,32 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 	private MenuService menuService;
 
 	public void updateOrder(String id1, String order1, String id2, String order2) {
-		UsUserMenuZmtb entity1 = dao.findEntity(UsUserMenuZmtb.class,
-				Restrictions.eq("cdId", id1));
+		UsUserMenuZmtb entity1 = dao.findEntity(UsUserMenuZmtb.class, Restrictions.eq("cdId", id1));
 		String order1_ = entity1.getOrder();
-		UsUserMenuZmtb entity2 = dao.findEntity(UsUserMenuZmtb.class,
-				Restrictions.eq("cdId", id2));
+		UsUserMenuZmtb entity2 = dao.findEntity(UsUserMenuZmtb.class, Restrictions.eq("cdId", id2));
 		String order2_ = entity2.getOrder();
-		dao.updateEntity("update " + UsUserMenuZmtb.class.getName()
-				+ " o set o.order=? where o.cdId=?", new Object[] { order1_,
-				id2 });
-		dao.updateEntity("update " + UsUserMenuZmtb.class.getName()
-				+ " o set o.order=? where o.cdId=?", new Object[] { order2_,
-				id1 });
+		dao.updateEntity("update " + UsUserMenuZmtb.class.getName() + " o set o.order=? where o.cdId=?",
+				new Object[] { order1_, id2 });
+		dao.updateEntity("update " + UsUserMenuZmtb.class.getName() + " o set o.order=? where o.cdId=?",
+				new Object[] { order2_, id1 });
 	}
 
 	public List<SysMenu> queryZmtbByUserId(String userId) {
-		List<UsUserMenuZmtb> hhXtYhCdZmtbList = dao
-				.queryList(UsUserMenuZmtb.class, ParamFactory.getParamHb().is("yhId", userId));
+		List<UsUserMenuZmtb> hhXtYhCdZmtbList = dao.queryList(UsUserMenuZmtb.class,
+				ParamFactory.getParamHb().is("yhId", userId));
 		List<SysMenu> hhXtCds = new ArrayList<SysMenu>();
 		for (UsUserMenuZmtb hhXtYhCdZmtb : hhXtYhCdZmtbList) {
 			hhXtCds.add(hhXtYhCdZmtb.getHhXtCd());
 		}
 		return hhXtCds;
 	}
+	
+	
+	public List<UsUserMenuZmtb> queryZmtbByUserId() {
+		return dao.queryList(UsUserMenuZmtb.class,
+				ParamFactory.getParamHb().is("yhId", loginUserService.findUserId()));
+	}
+	
 
 	@Transactional
 	public void orderIds(String ids) {
@@ -58,8 +62,7 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 			UsUserMenuZmtb hhXtYhCdZmtb = new UsUserMenuZmtb();
 			SysMenu hhXtCd = menuService.findObjectById2(idList.get(i));
 			hhXtYhCdZmtb.setHhXtCd(hhXtCd);
-			hhXtYhCdZmtb.setOrder(PrimaryKey.getPrimaryKeyTime()
-					+ PrimaryKey.getPrimaryKeyUUID());
+			hhXtYhCdZmtb.setOrder(PrimaryKey.getPrimaryKeyTime() + PrimaryKey.getPrimaryKeyUUID());
 			hhXtYhCdZmtb.setYhId(userid);
 			dao.createEntity(hhXtYhCdZmtb);
 		}
