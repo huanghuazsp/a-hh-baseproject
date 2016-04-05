@@ -18,4 +18,10 @@
     <column defaultValue="" empty="true" id="d31744ec-6d2e-4fe0-8834-cff19fcea6d8" length="" name="userId" primary="false" text="userId" type="String"/>
     <column defaultValue="" empty="true" id="572aa988-dfbe-4169-8217-270b9f88cc63" length="" name="message" primary="false" text="message" type="String"/>
   </table>
+  <table id="ef13e5d4-e5e1-45bb-b018-c8296b4d97ce" name="resourcesType" text="resourcesType" type="table"/>
+  <table id="f0d71e8f-7c28-4c15-b839-85f03f074320" name="resources" text="resources" type="table">
+    <column defaultValue="" empty="true" id="8b94b112-1fc9-467d-b450-f9944468f8a0" length="" name="text" primary="false" text="text" type="String"/>
+    <column defaultValue="" empty="true" id="5f2a2023-2d4e-49c5-99b2-cd9f935a5a32" length="" name="img" primary="false" text="img" type="String"/>
+    <column defaultValue="" empty="true" id="ccf4539a-1b26-4325-aae8-69f048d087c3" length="" name="type" primary="false" text="type" type="String"/>
+  </table>
 </project>
