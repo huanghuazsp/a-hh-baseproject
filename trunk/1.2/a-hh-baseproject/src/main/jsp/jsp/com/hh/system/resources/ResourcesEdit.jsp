@@ -71,7 +71,7 @@
 					</tr>
 					<tr>
 						<td xtype="label">资源：</td>
-						<td><span config="'name':'files','type':'eduresources' "  xtype="fileUpload" ></span></td>
+						<td><span config="'name':'files','type':'sysresources' "  xtype="fileUpload" ></span></td>
 					</tr>
 			</table>
 		</form>
