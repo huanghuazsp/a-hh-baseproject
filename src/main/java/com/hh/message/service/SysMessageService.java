@@ -288,7 +288,7 @@ public class SysMessageService extends BaseService<SysMessage> implements
 			ParamInf paramInf2 = ParamFactory.getParamHb();
 			paramInf2.is("sendUserId", user.getId());
 			paramInf2.is("sendObjectId", object.getSendObjectId());
-			paramInf.or(paramInf2).nis("sendObjectType", 0);
+			paramInf.or( ParamFactory.getParamHb().and(paramInf2).is("sendObjectId", object.getSendObjectId())).nis("sendObjectType", 0);
 		}
 
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
