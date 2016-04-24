@@ -65,12 +65,14 @@ public class SecurityInterceptor implements Interceptor {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
 		UsUser hhXtYh = loginUserUtilService.findLoginUser();
+		
+		boolean ajax = request.getHeader("x-requested-with") == null ? false : request
+				.getHeader("x-requested-with").equalsIgnoreCase(
+						"XMLHttpRequest");
 		if (hhXtYh == null && Check.isEmpty(request.getParameter("se"))) {
-			if (request.getHeader("x-requested-with") == null ? false : request
-					.getHeader("x-requested-with").equalsIgnoreCase(
-							"XMLHttpRequest")) {
+			if (ajax) {
 				response.addHeader("sessionstatus", "timeout");
-				return "timeout";
+				return "timeout_json";
 			} else {
 				// 普通请求
 				return "login";
@@ -120,7 +122,11 @@ public class SecurityInterceptor implements Interceptor {
 					response.addHeader("sessionstatus", "no_authority");
 					request.setAttribute("sessionstatusMsg", "对不起，您没有权限操作此功能！"
 							+ noSecurity);
-					return "no_authority";
+					if (ajax) {
+						return "no_authority_json";
+					}else{
+						return "no_authority";
+					}
 				}
 			} else {
 				return arg0.invoke();
