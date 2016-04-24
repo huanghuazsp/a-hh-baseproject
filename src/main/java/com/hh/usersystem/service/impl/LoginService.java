@@ -134,6 +134,11 @@ public class LoginService {
 					if (hhxtcdIdList.size() > 0) {
 						hhXtCdList = hhxtcdDao.queryList(SysMenu.class, "id",
 								hhxtcdIdList);
+						for (SysMenu sysMenu : hhXtCdList) {
+							SysOper sysOper =  new SysOper();
+							sysOper.setType(1);
+							hhXtCzMap.put(sysMenu.getVsj(),sysOper);
+						}
 					}
 					// 请求的控制
 					List<String> hhXtCzUrlList = new ArrayList<String>();

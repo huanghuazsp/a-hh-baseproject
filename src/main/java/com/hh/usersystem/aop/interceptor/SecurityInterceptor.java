@@ -73,7 +73,7 @@ public class SecurityInterceptor implements Interceptor {
 				return "timeout";
 			} else {
 				// 普通请求
-				return "login";
+				return "timeout";
 			}
 		} else {
 			String requestUri = request.getRequestURI().replace(
@@ -86,25 +86,29 @@ public class SecurityInterceptor implements Interceptor {
 				if (hhXtCz == null) {
 					isSecurity = false;
 				} else {
-					Object vcreates = request.getParameter("vcreates");
-					if (vcreates == null || "".equals(vcreates)) {
-						isSecurity = true;
-					} else {
-						boolean isOper = true;
-						for (String vcreate : vcreates.toString().split(",")) {
-							if (!vcreate.equals(hhXtYh.getId())) {
-								isOper = false;
-								break;
-							}
-						}
-						if (isOper) {
+					if (hhXtCz.getType()==1) {
+						isSecurity=true;
+					}else {
+						Object vcreates = request.getParameter("vcreates");
+						if (vcreates == null || "".equals(vcreates)) {
 							isSecurity = true;
 						} else {
-							noSecurity = valiOrg(request, hhXtYh, hhXtCz);
-							if (Check.isEmpty(noSecurity)) {
+							boolean isOper = true;
+							for (String vcreate : vcreates.toString().split(",")) {
+								if (!vcreate.equals(hhXtYh.getId())) {
+									isOper = false;
+									break;
+								}
+							}
+							if (isOper) {
 								isSecurity = true;
 							} else {
-								isSecurity = false;
+								noSecurity = valiOrg(request, hhXtYh, hhXtCz);
+								if (Check.isEmpty(noSecurity)) {
+									isSecurity = true;
+								} else {
+									isSecurity = false;
+								}
 							}
 						}
 					}
