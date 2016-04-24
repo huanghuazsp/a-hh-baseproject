@@ -73,7 +73,7 @@ public class SecurityInterceptor implements Interceptor {
 				return "timeout";
 			} else {
 				// 普通请求
-				return "timeout";
+				return "login";
 			}
 		} else {
 			String requestUri = request.getRequestURI().replace(
