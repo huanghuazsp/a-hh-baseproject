@@ -17,6 +17,7 @@ import com.hh.system.util.model.ExtCheckTree;
 import com.hh.system.util.model.ExtTree;
 import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.aop.interceptor.SecurityInterceptor;
+import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.bean.usersystem.SysOper;
 import com.hh.usersystem.bean.usersystem.UsRoleOper;
 import com.hh.usersystem.util.steady.StaticProperties.OperationLevel;
@@ -27,6 +28,9 @@ public class OperateService  extends BaseService<SysOper> {
 	private IHibernateDAO<SysOper> dao;
 	@Autowired
 	private IHibernateDAO<UsRoleOper> hhxtjsczDao;
+	
+	@Autowired
+	private MenuService menuService;
 
 	public List<ExtTree> queryOperateListByPid(String node) {
 		List<SysOper> hhXtCzList = new ArrayList<SysOper>();
@@ -220,6 +224,14 @@ public class OperateService  extends BaseService<SysOper> {
 						hhXtCz.getMenuUrl()).add(hhXtCz.getPageText());
 			}
 		}
+		
+		List<SysMenu> sysMenus = menuService.queryAllList();
+		for (SysMenu sysMenu : sysMenus) {
+			if (sysMenu.getLeaf()==1 && Check.isNoEmpty(sysMenu.getVsj())) {
+				SecurityInterceptor.all_manage_request.add(sysMenu.getVsj());
+			}
+		}
+		
 	}
 
 }

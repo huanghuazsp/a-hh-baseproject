@@ -22,6 +22,9 @@ public class SysOper extends BaseTwoEntity {
 	private String vurl;
 	private String pageText;
 	private String operLevel;
+	
+	//类型1是菜单
+	private int type;
 
 	@Transient
 	public String getOperLevel() {
@@ -83,6 +86,15 @@ public class SysOper extends BaseTwoEntity {
 
 	public void setMenuUrl(String menuUrl) {
 		this.menuUrl = menuUrl;
+	}
+
+	@Transient
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 }
