@@ -17,6 +17,7 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 public class SysOper extends BaseTwoEntity {
 	private String text;
 	private String vpid;
+	private String vpname;
 	private String menuUrl;
 //	private String vsj;
 	private String vurl;
@@ -96,5 +97,16 @@ public class SysOper extends BaseTwoEntity {
 	public void setType(int type) {
 		this.type = type;
 	}
+
+	public String getVpname() {
+		return vpname;
+	}
+
+	@Column(name="VPNAME", length = 128)
+	public void setVpname(String vpname) {
+		this.vpname = vpname;
+	}
+	
+	
 
 }

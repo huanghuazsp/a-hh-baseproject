@@ -72,6 +72,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		hhXtJs.setId(StaticVar.role_cjgly_id);
 		hhXtJs.setText("超级管理员");
 		hhXtJs.setVbz("超级管理员");
+		hhXtJs.setJssx("admin");
 		hhXtJs.setNlx(3);
 		roledao.saveOrUpdateEntity(hhXtJs);
 		
@@ -80,6 +81,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		hhXtJs2.setId(StaticVar.role_zcyh_id);
 		hhXtJs2.setText("注册用户");
 		hhXtJs2.setVbz("注册用户");
+		hhXtJs.setJssx("register");
 		hhXtJs2.setNlx(3);
 		roledao.saveOrUpdateEntity(hhXtJs2);
 		
