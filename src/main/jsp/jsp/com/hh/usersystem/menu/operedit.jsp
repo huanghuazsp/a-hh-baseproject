@@ -19,7 +19,7 @@
 				return;
 			}
 			formData.vpid=params.selectMenuNode.id;
-			formData.menuUrl=params.selectMenuNode.vsj;
+			formData.vpname=params.selectMenuNode.name;
 			Request.request('usersystem-operate-save', {
 				data : formData,
 				callback : function(result) {
@@ -46,6 +46,7 @@
 	}
 
 	function init() {
+		$('#span_menuUrl').setValue(params.selectMenuNode.vsj);
 		findData();
 	}
 </script>
@@ -58,6 +59,10 @@
 				<tr>
 					<td xtype="label">名称：</td>
 					<td><span xtype="text" config=" name : 'text',required :true"></span></td>
+				</tr>
+				<tr>
+					<td xtype="label">所在页面地址：</td>
+					<td><span xtype="text" config=" name : 'menuUrl',required :true"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">页面名称：</td>

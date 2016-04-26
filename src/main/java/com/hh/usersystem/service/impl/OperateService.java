@@ -49,6 +49,7 @@ public class OperateService  extends BaseService<SysOper> {
 			if (Check.isNoEmpty(hhXtCd.getVurl())) {
 				text+="（请求）";
 			}
+			text+="【"+hhXtCd.getVpname()+"】";
 			extTree.setText(text);
 			extTree.setLeaf(1);
 			extTreeList.add(extTree);

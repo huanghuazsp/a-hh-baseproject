@@ -127,10 +127,10 @@
 					config="onClick: $.hh.tree.doUp , params:{treeid:'menuTree',action:'usersystem-menu-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
 				<span xtype="button"
 					config="onClick: $.hh.tree.doDown , params:{treeid:'menuTree',action:'usersystem-menu-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
-				<span xtype="button" config="onClick: doLoadOper ,text:'功能设置'"></span>
+				<!-- <span xtype="button" config="onClick: doLoadOper ,text:'功能设置'"></span> -->
 			</div>
 			<span xtype="tree"
-				config=" id:'menuTree' , url:'usersystem-menu-queryTreeList' ,remove:doDelete , edit : doEdit "></span>
+				config=" id:'menuTree' , url:'usersystem-menu-queryTreeList' ,remove:doDelete , edit : doEdit,onClick : doLoadOper "></span>
 		</div>
 		<div id="czTreeDiv">
 			<div xtype="toolbar" config="type:'head'">

@@ -104,7 +104,7 @@ public class RoleService extends BaseService<UsRole> {
 			paramsMap.put("czid", extTree.getId());
 			hhxtjsczDao
 			.deleteEntity(
-					"delete HhXtJsCz o where jsId=:roleid and hhXtCz.id=:czid",
+					"delete UsRoleOper o where jsId=:roleid and hhXtCz.id=:czid",
 					paramsMap);
 		}
 		List<String> czid_operlevelList = Convert.strToList(czid_operlevel);
