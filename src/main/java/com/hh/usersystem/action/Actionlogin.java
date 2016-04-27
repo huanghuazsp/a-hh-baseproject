@@ -104,16 +104,16 @@ public class Actionlogin extends BaseAction {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			xtYh.setNxb(1);
-			UsReg usReg2 = usRegService.findObjectByProperty("email", xtYh.getVdzyj());
-			if (usReg2==null) {
-				map.put("msg", "注册码未获取");
-				return map;
-			}else{
-				if (!Convert.toString(code).equals(usReg2.getCode())) {
-					map.put("msg", "注册码不正确");
-					return map;
-				}
-			}
+//			UsReg usReg2 = usRegService.findObjectByProperty("email", xtYh.getVdzyj());
+//			if (usReg2==null) {
+//				map.put("msg", "注册码未获取");
+//				return map;
+//			}else{
+//				if (!Convert.toString(code).equals(usReg2.getCode())) {
+//					map.put("msg", "注册码不正确");
+//					return map;
+//				}
+//			}
 			xtYh.setRoleIds(StaticVar.role_zcyh_id);
 			userService.save(xtYh);
 			return map;
