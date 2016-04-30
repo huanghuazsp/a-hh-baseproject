@@ -103,7 +103,7 @@ public class Actionlogin extends BaseAction {
 	public Object reg() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			xtYh.setNxb(1);
+//			xtYh.setNxb(1);
 //			UsReg usReg2 = usRegService.findObjectByProperty("email", xtYh.getVdzyj());
 //			if (usReg2==null) {
 //				map.put("msg", "注册码未获取");
@@ -114,7 +114,6 @@ public class Actionlogin extends BaseAction {
 //					return map;
 //				}
 //			}
-			xtYh.setRoleIds(StaticVar.role_zcyh_id);
 			userService.save(xtYh);
 			return map;
 		} catch (MessageException e) {
@@ -182,6 +181,10 @@ public class Actionlogin extends BaseAction {
 	public String logout() {
 		session.remove("loginuser");
 		return "login";
+	}
+	public String logoutMain() {
+		session.remove("loginuser");
+		return "main";
 	}
 
 	public String updateDesktopType() {
