@@ -23,6 +23,7 @@ import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtTree;
+import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.bean.usersystem.UsGroup;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.bean.usersystem.UsRole;
@@ -187,6 +188,9 @@ public class UserService extends BaseService<UsUser> {
 		}
 		if (checkEmailOnly(hhXtYh)) {
 			throw new MessageException("电子邮箱已存在，请更换！" + hhXtYh.getVdlzh());
+		}
+		if (Check.isEmpty(hhXtYh.getRoleIds())) {
+			hhXtYh.setRoleIds(StaticVar.role_default_id);
 		}
 		if (Check.isEmpty(hhXtYh.getId())) {
 			// HHXtZmsx hhXtZmsx = new HHXtZmsx();
