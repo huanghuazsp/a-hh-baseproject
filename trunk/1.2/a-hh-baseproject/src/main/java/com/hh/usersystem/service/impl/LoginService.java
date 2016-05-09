@@ -57,7 +57,7 @@ public class LoginService {
 		List<UsUser> xtYhList = xtyhdao.queryList(UsUser.class, ParamFactory
 				.getParamHb().is("vdlzh", xtYh.getVdlzh()));
 		if (Check.isEmpty(xtYhList)) {
-			returnModel.setType(ReturnModel.TYPE_OK);
+//			returnModel.setType(ReturnModel.TYPE_OK);
 			returnModel.setMsg(MsgProperties.system_userlogin_notexist);
 		} else {
 			if (xtYhList.size() > 1) {
