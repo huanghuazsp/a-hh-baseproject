@@ -1,5 +1,6 @@
 package com.hh.usersystem.action;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +11,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hh.system.inf.IFileAction;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.BeanUtils;
 import com.hh.system.util.Check;
@@ -23,6 +23,7 @@ import com.hh.system.util.document.ExportSetInfo;
 import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.ExtTree;
+import com.hh.system.util.model.ResultFile;
 import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.bean.usersystem.UsRole;
@@ -33,7 +34,7 @@ import com.hh.usersystem.service.impl.RoleService;
 import com.hh.usersystem.service.impl.UserService;
 
 @SuppressWarnings("serial")
-public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction {
+public class Actionuser extends BaseServiceAction<UsUser>  {
 	private String orgs;
 	private String roles;
 	private String groups;
@@ -217,18 +218,7 @@ public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction
 		return returnMap;
 	}
 
-	private byte[] bytes = null;
-	private String title;
-
-	public byte[] getBytes() {
-		return bytes;
-	}
-
-	public void setBytes(byte[] bytes) {
-		this.bytes = bytes;
-	}
-
-	public String download() {
+	public Object download() {
 
 		Map<String, String> orgMapNameId = new HashMap<String, String>();
 		Map<String, String> roleMapNameId = new HashMap<String, String>();
@@ -326,18 +316,10 @@ public class Actionuser extends BaseServiceAction<UsUser> implements IFileAction
 			e.printStackTrace();
 		}
 
-		this.setBytes(baos.toByteArray());
-		this.setTitle("用户数据");
-		return "excel";
+		ResultFile resultFile = new ResultFile("用户数据.xls", new ByteArrayInputStream(baos.toByteArray()), "application/vnd.ms-excel");
+		return resultFile;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
 
 	private File attachment;
 	private String attachmentFileName;

@@ -283,7 +283,7 @@
 		var headpic = config.sendHeadpic;
 		
 		if(headpic &&  headpic.indexOf('hhcomm')==-1){
-	    	headpic =	"system-File-download?system_open_page_file_form_params={id:'"+headpic+"'}";
+	    	headpic =	"system-File-download?params={id:'"+headpic+"'}";
 	    }
 		
 		if(headpic){

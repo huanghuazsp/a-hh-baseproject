@@ -65,7 +65,7 @@
 				var td2 = $('<td></td>');
 				var img = '';
 				if(item.img){
-					img = $("<img style=\"height:300px;width:300px;\" src=\"system-File-download?system_open_page_file_form_params={id:'"+item.img+"'}\">");
+					img = $("<img style=\"height:300px;width:300px;\" src=\"system-File-download?params={id:'"+item.img+"'}\">");
 					td2.append(img);
 				}
 				
