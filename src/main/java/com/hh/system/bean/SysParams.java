@@ -58,7 +58,7 @@ public class SysParams extends BaseOneEntity {
 	public String getSysIcon2() {
 		String href = Convert.toString(sysIcon);
 		if (href.indexOf(".") == -1) {
-			href = "system-File-download?system_open_page_file_form_params={id:'"
+			href = "system-File-download?params={id:'"
 					+ href + "'}";
 		}
 		return href;
@@ -82,7 +82,7 @@ public class SysParams extends BaseOneEntity {
 	public String getSysImg2() {
 		String href = Convert.toString(sysImg);
 		if (href.indexOf(".") == -1) {
-			href = "system-File-download?system_open_page_file_form_params={id:'"
+			href = "system-File-download?params={id:'"
 					+ href + "'}";
 		}
 		return href;

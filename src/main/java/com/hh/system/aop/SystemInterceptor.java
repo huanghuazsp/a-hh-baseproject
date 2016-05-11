@@ -1,7 +1,5 @@
 package com.hh.system.aop;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,9 +10,6 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.google.gson.Gson;
-import com.hh.system.action.ActionFile;
-import com.hh.system.inf.IFileAction;
-import com.hh.system.inf.IImageAction;
 import com.hh.system.service.impl.SaveErrorThread;
 import com.hh.system.util.ExceptionUtil;
 import com.hh.system.util.ThreadUtil;
@@ -25,8 +20,7 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
 
 @SuppressWarnings("serial")
 public class SystemInterceptor implements Interceptor {
-	private static final Logger logger = Logger
-			.getLogger(SystemInterceptor.class);
+	private static final Logger logger = Logger.getLogger(SystemInterceptor.class);
 
 	public void destroy() {
 	}
@@ -43,16 +37,12 @@ public class SystemInterceptor implements Interceptor {
 		try {
 			long startTime = System.currentTimeMillis();
 			result = arg0.invoke();
-			String requestUri = request.getRequestURI().replace(
-					request.getContextPath() + "/", "");
-			logger.debug("【" + arg0.getAction().getClass().getName() + ";uri="
-					+ requestUri + "】耗时："
+			String requestUri = request.getRequestURI().replace(request.getContextPath() + "/", "");
+			logger.debug("【" + arg0.getAction().getClass().getName() + ";uri=" + requestUri + "】耗时："
 					+ (System.currentTimeMillis() - startTime) + "毫秒  ");
-			if (!(arg0.getAction() instanceof ActionFile
-					|| arg0.getAction() instanceof IFileAction || arg0
-						.getAction() instanceof IImageAction)) {
-				response.getWriter().print("{'success':true}");
-			}
+			// if (!( arg0.getAction() instanceof IFileAction)) {
+			// response.getWriter().print("{'success':true}");
+			// }
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.setStatus(500);
@@ -60,19 +50,16 @@ public class SystemInterceptor implements Interceptor {
 			resultMap.put("success", false);
 			resultMap.put("titleMsg", "错误");
 			resultMap.put("msg",
-					"异常：" + e.getClass().getName() + "：" + e.getMessage()
-							+ "<br/>" + ExceptionUtil.getMessage(e));
-			IUser userObject = (IUser)ActionContext.getContext().getSession()
-					.get("loginuser");
+					"异常：" + e.getClass().getName() + "：" + e.getMessage() + "<br/>" + ExceptionUtil.getMessage(e));
+			IUser userObject = (IUser) ActionContext.getContext().getSession().get("loginuser");
 			String userid = "";
 			String orgid = "";
-			if (userObject!=null) {
-				userid=userObject.getId();
-				orgid=userObject.getJobId();
+			if (userObject != null) {
+				userid = userObject.getId();
+				orgid = userObject.getJobId();
 			}
 			// 线程池
-			ThreadUtil.getThreadPool().execute(
-					new SaveErrorThread(e, userid, orgid));
+			ThreadUtil.getThreadPool().execute(new SaveErrorThread(e, userid, orgid));
 			response.getWriter().print(new Gson().toJson(resultMap));
 		}
 		return result;

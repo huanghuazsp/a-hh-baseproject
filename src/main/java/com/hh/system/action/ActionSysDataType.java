@@ -1,5 +1,6 @@
 package com.hh.system.action;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -23,10 +24,11 @@ import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.document.ExcelUtil;
 import com.hh.system.util.document.ExportSetInfo;
 import com.hh.system.util.document.FileUpload;
+import com.hh.system.util.model.ResultFile;
 import com.hh.system.util.statics.StaticVar;
 
 @SuppressWarnings("serial")
-public class ActionSysDataType extends BaseServiceAction<SysDataType> implements IFileAction{
+public class ActionSysDataType extends BaseServiceAction<SysDataType> {
 
 	public BaseService<SysDataType> getService() {
 		return sysDataTypeService;
@@ -47,27 +49,9 @@ public class ActionSysDataType extends BaseServiceAction<SysDataType> implements
 		return sysDataTypeService.findObjectByProperty("code", object.getId());
 	}
 
-	private byte[] bytes = null;
-	private String title;
 	private File attachment;
 	private String attachmentFileName;
 	private String type;
-
-	public byte[] getBytes() {
-		return bytes;
-	}
-
-	public void setBytes(byte[] bytes) {
-		this.bytes = bytes;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
 
 	public File getAttachment() {
 		return attachment;
@@ -110,7 +94,7 @@ public class ActionSysDataType extends BaseServiceAction<SysDataType> implements
 		return returnMap;
 	}
 
-	public String download() {
+	public Object download() {
 		Map<String, String> typeMapNameId = new HashMap<String, String>();
 		Map<String, String> dataMapNameId = new HashMap<String, String>();
 		Map<String, String> typeMapCodeName = new HashMap<String, String>();
@@ -193,10 +177,8 @@ public class ActionSysDataType extends BaseServiceAction<SysDataType> implements
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
-
-		this.setBytes(baos.toByteArray());
-		this.setTitle("数据字典");
-		return "excel";
+		ResultFile resultFile = new ResultFile("数据字典.xls", new ByteArrayInputStream(baos.toByteArray()), "application/vnd.ms-excel");
+		return resultFile;
 	}
 
 }

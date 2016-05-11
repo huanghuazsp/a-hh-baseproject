@@ -1,5 +1,6 @@
 package com.hh.usersystem.action;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -10,27 +11,25 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hh.system.inf.IFileAction;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.base.BaseServiceAction;
-import com.hh.system.util.date.DateFormat;
 import com.hh.system.util.document.ExcelUtil;
 import com.hh.system.util.document.ExportSetInfo;
 import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.model.ResultFile;
 import com.hh.system.util.model.ReturnModel;
 import com.hh.system.util.statics.StaticVar;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.bean.usersystem.UsRole;
-import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.OrganizationService;
 import com.hh.usersystem.service.impl.RoleService;
 
 @SuppressWarnings("serial")
-public class ActionOrg extends BaseServiceAction<UsOrganization> implements IFileAction {
+public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	private String orgs;
 	private String selectType;
 
@@ -156,26 +155,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements IFil
 		return returnMap;
 	}
 
-	private byte[] bytes = null;
-	private String title;
-
-	public byte[] getBytes() {
-		return bytes;
-	}
-
-	public void setBytes(byte[] bytes) {
-		this.bytes = bytes;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String download() {
+	public Object download() {
 
 		Map<String, String> orgMapNameId = new HashMap<String, String>();
 		Map<String, String> roleMapNameId = new HashMap<String, String>();
@@ -258,9 +238,9 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> implements IFil
 			e.printStackTrace();
 		}
 
-		this.setBytes(baos.toByteArray());
-		this.setTitle("机构数据");
-		return "excel";
+		ResultFile resultFile = new ResultFile("机构数据.xls", new ByteArrayInputStream(baos.toByteArray()),
+				"application/vnd.ms-excel");
+		return resultFile;
 	}
 
 	public File getAttachment() {
