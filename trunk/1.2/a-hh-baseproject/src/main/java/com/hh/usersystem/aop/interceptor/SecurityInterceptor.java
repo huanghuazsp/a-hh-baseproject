@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.gson.Gson;
 import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
+import com.hh.system.util.ExceptionUtil;
 import com.hh.system.util.SysParam;
 import com.hh.usersystem.bean.usersystem.SysOper;
 import com.hh.usersystem.bean.usersystem.UsUser;
@@ -72,7 +74,8 @@ public class SecurityInterceptor implements Interceptor {
 		if (hhXtYh == null && Check.isEmpty(request.getParameter("se"))) {
 			if (ajax) {
 				response.addHeader("sessionstatus", "timeout");
-				return "timeout_json";
+				response.getWriter().print("{sessionstatus: 'timeout'}");
+				return null;
 			} else {
 				// 普通请求
 				return "login";
@@ -123,7 +126,8 @@ public class SecurityInterceptor implements Interceptor {
 					request.setAttribute("sessionstatusMsg", "对不起，您没有权限操作此功能！"
 							+ noSecurity);
 					if (ajax) {
-						return "no_authority_json";
+						response.getWriter().print("{ sessionstatus: 'no_authority', success: true,sessionstatusMsg:'对不起，您没有权限操作此功能！"+noSecurity+"' } ");
+						return null;
 					}else{
 						return "no_authority";
 					}
