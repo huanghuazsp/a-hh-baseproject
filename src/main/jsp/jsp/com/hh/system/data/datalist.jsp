@@ -114,10 +114,10 @@
 	}
 	
 	function downloadExcel(){
-		Request.downloadFile('system-File-downloadFile',{path:'temp/数据字典.xls'});
+		Request.submit('system-File-downloadFile',{path:'temp/数据字典.xls'});
 	}
 	function outExcel(){
-		Request.downloadFile('system-SysDataType-download',{});
+		Request.submit('system-SysDataType-download',{});
 	}
 </script>
 </head>
