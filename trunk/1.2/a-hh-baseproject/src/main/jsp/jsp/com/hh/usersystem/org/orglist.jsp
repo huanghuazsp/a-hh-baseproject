@@ -108,10 +108,10 @@
 	}
 	
 	function downloadExcel(){
-		Request.downloadFile('system-File-downloadFile',{path:'temp/机构数据.xls'});
+		Request.submit('system-File-downloadFile',{path:'temp/机构数据.xls'});
 	}
 	function outExcel(){
-		Request.downloadFile('usersystem-Org-download',{});
+		Request.submit('usersystem-Org-download',{});
 	}
 	function init(){
 		$('#centerdiv').disabled('请选择要编辑的机构树或添加新的数据！！');

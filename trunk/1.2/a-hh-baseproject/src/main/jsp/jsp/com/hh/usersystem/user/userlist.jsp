@@ -69,10 +69,10 @@
 	}
 	
 	function downloadExcel(){
-		Request.downloadFile('system-File-downloadFile',{path:'temp/用户数据.xls'});
+		Request.submit('system-File-downloadFile',{path:'temp/用户数据.xls'});
 	}
 	function outExcel(){
-		Request.downloadFile('usersystem-user-download',{});
+		Request.submit('usersystem-user-download',{});
 	}
 </script>
 </head>
