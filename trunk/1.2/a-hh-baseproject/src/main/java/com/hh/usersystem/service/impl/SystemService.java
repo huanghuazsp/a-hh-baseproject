@@ -113,7 +113,6 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		hhXtYh.setVmm("123456");
 		hhXtYh.setId("92b38970-69d8-4f5e-b7fc-f06f458a9f1f");
 //		hhXtZmsx.setId(hhXtYh.getId());
-		hhXtYh.setDesktopType("jquerydesktop");
 		hhXtYh.setTheme("base");
 		hhXtYh.setRoleIds(hhXtJs.getId());
 		xtyhdao.saveOrUpdateEntity(hhXtYh);

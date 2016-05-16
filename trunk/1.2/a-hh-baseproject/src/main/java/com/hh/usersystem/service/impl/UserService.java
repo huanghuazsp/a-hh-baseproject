@@ -197,7 +197,6 @@ public class UserService extends BaseService<UsUser> {
 			// hhXtYh.setHhXtZmsx(hhXtZmsx);
 			hhXtYh.setVmm("123456");
 			hhXtYh.setId(UUID.randomUUID().toString());
-			hhXtYh.setDesktopType("jquerydesktop");
 			hhXtYh.setTheme("base");
 			xtyhdao.createEntity(hhXtYh);
 		} else {

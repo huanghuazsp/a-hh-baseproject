@@ -59,12 +59,7 @@ public class Actionlogin extends BaseAction {
 				return "login";
 			} else {
 				addCookie();
-				if (Check.isEmpty(xtYh.getDesktopType())) {
-					return "desktop2";
-				} else {
-					return xtYh.getDesktopType();
-				}
-
+				return "desktop";
 			}
 		} else {
 			if (!Check.isEmpty(returnModel.getHref())) {
@@ -103,17 +98,18 @@ public class Actionlogin extends BaseAction {
 	public Object reg() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-//			xtYh.setNxb(1);
-//			UsReg usReg2 = usRegService.findObjectByProperty("email", xtYh.getVdzyj());
-//			if (usReg2==null) {
-//				map.put("msg", "注册码未获取");
-//				return map;
-//			}else{
-//				if (!Convert.toString(code).equals(usReg2.getCode())) {
-//					map.put("msg", "注册码不正确");
-//					return map;
-//				}
-//			}
+			// xtYh.setNxb(1);
+			// UsReg usReg2 = usRegService.findObjectByProperty("email",
+			// xtYh.getVdzyj());
+			// if (usReg2==null) {
+			// map.put("msg", "注册码未获取");
+			// return map;
+			// }else{
+			// if (!Convert.toString(code).equals(usReg2.getCode())) {
+			// map.put("msg", "注册码不正确");
+			// return map;
+			// }
+			// }
 			userService.save(xtYh);
 			return map;
 		} catch (MessageException e) {
@@ -166,8 +162,7 @@ public class Actionlogin extends BaseAction {
 		// if (Check.isNoEmpty(cookie)) {
 		maxAge = 60 * 60 * 24 * 30;
 		// }
-		Cookie cookie = new Cookie("xtYh.vdlzh", URLEncoder.encode(xtYh
-				.getVdlzh()));
+		Cookie cookie = new Cookie("xtYh.vdlzh", URLEncoder.encode(xtYh.getVdlzh()));
 		cookie.setMaxAge(maxAge); // cookie 保存30天
 		response.addCookie(cookie);
 		// cookie = new Cookie("xtYh.vmm", xtYh.getVmm());
@@ -182,6 +177,7 @@ public class Actionlogin extends BaseAction {
 		session.remove("loginuser");
 		return "login";
 	}
+
 	public String logoutMain() {
 		session.remove("loginuser");
 		return "main";
