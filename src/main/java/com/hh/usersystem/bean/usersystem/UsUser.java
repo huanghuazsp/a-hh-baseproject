@@ -69,7 +69,6 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	private String vzmbj = StaticProperties.HHXT_USERSYSTEM_ZMBJ;
 	private int pageSize = 15;
 	private String theme;
-	private String desktopType;
 
 	// @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	// @JoinColumn(name = "ID")
@@ -347,14 +346,6 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.theme = theme;
 	}
 
-	@Column(name = "DESKTOP_TYPE_", length = 36)
-	public String getDesktopType() {
-		return desktopType;
-	}
-
-	public void setDesktopType(String desktopType) {
-		this.desktopType = desktopType;
-	}
 
 	@Column(name = "JOB_ID", length = 36)
 	public String getJobId() {
@@ -411,5 +402,16 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.roleIds = roleIds;
 	}
 
+//	@Transient
+//	public String getClientType() {
+//		return clientType;
+//	}
+//
+//	public void setClientType(String clientType) {
+//		this.clientType = clientType;
+//	}
+
+	
+	
 	
 }

@@ -49,27 +49,23 @@ public class LoginService {
 	private IHibernateDAO<SysMenu> hhxtcdDao;
 	@Autowired
 	private UserService userService;
-	
+
 	private static final Logger logger = Logger.getLogger(BaseAction.class);
 
 	public ReturnModel savefindLogin(UsUser xtYh) {
 		ReturnModel returnModel = new ReturnModel();
-		List<UsUser> xtYhList = xtyhdao.queryList(UsUser.class, ParamFactory
-				.getParamHb().is("vdlzh", xtYh.getVdlzh()));
+		List<UsUser> xtYhList = xtyhdao.queryList(UsUser.class, ParamFactory.getParamHb().is("vdlzh", xtYh.getVdlzh()));
 		if (Check.isEmpty(xtYhList)) {
-//			returnModel.setType(ReturnModel.TYPE_OK);
+			// returnModel.setType(ReturnModel.TYPE_OK);
 			returnModel.setMsg(MsgProperties.system_userlogin_notexist);
 		} else {
 			if (xtYhList.size() > 1) {
 				returnModel.setMsg(MsgProperties.system_userlogin_repeat);
 			} else {
 				if (LoginUser.loginUserMap.containsKey(xtYhList.get(0).getId())) {
-					logger.info("用户已经在线（" + xtYhList.get(0).getText() + "："
-							+ xtYhList.get(0).getVdlzh() + "），重新登录！！");
-					if (ActionContext.getContext().getSession()
-							.get("loginuser") == null) {
-						LoginUser.loginUserSession.get(xtYhList.get(0).getId())
-								.invalidate();
+					logger.info("用户已经在线（" + xtYhList.get(0).getText() + "：" + xtYhList.get(0).getVdlzh() + "），重新登录！！");
+					if (ActionContext.getContext().getSession().get("loginuser") == null) {
+						LoginUser.loginUserSession.get(xtYhList.get(0).getId()).invalidate();
 					}
 				}
 				if (xtYhList.get(0).getVmm().equals(xtYh.getVmm())) {
@@ -77,30 +73,24 @@ public class LoginService {
 					returnModel.setMsg(MsgProperties.system_is_jump);
 
 					UsUser hhXtYh = xtYhList.get(0);
-
 					if (hhXtYh.getState() == 1) {
 						returnModel.setMsg("您的账号已经被冻结，请联系管理员！");
 						return returnModel;
 					}
 
-					String desktop = "desktop";
-					if (Check.isNoEmpty(hhXtYh.getDesktopType())) {
-						desktop = hhXtYh.getDesktopType();
-					}
-					returnModel.setHref("webapp-desktop-" + desktop);
-
+					returnModel.setHref("webapp-desktop-desktop" );
 
 					List<String> jsids = Convert.strToList(hhXtYh.getRoleIds());
 
 					addOrg(hhXtYh);
 
-					if (hhXtYh.getOrg()!=null) {
+					if (hhXtYh.getOrg() != null) {
 						jsids.addAll(Convert.strToList(hhXtYh.getOrg().getRoleIds()));
 					}
-					if (hhXtYh.getDept()!=null) {
+					if (hhXtYh.getDept() != null) {
 						jsids.addAll(Convert.strToList(hhXtYh.getDept().getRoleIds()));
 					}
-					if (hhXtYh.getJob()!=null) {
+					if (hhXtYh.getJob() != null) {
 						jsids.addAll(Convert.strToList(hhXtYh.getJob().getRoleIds()));
 					}
 
@@ -108,17 +98,13 @@ public class LoginService {
 					List<UsRoleMenu> hhXtJsCdList = new ArrayList<UsRoleMenu>();
 					List<UsRoleOper> hhXtJsCzList = new ArrayList<UsRoleOper>();
 					if (jsids.size() != 0) {
-						hhXtJsList = xtjsdao.queryList(
-								UsRole.class,
-								ParamFactory.getParamHb().nis("state", 1)
-										.in("id", jsids));
+						hhXtJsList = xtjsdao.queryList(UsRole.class,
+								ParamFactory.getParamHb().nis("state", 1).in("id", jsids));
 						if (hhXtJsList.size() != 0) {
-							hhXtJsCdList = xtjscddao
-									.queryList(UsRoleMenu.class, ParamFactory
-											.getParamHb().in("jsId", jsids));
-							hhXtJsCzList = xtjsczdao
-									.queryList(UsRoleOper.class, ParamFactory
-											.getParamHb().in("jsId", jsids));
+							hhXtJsCdList = xtjscddao.queryList(UsRoleMenu.class,
+									ParamFactory.getParamHb().in("jsId", jsids));
+							hhXtJsCzList = xtjsczdao.queryList(UsRoleOper.class,
+									ParamFactory.getParamHb().in("jsId", jsids));
 						}
 					}
 
@@ -132,12 +118,11 @@ public class LoginService {
 					}
 					List<SysMenu> hhXtCdList = new ArrayList<SysMenu>();
 					if (hhxtcdIdList.size() > 0) {
-						hhXtCdList = hhxtcdDao.queryList(SysMenu.class, "id",
-								hhxtcdIdList);
+						hhXtCdList = hhxtcdDao.queryList(SysMenu.class, "id", hhxtcdIdList);
 						for (SysMenu sysMenu : hhXtCdList) {
-							SysOper sysOper =  new SysOper();
+							SysOper sysOper = new SysOper();
 							sysOper.setType(1);
-							hhXtCzMap.put(sysMenu.getVsj(),sysOper);
+							hhXtCzMap.put(sysMenu.getVsj(), sysOper);
 						}
 					}
 					// 请求的控制
@@ -152,28 +137,23 @@ public class LoginService {
 						if (Check.isEmpty(hhXtCz.getOperLevel())) {
 							hhXtCz.setOperLevel(hhXtJsCz.getOperLevel());
 						} else {
-							if (StaticProperties.findOperationLevel(hhXtJsCz
-									.getOperLevel()) > StaticProperties
+							if (StaticProperties.findOperationLevel(hhXtJsCz.getOperLevel()) > StaticProperties
 									.findOperationLevel(hhXtCz.getOperLevel())) {
 								hhXtCz.setOperLevel(hhXtJsCz.getOperLevel());
 							}
 						}
 						if (!hhXtCzUrlList.contains(hhXtCz.getVurl())
-								|| !hhXtCzPageTextList.contains(hhXtCz
-										.getPageText())) {
+								|| !hhXtCzPageTextList.contains(hhXtCz.getPageText())) {
 							if (Check.isNoEmpty(hhXtCz.getVurl())) {
 								hhXtCzUrlList.add(hhXtCz.getVurl());
 							}
 							if (Check.isNoEmpty(hhXtCz.getPageText())) {
 								hhXtCzPageTextList.add(hhXtCz.getPageText());
-								List<String> menuCzList = hhXtCzPageTextMap
-										.get(hhXtCz.getMenuUrl());
+								List<String> menuCzList = hhXtCzPageTextMap.get(hhXtCz.getMenuUrl());
 								if (menuCzList == null) {
-									hhXtCzPageTextMap.put(hhXtCz.getMenuUrl(),
-											new ArrayList<String>());
+									hhXtCzPageTextMap.put(hhXtCz.getMenuUrl(), new ArrayList<String>());
 								}
-								hhXtCzPageTextMap.get(hhXtCz.getMenuUrl()).add(
-										hhXtCz.getPageText());
+								hhXtCzPageTextMap.get(hhXtCz.getMenuUrl()).add(hhXtCz.getPageText());
 							}
 							hhXtCzMap.put(hhXtCz.getVurl(), hhXtCz);
 						}
@@ -197,16 +177,14 @@ public class LoginService {
 						BeanUtils.copyProperties(hhXtYh2, hhXtYh);
 						hhXtYh2.setVmm("");
 						// hhXtYh2.setHhXtZmsx(hhXtYh.getHhXtZmsx());
-						ActionContext.getContext().getSession()
-								.put("loginuser", hhXtYh2);
+						ActionContext.getContext().getSession().put("loginuser", hhXtYh2);
 					} catch (IllegalAccessException e) {
 						e.printStackTrace();
 					} catch (InvocationTargetException e) {
 						e.printStackTrace();
 					}
 				} else {
-					returnModel
-							.setMsg(MsgProperties.system_userlogin_wrong_password);
+					returnModel.setMsg(MsgProperties.system_userlogin_wrong_password);
 				}
 			}
 		}
@@ -215,28 +193,24 @@ public class LoginService {
 
 	private void addOrg(UsUser hhXtYh) {
 		if (Check.isNoEmpty(hhXtYh.getOrgId())) {
-			UsOrganization organization = organizationService
-					.findObjectById(hhXtYh.getOrgId());
+			UsOrganization organization = organizationService.findObjectById(hhXtYh.getOrgId());
 			hhXtYh.setOrg(organization);
 		}
 		if (Check.isNoEmpty(hhXtYh.getDeptId())) {
-			UsOrganization organization = organizationService
-					.findObjectById(hhXtYh.getDeptId());
+			UsOrganization organization = organizationService.findObjectById(hhXtYh.getDeptId());
 			hhXtYh.setDept(organization);
 		}
 		if (Check.isNoEmpty(hhXtYh.getJobId())) {
-			UsOrganization organization = organizationService
-					.findObjectById(hhXtYh.getJobId());
+			UsOrganization organization = organizationService.findObjectById(hhXtYh.getJobId());
 			hhXtYh.setJob(organization);
 		}
 	}
 
 	private List<SysMenu> queryZmtbList(UsUser hhXtYh, List<String> hhxtcdIdList) {
-		List<UsUserMenuZmtb> hhXtYhCdZmtbList = xtyhcdzmtb.queryList(
-				UsUserMenuZmtb.class,
+		List<UsUserMenuZmtb> hhXtYhCdZmtbList = xtyhcdzmtb.queryList(UsUserMenuZmtb.class,
 				ParamFactory.getParamHb().is("yhId", hhXtYh.getId())
 		// .addCondition(Order.asc(StaticVar.ORDER))
-				);
+		);
 
 		List<SysMenu> hhXtCdZmtbList = new ArrayList<SysMenu>();
 		for (UsUserMenuZmtb hhXtYhCdZmtb : hhXtYhCdZmtbList) {
