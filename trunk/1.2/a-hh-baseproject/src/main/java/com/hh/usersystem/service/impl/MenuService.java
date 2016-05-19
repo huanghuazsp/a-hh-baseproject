@@ -209,4 +209,24 @@ public class MenuService extends BaseService<SysMenu> {
 			ActionContext.getContext().getSession().put("loginuser", hhXtYh);
 		}
 	}
+
+	public static List<SysMenu> getSubNodes(String parentId, List<SysMenu> sysMenuList) {
+		List<SysMenu> returnsysMenuList = new ArrayList<SysMenu>();
+		for (SysMenu sysMenu : sysMenuList) {
+			if (Convert.toString(sysMenu.getNode()).equals(parentId) && Check.isNoEmpty(sysMenu.getMobileUrl())) {
+				returnsysMenuList.add(sysMenu);
+				getSubNodes(sysMenu.getId(), sysMenuList, returnsysMenuList);
+			}
+		}
+		return returnsysMenuList;
+	}
+
+	public static void getSubNodes(String parentId, List<SysMenu> sysMenuList, List<SysMenu> returnsysMenuList) {
+		for (SysMenu sysMenu : sysMenuList) {
+			if (Convert.toString(sysMenu.getNode()).equals(parentId) && Check.isNoEmpty(sysMenu.getMobileUrl())) {
+				returnsysMenuList.add(sysMenu);
+				getSubNodes(sysMenu.getId(), sysMenuList, returnsysMenuList);
+			}
+		}
+	}
 }

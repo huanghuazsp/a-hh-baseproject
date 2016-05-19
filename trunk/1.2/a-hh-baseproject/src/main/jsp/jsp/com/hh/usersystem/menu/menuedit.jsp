@@ -98,6 +98,11 @@
 						config=" name : 'vsj'"></span></td>
 				</tr>
 				<tr>
+					<td xtype="label">移动端动作：</td>
+					<td colspan="3"><span lxchange="true" xtype="text"
+						config=" name : 'mobileUrl'"></span></td>
+				</tr>
+				<tr>
 					<td xtype="label">打开类型：</td>
 					<td colspan="3"><span  xtype="radio"
 						config="name: 'openType' ,defaultValue : 0, data :[{id:0,text:'tab页签'},{id:1,text:'浏览器href'}]  "></td>
