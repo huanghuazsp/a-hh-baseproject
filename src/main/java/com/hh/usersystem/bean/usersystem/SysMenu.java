@@ -26,8 +26,10 @@ public class SysMenu extends BaseTreeNodeEntity<SysMenu> {
 	private String vdtp = "/hhcommon/images/big/apple/20.png";
 	private String vpname;
 	private String params;
-	
 	private int openType;
+	
+	private String mobileUrl;
+	
 	public SysMenu(){
 		
 	}
@@ -94,5 +96,15 @@ public class SysMenu extends BaseTreeNodeEntity<SysMenu> {
 	public void setOpenType(int openType) {
 		this.openType = openType;
 	}
+	
+	@Column(name = "MOBILE_URL", length = 256)
+	public String getMobileUrl() {
+		return mobileUrl;
+	}
+	public void setMobileUrl(String mobileUrl) {
+		this.mobileUrl = mobileUrl;
+	}
+	
+	
 
 }
