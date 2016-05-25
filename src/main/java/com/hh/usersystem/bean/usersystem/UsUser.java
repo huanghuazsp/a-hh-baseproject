@@ -87,6 +87,10 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	private String jobId;
 	private String deptId;
 	private String orgId;
+	
+	private String jobIdText;
+	private String deptIdText;
+	private String orgIdText;
 
 	@Transient
 	public UsOrganization getDept() {
@@ -400,6 +404,33 @@ public class UsUser extends BaseTwoEntity implements IUser {
 
 	public void setRoleIds(String roleIds) {
 		this.roleIds = roleIds;
+	}
+
+	@Column(name="JOB_ID_TEXT",length=64)
+	public String getJobIdText() {
+		return jobIdText;
+	}
+
+	public void setJobIdText(String jobIdText) {
+		this.jobIdText = jobIdText;
+	}
+
+	@Column(name="DEPT_ID_TEXT",length=64)
+	public String getDeptIdText() {
+		return deptIdText;
+	}
+
+	public void setDeptIdText(String deptIdText) {
+		this.deptIdText = deptIdText;
+	}
+
+	@Column(name="ORG_ID_TEXT",length=64)
+	public String getOrgIdText() {
+		return orgIdText;
+	}
+
+	public void setOrgIdText(String orgIdText) {
+		this.orgIdText = orgIdText;
 	}
 
 //	@Transient
