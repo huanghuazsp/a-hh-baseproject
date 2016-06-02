@@ -57,9 +57,9 @@ public class SetupInitializerSystem {
 						"/hhcommon/images/extjsico/bogus.png", 0, 1));
 
 		rootHhXtCd.getChildren().add(
-				new SysMenu("7cc2cd43-d297-419d-9386-8129f887b2b3", "消息管理",
-						"jsp-message-message-messagelist",
-						"/hhcommon/images/extjsico/17460341.png", 0, 1));
+				new SysMenu("7cc2cd43-d297-419d-9386-8129f887b2b3", "数据库管理",
+						"jsp-database-connect-main",
+						"/hhcommon/images/icons/page/page_white_database.png", 0, 1));
 
 		rootHhXtCd.getChildren().add(
 				new SysMenu("886a29ca-49f1-4703-9577-f639926178fd", "在线用户",
