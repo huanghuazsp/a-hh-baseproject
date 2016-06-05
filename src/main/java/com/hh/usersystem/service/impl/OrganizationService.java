@@ -67,7 +67,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 						: organization.getLx_() == 1 ? "org" : organization
 								.getLx_() == 2 ? "dept"
 								: organization.getLx_() == 3 ? "job" : "";
-				organization.setIconCls(clasString);
+				organization.setIconSkin(clasString);
 				organization
 						.setIcon(organization.getLx_() == 0 ? "/hhcommon/images/myimage/org/group.png"
 								: organization.getLx_() == 1 ? "/hhcommon/images/myimage/org/org.png"
