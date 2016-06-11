@@ -147,7 +147,7 @@
 					&nbsp;<span id="msgspan" style="color:red;" ></span>
 			</div>
 			<span id="dataTreeSpan" xtype="tree"
-				config=" id:'dataTree' , url:'system-SysData-queryTreeList' , remove : removeData , edit : editData "></span>
+				config=" dragInnerAction : 'system-SysData-dragInnerAction' , id:'dataTree' , url:'system-SysData-queryTreeList' , remove : removeData , edit : editData "></span>
 		</div>
 	</div>
 </body>
