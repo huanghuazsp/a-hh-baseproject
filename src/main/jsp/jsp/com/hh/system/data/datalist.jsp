@@ -137,7 +137,7 @@
 					config="onClick : downloadExcel ,text : '下载模板'"></span>
 			</div>
 			<span id="typeTreeSpan" xtype="tree"
-				config=" id:'typeTree' , url:'system-SysDataType-queryTreeList' , remove : removeType , edit : editType , onClick : typeTreeClick"></span>
+				config=" dragInnerAction : 'system-SysDataType-dragInnerAction' , id:'typeTree' , url:'system-SysDataType-queryTreeList' , remove : removeType , edit : editType , onClick : typeTreeClick"></span>
 		</div>
 		<div id="datacenter">
 			<div xtype="toolbar" config="type:'head'">
