@@ -83,11 +83,11 @@
 						</td>
 					</tr>
 					<tr>
-						<td xtype="label">类型：</td>
+						<!-- <td xtype="label">类型：</td>
 						<td><span id="leafspan" xtype="radio"
-							config="name: 'leaf' ,defaultValue : 1, data :[{id:1,text:'字典项'},{id:0,text:'类别'}]"></span></td>
+							config="name: 'leaf' ,defaultValue : 1, data :[{id:1,text:'字典项'},{id:0,text:'类别'}]"></span></td> -->
 						<td xtype="label">是否展开：</td>
-						<td><span xtype="radio"
+						<td  colspan="3"><span xtype="radio" 
 							config="name: 'expanded' ,defaultValue : 1,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
 					</tr>
 					<tr>
