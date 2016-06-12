@@ -137,7 +137,7 @@
 					config="onClick : downloadExcel ,text : '下载模板'"></span>
 			</div>
 			<span id="typeTreeSpan" xtype="tree"
-				config=" dragInnerAction : 'system-SysDataType-dragInnerAction' , id:'typeTree' , url:'system-SysDataType-queryTreeList' , remove : removeType , edit : editType , onClick : typeTreeClick"></span>
+				config=" dragAction : 'system-SysDataType-drag', dragInnerAction : 'system-SysDataType-dragInner' , id:'typeTree' , url:'system-SysDataType-queryTreeList' , remove : removeType , edit : editType , onClick : typeTreeClick"></span>
 		</div>
 		<div id="datacenter">
 			<div xtype="toolbar" config="type:'head'">
@@ -147,7 +147,7 @@
 					&nbsp;<span id="msgspan" style="color:red;" ></span>
 			</div>
 			<span id="dataTreeSpan" xtype="tree"
-				config=" dragInnerAction : 'system-SysData-dragInnerAction' , id:'dataTree' , url:'system-SysData-queryTreeList' , remove : removeData , edit : editData "></span>
+				config=" dragAction : 'system-SysData-drag', dragInnerAction : 'system-SysData-dragInner' , id:'dataTree' , url:'system-SysData-queryTreeList' , remove : removeData , edit : editData "></span>
 		</div>
 	</div>
 </body>
