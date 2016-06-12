@@ -27,9 +27,9 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 
 	public void updateOrder(String id1, String order1, String id2, String order2) {
 		UsUserMenuZmtb entity1 = dao.findEntity(UsUserMenuZmtb.class, Restrictions.eq("cdId", id1));
-		String order1_ = entity1.getOrder();
+		long order1_ = entity1.getOrder();
 		UsUserMenuZmtb entity2 = dao.findEntity(UsUserMenuZmtb.class, Restrictions.eq("cdId", id2));
-		String order2_ = entity2.getOrder();
+		long order2_ = entity2.getOrder();
 		dao.updateEntity("update " + UsUserMenuZmtb.class.getName() + " o set o.order=? where o.cdId=?",
 				new Object[] { order1_, id2 });
 		dao.updateEntity("update " + UsUserMenuZmtb.class.getName() + " o set o.order=? where o.cdId=?",
@@ -62,7 +62,7 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 			UsUserMenuZmtb hhXtYhCdZmtb = new UsUserMenuZmtb();
 			SysMenu hhXtCd = menuService.findObjectById2(idList.get(i));
 			hhXtYhCdZmtb.setHhXtCd(hhXtCd);
-			hhXtYhCdZmtb.setOrder(PrimaryKey.getPrimaryKeyTime() + PrimaryKey.getPrimaryKeyUUID());
+			hhXtYhCdZmtb.setOrder(PrimaryKey.getPrimaryKeyTime(this.getGenericType(0).getName()));
 			hhXtYhCdZmtb.setYhId(userid);
 			dao.createEntity(hhXtYhCdZmtb);
 		}
