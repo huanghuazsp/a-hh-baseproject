@@ -443,6 +443,16 @@ public class UsUser extends BaseTwoEntity implements IUser {
 //	}
 
 	
-	
+	private Integer state;
+	@Column(name="STATE_")
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		if (state!=null) {
+			this.state = state;
+		}
+	}
 	
 }

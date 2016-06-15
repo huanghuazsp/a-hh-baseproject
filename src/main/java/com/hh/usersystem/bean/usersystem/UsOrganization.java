@@ -177,4 +177,17 @@ public class UsOrganization    extends BaseTreeNodeEntity<UsOrganization> implem
 	public void setHeadpic(String headpic) {
 		this.headpic = headpic;
 	}
+	
+	private Integer state;
+	@Column(name="STATE_")
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		if (state!=null) {
+			this.state = state;
+		}
+	}
+
 }
