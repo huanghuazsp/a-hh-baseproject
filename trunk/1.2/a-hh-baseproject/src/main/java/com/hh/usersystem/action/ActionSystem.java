@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.hh.system.service.impl.SystemFileService;
 import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.StaticProperties;
 import com.hh.system.util.base.BaseAction;
@@ -15,9 +16,16 @@ import com.hh.usersystem.service.impl.SystemService;
 public class ActionSystem extends BaseAction {
 	@Autowired
 	private SystemService systemService;
+	
+	@Autowired
+	private SystemFileService systemFileService;
 
 	public void initMenuAndUser() {
 		systemService.initMenuAndUser();
+	}
+	
+	public void fileCopyDeleteTask() {
+		systemFileService.fileCopyDeleteTask();
 	}
 	
 	public Object loadDataTime() {
