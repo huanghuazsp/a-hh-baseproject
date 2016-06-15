@@ -68,6 +68,16 @@ public class UsRole extends BaseTwoEntity  {
 		this.jssx = jssx;
 	}
 
-	
+	private Integer state;
+	@Column(name="STATE_")
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		if (state!=null) {
+			this.state = state;
+		}
+	}
 	
 }
