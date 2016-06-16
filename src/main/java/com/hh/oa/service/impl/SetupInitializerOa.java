@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.hh.message.service.EmailService;
 import com.hh.message.service.SysMessageService;
+import com.hh.system.util.StaticVar;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.util.steady.StaticProperties;
 
@@ -59,9 +60,9 @@ public class SetupInitializerOa {
 						"/hhcommon/images/extjsico/17460310.png", 0, 1));
 
 		StaticProperties.hhXtCds.add(rootHhXtCd);
-		com.hh.system.util.StaticProperties.loadDataTimeList
+		StaticVar.loadDataTimeList
 				.add(sysShouEmailService);
-		com.hh.system.util.StaticProperties.loadDataTimeList
+		StaticVar.loadDataTimeList
 				.add(sysMessageService);
 	}
 }

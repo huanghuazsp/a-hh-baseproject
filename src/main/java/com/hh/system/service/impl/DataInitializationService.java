@@ -17,8 +17,8 @@ import com.hh.system.service.inf.SystemServiceInf;
 import com.hh.system.task.FileCopyDeleteTask;
 import com.hh.system.util.Convert;
 import com.hh.system.util.FileUtil;
+import com.hh.system.util.StaticVar;
 import com.hh.system.util.SysParam;
-import com.hh.system.util.statics.StaticVar;
 
 @Service
 public class DataInitializationService {

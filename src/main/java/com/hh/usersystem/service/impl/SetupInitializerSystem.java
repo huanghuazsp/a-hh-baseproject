@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hh.system.util.StaticVar;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.util.steady.StaticProperties;
 
@@ -128,7 +129,7 @@ public class SetupInitializerSystem {
 		}
 		
 		
-		com.hh.system.util.StaticProperties.loadDataTimeList.add(systemService);
+		StaticVar.loadDataTimeList.add(systemService);
 		
 	}
 }
