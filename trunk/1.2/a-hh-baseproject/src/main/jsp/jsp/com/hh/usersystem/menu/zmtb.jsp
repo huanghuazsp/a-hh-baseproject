@@ -1,7 +1,7 @@
 <%@page import="com.hh.usersystem.service.impl.ZmtbService"%>
 <%@page import="com.hh.system.service.impl.BeanFactoryHelper"%>
 <%@page import="com.hh.usersystem.service.impl.MenuService"%>
-<%@page import="com.hh.system.util.statics.StaticVar"%>
+<%@page import="com.hh.system.util.StaticVar"%>
 <%@page import="com.hh.system.util.dto.ParamFactory"%>
 <%@page import="com.hh.usersystem.bean.usersystem.UsUserMenuZmtb"%>
 <%@page import="com.hh.usersystem.bean.usersystem.SysMenu"%>
