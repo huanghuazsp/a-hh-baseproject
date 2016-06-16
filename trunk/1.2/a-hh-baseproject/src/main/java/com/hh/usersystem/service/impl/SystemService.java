@@ -21,7 +21,7 @@ import com.hh.system.service.inf.SystemServiceInf;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.PrimaryKey;
-import com.hh.system.util.statics.StaticVar;
+import com.hh.system.util.StaticVar;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.bean.usersystem.UsRole;

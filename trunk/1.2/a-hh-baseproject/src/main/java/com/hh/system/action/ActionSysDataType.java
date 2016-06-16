@@ -20,12 +20,12 @@ import com.hh.system.service.impl.SysDataTypeService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
+import com.hh.system.util.StaticVar;
 import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.document.ExcelUtil;
 import com.hh.system.util.document.ExportSetInfo;
 import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.model.ResultFile;
-import com.hh.system.util.statics.StaticVar;
 
 @SuppressWarnings("serial")
 public class ActionSysDataType extends BaseServiceAction<SysDataType> {
