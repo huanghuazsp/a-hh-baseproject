@@ -38,13 +38,13 @@
 		//var content = $('#form').html()||'';
 		var data = $('#form').getValue();
 		var filehtml='';
-		var files = $.hh.toObject(data.files);
+		/* var files = $.hh.toObject(data.files);
 		if(files){
 			for(var i=0;i<files.length;i++){
 				var fileitem = files[i];
 				filehtml+='<a href="'+fileitem.path+'">'+fileitem.attachmentFileName+'</a>&nbsp;；';
 			}
-		}
+		} */
 		var content ='<h3>【'+data.sendUserName+'】于'+ data.dcreate+'向【'+data.userNames+'】发送了一封邮件【'+data.title+'】！</h3><br/><br/>';
 		if(filehtml){
 			content+='附件：'+filehtml+'<br/>'

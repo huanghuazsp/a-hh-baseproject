@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hh.message.bean.SysEmail;
 import com.hh.system.service.impl.BaseService;
+import com.hh.system.service.inf.IFileOper;
 import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
@@ -22,7 +23,7 @@ import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 
 @Service
-public class EmailService extends BaseService<SysEmail> implements LoadDataTime {
+public class EmailService extends BaseService<SysEmail> implements LoadDataTime,IFileOper {
 
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
@@ -164,6 +165,11 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime 
 				}
 			}
 		}
+	}
+
+	@Override
+	public void fileOper() {
+		
 	}
 
 }
