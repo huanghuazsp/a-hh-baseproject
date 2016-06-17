@@ -17,7 +17,7 @@ public class SysMessage extends BaseTwoEntity {
 	private String type;
 	private String content;
 	private String title;
-	private String files;
+//	private String files;
 
 	
 	private String headpic = "";
@@ -79,15 +79,15 @@ public class SysMessage extends BaseTwoEntity {
 		this.title = title;
 	}
 
-	@Lob
-	@Column(name = "FILES")
-	public String getFiles() {
-		return files;
-	}
-
-	public void setFiles(String files) {
-		this.files = files;
-	}
+//	@Lob
+//	@Column(name = "FILES")
+//	public String getFiles() {
+//		return files;
+//	}
+//
+//	public void setFiles(String files) {
+//		this.files = files;
+//	}
 
 	@Column(name = "SEND_USERID", length = 36)
 	public String getSendUserId() {

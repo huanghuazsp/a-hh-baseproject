@@ -20,6 +20,8 @@ public class SetupInitializerOa {
 	private EmailService sysShouEmailService;
 	@Autowired
 	private SysMessageService sysMessageService;
+	
+	
 
 	@PostConstruct
 	public void initialize() {
@@ -64,5 +66,7 @@ public class SetupInitializerOa {
 				.add(sysShouEmailService);
 		StaticVar.loadDataTimeList
 				.add(sysMessageService);
+		
+		StaticVar.fileOperList.add(sysShouEmailService);
 	}
 }

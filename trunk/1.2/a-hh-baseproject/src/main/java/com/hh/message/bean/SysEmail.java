@@ -15,7 +15,7 @@ public class SysEmail extends BaseTwoEntity implements java.io.Serializable {
 	private String type;
 	private String content;
 	private String title;
-	private String files;
+//	private String files;
 	
 	private String users="";
 	private String userNames="";
@@ -73,15 +73,15 @@ public class SysEmail extends BaseTwoEntity implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@Lob
-	@Column(name="FILES")
-	public String getFiles() {
-		return files;
-	}
-
-	public void setFiles(String files) {
-		this.files = files;
-	}
+//	@Lob
+//	@Column(name="FILES")
+//	public String getFiles() {
+//		return files;
+//	}
+//
+//	public void setFiles(String files) {
+//		this.files = files;
+//	}
 
 	@Lob
 	@Column(name="USER_NAMES")
