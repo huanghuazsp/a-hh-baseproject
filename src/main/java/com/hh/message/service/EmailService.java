@@ -169,7 +169,9 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 
 	@Override
 	public void fileOper() {
-		
+		Map<String, Object> map=new HashMap<String,Object>();
+		dao.executeSql("update sys_file  set DESTROY_=1 where  type='email' and SERVICE_ID not in(select id from sys_email where is_file=0)",map);
+		dao.executeSql("UPDATE sys_email SET is_file=1 where is_file=0",map);
 	}
 
 }
