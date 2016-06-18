@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hh.message.bean.SysEmail;
+import com.hh.system.bean.SystemFile;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.service.inf.IFileOper;
 import com.hh.system.service.inf.LoadDataTime;
@@ -23,19 +24,23 @@ import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 
 @Service
-public class EmailService extends BaseService<SysEmail> implements LoadDataTime,IFileOper {
+public class EmailService extends BaseService<SysEmail> implements
+		LoadDataTime, IFileOper {
 
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 
 	@Override
-	public PagingData<SysEmail> queryPagingData(SysEmail entity, PageRange pageRange) {
-		return dao.queryPagingData(this.getGenericType(0), ParamFactory.getParamHb().orderDesc("dcreate"), pageRange,
-				new String[] { "id", "title", "dcreate", "type" });
+	public PagingData<SysEmail> queryPagingData(SysEmail entity,
+			PageRange pageRange) {
+		return dao.queryPagingData(this.getGenericType(0), ParamFactory
+				.getParamHb().orderDesc("dcreate"), pageRange, new String[] {
+				"id", "title", "dcreate", "type" });
 	}
 
 	@Transactional
-	public SysEmail sendEmail(SysEmail entity, String leixing) throws MessageException {
+	public SysEmail sendEmail(SysEmail entity, String leixing)
+			throws MessageException {
 		UsUser hhXtYh = loginUserUtilService.findLoginUser();
 		entity.setSendUserId(hhXtYh.getId());
 		entity.setSendUserName(hhXtYh.getText());
@@ -51,14 +56,14 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 	public Map<String, Object> load() {
 		return load2(loginUserUtilService.findUserId());
 	}
-	
+
 	@Transactional
 	public Map<String, Object> load2(String userId) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		int shouCount = findCount(ParamFactory.getParamHb().like("users", userId)
-				.nolike("readUserId", userId)
-				.nolike("deleteUserId",userId).is("type", "yfs")
+		int shouCount = findCount(ParamFactory.getParamHb()
+				.like("users", userId).nolike("readUserId", userId)
+				.nolike("deleteUserId", userId).is("type", "yfs")
 				.nolike("thoroughDeleteUserId", userId));
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("count", shouCount);
@@ -74,47 +79,79 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 	public SysEmail findObjectById(String id) {
 		String userId = loginUserUtilService.findUserId();
 		SysEmail sysEmail = super.findObjectById(id);
-		if (Convert.toString(sysEmail.getReadUserId()).indexOf(userId) == -1) {
-			sysEmail.setReadUserId(sysEmail.getReadUserId() + "," + userId);
-			dao.updateEntity(sysEmail);
-			ThreadUtil.getThreadPool().execute(new EmailThread(loginUserUtilService.findUserId()));
+		if (sysEmail!=null) {
+			if (Convert.toString(sysEmail.getReadUserId()).indexOf(userId) == -1) {
+				sysEmail.setReadUserId(sysEmail.getReadUserId() + "," + userId);
+				dao.updateEntity(sysEmail);
+				ThreadUtil.getThreadPool().execute(
+						new EmailThread(loginUserUtilService.findUserId()));
+			}
 		}
 		return sysEmail;
 	}
 
-	public PagingData<SysEmail> queryDeletePage(SysEmail object, PageRange pageRange) {
-		return dao.queryPagingData(this.getGenericType(0),
-				ParamFactory.getParamHb().like("deleteUserId", loginUserUtilService.findUserId())
-						.nolike("thoroughDeleteUserId", loginUserUtilService.findUserId()).orderDesc("dcreate"),
-				pageRange, new String[] { "id", "title", "dcreate", "type" });
+	public PagingData<SysEmail> queryDeletePage(SysEmail object,
+			PageRange pageRange) {
+		return dao
+				.queryPagingData(
+						this.getGenericType(0),
+						ParamFactory
+								.getParamHb()
+								.like("deleteUserId",
+										loginUserUtilService.findUserId())
+								.nolike("thoroughDeleteUserId",
+										loginUserUtilService.findUserId())
+								.orderDesc("dcreate"), pageRange, new String[] {
+								"id", "title", "dcreate", "type" });
 	}
 
-	public PagingData<SysEmail> queryCGXPage(SysEmail object, PageRange pageRange) {
-		return dao.queryPagingData(this.getGenericType(0),
-				ParamFactory.getParamHb().is("sendUserId", loginUserUtilService.findUserId())
-						.nolike("deleteUserId", loginUserUtilService.findUserId())
-						.nolike("thoroughDeleteUserId", loginUserUtilService.findUserId()).is("type", "cgx")
-						.orderDesc("dcreate"),
-				pageRange, new String[] { "id", "title", "dcreate", "type" });
+	public PagingData<SysEmail> queryCGXPage(SysEmail object,
+			PageRange pageRange) {
+		return dao.queryPagingData(
+				this.getGenericType(0),
+				ParamFactory
+						.getParamHb()
+						.is("sendUserId", loginUserUtilService.findUserId())
+						.nolike("deleteUserId",
+								loginUserUtilService.findUserId())
+						.nolike("thoroughDeleteUserId",
+								loginUserUtilService.findUserId())
+						.is("type", "cgx").orderDesc("dcreate"), pageRange,
+				new String[] { "id", "title", "dcreate", "type" });
 	}
 
-	public PagingData<SysEmail> querySendPage(SysEmail object, PageRange pageRange) {
-		return dao.queryPagingData(this.getGenericType(0),
-				ParamFactory.getParamHb().is("sendUserId", loginUserUtilService.findUserId())
-						.nolike("deleteUserId", loginUserUtilService.findUserId())
-						.nolike("thoroughDeleteUserId", loginUserUtilService.findUserId()).is("type", "yfs")
-						.orderDesc("dcreate"),
-				pageRange, new String[] { "id", "title", "dcreate", "type" });
+	public PagingData<SysEmail> querySendPage(SysEmail object,
+			PageRange pageRange) {
+		return dao.queryPagingData(
+				this.getGenericType(0),
+				ParamFactory
+						.getParamHb()
+						.is("sendUserId", loginUserUtilService.findUserId())
+						.nolike("deleteUserId",
+								loginUserUtilService.findUserId())
+						.nolike("thoroughDeleteUserId",
+								loginUserUtilService.findUserId())
+						.is("type", "yfs").orderDesc("dcreate"), pageRange,
+				new String[] { "id", "title", "dcreate", "type" });
 	}
 
-	public PagingData<SysEmail> queryShouPage(SysEmail object, PageRange pageRange) {
+	public PagingData<SysEmail> queryShouPage(SysEmail object,
+			PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
-		PagingData<SysEmail> page = dao.queryPagingData(this.getGenericType(0),
-				ParamFactory.getParamHb().like("users", loginUserUtilService.findUserId())
-						.nolike("deleteUserId", loginUserUtilService.findUserId())
-						.nolike("thoroughDeleteUserId", loginUserUtilService.findUserId()).is("type", "yfs")
-						.orderDesc("dcreate"),
-				pageRange, new String[] { "id", "title", "dcreate", "type", "readUserId" });
+		PagingData<SysEmail> page = dao
+				.queryPagingData(
+						this.getGenericType(0),
+						ParamFactory
+								.getParamHb()
+								.like("users",
+										loginUserUtilService.findUserId())
+								.nolike("deleteUserId",
+										loginUserUtilService.findUserId())
+								.nolike("thoroughDeleteUserId",
+										loginUserUtilService.findUserId())
+								.is("type", "yfs").orderDesc("dcreate"),
+						pageRange, new String[] { "id", "title", "dcreate",
+								"type", "readUserId" });
 
 		for (SysEmail sysEmail : page.getItems()) {
 			if (Convert.toString(sysEmail.getReadUserId()).indexOf(userId) > -1) {
@@ -131,8 +168,10 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 			String userId = loginUserUtilService.findUserId();
 			List<SysEmail> sysEmails = queryListByIds(Convert.strToList(ids));
 			for (SysEmail sysEmail : sysEmails) {
-				if (Convert.toString(sysEmail.getDeleteUserId()).indexOf(userId) == -1) {
-					sysEmail.setDeleteUserId(sysEmail.getDeleteUserId() + "," + userId);
+				if (Convert.toString(sysEmail.getDeleteUserId())
+						.indexOf(userId) == -1) {
+					sysEmail.setDeleteUserId(sysEmail.getDeleteUserId() + ","
+							+ userId);
 					dao.updateEntity(sysEmail);
 				}
 			}
@@ -145,8 +184,10 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 			String userId = loginUserUtilService.findUserId();
 			List<SysEmail> sysEmails = queryListByIds(Convert.strToList(ids));
 			for (SysEmail sysEmail : sysEmails) {
-				if (Convert.toString(sysEmail.getThoroughDeleteUserId()).indexOf(userId) == -1) {
-					sysEmail.setThoroughDeleteUserId(sysEmail.getThoroughDeleteUserId() + "," + userId);
+				if (Convert.toString(sysEmail.getThoroughDeleteUserId())
+						.indexOf(userId) == -1) {
+					sysEmail.setThoroughDeleteUserId(sysEmail
+							.getThoroughDeleteUserId() + "," + userId);
 					dao.updateEntity(sysEmail);
 				}
 			}
@@ -159,8 +200,10 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 			String userId = loginUserUtilService.findUserId();
 			List<SysEmail> sysEmails = queryListByIds(Convert.strToList(ids));
 			for (SysEmail sysEmail : sysEmails) {
-				if (Convert.toString(sysEmail.getDeleteUserId()).indexOf(userId) > -1) {
-					sysEmail.setDeleteUserId(sysEmail.getDeleteUserId().replaceAll("," + userId, ""));
+				if (Convert.toString(sysEmail.getDeleteUserId())
+						.indexOf(userId) > -1) {
+					sysEmail.setDeleteUserId(sysEmail.getDeleteUserId()
+							.replaceAll("," + userId, ""));
 					dao.updateEntity(sysEmail);
 				}
 			}
@@ -168,10 +211,11 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 	}
 
 	@Override
-	public void fileOper() {
-		Map<String, Object> map=new HashMap<String,Object>();
-//		dao.executeSql("update sys_file  set DESTROY_=1 where  type='email' and SERVICE_ID not in(select id from sys_email where is_file=0)",map);
-//		dao.executeSql("UPDATE sys_email SET is_file=1 where is_file=0",map);
+	public void fileOper(SystemFile systemFile) {
+		SysEmail sysEmail = dao.findEntityByPK(SysEmail.class,systemFile.getServiceId());
+		if (sysEmail == null) {
+			systemFile.setDestroy(1);
+		}
 	}
 
 }
