@@ -441,17 +441,13 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	// this.clientType = clientType;
 	// }
 
-	private Integer state;
-
-	@Column(name = "STATE_")
-	public Integer getState() {
+	private int state;
+	@Column(name="STATE_")
+	public int getState() {
 		return state;
 	}
 
-	public void setState(Integer state) {
-		if (state == null) {
-			state = 0;
-		}
+	public void setState(int state) {
 		this.state = state;
 	}
 }
