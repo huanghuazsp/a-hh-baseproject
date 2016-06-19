@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
+import com.hh.message.bean.SysEmail;
+import com.hh.system.bean.SystemFile;
 import com.hh.system.service.impl.BaseService;
+import com.hh.system.service.inf.IFileOper;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
@@ -37,7 +40,7 @@ import com.hh.usersystem.util.steady.StaticProperties;
 import com.opensymphony.xwork2.ActionContext;
 
 @Service
-public class UserService extends BaseService<UsUser> {
+public class UserService extends BaseService<UsUser> implements IFileOper  {
 	@Autowired
 	private IHibernateDAO<UsUser> xtyhdao;
 
@@ -518,4 +521,12 @@ public class UserService extends BaseService<UsUser> {
 		}
 	}
 
+	@Override
+	public void fileOper(SystemFile systemFile) {
+		int count = findCount(ParamFactory.getParamHb().is("headpic", systemFile.getId()));
+		if (count == 0) {
+			systemFile.setDestroy(1);
+		}
+	}
+	
 }

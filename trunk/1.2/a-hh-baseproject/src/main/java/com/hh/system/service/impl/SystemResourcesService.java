@@ -4,7 +4,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.hh.system.bean.SystemFile;
 import com.hh.system.bean.SystemResources;
+import com.hh.system.service.inf.IFileOper;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.Json;
@@ -15,7 +17,7 @@ import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 
 @Service
-public class SystemResourcesService extends BaseService<SystemResources> {
+public class SystemResourcesService extends BaseService<SystemResources> implements IFileOper {
 	@Override
 	public SystemResources save(SystemResources entity) throws MessageException {
 		List<Map<String,Object>> mapList = Json.toMapList(entity.getFiles());
@@ -41,6 +43,14 @@ public class SystemResourcesService extends BaseService<SystemResources> {
 			paramInf.like("text", entity.getText());
 		}
 		return super.queryPagingData(entity, pageRange, paramInf);
+	}
+
+	@Override
+	public void fileOper(SystemFile systemFile) {
+		int count = findCount(ParamFactory.getParamHb().like("files", systemFile.getId()));
+		if (count == 0) {
+			systemFile.setDestroy(1);
+		}
 	}
 
 }

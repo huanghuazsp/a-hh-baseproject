@@ -95,7 +95,7 @@
 			height : 270,
 			params : {
 				saveUrl : 'usersystem-Org-importData',
-				type : 'org',
+				type : 'temp',
 				callback : function(data) {
 					if(data.returnModel && data.returnModel.msg){
 						Dialog.alert(data.returnModel.msg);

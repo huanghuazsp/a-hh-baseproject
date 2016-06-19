@@ -87,7 +87,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	private String jobId;
 	private String deptId;
 	private String orgId;
-	
+
 	private String jobIdText;
 	private String deptIdText;
 	private String orgIdText;
@@ -260,7 +260,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.orgIdsStr = orgIdsStr;
 	}
 
-	@Column(name="HEADPIC")
+	@Column(name = "HEADPIC")
 	public String getHeadpic() {
 		return headpic;
 	}
@@ -350,7 +350,6 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.theme = theme;
 	}
 
-
 	@Column(name = "JOB_ID", length = 36)
 	public String getJobId() {
 		return jobId;
@@ -397,7 +396,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	}
 
 	@Lob
-	@Column(name="ROLE_IDS")
+	@Column(name = "ROLE_IDS")
 	public String getRoleIds() {
 		return roleIds;
 	}
@@ -406,7 +405,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.roleIds = roleIds;
 	}
 
-	@Column(name="JOB_ID_TEXT",length=64)
+	@Column(name = "JOB_ID_TEXT", length = 64)
 	public String getJobIdText() {
 		return jobIdText;
 	}
@@ -415,7 +414,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.jobIdText = jobIdText;
 	}
 
-	@Column(name="DEPT_ID_TEXT",length=64)
+	@Column(name = "DEPT_ID_TEXT", length = 64)
 	public String getDeptIdText() {
 		return deptIdText;
 	}
@@ -424,7 +423,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.deptIdText = deptIdText;
 	}
 
-	@Column(name="ORG_ID_TEXT",length=64)
+	@Column(name = "ORG_ID_TEXT", length = 64)
 	public String getOrgIdText() {
 		return orgIdText;
 	}
@@ -433,26 +432,26 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.orgIdText = orgIdText;
 	}
 
-//	@Transient
-//	public String getClientType() {
-//		return clientType;
-//	}
-//
-//	public void setClientType(String clientType) {
-//		this.clientType = clientType;
-//	}
+	// @Transient
+	// public String getClientType() {
+	// return clientType;
+	// }
+	//
+	// public void setClientType(String clientType) {
+	// this.clientType = clientType;
+	// }
 
-	
 	private Integer state;
-	@Column(name="STATE_")
+
+	@Column(name = "STATE_")
 	public Integer getState() {
 		return state;
 	}
 
 	public void setState(Integer state) {
-		if (state!=null) {
-			this.state = state;
+		if (state == null) {
+			state = 0;
 		}
+		this.state = state;
 	}
-	
 }
