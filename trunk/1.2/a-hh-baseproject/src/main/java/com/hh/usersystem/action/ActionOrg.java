@@ -14,12 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
+import com.hh.system.util.FileUtil;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.StaticVar;
 import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.document.ExcelUtil;
 import com.hh.system.util.document.ExportSetInfo;
-import com.hh.system.util.document.FileUpload;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.ResultFile;
 import com.hh.system.util.model.ReturnModel;
@@ -141,7 +141,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 
 	public Object importData() throws Exception {
 		response.setContentType("text/html");
-		String path = FileUpload.uploadFile(attachment, attachmentFileName, type);
+		String path = FileUtil.uploadFile(attachment, attachmentFileName, type);
 		File file = new File(StaticVar.filepath + path);
 		List<Map<String, Object>> mapList = ExcelUtil.getMapList(file, 1);
 		try {
