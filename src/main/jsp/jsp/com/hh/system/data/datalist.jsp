@@ -101,7 +101,7 @@
 			height : 270,
 			params : {
 				saveUrl : 'system-SysDataType-importData',
-				type : 'user',
+				type : 'temp',
 				callback : function(data) {
 					if(data.returnModel && data.returnModel.msg){
 						Dialog.alert(data.returnModel.msg);

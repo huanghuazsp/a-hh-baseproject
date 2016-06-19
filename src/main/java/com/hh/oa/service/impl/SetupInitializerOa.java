@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.hh.message.service.EmailService;
 import com.hh.message.service.SysMessageService;
+import com.hh.system.service.impl.SysParamService;
+import com.hh.system.service.impl.SystemResourcesService;
 import com.hh.system.util.StaticVar;
 import com.hh.usersystem.bean.usersystem.SysMenu;
+import com.hh.usersystem.service.impl.UserService;
 import com.hh.usersystem.util.steady.StaticProperties;
 
 @Service
@@ -20,7 +23,14 @@ public class SetupInitializerOa {
 	private EmailService sysShouEmailService;
 	@Autowired
 	private SysMessageService sysMessageService;
-
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private SysParamService sysParamService;
+	@Autowired
+	private SystemResourcesService systemResourcesService;
+	
+	
 	@PostConstruct
 	public void initialize() {
 		SysMenu rootHhXtCd = new SysMenu(
@@ -64,5 +74,9 @@ public class SetupInitializerOa {
 		StaticVar.loadDataTimeList.add(sysMessageService);
 
 		StaticVar.fileOperMap.put("email", sysShouEmailService);
+		StaticVar.fileOperMap.put("headpic",userService );
+		StaticVar.fileOperMap.put("param",sysParamService );
+		StaticVar.fileOperMap.put("sysresources",systemResourcesService );
+		
 	}
 }
