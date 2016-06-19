@@ -1,4 +1,5 @@
- package com.hh.system.service.impl;
+package com.hh.system.service.impl;
+
 import java.util.List;
 import java.util.Map;
 
@@ -20,19 +21,19 @@ import com.hh.system.util.dto.ParamInf;
 public class SystemResourcesService extends BaseService<SystemResources> implements IFileOper {
 	@Override
 	public SystemResources save(SystemResources entity) throws MessageException {
-		List<Map<String,Object>> mapList = Json.toMapList(entity.getFiles());
+		List<Map<String, Object>> mapList = Json.toMapList(entity.getFiles());
 		String text = "";
 		for (Map<String, Object> map : mapList) {
-			text+=Convert.toString(map.get("text"))+",";
+			text += Convert.toString(map.get("text")) + ",";
 		}
-		
-		if (text.length()>128) {
-			text=text.substring(0, 127);
+
+		if (text.length() > 128) {
+			text = text.substring(0, 127);
 		}
 		entity.setText(text);
 		return super.save(entity);
 	}
-	
+
 	@Override
 	public PagingData<SystemResources> queryPagingData(SystemResources entity, PageRange pageRange) {
 		ParamInf paramInf = ParamFactory.getParamHb();
@@ -47,11 +48,11 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 
 	@Override
 	public void fileOper(SystemFile systemFile) {
-		int count = findCount(ParamFactory.getParamHb().like("files", systemFile.getId()));
+		int count = findCount(ParamFactory.getParamHb()
+				.or(ParamFactory.getParamHb().like("files", systemFile.getId()).is("img", systemFile.getId())));
 		if (count == 0) {
 			systemFile.setDestroy(1);
 		}
 	}
 
 }
- 
