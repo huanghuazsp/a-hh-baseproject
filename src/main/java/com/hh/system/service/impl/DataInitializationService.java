@@ -73,9 +73,9 @@ public class DataInitializationService {
 	}
 
 	private void initProperties() throws IOException {
-		String classPath = "/"+Thread.currentThread().getContextClassLoader()
+		String classPath = Thread.currentThread().getContextClassLoader()
 				.getResource("").getPath();
-		classPath = classPath.substring(1, classPath.indexOf("/WEB-INF"));
+		classPath = classPath.substring(0, classPath.indexOf("/WEB-INF"));
 		StaticVar.contextPath =  classPath;
 		logger.info("项目绝对路径：" + StaticVar.contextPath);
 		classPath = classPath.substring(0, classPath.lastIndexOf("/"));
@@ -83,7 +83,9 @@ public class DataInitializationService {
 		logger.info("web服务器绝对路径：" + StaticVar.webappPath);
 		StaticVar.filepath = StaticVar.webappPath + StaticVar.filebasepath;
 		logger.info("附件绝对路径：" + StaticVar.filepath);
-		FileUtil.isExist(StaticVar.filepath);
-		FileUtil.isExist(StaticVar.filepath + "/task");
+		StaticVar.deletefilepath = StaticVar.webappPath + StaticVar.deletefilebasepath;
+		logger.info("删除附件绝对路径：" + StaticVar.deletefilepath);
+		FileUtil.mkdirs(StaticVar.filepath);
+		FileUtil.mkdirs(StaticVar.deletefilepath);
 	}
 }
