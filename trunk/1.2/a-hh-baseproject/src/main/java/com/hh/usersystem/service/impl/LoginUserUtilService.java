@@ -11,6 +11,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.hh.system.util.BeanUtils;
 import com.hh.system.util.Check;
 import com.hh.usersystem.LoginUserServiceInf;
 import com.hh.usersystem.aop.interceptor.SecurityInterceptor;
@@ -39,13 +40,16 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 		}
 		UsUser hhXtYh = (UsUser) ActionContext.getContext().getSession()
 				.get("loginuser");
-		hhXtYh.setHhXtCdList(null);
-		hhXtYh.setHhXtCzMap(null);
-		hhXtYh.setHhXtCzPageTextList(null);
-		hhXtYh.setHhXtCzPageTextMap(null);
-		hhXtYh.setHhXtCzUrlList(null);
-		hhXtYh.setHhXtYhCdZmtbList(null);
-		return hhXtYh;
+		
+		UsUser user = new UsUser();
+		BeanUtils.copyProperties(user, hhXtYh);
+		user.setHhXtCdList(null);
+		user.setHhXtCzMap(null);
+		user.setHhXtCzPageTextList(null);
+		user.setHhXtCzPageTextMap(null);
+		user.setHhXtCzUrlList(null);
+		user.setHhXtYhCdZmtbList(null);
+		return user;
 	}
 
 	public String findUserId() {
