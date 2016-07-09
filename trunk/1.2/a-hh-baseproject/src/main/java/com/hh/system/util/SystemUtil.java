@@ -3,6 +3,8 @@ package com.hh.system.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts2.ServletActionContext;
 
 import com.google.gson.Gson;
@@ -47,7 +49,7 @@ public class SystemUtil {
 	}
 
 	public static String getUser() {
-		UsUser hhXtYh = getLoginUserUtilService().findLoginUser();
+		UsUser hhXtYh = getLoginUserUtilService().findLoginUserSimple();
 		if (hhXtYh != null) {
 			return "<script type=\"text/javascript\">var loginUser="
 					+ gson.toJson(hhXtYh) + ";</script>";
