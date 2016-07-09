@@ -1,7 +1,13 @@
 package com.hh.usersystem.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -24,6 +30,21 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 		}
 		UsUser hhXtYh = (UsUser) ActionContext.getContext().getSession()
 				.get("loginuser");
+		return hhXtYh;
+	}
+	
+	public UsUser findLoginUserSimple() {
+		if (ActionContext.getContext() == null) {
+			return null;
+		}
+		UsUser hhXtYh = (UsUser) ActionContext.getContext().getSession()
+				.get("loginuser");
+		hhXtYh.setHhXtCdList(null);
+		hhXtYh.setHhXtCzMap(null);
+		hhXtYh.setHhXtCzPageTextList(null);
+		hhXtYh.setHhXtCzPageTextMap(null);
+		hhXtYh.setHhXtCzUrlList(null);
+		hhXtYh.setHhXtYhCdZmtbList(null);
 		return hhXtYh;
 	}
 
@@ -78,25 +99,35 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 	public String getOperPower() {
 		UsUser hhXtYh = findLoginUser();
 		if (hhXtYh != null) {
-			return "<script type=\"text/javascript\">" + "var allOperPower="
-					+ gson.toJson(SecurityInterceptor.all_manage_page_text_map)
-					+ ";"
-					+ "var myOperPower="
-					+ gson.toJson(hhXtYh.getHhXtCzPageTextMap())
-					+ ";"
-					+ "var myurl = this.location.pathname.replace(this.contextPath + '/', '');"
-					+ "allOperPower = allOperPower[myurl];"
-					+ "myOperPower = myOperPower[myurl];"
-					+ "var operPower = {};" + "var myOperPowerMap = {};"
-					+ "if (allOperPower) {" + "	if (myOperPower) {"
-					+ "		for (var i = 0; i < myOperPower.length; i++) {"
-					+ "			myOperPowerMap[myOperPower[i]] = true;" + "		}"
-					+ "	}" + "	for (var i = 0; i < allOperPower.length; i++) {"
-					+ "		if (myOperPowerMap[allOperPower[i]] != true) {"
-					+ "			operPower[allOperPower[i]] = true;" + "		}" + "	}"
-					+ "	}" + "delete myurl;" + "delete allOperPower;"
-					+ "delete myOperPower;" + "delete myOperPowerMap;"
-					+ "</script>";
+			HttpServletRequest request = ServletActionContext.getRequest();
+			String uri = request.getRequestURI();
+			uri = "jsp-"
+					+ uri.replace(request.getContextPath(), "")
+							.replaceAll("/WEB-INF/CLASSPATH-PAGES/jsp/com/hh/",
+									"").replace(".jsp", "")
+							.replaceAll("/", "-");
+
+			List<String> allOperPower = SecurityInterceptor.all_manage_page_text_map
+					.get(uri);
+			List<String> myOperPower = hhXtYh.getHhXtCzPageTextMap().get(uri);
+			if (myOperPower == null) {
+				myOperPower = new ArrayList<String>();
+			}
+
+			Map<String, Boolean> myOperPowerMap = new HashMap<String, Boolean>();
+			Map<String, Boolean> operPowerMap = new HashMap<String, Boolean>();
+			for (String string : myOperPower) {
+				myOperPowerMap.put(string, true);
+			}
+			if (allOperPower!=null) {
+				for (String string : allOperPower) {
+					if (myOperPowerMap.get(string) ==null || myOperPowerMap.get(string) != true) {
+						operPowerMap.put(string, true);
+					}
+				}
+			}
+			return "<script type=\"text/javascript\">" + "var operPower="
+					+ gson.toJson(operPowerMap) + ";" + "</script>";
 		}
 		return "";
 	}
