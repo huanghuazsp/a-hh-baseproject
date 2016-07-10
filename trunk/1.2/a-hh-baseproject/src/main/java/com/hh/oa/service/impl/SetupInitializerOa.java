@@ -68,6 +68,13 @@ public class SetupInitializerOa {
 				new SysMenu("fb7ac8da-63f1-467c-8822-791591f00559", "日程安排",
 						"jsp-oa-schedule-fullcalendar",
 						"/hhcommon/images/extjsico/17460310.png", 0, 1));
+		
+		
+		rootHhXtCd.getChildren().add(
+				new SysMenu("05be78a2-f5d7-459d-b179-788b7c7f1111", "网盘",
+						"jsp-system-resources-resourcesmain",
+						"/hhcommon/images/icons/folder/folder.png", 0, 1));
+		
 
 		StaticProperties.hhXtCds.add(rootHhXtCd);
 		StaticVar.loadDataTimeList.add(sysShouEmailService);
