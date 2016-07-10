@@ -32,7 +32,7 @@ public class SetupInitializerSystem {
 		rootHhXtCd.getChildren().add(
 				new SysMenu("d45831d2-b887-40f1-9a3f-450298ac3f92", "计划任务",
 						"jsp-system-systemplantask-SystemPlantaskList",
-						"/hhcommon/images/icons/world/world.png", 0, 1));
+						"/hhcommon/images/extjsico/timer.gif", 0, 1));
 		
 //		rootHhXtCd.getChildren().add(
 //				new SysMenu("d45831d2-b887-40f1-9a3f-450298ac3f91", "取色工具",
@@ -103,20 +103,20 @@ public class SetupInitializerSystem {
 		
 		
 		
-		SysMenu resourceHhXtCd = new SysMenu("90b2b9a6-e18f-4071-b3e3-e06ba063cb46",
-				"资源管理", "com.hh.global.NavigAtionWindow",
-				"/hhcommon/images/icons/world/world.png", 1, 0);
-		resourceHhXtCd.setChildren(new ArrayList<SysMenu>());
-		
-		resourceHhXtCd.getChildren().add(
-				new SysMenu("05be78a2-f5d7-459d-b179-788b7c7f9b90", "资源类型管理",
-						"jsp-system-resourcestype-ResourcesTypeList",
-						"/hhcommon/images/icons/world/world.png", 0, 1));
-
-		resourceHhXtCd.getChildren().add(
-				new SysMenu("9797f9ca-8a8a-4a6a-a7ad-98e2f321b7b8",
-						"资源文件管理", "jsp-system-resources-main",
-						"/hhcommon/images/icons/world/world.png", 0, 1));
+//		SysMenu resourceHhXtCd = new SysMenu("90b2b9a6-e18f-4071-b3e3-e06ba063cb46",
+//				"资源管理", "com.hh.global.NavigAtionWindow",
+//				"/hhcommon/images/icons/world/world.png", 1, 0);
+//		resourceHhXtCd.setChildren(new ArrayList<SysMenu>());
+//		
+//		resourceHhXtCd.getChildren().add(
+//				new SysMenu("05be78a2-f5d7-459d-b179-788b7c7f9b90", "资源类型管理",
+//						"jsp-system-resourcestype-ResourcesTypeList",
+//						"/hhcommon/images/icons/world/world.png", 0, 1));
+//
+//		resourceHhXtCd.getChildren().add(
+//				new SysMenu("9797f9ca-8a8a-4a6a-a7ad-98e2f321b7b8",
+//						"资源文件管理", "jsp-system-resources-main",
+//						"/hhcommon/images/icons/world/world.png", 0, 1));
 		
 		rootHhXtCd
 		.getChildren()
@@ -124,13 +124,13 @@ public class SetupInitializerSystem {
 				"jsp-system-system-systemmain",
 				"/hhcommon/images/extjsico/application_16x16.gif", 0, 1));
 
-		for (SysMenu hhXtCd : StaticProperties.hhXtCds) {
-			if ("系统管理".equals(hhXtCd.getText())) {
+//		for (SysMenu hhXtCd : StaticProperties.hhXtCds) {
+//			if ("系统管理".equals(hhXtCd.getText())) {
 //				hhXtCd.getChildren().add(menurootHhXtCd);
-				hhXtCd.getChildren().add(resourceHhXtCd);
-				break;
-			}
-		}
+//				hhXtCd.getChildren().add(resourceHhXtCd);
+//				break;
+//			}
+//		}
 		
 		
 		StaticVar.loadDataTimeList.add(systemService);
