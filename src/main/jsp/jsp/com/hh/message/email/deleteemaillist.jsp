@@ -58,12 +58,22 @@
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'message-Email-queryDeletePage' ,column : [
 		{
+			name : 'sendUserName' ,
+			text : '发件人',
+			width:100
+		},{
+			name : 'userNames' ,
+			text : '收件人',
+			width:100
+		},{
 			name : 'title' ,
-			text : '标题'
+			text : '标题',
+			align : 'left'
 		},{
 			name : 'dcreate' ,
 			text : '时间',
-			render:'datetime'
+			render:'datetime',
+			width:120
 		}
 	]">
 	</div>

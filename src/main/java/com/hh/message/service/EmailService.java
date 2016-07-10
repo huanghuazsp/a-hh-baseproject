@@ -35,7 +35,7 @@ public class EmailService extends BaseService<SysEmail> implements
 			PageRange pageRange) {
 		return dao.queryPagingData(this.getGenericType(0), ParamFactory
 				.getParamHb().orderDesc("dcreate"), pageRange, new String[] {
-				"id", "title", "dcreate", "type" });
+				"id", "title", "dcreate", "type", "sendUserName", "userNames" });
 	}
 
 	@Transactional
@@ -102,7 +102,7 @@ public class EmailService extends BaseService<SysEmail> implements
 								.nolike("thoroughDeleteUserId",
 										loginUserUtilService.findUserId())
 								.orderDesc("dcreate"), pageRange, new String[] {
-								"id", "title", "dcreate", "type" });
+								"id", "title", "dcreate", "type", "sendUserName", "userNames" });
 	}
 
 	public PagingData<SysEmail> queryCGXPage(SysEmail object,
@@ -117,7 +117,7 @@ public class EmailService extends BaseService<SysEmail> implements
 						.nolike("thoroughDeleteUserId",
 								loginUserUtilService.findUserId())
 						.is("type", "cgx").orderDesc("dcreate"), pageRange,
-				new String[] { "id", "title", "dcreate", "type" });
+				new String[] { "id", "title", "dcreate", "type", "sendUserName", "userNames" });
 	}
 
 	public PagingData<SysEmail> querySendPage(SysEmail object,
@@ -132,7 +132,7 @@ public class EmailService extends BaseService<SysEmail> implements
 						.nolike("thoroughDeleteUserId",
 								loginUserUtilService.findUserId())
 						.is("type", "yfs").orderDesc("dcreate"), pageRange,
-				new String[] { "id", "title", "dcreate", "type" });
+				new String[] { "id", "title", "dcreate", "type", "sendUserName", "userNames" });
 	}
 
 	public PagingData<SysEmail> queryShouPage(SysEmail object,
@@ -151,7 +151,7 @@ public class EmailService extends BaseService<SysEmail> implements
 										loginUserUtilService.findUserId())
 								.is("type", "yfs").orderDesc("dcreate"),
 						pageRange, new String[] { "id", "title", "dcreate",
-								"type", "readUserId" });
+								"type", "readUserId", "sendUserName", "userNames" });
 
 		for (SysEmail sysEmail : page.getItems()) {
 			if (Convert.toString(sysEmail.getReadUserId()).indexOf(userId) > -1) {
