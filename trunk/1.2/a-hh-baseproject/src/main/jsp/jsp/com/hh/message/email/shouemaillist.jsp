@@ -41,12 +41,18 @@
 			width :30,
 			render : 'readrender'
 		},{
-			name : 'title' ,
-			text : '标题'
+			name : 'sendUserName' ,
+			text : '发件人',
+			width:100
 		},{
 			name : 'dcreate' ,
 			text : '时间',
-			render:'datetime'
+			render:'datetime',
+			width:120
+		},{
+			name : 'title' ,
+			text : '标题',
+			align : 'left'
 		}
 	]">
 	</div>

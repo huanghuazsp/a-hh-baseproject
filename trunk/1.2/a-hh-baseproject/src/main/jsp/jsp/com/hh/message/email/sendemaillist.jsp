@@ -30,12 +30,19 @@
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'message-Email-querySendPage' ,column : [
 		{
-			name : 'title' ,
-			text : '标题'
+			name : 'userNames' ,
+			text : '收件人',
+			width:100
 		},{
 			name : 'dcreate' ,
 			text : '时间',
-			render:'datetime'
+			render:'datetime',
+			width:120
+		},{
+			name : 'title' ,
+			align : 'left',
+			text : '标题',
+			align : 'left'
 		}
 	]">
 	</div>
