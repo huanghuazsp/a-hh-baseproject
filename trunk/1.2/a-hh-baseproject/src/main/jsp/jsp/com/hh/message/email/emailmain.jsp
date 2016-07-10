@@ -10,9 +10,8 @@
 <% 
 	EmailService emailService = BeanFactoryHelper.getBean( EmailService.class);
 
-	Map<String, Object> map =emailService.load();
+	Map<String, Object> map =emailService.count();
 	
-	Object count = ((Map<String, Object>)map.get("email")).get("count");
 
 %>
 <script type="text/javascript">
@@ -26,25 +25,28 @@
 			}
 		},{
 			text : '收件',
-			rightText:'<font class="hh_red"><%=count%></font>',
+			rightText:'<font class="hh_red"><%=map.get("wdCount")%></font>/<font class="hh_green"><%=map.get("sjCount")%></font>',
 			img : '/hhcommon/images/icons/email/email_close.gif',
 			onClick : function() {
 				shoujianlist();
 			}
 		},{
 			text : '已发送',
+			rightText:'<font class="hh_green"><%=map.get("fsCount")%></font>',
 			img : '/hhcommon/images/icons/email/email_go.png',
 			onClick : function() {
 				sendemaillist();
 			}
 		},{
 			text : '草稿箱',
+			rightText:'<font class="hh_green"><%=map.get("cgxCount")%></font>',
 			img : '/hhcommon/images/icons/email/email_link.png',
 			onClick : function() {
 				cgxemaillist();
 			}
 		},{
 			text : '已删除',
+			rightText:'<font class="hh_green"><%=map.get("scCount")%></font>',
 			img : '/hhcommon/images/icons/email/email_delete.png',
 			onClick : function() {
 				deleteemaillist();
@@ -106,7 +108,7 @@
 </head>
 <body>
 	<div xtype="border_layout">
-		<div config="render : 'west',width:140">
+		<div config="render : 'west',width:165">
 			<span xtype=menu  configVar="emailMenu"></span>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
