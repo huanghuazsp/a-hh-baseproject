@@ -100,7 +100,17 @@
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'system-Resources-queryPagingData' ,column : [
 		
-		
+		{
+				name : 'vcreateName' ,
+				text : '创建人',
+				align:'center',
+			width:80
+			},{
+			name : 'dcreate' ,
+			text : '时间',
+			render:'datetime',
+			width:120
+		},
 		
 			{
 				name : 'text' ,
