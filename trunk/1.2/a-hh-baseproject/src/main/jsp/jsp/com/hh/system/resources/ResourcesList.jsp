@@ -65,7 +65,7 @@
 				var td2 = $('<td></td>');
 				var img = '';
 				if(item.img){
-					img = $("<img style=\"height:300px;width:300px;\" src=\"system-File-download?params={id:'"+item.img+"'}\">");
+					img = $("<img style=\"height:30px;width:30px;\" src=\"system-File-download?params={id:'"+item.img+"'}\">");
 					td2.append(img);
 				}
 				
@@ -104,7 +104,7 @@
 		
 			{
 				name : 'text' ,
-				text : '题目',
+				text : '资源名称',
 				align:'left',
 				render : renderData ,
 				widthAuto : true

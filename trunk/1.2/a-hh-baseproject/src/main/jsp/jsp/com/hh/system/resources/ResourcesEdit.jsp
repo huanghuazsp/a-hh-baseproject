@@ -65,13 +65,13 @@
 						<td><span xtype="text" config=" name : 'text' "></span></td>
 					</tr>
 					<tr>
-						<td xtype="label">图片：</td>
-						<td><span xtype="uploadpic"
-						config="name: 'img' , type : 'sysresources' ,width:400,height:400 "></span></td>
-					</tr>
-					<tr>
 						<td xtype="label">资源：</td>
 						<td><span config="'name':'files','type':'sysresources' "  xtype="fileUpload" ></span></td>
+					</tr>
+					<tr>
+						<td xtype="label">图片：</td>
+						<td><span xtype="uploadpic"
+						config="name: 'img' , type : 'sysresources' ,width:300,height:300 "></span></td>
 					</tr>
 			</table>
 		</form>
