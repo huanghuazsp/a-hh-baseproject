@@ -71,13 +71,10 @@
 						<td><span xtype="text" config=" name : 'text',required :true,blur: zwblur "></span></td>
 						<td xtype="label">父节点：</td>
 						<td><span xtype="selectTree" id="node_span"
-							config="name: 'node' , tableName : 'SYS_DATA_TYPE', params : {isNoLeaf : true},  url : 'system-SysDataType-queryTreeList'"></span>
+							config="name: 'node' , tableName : 'SYS_DATA_TYPE',  url : 'system-SysDataType-queryTreeList'"></span>
 						</td>
 					</tr>
 					<tr>
-						<!-- <td xtype="label">类型：</td>
-						<td><span id="leafspan" xtype="radio"
-							config="name: 'leaf' ,defaultValue : 0, data :[{id:1,text:'字典项'},{id:0,text:'类别'}]"></span></td>-->
 						<td xtype="label">是否展开：</td>
 						<td  colspan="3"><span xtype="radio"
 							config="name: 'expanded' ,defaultValue : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>

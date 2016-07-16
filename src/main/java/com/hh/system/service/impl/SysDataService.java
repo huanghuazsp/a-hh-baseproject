@@ -23,8 +23,8 @@ public class SysDataService  extends BaseService<SysData> {
 	}
 	
 	public List<SysData> queryTreeListCode(SysData baseTreeNodeEntity,
-			boolean isNoLeaf, ParamInf paramInf) {
-		List<SysData> sysDataTypes = super.queryTreeList(baseTreeNodeEntity.getNode(), isNoLeaf, paramInf);
+			ParamInf paramInf) {
+		List<SysData> sysDataTypes = super.queryTreeList(baseTreeNodeEntity.getNode(), paramInf);
 		updateId(sysDataTypes);
 		return sysDataTypes;
 	}

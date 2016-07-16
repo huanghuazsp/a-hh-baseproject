@@ -130,7 +130,7 @@
 				<!-- <span xtype="button" config="onClick: doLoadOper ,text:'功能设置'"></span> -->
 			</div>
 			<span xtype="tree"
-				config=" id:'menuTree' , url:'usersystem-menu-queryTreeList' ,remove:doDelete , edit : doEdit,onClick : doLoadOper "></span>
+				config=" id:'menuTree' , url:'usersystem-menu-queryList' ,remove:doDelete , edit : doEdit,onClick : doLoadOper "></span>
 		</div>
 		<div id="czTreeDiv">
 			<div xtype="toolbar" config="type:'head'">

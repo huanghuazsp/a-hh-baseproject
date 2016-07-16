@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.SystemUtil"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.BaseSystemUtil"%>
 <%@page import="com.hh.system.util.PrimaryKey"%>
@@ -6,7 +7,7 @@
 <html>
 <head>
 <title>数据列表</title>
-<%=BaseSystemUtil.getBaseJs("layout","ztree", "ztree_edit")%>
+<%=BaseSystemUtil.getBaseJs("layout","ztree", "ztree_edit")+SystemUtil.getUser()%>
 <%String iframeId = PrimaryKey.getPrimaryKeyUUID();%>
 
 <script type="text/javascript">
@@ -65,14 +66,23 @@
 		var iframe = window.frames[iframeId];
 		iframe.callback = function(object) {
 			treeNode.name = object.text;
-			treeNode.isParent = object.leaf==1?0:1;
 			$.hh.tree.updateNode('tree', treeNode);
 			$.hh.tree.getTree('tree').refresh();
 		}
 		iframe.findData(treeNode.id);
+		if(treeNode.vcreate!=loginUser.id){
+			$('#upBtn').hide();
+			$('#downBtn').hide();
+		}else{
+			$('#upBtn').show();
+			$('#downBtn').show();
+		}
 	}
 	function init(){
 		$('#centerdiv').disabled('请选择要编辑的树节点或添加新的数据！');
+	}
+	function showBtn(treeid,node){
+		return node.vcreate==loginUser.id;
 	}
 </script>
 </head>
@@ -81,15 +91,15 @@
 		<div config="render : 'west'">
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span> <span
-					xtype="button"
+					id="upBtn" xtype="button"
 					config="onClick: $.hh.tree.doUp , params:{treeid:'tree',action:'system-ResourcesType-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
-				<span xtype="button"
+				<span	id="downBtn"  xtype="button"
 					config="onClick: $.hh.tree.doDown , params:{treeid:'tree',action:'system-ResourcesType-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
 				<span xtype="button"
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'tree'  "></span>
 			</div>
 			<span xtype="tree"
-				config=" id:'tree', url:'system-ResourcesType-queryTreeList' ,remove: doDelete , onClick : treeClick  "></span>
+				config=" id:'tree', showRemoveBtn : showBtn, url:'system-ResourcesType-queryTreeList' ,remove: doDelete , onClick : treeClick  "></span>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="<%=iframeId%>" name="<%=iframeId%>" width=100%

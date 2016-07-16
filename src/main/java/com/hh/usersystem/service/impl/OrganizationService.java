@@ -37,10 +37,9 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	@Autowired
 	private RoleService roleService;
 
-	public List<UsOrganization> queryTreeList(UsOrganization object,
-			boolean isNoLeaf) {
+	public List<UsOrganization> queryTreeList(UsOrganization object) {
 		return organizationToIconCls(
-				queryTreeList(object.getNode(), isNoLeaf,
+				queryTreeList(object.getNode(),
 						ParamFactory.getParamHb()), null);
 	}
 
@@ -49,10 +48,9 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		return organizationToIconCls(super.queryTreeList(paramList), null);
 	}
 
-	public List<UsOrganization> queryTreeListByLx(UsOrganization object,
-			boolean isNoLeaf) {
+	public List<UsOrganization> queryTreeListByLx(UsOrganization object) {
 		return organizationToIconCls(
-				queryTreeList(object.getNode(), isNoLeaf, ParamFactory
+				queryTreeList(object.getNode(), ParamFactory
 						.getParamHb().le("lx_", object.getLx_())), null);
 	}
 
