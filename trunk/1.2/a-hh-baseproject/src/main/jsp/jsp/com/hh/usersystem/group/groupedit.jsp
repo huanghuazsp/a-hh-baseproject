@@ -45,7 +45,6 @@
 
 	function newData(params) {
 		//$('#lx_tr').show();
-		params.leaf=0;
 		params.expanded=0;
 		$('#form').setValue(params);
 	}
@@ -68,18 +67,13 @@
 					<tr>
 						<td xtype="label">父节点：</td>
 						<td><span id="node_span" xtype="selectTree"
-							config="name: 'node' , tableName : 'US_GROUP' , url : 'usersystem-Group-queryTreeList' , params : {isNoLeaf : true} "></span>
+							config="name: 'node' ,findTextAction : 'usersystem-Group-findObjectById' ,  url : 'usersystem-Group-queryTreeList' "></span>
 						</td>
 					</tr>
 					<tr>
 						<td xtype="label">是否展开：</td>
 						<td><span xtype="radio"
 							config="name: 'expanded' ,defaultValue : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
-					</tr>
-					<tr id="lx_tr">
-						<td xtype="label">类型：</td>
-						<td><span xtype="radio"
-							config="name: 'leaf' ,defaultValue : 0,  data :[{id:1,text:'子节点'},{id:0,text:'父节点'}]"></span></td>
 					</tr>
 					<tr>
 						<td xtype="label">组员：</td>

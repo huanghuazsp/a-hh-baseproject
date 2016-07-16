@@ -74,8 +74,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 
 	@Override
 	public Object queryTreeList() {
-		List<UsOrganization> organizationList = organizationService.queryTreeList(object,
-				Convert.toBoolean(request.getParameter("isNoLeaf")));
+		List<UsOrganization> organizationList = organizationService.queryTreeList(object);
 		return organizationList;
 	}
 
@@ -84,7 +83,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	}
 
 	public Object queryTreeListByLx() {
-		return organizationService.queryTreeListByLx(object, Convert.toBoolean(request.getParameter("isNoLeaf")));
+		return organizationService.queryTreeListByLx(object);
 	}
 
 	public Object save() {

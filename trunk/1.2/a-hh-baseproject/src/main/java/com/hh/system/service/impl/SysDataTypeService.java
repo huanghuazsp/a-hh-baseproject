@@ -23,10 +23,9 @@ public class SysDataTypeService extends BaseService<SysDataType> {
 	@Autowired
 	private SysDataService sysDataService;
 
-	public List<SysDataType> queryTreeListCode(SysDataType baseTreeNodeEntity,
-			boolean isNoLeaf) {
+	public List<SysDataType> queryTreeListCode(SysDataType baseTreeNodeEntity) {
 		List<SysDataType> sysDataTypes = super.queryTreeList(
-				baseTreeNodeEntity.getNode(), isNoLeaf);
+				baseTreeNodeEntity.getNode());
 		updateId(sysDataTypes);
 		return sysDataTypes;
 	}

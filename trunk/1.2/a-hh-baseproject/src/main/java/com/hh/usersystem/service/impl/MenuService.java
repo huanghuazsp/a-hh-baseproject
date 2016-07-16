@@ -92,7 +92,6 @@ public class MenuService extends BaseService<SysMenu> {
 
 	public List<SysMenu> queryMenuListByPid(String node) {
 		List<SysMenu> hhxtcdList = new ArrayList<SysMenu>();
-		ParamInf hqlParamList = ParamFactory.getParamHb().is("leaf", 0);
 		if (Check.isEmpty(node) || "root".equals(node)) {
 			hhxtcdList = dao.queryTreeList(SysMenu.class, ParamFactory.getParamHb().is("node", "root"));
 		} else {

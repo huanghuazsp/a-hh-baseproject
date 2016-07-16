@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.SystemUtil"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.BaseSystemUtil"%>
 <%@page import="com.hh.system.util.Convert"%>
@@ -6,7 +7,7 @@
 <html>
 <head>
 <title>数据编辑</title>
-<%=BaseSystemUtil.getBaseJs("checkform","date")%>
+<%=BaseSystemUtil.getBaseJs("checkform","date")+SystemUtil.getUser()%>
 
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
@@ -36,6 +37,11 @@
 					id : objid
 				},
 				callback : function(result) {
+					if(result.vcreate!=loginUser.id){
+						$('#saveBtn').hide();
+					}else{
+						$('#saveBtn').show();
+					}
 					$('#form').setValue(result);
 				}
 			});
@@ -44,8 +50,8 @@
 
 	function newData(params) {
 		params.expanded=0;
-		params.leaf=0;
 		$('#form').setValue(params);
+		$('#saveBtn').show();
 	}
 
 	function init() {
@@ -69,22 +75,15 @@
 					</td>
 				</tr>
 				<tr>
-					<td xtype="label">类型：</td>
-					<td><span xtype="radio"
-						config="name: 'leaf' ,defaultValue : 0,  data :[{id:1,text:'子节点'},{id:0,text:'父节点'}]"></span></td>
-				</tr>
-				<tr>
 					<td xtype="label">是否展开：</td>
 					<td><span xtype="radio"
 						config="name: 'expanded' ,defaultValue : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
 				</tr>
-				
-				
 			</table>
 		</form>
 	</div>
 	<div xtype="toolbar">
-		<span xtype="button" config="text:'保存' , onClick : save "></span>
+		<span id="saveBtn" xtype="button" config="text:'保存' , onClick : save "></span>
 	</div>
 </body>
 </html>

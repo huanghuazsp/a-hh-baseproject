@@ -59,8 +59,7 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 			userGroup.setChildren(userGroups);
 			returnObjects.add(userGroup);
 		}
-		List<UsSysGroup> groupList = service.queryTreeList(this.object.getNode(),
-				Convert.toBoolean(request.getParameter("isNoLeaf")));
+		List<UsSysGroup> groupList = service.queryTreeList(this.object.getNode());
 		if (andUser == 1) {
 			for (UsSysGroup hhXtGroup : groupList) {
 				addXtGroup(hhXtGroup);

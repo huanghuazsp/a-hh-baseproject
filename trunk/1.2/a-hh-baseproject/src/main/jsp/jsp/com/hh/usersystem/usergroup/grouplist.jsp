@@ -16,7 +16,7 @@
 		}
 		if (selectNode) {
 			iframe.newData({
-				node : selectNode.leaf == 0 ? selectNode.id : ''
+				node : selectNode.id
 			});
 		} else {
 			iframe.newData({});
@@ -39,7 +39,6 @@
 		var iframe = window.frames['orgeditiframe'];
 		iframe.callback = function(object) {
 			treeNode.name = object.text;
-			treeNode.isParent = object.leaf == 0;
 			$.hh.tree.updateNode('groupTree', treeNode);
 			$.hh.tree.getTree('groupTree').refresh();
 			$('#centerdiv').disabled('请选择要编辑的用户组或添加新的数据！');

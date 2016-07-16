@@ -40,8 +40,7 @@ public class ActionSysDataType extends BaseServiceAction<SysDataType> {
 	private SysDataService sysDataService;
 	
 	public Object queryTreeListCode() {
-		return sysDataTypeService.queryTreeListCode(this.object,
-				Convert.toBoolean(request.getParameter("isNoLeaf")));
+		return sysDataTypeService.queryTreeListCode(this.object);
 	}
 
 	public Object findObjectByCode() {

@@ -104,7 +104,10 @@ public class SysMenu extends BaseTreeNodeEntity<SysMenu> {
 	public void setMobileUrl(String mobileUrl) {
 		this.mobileUrl = mobileUrl;
 	}
-	
-	
+	@Column(name = "LEAF", length = 1)
+	public int getLeaf() {
+		return leaf;
+	}
+
 
 }
