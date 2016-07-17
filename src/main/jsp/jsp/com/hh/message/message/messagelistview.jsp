@@ -14,7 +14,7 @@
 				+ '</font>】！</h3>';
 		return content;
 	}
-	function itemclick(row) {
+	function itemClick(row) {
 		var param = row.rowdata;
 
 		Request.request('message-SysMessage-updateRead', {
@@ -44,7 +44,7 @@
 </head>
 <body>
 	<div id="pagelist" xtype="pagelist"
-		config=" url: 'message-SysMessage-queryMyMessage' , title : false , radio : true , itemclick : itemclick ,column : [
+		config=" url: 'message-SysMessage-queryMyMessage' , title : false , radio : true , itemClick : itemClick ,column : [
 		{
 			render : titleRender
 		}
