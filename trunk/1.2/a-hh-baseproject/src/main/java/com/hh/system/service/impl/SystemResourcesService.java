@@ -22,15 +22,18 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 	@Override
 	public SystemResources save(SystemResources entity) throws MessageException {
 		List<Map<String, Object>> mapList = Json.toMapList(entity.getFiles());
-		String text = "";
-		for (Map<String, Object> map : mapList) {
-			text += Convert.toString(map.get("text")) + ",";
-		}
+		if (Check.isEmpty(entity.getText())) {
+			String text = "";
+			for (Map<String, Object> map : mapList) {
+				text += Convert.toString(map.get("text")) + ",";
+			}
 
-		if (text.length() > 128) {
-			text = text.substring(0, 127);
+			if (text.length() > 128) {
+				text = text.substring(0, 127);
+			}
+			entity.setText(text);
 		}
-		entity.setText(text);
+		
 		return super.save(entity);
 	}
 
