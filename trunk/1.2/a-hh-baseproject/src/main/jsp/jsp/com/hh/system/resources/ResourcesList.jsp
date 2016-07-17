@@ -25,10 +25,14 @@
 			}
 		});
 	}
-	function doEdit() {
+	function doEdit(view) {
 		$.hh.pagelist.callRow("pagelist", function(row) {
+			var p = '';
+			if(view==1){
+				p="&view=1";
+			}
 			Dialog.open({
-				url : 'jsp-system-resources-ResourcesEdit?type='+type1,
+				url : 'jsp-system-resources-ResourcesEdit?type='+type1+p,
 				urlParams : {
 					id : row.id
 				},
@@ -40,6 +44,11 @@
 			});
 		});
 	}
+	
+	function doView(){
+		doEdit(1);
+	}
+	
 	function doQuery() {
 		var params = $('#queryForm').getValue();
 		params.type = type1;
@@ -119,6 +128,8 @@
 			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'system-Resources-order'}  ,  icon : 'hh_up' "></span>
 		<span xtype="button"
 			id="downBtn" config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'system-Resources-order'} , icon : 'hh_down' "></span>
+		<span
+			xtype="button" config="onClick: doView ,text:'查看',itype:'view' "></span>
 	</div>
 	<!-- <table xtype="form" id="queryForm" style="width:600px;">
 		<tr>

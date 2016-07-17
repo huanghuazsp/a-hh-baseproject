@@ -17,6 +17,8 @@ public class SystemResources  extends BaseTwoEntity{
 	//text
 	private String text;
 	private String files;
+	private String content;
+	
 	@Column(name="TEXT")
 	public String getText() {
 		return text;
@@ -56,4 +58,16 @@ public class SystemResources  extends BaseTwoEntity{
 	public void setFiles(String files) {
 		this.files = files;
 	}
+	
+	@Lob
+	@Column(name = "CONTENT_")
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
+	
+	
 }
