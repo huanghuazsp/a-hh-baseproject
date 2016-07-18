@@ -19,4 +19,13 @@ import com.hh.hibernate.dao.inf.Order;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order(fields = "order", sorts = "asc")
 public class SystemResourcesType  extends BaseTreeNodeEntity<SystemResourcesType>{
+	private int state;
+	@Column(name="STATE_",columnDefinition = "int default 0")
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
 }

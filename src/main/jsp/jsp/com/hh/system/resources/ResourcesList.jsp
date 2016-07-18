@@ -114,6 +114,30 @@
 			$('#deleteBtn').hide();
 		} */
 	}
+	
+	function doSetState(state) {
+		$.hh.pagelist.callRows( 'pagelist', function(rows) {
+				var ids = $.hh.objsToStr(rows);
+				var data = {};
+				data.ids = ids;
+				data.state = state || 0;
+				Request.request('system-Resources-doSetState', {
+					data : data
+				}, function(result) {
+					if (result.success != false) {
+						$("#pagelist" ).loadData();
+					}
+				});
+		});
+		
+	}
+	
+	function doGX(){
+		doSetState(1);
+	}
+	function doQXGX(){
+		doSetState(0);
+	}
 </script>
 </head>
 <body>
@@ -130,6 +154,11 @@
 			id="downBtn" config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'system-Resources-order'} , icon : 'hh_down' "></span>
 		<span
 			xtype="button" config="onClick: doView ,text:'查看',itype:'view' "></span>
+			
+			<span
+			xtype="button" config="onClick: doGX ,text:'共享' "></span>
+			<span
+			xtype="button" config="onClick: doQXGX ,text:'取消共享' "></span>
 	</div>
 	<!-- <table xtype="form" id="queryForm" style="width:600px;">
 		<tr>
