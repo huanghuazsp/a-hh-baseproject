@@ -94,7 +94,7 @@
 	
 	function doChange(data){
 		var dataList = $('#pagelist').getWidget().getSelectDataList();
-		var as = true;
+		/* var as = true;
 		for(var i=0;i<dataList.length;i++){
 			var data = dataList[i];
 			if(data.vcreate!=loginUser.id){
@@ -112,7 +112,7 @@
 			$('#downBtn').hide();
 			$('#editBtn').hide();
 			$('#deleteBtn').hide();
-		}
+		} */
 	}
 </script>
 </head>

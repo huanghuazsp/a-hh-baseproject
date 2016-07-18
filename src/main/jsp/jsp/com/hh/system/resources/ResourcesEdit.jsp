@@ -71,10 +71,10 @@
 					</tr>
 					<tr>
 						<td xtype="label">资源：</td>
-						<td colspan="2" style="text-align:center;">
+						<td style="text-align:center;">
 						<span config="'name':'files','type':'sysresources' "  xtype="fileUpload" ></span>
 						</td>
-						<td  style="text-align:center;">
+						<td  style="text-align:center;" colspan="2">
 						<span xtype="uploadpic"
 						config="name: 'img' , type : 'sysresources' ,width:200,height:200 "></span>
 						</td>
