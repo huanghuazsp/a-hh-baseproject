@@ -37,11 +37,11 @@
 					id : objid
 				},
 				callback : function(result) {
-					if(result.vcreate!=loginUser.id){
+					/* if(result.vcreate!=loginUser.id){
 						$('#saveBtn').hide();
 					}else{
 						$('#saveBtn').show();
-					}
+					} */
 					$('#form').setValue(result);
 				}
 			});

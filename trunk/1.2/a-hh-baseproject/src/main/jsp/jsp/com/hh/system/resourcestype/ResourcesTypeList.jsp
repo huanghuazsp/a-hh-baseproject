@@ -70,13 +70,13 @@
 			$.hh.tree.getTree('tree').refresh();
 		}
 		iframe.findData(treeNode.id);
-		if(treeNode.vcreate!=loginUser.id){
+		/* if(treeNode.vcreate!=loginUser.id){
 			$('#upBtn').hide();
 			$('#downBtn').hide();
 		}else{
 			$('#upBtn').show();
 			$('#downBtn').show();
-		}
+		} */
 	}
 	function init(){
 		$('#centerdiv').disabled('请选择要编辑的树节点或添加新的数据！');
