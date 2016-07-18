@@ -28,6 +28,10 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 				text += Convert.toString(map.get("text")) + ",";
 			}
 
+			if (Check.isNoEmpty(text)) {
+				text=text.substring(0,text.length()-1);
+			}
+			
 			if (text.length() > 128) {
 				text = text.substring(0, 127);
 			}
