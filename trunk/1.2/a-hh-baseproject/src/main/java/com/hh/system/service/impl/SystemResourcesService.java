@@ -1,5 +1,6 @@
 package com.hh.system.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +66,13 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 		if (count == 0) {
 			systemFile.setDestroy(1);
 		}
+	}
+	
+	public void doSetState(String ids,int state) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", Convert.strToList(ids));
+		map.put("state", state);
+		dao.updateEntity("update " + SystemResources.class.getName() + " o set o.state=:state where o.id in :id", map);
 	}
 
 }

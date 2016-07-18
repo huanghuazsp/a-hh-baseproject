@@ -16,14 +16,45 @@
 	}
 	function init(){
 	}
+	function doSetState(state) {
+		var node = $('#span_tree').getWidget().getSelectNode();
+		if(node){
+			var data = {};
+			data.ids = node.id;
+			data.state = state || 0;
+			Request.request('system-ResourcesType-doSetState', {
+				data : data
+			}, function(result) {
+				if (result.success != false) {
+					$.hh.tree.refresh('tree');
+				}
+			});
+		}else{
+			Dialog.infomsg('请选中一条数据！');
+		}
+		
+		
+	}
+	
+	
+	function doGX(){
+		doSetState(1);
+	}
+	function doQXGX(){
+		doSetState(0);
+	}
 </script>
 </head>
 <body>
 	<div xtype="border_layout">
-		<div config="render : 'west'">
+		<div config="render : 'west',width:220">
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button"
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'tree'  "></span>
+					<span
+			xtype="button" config="onClick: doGX ,text:'共享' "></span>
+			<span
+			xtype="button" config="onClick: doQXGX ,text:'取消共享' "></span>
 			</div>
 			<span xtype="tree"
 				config=" id:'tree', url:'system-ResourcesType-queryTreeList' ,onClick : treeClick  "></span>

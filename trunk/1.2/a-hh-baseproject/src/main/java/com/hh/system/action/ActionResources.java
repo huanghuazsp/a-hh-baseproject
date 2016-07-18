@@ -14,5 +14,9 @@ public class ActionResources extends BaseServiceAction< SystemResources > {
 	public BaseService<SystemResources> getService() {
 		return systemresourcesService;
 	}
+	
+	public void doSetState() {
+		systemresourcesService.doSetState(this.getIds(),object.getState());
+	}
 }
  

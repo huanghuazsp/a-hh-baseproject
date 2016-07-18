@@ -14,5 +14,9 @@ public class ActionResourcesType extends BaseServiceAction< SystemResourcesType 
 	public BaseService<SystemResourcesType> getService() {
 		return systemresourcestypeService;
 	}
+	
+	public void doSetState() {
+		systemresourcestypeService.doSetState(this.getIds(),object.getState());
+	}
 }
  
