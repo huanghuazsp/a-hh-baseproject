@@ -243,9 +243,10 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			UsOrganization organization1) {
 		List<UsOrganization> organizations = this.queryOrgListByPid(
 				organization1, null, null);
-//		for (UsOrganization organization : organizations) {
-//			addOrgUser(organization1);
-//		}
+		for (UsOrganization organization : organizations) {
+			organization.setLeaf(0);
+			updateLeaf(organization);
+		}
 		
 		
 		if ("root".equals(organization1.getNode())) {
@@ -262,6 +263,16 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		
 		organizations.addAll(addOrgUser(organization1.getNode()));
 		return organizations;
+	}
+
+	private void updateLeaf(UsOrganization organization1) {
+		if (organization1.getChildren() !=null) {
+			for (UsOrganization organization : organization1.getChildren() ) {
+				organization.setLeaf(0);
+				updateLeaf(organization);
+			}
+		}
+		
 	}
 
 	private List<UsOrganization> addOrgUser(String orgId) {
