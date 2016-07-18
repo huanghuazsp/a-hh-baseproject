@@ -63,7 +63,7 @@
 			<table xtype="form">
 					<tr>
 						<td xtype="label">名称：</td>
-						<td><span xtype="text" config=" name : 'text' "></span></td>
+						<td style="width:280px;"><span xtype="text" config=" name : 'text' "></span></td>
 						<td xtype="label">类型：</td>
 						<td style="width:250px;"><span id="node_span" xtype="selectTree"
 							config="  value:'<%=type %>' , name: 'type' , findTextAction : 'system-ResourcesType-findObjectById' , url : 'edu-SubjectType-queryTreeList' ,required :true "></span>
@@ -81,7 +81,7 @@
 					</tr>
 					<tr>
 						<td xtype="label">资源描述：</td>
-						<td colspan="3">
+						<td colspan="3" style="width:700px;">
 						<span xtype="ckeditor" config="name: 'content' , nheight :300 ,mheight:200"></span>
 						</td>
 					</tr>

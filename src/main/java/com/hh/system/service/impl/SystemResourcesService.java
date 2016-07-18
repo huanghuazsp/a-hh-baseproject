@@ -3,6 +3,7 @@ package com.hh.system.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.system.bean.SystemFile;
@@ -16,9 +17,12 @@ import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
+import com.hh.usersystem.LoginUserServiceInf;
 
 @Service
 public class SystemResourcesService extends BaseService<SystemResources> implements IFileOper {
+	@Autowired
+	private LoginUserServiceInf userService;
 	@Override
 	public SystemResources save(SystemResources entity) throws MessageException {
 		List<Map<String, Object>> mapList = Json.toMapList(entity.getFiles());
@@ -50,6 +54,7 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 		if (Check.isNoEmpty(entity.getText())) {
 			paramInf.like("text", entity.getText());
 		}
+		paramInf.is("vcreate", userService.findUserId());
 		return super.queryPagingData(entity, pageRange, paramInf);
 	}
 
