@@ -99,7 +99,7 @@
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'tree'  "></span>
 			</div>
 			<span xtype="tree"
-				config=" id:'tree', showRemoveBtn : showBtn, url:'system-ResourcesType-queryTreeList' ,remove: doDelete , onClick : treeClick  "></span>
+				config=" id:'tree', showRemoveBtn : showBtn, url:'system-ResourcesType-queryTreeList' ,params:{state:2} ,remove: doDelete , onClick : treeClick  "></span>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="<%=iframeId%>" name="<%=iframeId%>" width=100%

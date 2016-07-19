@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.Convert"%>
 <%@page import="com.hh.system.util.SystemUtil"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.BaseSystemUtil"%>
@@ -59,11 +60,20 @@
 	var type1 = null;
 	function iframeClick(data) {
 		type1=data.id;
+		
+		var data = {type:type1};
+		<%if("1".equals(request.getParameter("share"))){%>
+		data.state=1;
+		<%} %>
 		$('#pagelist').loadData({
-			params : {type:type1}
+			params : data
 		});
 	}
 	function renderData(value,item){
+		var shareimg = '';
+		if(item.state==1){
+			shareimg = '<img src="/hhcommon/images/icons/folder/folder_star.png">';
+		}
 		var value = item.files;
 		var table = $('<table></table>');
 		if(value){
@@ -73,6 +83,7 @@
 				var tr = $('<tr></tr>');
 				var td = $('<td></td>');
 				var td2 = $('<td></td>');
+				td2.append(shareimg);
 				var img = '';
 				if(item.img){
 					img = $("<img style=\"height:30px;width:30px;\" src=\"system-File-download?params={id:'"+item.img+"'}\">");
@@ -84,10 +95,10 @@
 				td.append('<a href="javascript:Request.download(\''+data.id+'\');">'+(data.text||'')+'</a>');
 			}
 			if(fileList.length==0){
-				return (item.text||'');
+				return shareimg+(item.text||'');
 			}
 		}else{
-			return (item.text||'');
+			return shareimg+(item.text||'');
 		}
 		return table;
 	}
@@ -142,6 +153,8 @@
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
+		<%if(!"1".equals(request.getParameter("share"))){%>
+		
 		<span xtype="button" config="onClick:doAdd,text:'添加' , itype :'add' "></span>
 		<span xtype="button"
 			id="editBtn"  config="onClick:doEdit,text:'修改' , itype :'edit' "></span> <span
@@ -152,13 +165,14 @@
 			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'system-Resources-order'}  ,  icon : 'hh_up' "></span>
 		<span xtype="button"
 			id="downBtn" config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'system-Resources-order'} , icon : 'hh_down' "></span>
-		<span
-			xtype="button" config="onClick: doView ,text:'查看',itype:'view' "></span>
 			
 			<span
 			xtype="button" config="onClick: doGX ,text:'共享' "></span>
 			<span
 			xtype="button" config="onClick: doQXGX ,text:'取消共享' "></span>
+			<%} %>
+			<span
+			xtype="button" config="onClick: doView ,text:'查看',itype:'view' "></span>
 	</div>
 	<!-- <table xtype="form" id="queryForm" style="width:600px;">
 		<tr>
@@ -167,7 +181,11 @@
 		</tr>
 	</table> -->
 	<div id="pagelist" xtype="pagelist"
-		config="  doChange : doChange , url: 'system-Resources-queryPagingData' ,column : [
+		config="
+		<%if("1".equals(request.getParameter("share"))){%>
+		params:{state:1},
+		<%} %>
+		  doChange : doChange , url: 'system-Resources-queryPagingData' ,column : [
 		
 		{
 				name : 'vcreateName' ,

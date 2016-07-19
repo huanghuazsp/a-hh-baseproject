@@ -19,6 +19,11 @@
 			img : '/hhcommon/images/icons/folder/folder_page.png',
 			url : 'jsp-system-resources-main',
 			onClick : onClick
+		},{
+			text : '共享文件',
+			img : '/hhcommon/images/icons/folder/folder_magnify.png',
+			url : 'jsp-system-resources-sharemain',
+			onClick : onClick
 		}
 		]
 	};
