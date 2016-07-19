@@ -20,6 +20,7 @@ import com.hh.system.util.ThreadUtil;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.dto.ParamInf;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 
@@ -135,7 +136,7 @@ public class EmailService extends BaseService<SysEmail> implements
 										loginUserUtilService.findUserId())
 								.nolike("thoroughDeleteUserId",
 										loginUserUtilService.findUserId())
-								.orderDesc("dcreate"), pageRange, new String[] {
+								.orderDesc("dcreate").like("title", object.getTitle()), pageRange, new String[] {
 								"id", "title", "dcreate", "type",
 								"sendUserName", "userNames" });
 	}
@@ -151,7 +152,7 @@ public class EmailService extends BaseService<SysEmail> implements
 								loginUserUtilService.findUserId())
 						.nolike("thoroughDeleteUserId",
 								loginUserUtilService.findUserId())
-						.is("type", "cgx").orderDesc("dcreate"), pageRange,
+						.is("type", "cgx").orderDesc("dcreate").like("title", object.getTitle()), pageRange,
 				new String[] { "id", "title", "dcreate", "type",
 						"sendUserName", "userNames" });
 	}
@@ -167,7 +168,7 @@ public class EmailService extends BaseService<SysEmail> implements
 								loginUserUtilService.findUserId())
 						.nolike("thoroughDeleteUserId",
 								loginUserUtilService.findUserId())
-						.is("type", "yfs").orderDesc("dcreate"), pageRange,
+						.is("type", "yfs").orderDesc("dcreate").like("title", object.getTitle()), pageRange,
 				new String[] { "id", "title", "dcreate", "type",
 						"sendUserName", "userNames" });
 	}
@@ -175,16 +176,18 @@ public class EmailService extends BaseService<SysEmail> implements
 	public PagingData<SysEmail> queryShouPage(SysEmail object,
 			PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
+		ParamInf paramInf = ParamFactory
+				.getParamHb()
+				.like("users", loginUserUtilService.findUserId())
+				.nolike("deleteUserId",
+						loginUserUtilService.findUserId())
+				.nolike("thoroughDeleteUserId",
+						loginUserUtilService.findUserId())
+				.is("type", "yfs").orderDesc("dcreate");
+		paramInf.like("title", object.getTitle());
 		PagingData<SysEmail> page = dao.queryPagingData(
 				this.getGenericType(0),
-				ParamFactory
-						.getParamHb()
-						.like("users", loginUserUtilService.findUserId())
-						.nolike("deleteUserId",
-								loginUserUtilService.findUserId())
-						.nolike("thoroughDeleteUserId",
-								loginUserUtilService.findUserId())
-						.is("type", "yfs").orderDesc("dcreate"), pageRange,
+				paramInf, pageRange,
 				new String[] { "id", "title", "dcreate", "type", "readUserId",
 						"sendUserName", "userNames" });
 

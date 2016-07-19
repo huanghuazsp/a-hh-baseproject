@@ -26,6 +26,12 @@
 			parent.writeemail({id:row.id});
 		});
 	}
+	function doQuery() {
+		var params = $('#queryForm').getValue();
+		$('#pagelist').loadData({
+			params : params
+		});
+	}
 </script>
 </head>
 <body>
@@ -34,6 +40,15 @@
 		<span xtype="button" config="onClick: doEdit ,text:'编辑'"></span>
 		<span xtype="button" config="onClick:doDelete,text:'删除'"></span>
 	</div>
+	<table xtype="form" id="queryForm" style="width: 700px;">
+		<tr>
+			<td xtype="label">标题：</td>
+			<td><span xtype="text"
+				config=" name : 'title' ,enter: doQuery "></span></td>
+				<td><span xtype="button"
+				config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
+		</tr>
+	</table>
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'message-Email-queryCGXPage' ,column : [
 		{
