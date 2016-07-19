@@ -17,6 +17,7 @@ import com.hh.system.util.Convert;
 import com.hh.system.util.Json;
 import com.hh.system.util.ThreadUtil;
 import com.hh.system.util.date.DateFormat;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 
 public class MessageService {
@@ -64,13 +65,10 @@ public class MessageService {
 		paramMap.put("type", "you");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("message", paramMap);
-
-		final String userId = Convert.toString(paramMap.get("userId"));
-		final String orgId = Convert.toString(paramMap.get("orgId"));
-		final String deptId = Convert.toString(paramMap.get("deptId"));
 		final String sendUserId = Convert.toString(paramMap.get("sendUserId"));
-		SysMessage sysMessage = saveMessage(paramMap, userId, orgId, deptId);
-		paramMap.put("sendObjectId", sysMessage.getSendObjectId());
+		SysMessage sysMessage = saveMessage(paramMap);
+		paramMap.put("toObjectId", sysMessage.getToObjectId());
+		final String toObjectId = sysMessage.getToObjectId();
 		final String config2 = Json.toStr(map);
 		
 
@@ -80,9 +78,9 @@ public class MessageService {
 					return false;
 				else {
 					Map<String, Object> userMap = (Map<String, Object>) session.getAttribute("user");
-					return ((Convert.toString(userMap.get("userId"))).equals(userId)
-							|| (Convert.toString(userMap.get("orgId"))).equals(orgId)
-							|| (Convert.toString(userMap.get("deptId"))).equals(deptId))
+					return ((Convert.toString(userMap.get("userId"))).equals(toObjectId)
+							|| (Convert.toString(userMap.get("orgId"))).equals(toObjectId)
+							|| (Convert.toString(userMap.get("deptId"))).equals(toObjectId))
 							&& !sendUserId.equals(userMap.get("userId"));
 				}
 			}
@@ -93,56 +91,44 @@ public class MessageService {
 				script.appendCall("showMessage", config2);
 				Collection<ScriptSession> sessions = Browser.getTargetSessions();
 				for (ScriptSession scriptSession : sessions) {
-					System.out.println(scriptSession.getAttribute("user"));
+//					System.out.println(scriptSession.getAttribute("user"));
 					scriptSession.addScript(script);
 				}
 			}
 		});
 	}
 
-	private SysMessage saveMessage(Map<String, Object> paramMap, final String userId, final String orgId,
-			final String deptId) {
+	private SysMessage saveMessage(Map<String, Object> paramMap) {
 		SysMessage message = new SysMessage();
-		message.setUserId(userId);
-		message.setUserName(Convert.toString(paramMap.get("userName")));
-		message.setDeptId(deptId);
-		message.setDeptName(Convert.toString(paramMap.get("deptName")));
-		message.setOrgId(orgId);
-		message.setOrgName(Convert.toString(paramMap.get("orgName")));
+		UsUser user = loginUserUtilService.findLoginUser();
 
-		String currUserId = loginUserUtilService.findUserId();
-		message.setSendUserId(currUserId);
-		message.setSendUserName(loginUserUtilService.findUserName());
+		String currUserId = user.getId();
 		message.setVcreate(currUserId);
 		message.setVupdate(currUserId);
-		message.setVorgid(loginUserUtilService.findOrgId());
-		message.setVdeptid(loginUserUtilService.findDeptId());
-		message.setVjobid(loginUserUtilService.findJobId());
-		message.setHeadpic(Convert.toString(paramMap.get("headpic")));
+		message.setVorgid(user.getOrgId());
+		message.setVdeptid(user.getDeptId());
+		message.setVjobid(user.getJobId());
 		message.setContent(Convert.toString(paramMap.get("message")));
+		message.setVcreateName(user.getText());
 		
-		message.setSendObjectHeadpic(Convert.toString(paramMap.get("sendObjectHeadpic")));
+		message.setSendUserId(currUserId);
+		message.setSendUserName(user.getText());
+		message.setSendHeadpic(user.getHeadpic());
 		
-		String title = "";
 		
-		if (Check.isNoEmpty(message.getOrgName())) {
-			title=message.getOrgName();
-			message.setSendObjectId(message.getOrgId());
-			message.setSendObjectName(message.getOrgName());
-			message.setSendObjectType(1);
-		}else if (Check.isNoEmpty(message.getDeptName())) {
-			title=message.getDeptName();
-			message.setSendObjectId(message.getDeptId());
-			message.setSendObjectName(message.getDeptName());
-			message.setSendObjectType(2);
-		}else {
-			title=message.getSendUserName();
-			message.setSendObjectId(message.getSendUserId());
-			message.setSendObjectName(message.getSendUserName());
-			message.setSendObjectType(0);
-		}
+		message.setSendUserId(currUserId);
+		message.setSendUserName(user.getText());
+		message.setSendHeadpic(user.getHeadpic());
 		
-		message.setTitle(title);
+		
+		message.setToObjectId(Convert.toString(paramMap.get("toObjectId")));
+		message.setToObjectName(Convert.toString(paramMap.get("toObjectName")));
+		message.setToObjectHeadpic(Convert.toString(paramMap.get("toObjectHeadpic")));
+		
+		message.setSendObjectType(Convert.toInt(paramMap.get("sendObjectType")));
+		
+		
+		
 
 		ThreadUtil.getThreadPool().execute(new MessageThread(message,Convert.toInt(paramMap.get("addCylxr"))));
 		return message;
