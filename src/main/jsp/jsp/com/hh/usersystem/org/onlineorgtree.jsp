@@ -120,12 +120,11 @@
 				limit:limit,
 				page:page,
 				start:start,
-				sendObjectId : data.id,
+				toObjectId : data.id,
 				sendObjectType : data.lx_
 			},
 			defaultMsg : false
 		}, function(dataList) {
-			
 			 loadData(dataList);
 		});
 		
@@ -139,7 +138,7 @@
 			data.date = $.hh.dateTimeToString(data.dcreate);
 			data.message = data.content;
 			data.type = data.sendUserId == loginUser.id ? 'my' : 'you';
-			data.sendHeadpic = data.headpic;
+			data.sendHeadpic = data.sendHeadpic;
 			appendMessage(data);
 		}
 	}
@@ -261,7 +260,7 @@
 	
 	function renderMsg(message){
 		var selectData = $('#userdiv').data('data');
-		if(selectData && (message.sendObjectId== selectData.id )){
+		if(selectData && (message.sendUserId== selectData.id )){
 			appendMessage(message);
 		}else{
 			//console.log(message);
@@ -276,11 +275,12 @@
 		var message = config.message || '';
 		var date = config.date || '';
 		var type = config.type;
+		
+		
 		var text = config.sendUserName;
-		var userId = config.userId;
-		
-		
 		var headpic = config.sendHeadpic;
+		
+		
 		
 		if(headpic &&  headpic.indexOf('hhcomm')==-1){
 	    	headpic =	"system-File-download?params={id:'"+headpic+"'}";
@@ -341,25 +341,6 @@
 		var data = $('#userdiv').data('data');
 		if(data){
 			var messageData = {};
-			var userId = '';
-			var deptId = '';
-			var orgId = '';
-			
-			
-			var userName = '';
-			var deptName = '';
-			var orgName = '';
-			
-			if (data.lx_ == 1) {
-				messageData.orgId = data.id;
-				messageData.orgName = data.text;
-			} else if (data.lx_ == 2) {
-				messageData.deptId = data.id;
-				messageData.deptName = data.text;
-			} else {
-				messageData.userId = data.id;
-				messageData.userName = data.text;
-			}
 			messageData.message = $('#messageSpan').getValue();
 			if(!messageData.message){
 				Dialog.infomsg('请输入内容！');
@@ -368,11 +349,13 @@
 			
 			messageData.sendUserId = loginUser.id;
 			messageData.sendUserName = loginUser.text;
+			messageData.sendHeadpic =  loginUser.headpic;
 			
-			messageData.sendObjectHeadpic =data.headpic;
-			messageData.headpic =  loginUser.headpic;
+			messageData.toObjectHeadpic =data.headpic;
+			messageData.toObjectId =data.id;
+			messageData.toObjectName =data.text;
 			
-			messageData.sendHeadpic = loginUser.headpic;
+			messageData.sendObjectType =data.lx_;
 			
 			messageData.date = $.hh.dateTimeToString($.hh.getDate());
 			messageData.type='my';
