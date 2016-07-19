@@ -24,6 +24,7 @@ import com.hh.usersystem.LoginUserServiceInf;
 public class SystemResourcesService extends BaseService<SystemResources> implements IFileOper {
 	@Autowired
 	private LoginUserServiceInf userService;
+
 	@Override
 	public SystemResources save(SystemResources entity) throws MessageException {
 		List<Map<String, Object>> mapList = Json.toMapList(entity.getFiles());
@@ -34,20 +35,28 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 			}
 
 			if (Check.isNoEmpty(text)) {
-				text=text.substring(0,text.length()-1);
+				text = text.substring(0, text.length() - 1);
 			}
-			
+
 			if (text.length() > 128) {
 				text = text.substring(0, 127);
 			}
 			entity.setText(text);
 		}
-		
+
 		return super.save(entity);
 	}
 
-	@Override
 	public PagingData<SystemResources> queryPagingData(SystemResources entity, PageRange pageRange) {
+		return queryPagingData(entity, pageRange, 0);
+	}
+
+	public PagingData<SystemResources> querySharePagingData(SystemResources entity, PageRange pageRange) {
+		entity.setState(1);
+		return queryPagingData(entity, pageRange, 1);
+	}
+
+	public PagingData<SystemResources> queryPagingData(SystemResources entity, PageRange pageRange, int share) {
 		ParamInf paramInf = ParamFactory.getParamHb();
 		if (Check.isNoEmpty(entity.getType())) {
 			paramInf.is("type", entity.getType());
@@ -55,12 +64,15 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 		if (Check.isNoEmpty(entity.getText())) {
 			paramInf.like("text", entity.getText());
 		}
-		
-		if (entity.getState()==1) {
-			paramInf.is("state",1);
-		}else{
+
+		if (entity.getState() == 1 || entity.getState() == 0) {
+			paramInf.is("state", entity.getState());
+		}
+
+		if (share != 1) {
 			paramInf.is("vcreate", userService.findUserId());
 		}
+
 		return super.queryPagingData(entity, pageRange, paramInf);
 	}
 
@@ -72,8 +84,8 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 			systemFile.setDestroy(1);
 		}
 	}
-	
-	public void doSetState(String ids,int state) {
+
+	public void doSetState(String ids, int state) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", Convert.strToList(ids));
 		map.put("state", state);

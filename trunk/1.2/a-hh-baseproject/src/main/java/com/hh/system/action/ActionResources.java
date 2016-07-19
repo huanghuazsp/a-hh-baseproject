@@ -18,5 +18,11 @@ public class ActionResources extends BaseServiceAction< SystemResources > {
 	public void doSetState() {
 		systemresourcesService.doSetState(this.getIds(),object.getState());
 	}
+	
+	
+	public Object querySharePagingData() {
+		return systemresourcesService.querySharePagingData(object,
+				this.getPageRange());
+	}
 }
  
