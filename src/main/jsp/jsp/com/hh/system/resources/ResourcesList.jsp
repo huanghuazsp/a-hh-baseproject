@@ -10,6 +10,7 @@
 <%=SystemUtil.getBaseJs()+SystemUtil.getUser()%>
 
 <script type="text/javascript">
+	var isShare = '<%=request.getParameter("share")%>';
 	function doDelete() {
 		$.hh.pagelist.deleteData({
 			pageid : 'pagelist',
@@ -61,12 +62,10 @@
 	function iframeClick(data) {
 		type1=data.id;
 		
-		var data = {type:type1};
-		<%if("1".equals(request.getParameter("share"))){%>
-		data.state=1;
-		<%} %>
+		var params = $('#queryForm').getValue();
+		params.type=type1;
 		$('#pagelist').loadData({
-			params : data
+			params : params
 		});
 	}
 	function renderData(value,item){
@@ -174,18 +173,23 @@
 			<span
 			xtype="button" config="onClick: doView ,text:'查看',itype:'view' "></span>
 	</div>
-	<!-- <table xtype="form" id="queryForm" style="width:600px;">
+	<table xtype="form" id="queryForm" style="width: 700px;">
 		<tr>
-			<td xtype="label">test：</td>
-			<td><span xtype="text" config=" name : 'test'"></span></td>
+			<td xtype="label">名称：</td>
+			<td><span xtype="text"
+				config=" name : 'text' ,enter: doQuery "></span></td>
+				<%if(!"1".equals(request.getParameter("share"))){%>
+			<td xtype="label">是否共享：</td>
+			<td><span xtype="radio"
+				config="name: 'state'  ,defaultValue : 2 , data :[{id:2,text:'所有'},{id:1,text:'共享'},{id:0,text:'个人'}]"></span></td>
+				<%}%>
+				<td><span xtype="button"
+				config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
 		</tr>
-	</table> -->
+	</table>
 	<div id="pagelist" xtype="pagelist"
-		config="
-		<%if("1".equals(request.getParameter("share"))){%>
-		params:{state:1},
-		<%} %>
-		  doChange : doChange , url: 'system-Resources-queryPagingData' ,column : [
+		config=" params:{state:2},
+		  doChange : doChange , url: '<%="1".equals(request.getParameter("share"))? "system-Resources-querySharePagingData":"system-Resources-queryPagingData" %>' ,column : [
 		
 		{
 				name : 'vcreateName' ,
