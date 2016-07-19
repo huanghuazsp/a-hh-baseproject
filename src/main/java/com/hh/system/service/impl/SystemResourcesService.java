@@ -55,7 +55,12 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 		if (Check.isNoEmpty(entity.getText())) {
 			paramInf.like("text", entity.getText());
 		}
-		paramInf.is("vcreate", userService.findUserId());
+		
+		if (entity.getState()==1) {
+			paramInf.is("state",1);
+		}else{
+			paramInf.is("vcreate", userService.findUserId());
+		}
 		return super.queryPagingData(entity, pageRange, paramInf);
 	}
 

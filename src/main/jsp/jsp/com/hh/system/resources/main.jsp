@@ -8,7 +8,11 @@
 <title>数据列表</title>
 <%=BaseSystemUtil.getBaseJs("layout","ztree", "ztree_edit")%>
 <%String iframeId = PrimaryKey.getPrimaryKeyUUID();%>
-
+<style type="text/css">
+.ztree li span.button.share_ico_docu{margin-right:2px; background: url(/hhcommon/images/icons/folder/folder_star.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.share_ico_open{margin-right:2px; background: url(/hhcommon/images/icons/folder/folder_star.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.share_ico_close{margin-right:2px; background: url(/hhcommon/images/icons/folder/folder_star.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+</style>
 <script type="text/javascript">
 	var iframeId = '<%=iframeId%>';
 	function treeClick(treeNode) {
@@ -61,7 +65,7 @@
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="<%=iframeId%>" name="<%=iframeId%>" width=100%
-				height=100% frameborder=0 src="jsp-system-resources-ResourcesList?type=<%=request.getParameter("type")%>"></iframe>
+				height=100% frameborder=0 src="jsp-system-resources-ResourcesList"></iframe>
 		</div>
 	</div>
 </body>

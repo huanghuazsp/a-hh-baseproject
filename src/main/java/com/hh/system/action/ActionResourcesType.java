@@ -18,5 +18,12 @@ public class ActionResourcesType extends BaseServiceAction< SystemResourcesType 
 	public void doSetState() {
 		systemresourcestypeService.doSetState(this.getIds(),object.getState());
 	}
+
+	@Override
+	public Object queryTreeList() {
+		return systemresourcestypeService.queryTreeList(object);
+	}
+	
+	
 }
  
