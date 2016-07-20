@@ -101,6 +101,7 @@
 	}
 	
 	function clickMenu(data){
+		data.sendObjectType = data.sendObjectType || data.lx_ ;
 		var objectMap = $.hh.listToObject($('#messDivspan').data('data'));
 		if(objectMap[data.id]==null){
 			data.addCylxr = 1;
@@ -121,7 +122,7 @@
 				page:page,
 				start:start,
 				toObjectId : data.id,
-				sendObjectType : data.lx_
+				sendObjectType :  data.sendObjectType
 			},
 			defaultMsg : false
 		}, function(dataList) {
@@ -260,7 +261,7 @@
 	
 	function renderMsg(message){
 		var selectData = $('#userdiv').data('data');
-		if(selectData && (message.sendUserId== selectData.id )){
+		if(selectData && (message.objectId == selectData.id )){
 			appendMessage(message);
 		}else{
 			//console.log(message);
@@ -355,7 +356,7 @@
 			messageData.toObjectId =data.id;
 			messageData.toObjectName =data.text;
 			
-			messageData.sendObjectType =data.lx_;
+			messageData.sendObjectType =data.sendObjectType;
 			
 			messageData.date = $.hh.dateTimeToString($.hh.getDate());
 			messageData.type='my';

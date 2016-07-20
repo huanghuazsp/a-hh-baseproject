@@ -68,6 +68,7 @@ public class MessageService {
 		final String sendUserId = Convert.toString(paramMap.get("sendUserId"));
 		SysMessage sysMessage = saveMessage(paramMap);
 		paramMap.put("toObjectId", sysMessage.getToObjectId());
+		paramMap.put("objectId", sysMessage.getObjectId());
 		final String toObjectId = sysMessage.getToObjectId();
 		final String config2 = Json.toStr(map);
 		
@@ -127,7 +128,15 @@ public class MessageService {
 		
 		message.setSendObjectType(Convert.toInt(paramMap.get("sendObjectType")));
 		
-		
+		if (message.getSendObjectType()==0) {
+			message.setObjectId(message.getSendUserId());
+			message.setObjectName(message.getSendUserName());
+			message.setObjectHeadpic(message.getSendHeadpic());
+		}else{
+			message.setObjectId(message.getToObjectId());
+			message.setObjectName(message.getToObjectName());
+			message.setObjectHeadpic(message.getToObjectHeadpic());
+		}
 		
 
 		ThreadUtil.getThreadPool().execute(new MessageThread(message,Convert.toInt(paramMap.get("addCylxr"))));
