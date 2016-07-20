@@ -31,10 +31,10 @@ public class SysMessage extends BaseTwoEntity {
 	private String toObjectName = "";
 	private String toObjectHeadpic = "";
 	
+	private String objectId = "";
+	private String objectName = "";
+	private String objectHeadpic = "";
 	
-//	private String toUserId = "";
-//	private String toUserName = "";
-//	private String toHeadpic = "";
 	private int sendObjectType = 0;
 	
 	private enum Type {
@@ -144,35 +144,33 @@ public class SysMessage extends BaseTwoEntity {
 		this.toObjectHeadpic = toObjectHeadpic;
 	}
 
-//	@Column(name="TO_OBJECTID",length=36)
-//	public String getToUserId() {
-//		return toUserId;
-//	}
-//
-//	public void setToUserId(String toUserId) {
-//		this.toUserId = toUserId;
-//	}
-//
-//	@Column(name="TO_USERNAME",length=128)
-//	public String getToUserName() {
-//		return toUserName;
-//	}
-//
-//	public void setToUserName(String toUserName) {
-//		this.toUserName = toUserName;
-//	}
-//
-//	@Column(name="TO_HEADPIC")
-//	public String getToHeadpic() {
-//		return toHeadpic;
-//	}
-//
-//	public void setToHeadpic(String toHeadpic) {
-//		this.toHeadpic = toHeadpic;
-//	}
 	
-	
-	
-	
+	@Column(name="OBJECTID",length=36)
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
+
+	@Column(name="OBJECTNAME",length=128)
+	public String getObjectName() {
+		return objectName;
+	}
+
+	public void setObjectName(String objectName) {
+		this.objectName = objectName;
+	}
+
+	@Column(name="OBJECT_HEADPIC")
+	public String getObjectHeadpic() {
+		return objectHeadpic;
+	}
+
+	public void setObjectHeadpic(String objectHeadpic) {
+		this.objectHeadpic = objectHeadpic;
+	}
+
 	
 }

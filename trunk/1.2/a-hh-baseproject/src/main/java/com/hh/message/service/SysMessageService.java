@@ -102,10 +102,10 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 		mapparam.put("deptId", deptId);
 
 		List<Map<String, Object>> sysMessagesList = this.getDao().queryList(
-				"select sendObjectType as lx_,sendUserId as id,sendUserName as text,sendHeadpic as headpic,count(id) as count  from "
+				"select sendObjectType as sendObjectType,objectId as id,objectName as text,objectHeadpic as headpic,count(id) as count  from "
 						+ SysMessage.class.getName()
 						+ " where (toObjectId=:userId or toObjectId=:orgId or toObjectId=:deptId) and sendUserId!=:userId and readUserId not like '%"
-						+ userId + "%' GROUP BY sendObjectType,sendUserId,sendUserName,sendHeadpic",
+						+ userId + "%' GROUP BY sendObjectType,objectId,objectName,objectHeadpic",
 				mapparam);
 
 		Map<String, Map<String, Object>> mapMap = Convert.listMapToMap(sysMessagesList, "id");
@@ -124,7 +124,7 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 				usUserCyLxr.setCylxrId(Convert.toString(map2.get("id")));
 				usUserCyLxr.setCylxrName(Convert.toString(map2.get("text")));
 				usUserCyLxr.setHeadpic(Convert.toString(map2.get("headpic")));
-				usUserCyLxr.setType(Convert.toInt(map2.get("lx_")));
+				usUserCyLxr.setType(Convert.toInt(map2.get("sendObjectType")));
 				userService.addCylxrObject(usUserCyLxr);
 			}
 		}
@@ -134,7 +134,7 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 				map2.put("id", usUserCyLxr.getCylxrId());
 				map2.put("text", usUserCyLxr.getCylxrName());
 				map2.put("headpic", usUserCyLxr.getHeadpic());
-				map2.put("lx_", usUserCyLxr.getType());
+				map2.put("sendObjectType", usUserCyLxr.getType());
 				sysMessagesList.add(map2);
 			}
 		}
