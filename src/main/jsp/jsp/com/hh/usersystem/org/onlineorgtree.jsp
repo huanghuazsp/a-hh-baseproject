@@ -102,6 +102,17 @@
 	
 	function clickMenu(data){
 		data.sendObjectType = data.sendObjectType || data.lx_ ;
+		
+		$('#backbtn').undisabled();
+		if(data.sendObjectType!=0){
+			if(data.id!=loginUser.orgId && data.id!=loginUser.deptId){
+				$('#himessageDiv').html('<h1>您不在本机构/本部门</h1>');
+				$('#backbtn').disabled();
+				return;
+			}
+		}
+		
+		
 		var objectMap = $.hh.listToObject($('#messDivspan').data('data'));
 		if(objectMap[data.id]==null){
 			data.addCylxr = 1;
