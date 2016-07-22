@@ -102,8 +102,8 @@ public class EmailService extends BaseService<SysEmail> implements
 				.nolike("thoroughDeleteUserId", userId));
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("count", shouCount);
-		map2.put("id", "93bb64fe-e50a-40b2-ab59-b1ae543cd107");
-		map2.put("text", "收件箱");
+		map2.put("id", "e9fa8689-c362-4c66-bd75-d1b132bd5211");
+		map2.put("text", "个人邮件");
 		map2.put("vsj", "jsp-message-email-emailmain");
 		map.put("email", map2);
 		map.put("userId", userId);
