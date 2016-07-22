@@ -101,7 +101,7 @@
 	}
 	
 	function clickMenu(data){
-		data.sendObjectType = data.sendObjectType || data.lx_ ;
+		data.sendObjectType = data.sendObjectType ==null ? data.lx_ : data.sendObjectType ;
 		
 		$('#backbtn').undisabled();
 		if(data.sendObjectType!=0){
