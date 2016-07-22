@@ -316,7 +316,7 @@
 		var td1 = '<td style="width: 40px; text-align: center;">'+headpic+' <br />'
 				+ text+'</td>';
 		var td2 = '<td>'
-				+ '<div style="-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; background-color: '+backColor+'; width: 340px; height: auto; display: block; padding: 5px; float: '+align+'; color: #333333;">'
+				+ '<div style="-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; background-color: '+backColor+'; width: 340px; height: auto; display: block; padding: 5px; float: '+align+'; color: #333333;table-layout:fixed;word-wrap: break-word; word-break: break-all;">'
 				+ '<font style="font-size: 14px;"><b>' + message
 				+ '</b></font>' + '<br />'
 				+ '<div style="padding-top: 6px; color: #a9b4a2;">' + date
