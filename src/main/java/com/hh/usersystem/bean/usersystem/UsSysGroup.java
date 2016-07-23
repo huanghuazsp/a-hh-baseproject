@@ -22,7 +22,7 @@ public class UsSysGroup  extends BaseTreeNodeEntity<UsSysGroup> {
 	private String users;
 	
 	private String type="sysgroup";
-
+	private int meGroup=0;
 	@Column(length = 1024)
 	public String getRemark() {
 		return remark;
@@ -51,5 +51,12 @@ public class UsSysGroup  extends BaseTreeNodeEntity<UsSysGroup> {
 	public void setType(String type) {
 		this.type = type;
 	}
-
+	@Transient
+	public int getMeGroup() {
+		return meGroup;
+	}
+	public void setMeGroup(int meGroup) {
+		this.meGroup = meGroup;
+	}
+	
 }

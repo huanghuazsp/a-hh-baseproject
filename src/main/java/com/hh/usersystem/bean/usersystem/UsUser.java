@@ -52,36 +52,21 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	private List<UsRole> hhXtJsList = new ArrayList<UsRole>();// 角色
 	private List<SysMenu> hhXtYhCdZmtbList = new ArrayList<SysMenu>();// 桌面快捷方式
 	private Map<String, SysOper> hhXtCzMap = new HashMap<String, SysOper>();// 用户的操作权限
-	private List<String> hhXtCzUrlList = new ArrayList<String>();
-	private List<String> hhXtCzPageTextList = new ArrayList<String>();
+	
+	private List<String> hhXtCzUrlList = new ArrayList<String>();//url权限控制
+	private List<String> hhXtCzPageTextList = new ArrayList<String>();//页面文字权限控制
 
-	private Map<String, List<String>> hhXtCzPageTextMap = new HashMap<String, List<String>>();
+	private Map<String, List<String>> hhXtCzPageTextMap = new HashMap<String, List<String>>();//页面文字权限控制
 
 	private List<String> jsList = new ArrayList<String>();// 角色ID
-	// private HHXtZmsx hhXtZmsx;// 用户属性
-	// private List<Organization> organizationList = new
-	// ArrayList<Organization>();// 岗位
-	private String orgIdsStr;
-	private String roleIds;
-
-	// private Map<String, Organization> organization;
+	private String roleIds;// 角色ID
 
 	private String vzmbj = StaticProperties.HHXT_USERSYSTEM_ZMBJ;
 	private int pageSize = 15;
 	private String theme;
 
-	// @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	// @JoinColumn(name = "ID")
-	// public HHXtZmsx getHhXtZmsx() {
-	// return hhXtZmsx;
-	// }
-	//
-	// public void setHhXtZmsx(HHXtZmsx hhXtZmsx) {
-	// this.hhXtZmsx = hhXtZmsx;
-	// }
 	private UsOrganization dept;// 部门
 	private UsOrganization org;// 机构
-	// private Organization jt ;// 集团
 	private UsOrganization job;
 
 	private String jobId;
@@ -164,15 +149,6 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.hhXtJsList = hhXtJsList;
 	}
 
-	// @Transient
-	// public List<Organization> getOrganizationList() {
-	// return organizationList;
-	// }
-	//
-	// public void setOrganizationList(List<Organization> organizationList) {
-	// this.organizationList = organizationList;
-	// }
-
 	@Transient
 	public List<String> getHhXtCzUrlList() {
 		return hhXtCzUrlList;
@@ -249,15 +225,6 @@ public class UsUser extends BaseTwoEntity implements IUser {
 
 	public void setDsr(Date dsr) {
 		this.dsr = dsr;
-	}
-
-	@Transient
-	public String getOrgIdsStr() {
-		return orgIdsStr;
-	}
-
-	public void setOrgIdsStr(String orgIdsStr) {
-		this.orgIdsStr = orgIdsStr;
 	}
 
 	@Column(name = "HEADPIC")
