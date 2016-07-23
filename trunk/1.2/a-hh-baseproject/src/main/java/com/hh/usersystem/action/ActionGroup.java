@@ -9,6 +9,8 @@ import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.base.BaseServiceAction;
+import com.hh.system.util.dto.ParamFactory;
+import com.hh.usersystem.LoginUserServiceInf;
 import com.hh.usersystem.bean.usersystem.UsSysGroup;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UsGroup;
@@ -32,6 +34,9 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private LoginUserServiceInf loginUserService;
+
 	public BaseService<UsSysGroup> getService() {
 		return service;
 	}
@@ -41,7 +46,7 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 	}
 
 	public Object queryListAndUserGroup() {
-
+		String userId = loginUserService.findUserId();
 		List<Object> returnObjects = new ArrayList<Object>();
 		if ("root".equals(this.object.getNode())) {
 			UsGroup userGroup = new UsGroup();
@@ -49,7 +54,11 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 			userGroup.setExpanded(1);
 			userGroup.setIcon("/hhcommon/images/myimage/org/dept.png");
 			userGroup.setType("zdy");
-			List<UsGroup> userGroups = userGroupService.queryAllTreeList();
+			List<UsGroup> userGroups = userGroupService.queryTreeList(
+					object.getNode(),
+					ParamFactory.getParamHb().or(
+							ParamFactory.getParamHb().is("vcreate", userId)
+									.like("users", userId)));
 			if (andUser == 1) {
 				for (UsGroup userGroup2 : userGroups) {
 					addUserGroup(userGroup2);
@@ -59,7 +68,8 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 			userGroup.setChildren(userGroups);
 			returnObjects.add(userGroup);
 		}
-		List<UsSysGroup> groupList = service.queryTreeList(this.object.getNode());
+		List<UsSysGroup> groupList = service.queryTreeList(this.object
+				.getNode());
 		if (andUser == 1) {
 			for (UsSysGroup hhXtGroup : groupList) {
 				addXtGroup(hhXtGroup);
@@ -70,12 +80,16 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 	}
 
 	private void addXtGroup(UsSysGroup userGroup) {
+		String userId = loginUserService.findUserId();
 		if (userGroup.getChildren() != null) {
 			for (UsSysGroup userGroup2 : userGroup.getChildren()) {
 				addXtGroup(userGroup2);
 			}
 		}
 		if (Check.isNoEmpty(userGroup.getUsers())) {
+			if (userGroup.getUsers().indexOf(userId) > -1) {
+				userGroup.setMeGroup(1);
+			}
 			List<String> userIds = Convert.strToList(userGroup.getUsers());
 			List<UsUser> hhXtYhs = userService.queryListByIds(userIds);
 			for (UsUser hhXtYh : hhXtYhs) {
@@ -99,12 +113,17 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 	}
 
 	private void addUserGroup(UsGroup userGroup) {
+		String userId = loginUserService.findUserId();
 		if (userGroup.getChildren() != null) {
 			for (UsGroup userGroup2 : userGroup.getChildren()) {
 				addUserGroup(userGroup2);
 			}
 		}
 		if (Check.isNoEmpty(userGroup.getUsers())) {
+			userGroup.setChildren(new ArrayList<UsGroup>());
+			if (userGroup.getUsers().indexOf(userId) > -1) {
+				userGroup.setMeGroup(1);
+			}
 			List<String> userIds = Convert.strToList(userGroup.getUsers());
 			List<UsUser> hhXtYhs = userService.queryListByIds(userIds);
 			for (UsUser hhXtYh : hhXtYhs) {

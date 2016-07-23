@@ -18,6 +18,7 @@
 	var params = $.hh.getIframeParams();
 	var orgtreeconfig = {
 		//render : false,
+		render : false,
 		id : 'orgTree',
 		nheight : 42,
 		url : 'usersystem-Org-queryOrgAndUsersList',
@@ -100,13 +101,18 @@
 			}
 	}
 	
+	function msg(msg){
+		$('#himessageDiv').html('<h1>'+msg+'</h1>');
+		$('#backbtn').disabled();
+	}
+	
 	function clickMenu(data){
 		data.sendObjectType = data.sendObjectType ==null ? data.lx_ : data.sendObjectType ;
 		
 		$('#backbtn').undisabled();
-		if(data.sendObjectType!=0){
+		if(data.sendObjectType!=0 && data.sendObjectType!=6 && data.sendObjectType!=7){
 			if(data.id!=loginUser.orgId && data.id!=loginUser.deptId){
-				$('#himessageDiv').html('<h1>您不在本机构/本部门</h1>');
+				msg('您不在本机构/本部门');
 				$('#backbtn').disabled();
 				return;
 			}
@@ -231,7 +237,27 @@
 			onClick : function() {
 				$.hh.tree.refresh('groupTree');
 			}
-		} ]
+		} ],
+		onClick : function(node) {
+			if(node.type=='zdy'){
+				msg('请选择组或人员');
+				return;
+			}
+			if(node.meGroup==0 && node.sendObjectType!=0){
+				msg('您不在本组');
+				return;
+			}
+			if(node.type=='usgroup'){
+				node.sendObjectType=6;
+			}
+			if(node.type=='sysgroup'){
+				node.sendObjectType=7;
+			}
+			if(node.type=='user'){
+				node.sendObjectType=0;
+			}
+			clickMenu(node);
+		}
 	}
 
 	function onPageLoad() {
@@ -397,8 +423,8 @@
 		<div config="render : 'west' ,width:260 ">
 			<div id="tabs" xtype="tab" configVar="tabconfig">
 				<ul>
-					<li><a href="#orgDiv">机构</a></li>
 					<li><a href="#messDiv">消息</a></li>
+					<li><a href="#orgDiv">机构</a></li>
 					<li><a href="#grooupDiv">组</a></li>
 				</ul>
 				<div id="messDiv">
@@ -428,7 +454,7 @@
 				</div>
 				<div config="render : 'south' ,width:160,spacing_open:0 ">
 					<span id="messageSpan"
-						config=" height:78,bottom:'hidden', name:'message' ,toolbar : ['Format',	'Font', 'FontSize', 'Styles'] "
+						config=" height:81,bottom:'hidden', name:'message' ,toolbar : ['Format',	'Font', 'FontSize', 'Styles'] "
 						xtype="ckeditor"></span>
 					<div xtype="toolbar" config="type:'head'"
 						style="text-align: right;">
