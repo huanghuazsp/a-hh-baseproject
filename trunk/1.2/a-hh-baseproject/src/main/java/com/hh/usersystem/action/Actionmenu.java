@@ -35,9 +35,9 @@ public class Actionmenu extends BaseServiceAction<SysMenu> {
 	}
 
 	public Object queryMenuListByPid() {
-		List<SysMenu> hhxtcdList = menuService.queryMenuListByPid(this.object
+		List<SysMenu> menuList = menuService.queryMenuListByPid(this.object
 				.getNode());
-		return hhxtcdList;
+		return menuList;
 	}
 	
 	public Object queryAllMenuList() {
@@ -45,9 +45,9 @@ public class Actionmenu extends BaseServiceAction<SysMenu> {
 	}
 
 	public Object queryMenuAllListByPid() {
-		List<ExtCheckTree> hhxtcdList = menuService.queryMenuAllListByPid(
+		List<ExtCheckTree> menuList = menuService.queryMenuAllListByPid(
 				this.object.getNode(), roleid);
-		return hhxtcdList;
+		return menuList;
 	}
 
 	public void deleteByIds() {

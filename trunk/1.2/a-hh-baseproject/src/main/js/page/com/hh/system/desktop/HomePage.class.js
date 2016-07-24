@@ -22,7 +22,7 @@ Ext.define('com.hh.system.desktop.HomePage', {
 		this.superclass.constructor.call(this, this.config);
 		var storeCfg = {
 			fields : ['id', 'text', 'vsj', 'icon', 'leaf', 'params', 'vdtp'],
-			data : static_var.loginuser.hhXtYhCdZmtbList
+			data : static_var.loginuser.desktopQuickList
 		};
 		this.store = Ext.create('com.hh.base.BaseDataStore', storeCfg);
 		var view = Ext.create("Ext.view.View", {

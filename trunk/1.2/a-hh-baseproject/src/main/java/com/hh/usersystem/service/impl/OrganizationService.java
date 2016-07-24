@@ -197,10 +197,10 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		if (!Check.isEmpty(idList)) {
 
 			List<String> nodeList = new ArrayList<String>();
-			List<UsOrganization> hhxtcdList = dao.queryList(
+			List<UsOrganization> menuList = dao.queryList(
 					UsOrganization.class,
 					Restrictions.in("id", Convert.strToList(ids)));
-			for (UsOrganization organization2 : hhxtcdList) {
+			for (UsOrganization organization2 : menuList) {
 				nodeList.add(organization2.getNode());
 			}
 
@@ -225,9 +225,9 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	private void deleteYzNode(List<String> idList) {
 		List<String> yzIdList = new ArrayList<String>();
 		if (!Check.isEmpty(idList)) {
-			List<UsOrganization> hhxtcdList = dao.queryList(
+			List<UsOrganization> menuList = dao.queryList(
 					UsOrganization.class, Restrictions.in("node", idList));
-			for (UsOrganization hhXtCd : hhxtcdList) {
+			for (UsOrganization hhXtCd : menuList) {
 				yzIdList.add(hhXtCd.getId());
 			}
 			if (!Check.isEmpty(yzIdList)) {

@@ -84,9 +84,9 @@ public class SecurityInterceptor implements Interceptor {
 			String requestUri = request.getRequestURI().replace(
 					request.getContextPath() + "/", "");
 			if (all_manage_request.contains(requestUri)) {
-				Map<String, SysOper> hhXtCzMap = hhXtYh.getHhXtCzMap();
+				Map<String, SysOper> operMap = hhXtYh.getOperMap();
 				boolean isSecurity = false;
-				SysOper hhXtCz = hhXtCzMap.get(requestUri);
+				SysOper hhXtCz = operMap.get(requestUri);
 
 				if (hhXtCz == null) {
 					isSecurity = false;

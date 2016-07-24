@@ -17,7 +17,7 @@
 <%
 	Gson gson = new Gson();
 UsUser hhXtYh =	(UsUser)session.getAttribute("loginuser");
-List<SysMenu> hhXtCds =  hhXtYh.getHhXtYhCdZmtbList();
+List<SysMenu> hhXtCds =  hhXtYh.getDesktopQuickList();
 
 MenuService menuService = BeanFactoryHelper.getBean(MenuService.class);
 ZmtbService zmtbService = BeanFactoryHelper.getBean(ZmtbService.class);

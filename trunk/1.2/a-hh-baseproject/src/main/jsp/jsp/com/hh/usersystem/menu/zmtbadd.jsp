@@ -11,8 +11,8 @@
 <%
 	Gson gson = new Gson();
 UsUser hhXtYh =	(UsUser)session.getAttribute("loginuser");
-List<SysMenu> hhXtCds =  hhXtYh.getHhXtCdList();
-List<SysMenu> zmtbcd =  hhXtYh.getHhXtYhCdZmtbList();
+List<SysMenu> hhXtCds =  hhXtYh.getMenuList();
+List<SysMenu> zmtbcd =  hhXtYh.getDesktopQuickList();
 
 String hhxtcdStr =  gson.toJson(hhXtCds);
 String zmtbcdStr =  gson.toJson(zmtbcd);
@@ -22,10 +22,10 @@ String zmtbcdStr =  gson.toJson(zmtbcd);
 	var params = $.hh.getIframeParams();
 	var Menu = {
 		getTreeChildrens : function(menuid) {
-			var hhXtCdList = hhxtcds;
+			var menuList = hhxtcds;
 			var resultTreeChildrens = [];
-			for (var i = 0; i < hhXtCdList.length; i++) {
-				var hhXtCd = hhXtCdList[i];
+			for (var i = 0; i < menuList.length; i++) {
+				var hhXtCd = menuList[i];
 				if (hhXtCd.node == menuid) {
 					var treeNode = {};
 					jQuery.extend(treeNode, hhXtCd);
@@ -35,16 +35,16 @@ String zmtbcdStr =  gson.toJson(zmtbcd);
 					treeNode.icon = hhXtCd.icon;
 					treeNode.isParent = hhXtCd.leaf == 0;
 					treeNode.open = hhXtCd.expanded == 1;
-					Menu.addTreeChildrens(treeNode, hhXtCdList);
+					Menu.addTreeChildrens(treeNode, menuList);
 					resultTreeChildrens.push(treeNode);
 				}
 			}
 			return resultTreeChildrens;
 		},
-		addTreeChildrens : function(parentTreeNode, hhXtCdList) {
+		addTreeChildrens : function(parentTreeNode, menuList) {
 			parentTreeNode.children = [];
-			for (var i = 0; i < hhXtCdList.length; i++) {
-				var hhXtCd = hhXtCdList[i];
+			for (var i = 0; i < menuList.length; i++) {
+				var hhXtCd = menuList[i];
 				if (hhXtCd.node == parentTreeNode.id) {
 					var treeNode = {};
 					jQuery.extend(treeNode, hhXtCd);
@@ -54,7 +54,7 @@ String zmtbcdStr =  gson.toJson(zmtbcd);
 					treeNode.icon = hhXtCd.icon;
 					treeNode.isParent = hhXtCd.leaf == 0;
 					treeNode.open = hhXtCd.expanded == 1;
-					Menu.addTreeChildrens(treeNode, hhXtCdList);
+					Menu.addTreeChildrens(treeNode, menuList);
 					parentTreeNode.children.push(treeNode);
 				}
 			}

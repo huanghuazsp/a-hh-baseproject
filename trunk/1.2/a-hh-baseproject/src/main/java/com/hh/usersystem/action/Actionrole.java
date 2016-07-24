@@ -23,8 +23,8 @@ public class Actionrole  extends BaseServiceAction<UsRole> {
 	}
 
 	public Object queryAllRoleList() {
-		List<UsRole> hhxtjsList = roleService.queryAllRoleList();
-		return hhxtjsList;
+		List<UsRole> roleList = roleService.queryAllRoleList();
+		return roleList;
 	}
 
 	public Object queryPagingData() {
