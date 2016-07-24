@@ -367,9 +367,7 @@
 		onPageLoad();
 		
 		 if ($.hh.browser.type.indexOf('IE') > -1) {
-			setTimeout(function() {
-				mysetInterval = setInterval(keepSession, 1000 * 60*4);
-			}, 3000); 
+			 mysetInterval = setInterval(keepSession, 1000 * 60*4);
 		} 
 	}
 	
