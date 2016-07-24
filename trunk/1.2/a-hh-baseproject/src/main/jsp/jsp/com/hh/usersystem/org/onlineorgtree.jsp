@@ -366,11 +366,15 @@
 		});
 		onPageLoad();
 		
-		/* if ($.hh.browser.type.indexOf('IE') > -1) {
+		 if ($.hh.browser.type.indexOf('IE') > -1) {
 			setTimeout(function() {
-				mysetInterval = setInterval(onPageLoad, 1000 * 60*4);
+				mysetInterval = setInterval(keepSession, 1000 * 60*4);
 			}, 3000); 
-		} */
+		} 
+	}
+	
+	function keepSession(){
+		message.sendMessageAuto("");
 	}
 
 	function setHeight(height) {
