@@ -43,12 +43,12 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 		
 		UsUser user = new UsUser();
 		BeanUtils.copyProperties(user, hhXtYh);
-		user.setHhXtCdList(null);
-		user.setHhXtCzMap(null);
-		user.setHhXtCzPageTextList(null);
-		user.setHhXtCzPageTextMap(null);
-		user.setHhXtCzUrlList(null);
-		user.setHhXtYhCdZmtbList(null);
+		user.setMenuList(null);
+		user.setOperMap(null);
+		user.setOperPageTextList(null);
+		user.setOperPageTextMap(null);
+		user.setOperUrlList(null);
+		user.setDesktopQuickList(null);
 		return user;
 	}
 
@@ -81,8 +81,8 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 		}
 		UsOrganization organization = null;
 		UsUser hhXtYh = findLoginUser();
-		Map<String, SysOper> hhXtCzMap = hhXtYh.getHhXtCzMap();
-		SysOper hhXtCz = hhXtCzMap.get(action);
+		Map<String, SysOper> operMap = hhXtYh.getOperMap();
+		SysOper hhXtCz = operMap.get(action);
 		if (hhXtCz != null) {
 			if (OperationLevel.BJG.toString().equals(hhXtCz.getOperLevel())) {
 				organization = hhXtYh.getOrg();
@@ -113,7 +113,7 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 
 			List<String> allOperPower = SecurityInterceptor.all_manage_page_text_map
 					.get(uri);
-			List<String> myOperPower = hhXtYh.getHhXtCzPageTextMap().get(uri);
+			List<String> myOperPower = hhXtYh.getOperPageTextMap().get(uri);
 			if (myOperPower == null) {
 				myOperPower = new ArrayList<String>();
 			}

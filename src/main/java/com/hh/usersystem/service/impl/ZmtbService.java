@@ -37,10 +37,10 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 	}
 
 	public List<SysMenu> queryZmtbByUserId(String userId) {
-		List<UsUserMenuZmtb> hhXtYhCdZmtbList = dao.queryList(UsUserMenuZmtb.class,
+		List<UsUserMenuZmtb> desktopQuickList = dao.queryList(UsUserMenuZmtb.class,
 				ParamFactory.getParamHb().is("yhId", userId));
 		List<SysMenu> hhXtCds = new ArrayList<SysMenu>();
-		for (UsUserMenuZmtb hhXtYhCdZmtb : hhXtYhCdZmtbList) {
+		for (UsUserMenuZmtb hhXtYhCdZmtb : desktopQuickList) {
 			hhXtCds.add(hhXtYhCdZmtb.getHhXtCd());
 		}
 		return hhXtCds;
@@ -67,7 +67,7 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 			dao.createEntity(hhXtYhCdZmtb);
 		}
 		UsUser hhXtYh = loginUserService.findLoginUser();
-		hhXtYh.setHhXtYhCdZmtbList(queryZmtbByUserId(hhXtYh.getId()));
+		hhXtYh.setDesktopQuickList(queryZmtbByUserId(hhXtYh.getId()));
 		ActionContext.getContext().getSession().put("loginuser", hhXtYh);
 	}
 

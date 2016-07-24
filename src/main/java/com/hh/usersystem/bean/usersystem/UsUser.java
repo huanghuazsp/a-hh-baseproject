@@ -48,15 +48,15 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	private String headpic;
 	private String textpinyin;
 
-	private List<SysMenu> hhXtCdList = new ArrayList<SysMenu>();// 菜单
-	private List<UsRole> hhXtJsList = new ArrayList<UsRole>();// 角色
-	private List<SysMenu> hhXtYhCdZmtbList = new ArrayList<SysMenu>();// 桌面快捷方式
-	private Map<String, SysOper> hhXtCzMap = new HashMap<String, SysOper>();// 用户的操作权限
+	private List<SysMenu> menuList = new ArrayList<SysMenu>();// 菜单
+	private List<UsRole> roleList = new ArrayList<UsRole>();// 角色
+	private List<SysMenu> desktopQuickList = new ArrayList<SysMenu>();// 桌面快捷方式
+	private Map<String, SysOper> operMap = new HashMap<String, SysOper>();// 用户的操作权限
 	
-	private List<String> hhXtCzUrlList = new ArrayList<String>();//url权限控制
-	private List<String> hhXtCzPageTextList = new ArrayList<String>();//页面文字权限控制
+	private List<String> operUrlList = new ArrayList<String>();//url权限控制
+	private List<String> operPageTextList = new ArrayList<String>();//页面文字权限控制
 
-	private Map<String, List<String>> hhXtCzPageTextMap = new HashMap<String, List<String>>();//页面文字权限控制
+	private Map<String, List<String>> operPageTextMap = new HashMap<String, List<String>>();//页面文字权限控制
 
 	private String roleIds;// 角色ID
 
@@ -113,39 +113,39 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	}
 
 	@Transient
-	public List<SysMenu> getHhXtYhCdZmtbList() {
-		return hhXtYhCdZmtbList;
+	public List<SysMenu> getDesktopQuickList() {
+		return desktopQuickList;
 	}
 
-	public void setHhXtYhCdZmtbList(List<SysMenu> hhXtYhCdZmtbList) {
-		this.hhXtYhCdZmtbList = hhXtYhCdZmtbList;
-	}
-
-	@Transient
-	public List<SysMenu> getHhXtCdList() {
-		return hhXtCdList;
-	}
-
-	public void setHhXtCdList(List<SysMenu> hhXtCdList) {
-		this.hhXtCdList = hhXtCdList;
+	public void setDesktopQuickList(List<SysMenu> desktopQuickList) {
+		this.desktopQuickList = desktopQuickList;
 	}
 
 	@Transient
-	public List<UsRole> getHhXtJsList() {
-		return hhXtJsList;
+	public List<SysMenu> getMenuList() {
+		return menuList;
 	}
 
-	public void setHhXtJsList(List<UsRole> hhXtJsList) {
-		this.hhXtJsList = hhXtJsList;
+	public void setMenuList(List<SysMenu> menuList) {
+		this.menuList = menuList;
 	}
 
 	@Transient
-	public List<String> getHhXtCzUrlList() {
-		return hhXtCzUrlList;
+	public List<UsRole> getRoleList() {
+		return roleList;
 	}
 
-	public void setHhXtCzUrlList(List<String> hhXtCzUrlList) {
-		this.hhXtCzUrlList = hhXtCzUrlList;
+	public void setRoleList(List<UsRole> roleList) {
+		this.roleList = roleList;
+	}
+
+	@Transient
+	public List<String> getOperUrlList() {
+		return operUrlList;
+	}
+
+	public void setOperUrlList(List<String> operUrlList) {
+		this.operUrlList = operUrlList;
 	}
 
 	/** default constructor */
@@ -227,21 +227,21 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	}
 
 	@Transient
-	public List<String> getHhXtCzPageTextList() {
-		return hhXtCzPageTextList;
+	public List<String> getOperPageTextList() {
+		return operPageTextList;
 	}
 
-	public void setHhXtCzPageTextList(List<String> hhXtCzPageTextList) {
-		this.hhXtCzPageTextList = hhXtCzPageTextList;
+	public void setOperPageTextList(List<String> operPageTextList) {
+		this.operPageTextList = operPageTextList;
 	}
 
 	@Transient
-	public Map<String, List<String>> getHhXtCzPageTextMap() {
-		return hhXtCzPageTextMap;
+	public Map<String, List<String>> getOperPageTextMap() {
+		return operPageTextMap;
 	}
 
-	public void setHhXtCzPageTextMap(Map<String, List<String>> hhXtCzPageTextMap) {
-		this.hhXtCzPageTextMap = hhXtCzPageTextMap;
+	public void setOperPageTextMap(Map<String, List<String>> operPageTextMap) {
+		this.operPageTextMap = operPageTextMap;
 	}
 
 	@Transient
@@ -335,12 +335,12 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	}
 
 	@Transient
-	public Map<String, SysOper> getHhXtCzMap() {
-		return hhXtCzMap;
+	public Map<String, SysOper> getOperMap() {
+		return operMap;
 	}
 
-	public void setHhXtCzMap(Map<String, SysOper> hhXtCzMap) {
-		this.hhXtCzMap = hhXtCzMap;
+	public void setOperMap(Map<String, SysOper> operMap) {
+		this.operMap = operMap;
 	}
 
 	@Column(name = "TEXT_PINYIN")

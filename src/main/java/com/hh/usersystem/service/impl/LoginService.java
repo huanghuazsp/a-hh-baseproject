@@ -94,13 +94,13 @@ public class LoginService {
 						jsids.addAll(Convert.strToList(hhXtYh.getJob().getRoleIds()));
 					}
 
-					List<UsRole> hhXtJsList = new ArrayList<UsRole>();
+					List<UsRole> roleList = new ArrayList<UsRole>();
 					List<UsRoleMenu> hhXtJsCdList = new ArrayList<UsRoleMenu>();
 					List<UsRoleOper> hhXtJsCzList = new ArrayList<UsRoleOper>();
 					if (jsids.size() != 0) {
-						hhXtJsList = xtjsdao.queryList(UsRole.class,
+						roleList = xtjsdao.queryList(UsRole.class,
 								ParamFactory.getParamHb().nis("state", 1).in("id", jsids));
-						if (hhXtJsList.size() != 0) {
+						if (roleList.size() != 0) {
 							hhXtJsCdList = xtjscddao.queryList(UsRoleMenu.class,
 									ParamFactory.getParamHb().in("jsId", jsids));
 							hhXtJsCzList = xtjsczdao.queryList(UsRoleOper.class,
@@ -108,7 +108,7 @@ public class LoginService {
 						}
 					}
 
-					Map<String, SysOper> hhXtCzMap = new HashMap<String, SysOper>();
+					Map<String, SysOper> operMap = new HashMap<String, SysOper>();
 					List<SysMenu> hhXtCdZmtbList = new ArrayList<SysMenu>();
 
 					List<String> hhxtcdIdList = new ArrayList<String>();
@@ -116,20 +116,20 @@ public class LoginService {
 					for (UsRoleMenu hhXtJsCd : hhXtJsCdList) {
 						hhxtcdIdList.add(hhXtJsCd.getCdId());
 					}
-					List<SysMenu> hhXtCdList = new ArrayList<SysMenu>();
+					List<SysMenu> menuList = new ArrayList<SysMenu>();
 					if (hhxtcdIdList.size() > 0) {
-						hhXtCdList = hhxtcdDao.queryList(SysMenu.class, "id", hhxtcdIdList);
-						for (SysMenu sysMenu : hhXtCdList) {
+						menuList = hhxtcdDao.queryList(SysMenu.class, "id", hhxtcdIdList);
+						for (SysMenu sysMenu : menuList) {
 							SysOper sysOper = new SysOper();
 							sysOper.setType(1);
-							hhXtCzMap.put(sysMenu.getVsj(), sysOper);
+							operMap.put(sysMenu.getVsj(), sysOper);
 						}
 					}
 					// 请求的控制
-					List<String> hhXtCzUrlList = new ArrayList<String>();
+					List<String> operUrlList = new ArrayList<String>();
 					// 根据字符串控制页面
-					List<String> hhXtCzPageTextList = new ArrayList<String>();
-					Map<String, List<String>> hhXtCzPageTextMap = new HashMap<String, List<String>>();
+					List<String> operPageTextList = new ArrayList<String>();
+					Map<String, List<String>> operPageTextMap = new HashMap<String, List<String>>();
 
 					// 多个角色 获取权限最大的操作级别
 					for (UsRoleOper hhXtJsCz : hhXtJsCzList) {
@@ -142,34 +142,34 @@ public class LoginService {
 								hhXtCz.setOperLevel(hhXtJsCz.getOperLevel());
 							}
 						}
-						if (!hhXtCzUrlList.contains(hhXtCz.getVurl())
-								|| !hhXtCzPageTextList.contains(hhXtCz.getPageText())) {
+						if (!operUrlList.contains(hhXtCz.getVurl())
+								|| !operPageTextList.contains(hhXtCz.getPageText())) {
 							if (Check.isNoEmpty(hhXtCz.getVurl())) {
-								hhXtCzUrlList.add(hhXtCz.getVurl());
+								operUrlList.add(hhXtCz.getVurl());
 							}
 							if (Check.isNoEmpty(hhXtCz.getPageText())) {
-								hhXtCzPageTextList.add(hhXtCz.getPageText());
-								List<String> menuCzList = hhXtCzPageTextMap.get(hhXtCz.getMenuUrl());
+								operPageTextList.add(hhXtCz.getPageText());
+								List<String> menuCzList = operPageTextMap.get(hhXtCz.getMenuUrl());
 								if (menuCzList == null) {
-									hhXtCzPageTextMap.put(hhXtCz.getMenuUrl(), new ArrayList<String>());
+									operPageTextMap.put(hhXtCz.getMenuUrl(), new ArrayList<String>());
 								}
-								hhXtCzPageTextMap.get(hhXtCz.getMenuUrl()).add(hhXtCz.getPageText());
+								operPageTextMap.get(hhXtCz.getMenuUrl()).add(hhXtCz.getPageText());
 							}
-							hhXtCzMap.put(hhXtCz.getVurl(), hhXtCz);
+							operMap.put(hhXtCz.getVurl(), hhXtCz);
 						}
 					}
 					hhXtCdZmtbList = queryZmtbList(hhXtYh, hhxtcdIdList);
 
-					hhXtYh.setHhXtCdList(hhXtCdList);
-					hhXtYh.setHhXtCzUrlList(hhXtCzUrlList);
+					hhXtYh.setMenuList(menuList);
+					hhXtYh.setOperUrlList(operUrlList);
 
-					hhXtYh.setHhXtCzPageTextList(hhXtCzPageTextList);
-					hhXtYh.setHhXtCzPageTextMap(hhXtCzPageTextMap);
+					hhXtYh.setOperPageTextList(operPageTextList);
+					hhXtYh.setOperPageTextMap(operPageTextMap);
 
-					hhXtYh.setHhXtCzMap(hhXtCzMap);
-					hhXtYh.setHhXtYhCdZmtbList(hhXtCdZmtbList);
+					hhXtYh.setOperMap(operMap);
+					hhXtYh.setDesktopQuickList(hhXtCdZmtbList);
 
-					hhXtYh.setHhXtJsList(hhXtJsList);
+					hhXtYh.setRoleList(roleList);
 
 					// createZmsx(hhXtYh);
 					UsUser hhXtYh2 = new UsUser();
@@ -207,13 +207,13 @@ public class LoginService {
 	}
 
 	private List<SysMenu> queryZmtbList(UsUser hhXtYh, List<String> hhxtcdIdList) {
-		List<UsUserMenuZmtb> hhXtYhCdZmtbList = xtyhcdzmtb.queryList(UsUserMenuZmtb.class,
+		List<UsUserMenuZmtb> desktopQuickList = xtyhcdzmtb.queryList(UsUserMenuZmtb.class,
 				ParamFactory.getParamHb().is("yhId", hhXtYh.getId())
 		// .addCondition(Order.asc(StaticVar.ORDER))
 		);
 
 		List<SysMenu> hhXtCdZmtbList = new ArrayList<SysMenu>();
-		for (UsUserMenuZmtb hhXtYhCdZmtb : hhXtYhCdZmtbList) {
+		for (UsUserMenuZmtb hhXtYhCdZmtb : desktopQuickList) {
 			if (hhXtYhCdZmtb.getHhXtCd() != null) {
 				if (hhxtcdIdList.contains(hhXtYhCdZmtb.getHhXtCd().getId())) {
 					hhXtCdZmtbList.add(hhXtYhCdZmtb.getHhXtCd());

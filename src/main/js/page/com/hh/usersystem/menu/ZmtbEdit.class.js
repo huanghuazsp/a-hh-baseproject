@@ -21,7 +21,7 @@ Ext.define('com.hh.usersystem.menu.ZmtbEdit', {
 									id : record.get("id")
 								}, function(resultObject) {
 									if (resultObject.success == true) {
-										var hhXtCdList = static_var.loginuser.hhXtCdList;
+										var menuList = static_var.loginuser.menuList;
 										page.grid.getStore().add(record.raw);
 									}
 								}, {

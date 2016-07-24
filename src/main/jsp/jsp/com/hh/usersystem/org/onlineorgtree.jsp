@@ -249,6 +249,10 @@
 			}
 			if(node.type=='user'){
 				node.sendObjectType=0;
+				if(loginUser.id==node.id){
+					msg('不能选择本人');
+					return;
+				}
 			}
 			if(node.meGroup==0 && node.sendObjectType!=0){
 				msg('您不在本组');
