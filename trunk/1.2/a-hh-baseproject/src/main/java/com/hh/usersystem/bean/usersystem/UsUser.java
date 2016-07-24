@@ -58,7 +58,6 @@ public class UsUser extends BaseTwoEntity implements IUser {
 
 	private Map<String, List<String>> hhXtCzPageTextMap = new HashMap<String, List<String>>();//页面文字权限控制
 
-	private List<String> jsList = new ArrayList<String>();// 角色ID
 	private String roleIds;// 角色ID
 
 	private String vzmbj = StaticProperties.HHXT_USERSYSTEM_ZMBJ;
@@ -111,15 +110,6 @@ public class UsUser extends BaseTwoEntity implements IUser {
 
 	public void setJob(UsOrganization gw) {
 		this.job = gw;
-	}
-
-	@Transient
-	public List<String> getJsList() {
-		return jsList;
-	}
-
-	public void setJsList(List<String> jsList) {
-		this.jsList = jsList;
 	}
 
 	@Transient
