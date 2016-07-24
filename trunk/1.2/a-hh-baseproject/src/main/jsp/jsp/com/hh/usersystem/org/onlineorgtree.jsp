@@ -155,8 +155,9 @@
 			data.message = data.content;
 			data.type = data.sendUserId == loginUser.id ? 'my' : 'you';
 			data.sendHeadpic = data.sendHeadpic;
-			appendMessage(data);
+			appendMessage(data,1);
 		}
+		$('#himessagediv').animate({scrollTop:5000},100);
 	}
 
 	var grouprender = false;
@@ -279,7 +280,6 @@
 		var message = result.message;
 		if (message && message.message) {
 			renderMsg(message);
-			$('#himessagediv').animate({scrollTop:5000},100);
 		}
 		
 		var allMessage = result.allMessage;
@@ -413,9 +413,11 @@
 		}
 	}
 	
-	function appendMessage (data){
+	function appendMessage (data,isTop){
 		$('#himessageDiv').append(getMyMsg(data));
-		$('#himessagediv').animate({scrollTop:5000},100);
+		if(!isTop){
+			$('#himessagediv').animate({scrollTop:5000},100);
+		}
 	}
 
 </script>
@@ -465,6 +467,11 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		
+		
+		<div config="render : 'east' ,width:382 , overflow : 'hidden' ">
+			<iframe id='eastiframe'  frameborder=0  width=100% height=100% src='jsp-usersystem-menu-zmtb' />
 		</div>
 	</div>
 
