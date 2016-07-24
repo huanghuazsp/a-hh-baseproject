@@ -102,7 +102,7 @@ String hhxtcdStr =  gson.toJson(hhXtCds);
 </head>
 <body>
 	<span xtype="rightMenu" configVar="rightMenuConfig"></span>
-	<div style="padding: 25px;">
+	<div style="padding: 0px;">
 		<span id="gridView" xtype="gridView" configVar="gridViewConfig"></span>
 	</div>
 </body>
