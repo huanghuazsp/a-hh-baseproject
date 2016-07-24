@@ -15,6 +15,7 @@ import com.hh.system.service.impl.BeanFactoryHelper;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.Json;
+import com.hh.system.util.LogUtil;
 import com.hh.system.util.ThreadUtil;
 import com.hh.system.util.date.DateFormat;
 import com.hh.usersystem.bean.usersystem.UsUser;
@@ -59,6 +60,10 @@ public class MessageService {
 	}
 
 	public void sendMessageAuto(String config) {
+		if (Check.isEmpty(config)) {
+			LogUtil.info("保持session");
+			return ;
+		}
 
 		Map<String, Object> paramMap = Json.toMap(config);
 		paramMap.put("date", DateFormat.getDate("yyyy-MM-dd HH::mm:ss"));

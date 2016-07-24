@@ -20,11 +20,11 @@ public class DwrScriptSessionManagerUtil extends DwrServlet {
 		ScriptSessionManager manager = container.getBean(ScriptSessionManager.class);
 		ScriptSessionListener listener = new ScriptSessionListener() {
 			public void sessionCreated(ScriptSessionEvent ev) {
-				System.out.println("a ScriptSession is created!");
+				System.out.println("创建 ScriptSession!");
 			}
 
 			public void sessionDestroyed(ScriptSessionEvent ev) {
-				System.out.println("a ScriptSession is distroyed");
+				System.out.println("销毁 ScriptSession");
 			}
 		};
 		manager.addScriptSessionListener(listener);
