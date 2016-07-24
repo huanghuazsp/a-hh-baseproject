@@ -8,13 +8,11 @@
 <html>
 <head>
 <title>即时通讯</title>
-<%=SystemUtil.getBaseJs("layout", "ztree", "ckeditor")%>
+<%=SystemUtil.getBaseJs("layout", "ztree", "ckeditor")+SystemUtil.getUser()%>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/engine.js"></script>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/message.js"></script>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/util.js"></script>
 <script type="text/javascript">
-
-	loginUser = <%=Json.toStr(session.getAttribute("loginuser"))%>;
 	var params = $.hh.getIframeParams();
 	var orgtreeconfig = {
 		//render : false,
@@ -243,10 +241,6 @@
 				msg('请选择组或人员');
 				return;
 			}
-			if(node.meGroup==0 && node.sendObjectType!=0){
-				msg('您不在本组');
-				return;
-			}
 			if(node.type=='usgroup'){
 				node.sendObjectType=6;
 			}
@@ -255,6 +249,10 @@
 			}
 			if(node.type=='user'){
 				node.sendObjectType=0;
+			}
+			if(node.meGroup==0 && node.sendObjectType!=0){
+				msg('您不在本组');
+				return;
 			}
 			clickMenu(node);
 		}
