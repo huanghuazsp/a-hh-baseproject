@@ -8,7 +8,7 @@
 <html>
 <head>
 <title>即时通讯</title>
-<%=SystemUtil.getBaseJs("layout", "ztree", "ckeditor")+SystemUtil.getUser()%>
+<%=SystemUtil.getBaseJs("layout", "ztree", "ckeditor") + SystemUtil.getUser()%>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/engine.js"></script>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/message.js"></script>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/util.js"></script>
@@ -21,7 +21,7 @@
 		nheight : 42,
 		url : 'usersystem-Org-queryOrgAndUsersList',
 		onClick : function(node) {
-			if(node.id=='default'){
+			if (node.id == 'default') {
 				//Dialog.infomsg('请输入内容！');
 				return;
 			}
@@ -90,74 +90,76 @@
 			}
 		} ]
 	}
-	
+
 	var messConfig = {
-			render:false,
-			onClick : function(data){
-				data.li.find('.hh_red').remove();
-				clickMenu(data);
-			}
+		render : false,
+		onClick : function(data) {
+			data.li.find('.hh_red').remove();
+			clickMenu(data);
+		}
 	}
-	
-	function msg(msg){
-		$('#himessageDiv').html('<h1>'+msg+'</h1>');
+
+	function msg(msg) {
+		$('#himessageDiv').html('<h1>' + msg + '</h1>');
 		$('#backbtn').disabled();
 	}
-	
-	function clickMenu(data){
-		data.sendObjectType = data.sendObjectType ==null ? data.lx_ : data.sendObjectType ;
-		
+
+	function clickMenu(data) {
+		data.sendObjectType = data.sendObjectType == null ? data.lx_
+				: data.sendObjectType;
+
 		$('#backbtn').undisabled();
-		if(data.sendObjectType!=0 && data.sendObjectType!=6 && data.sendObjectType!=7){
-			if(data.id!=loginUser.orgId && data.id!=loginUser.deptId){
+		if (data.sendObjectType != 0 && data.sendObjectType != 6
+				&& data.sendObjectType != 7) {
+			if (data.id != loginUser.orgId && data.id != loginUser.deptId) {
 				msg('您不在本机构/本部门');
 				$('#backbtn').disabled();
 				return;
 			}
 		}
-		
-		
+
 		var objectMap = $.hh.listToObject($('#messDivspan').data('data'));
-		if(objectMap[data.id]==null){
+		if (objectMap[data.id] == null) {
 			data.addCylxr = 1;
-		}else{
+		} else {
 			data.addCylxr = 0;
 		}
 		$('#userdiv').html(
 				'<div style="margin-top:5px;">' + data.text + '</div>');
 		$('#userdiv').data('data', data);
-		
+
 		var limit = 30;
 		var page = 1;
-		var start =  limit * page - limit;
-		
+		var start = limit * page - limit;
+
 		Request.request('message-SysMessage-queryMyPagingDataBySendObjectId', {
 			data : {
-				limit:limit,
-				page:page,
-				start:start,
+				limit : limit,
+				page : page,
+				start : start,
 				toObjectId : data.id,
-				sendObjectType :  data.sendObjectType
+				sendObjectType : data.sendObjectType
 			},
 			defaultMsg : false
 		}, function(dataList) {
-			 loadData(dataList);
+			loadData(dataList);
 		});
-		
-		
+
 	}
-	
-	function loadData(dataList){
+
+	function loadData(dataList) {
 		$('#himessageDiv').empty();
-		for(var i=dataList.length-1;i>-1;i--){
-			var data =dataList[i];
+		for (var i = dataList.length - 1; i > -1; i--) {
+			var data = dataList[i];
 			data.date = $.hh.dateTimeToString(data.dcreate);
 			data.message = data.content;
 			data.type = data.sendUserId == loginUser.id ? 'my' : 'you';
 			data.sendHeadpic = data.sendHeadpic;
-			appendMessage(data,1);
+			appendMessage(data, 1);
 		}
-		$('#himessagediv').animate({scrollTop:5000},100);
+		$('#himessagediv').animate({
+			scrollTop : 5000
+		}, 100);
 	}
 
 	var grouprender = false;
@@ -170,10 +172,10 @@
 			if (id == 'grooupDiv' && grouprender == false) {
 				grouprender = true;
 				$('#span_groupTree').render();
-			}else if (id == 'orgDiv' && orgrender == false) {
+			} else if (id == 'orgDiv' && orgrender == false) {
 				orgrender = true;
 				$('#span_orgTree').render();
-			}else if (id == 'orgDiv' && orgrender == false) {
+			} else if (id == 'orgDiv' && orgrender == false) {
 				messrender = true;
 				$('#messDivspan').render();
 			}
@@ -238,24 +240,24 @@
 			}
 		} ],
 		onClick : function(node) {
-			if(node.type=='zdy'){
+			if (node.type == 'zdy') {
 				msg('请选择组或人员');
 				return;
 			}
-			if(node.type=='usgroup'){
-				node.sendObjectType=6;
+			if (node.type == 'usgroup') {
+				node.sendObjectType = 6;
 			}
-			if(node.type=='sysgroup'){
-				node.sendObjectType=7;
+			if (node.type == 'sysgroup') {
+				node.sendObjectType = 7;
 			}
-			if(node.type=='user'){
-				node.sendObjectType=0;
-				if(loginUser.id==node.id){
+			if (node.type == 'user') {
+				node.sendObjectType = 0;
+				if (loginUser.id == node.id) {
 					msg('不能选择本人');
 					return;
 				}
 			}
-			if(node.meGroup==0 && node.sendObjectType!=0){
+			if (node.meGroup == 0 && node.sendObjectType != 0) {
 				msg('您不在本组');
 				return;
 			}
@@ -276,33 +278,41 @@
 		}));
 	}
 	function showMessage(autoMessage) {
-		var result = $.hh.toObject(autoMessage);
-		var message = result.message;
-		if (message && message.message) {
-			renderMsg(message);
-		}
-		
-		var allMessage = result.allMessage;
-		if (allMessage) {
-			renderAllMessage(allMessage);
-		}
-	}
-	
-	function renderAllMessage(allMessage){
-		for(var i =0;i<allMessage.length;i++){
-			if(allMessage[i].count){
-				allMessage[i].rightText = '<font class="hh_red">'+allMessage[i].count+'</font>';
+		if (autoMessage) {
+			var result = $.hh.toObject(autoMessage);
+			var message = result.message;
+			if (message && message.message) {
+				renderMsg(message);
+			}
+
+			var allMessage = result.allMessage;
+			if (allMessage) {
+				renderAllMessage(allMessage);
+			}
+		} else {
+			if ($.hh.browser.type.indexOf('IE') > -1) {
+				$('#himessageDiv').append(new Date().getTime() + '<br>');
 			}
 		}
-		$('#messDivspan').render({data: allMessage});
 	}
-	
-	
-	function renderMsg(message){
+
+	function renderAllMessage(allMessage) {
+		for (var i = 0; i < allMessage.length; i++) {
+			if (allMessage[i].count) {
+				allMessage[i].rightText = '<font class="hh_red">'
+						+ allMessage[i].count + '</font>';
+			}
+		}
+		$('#messDivspan').render({
+			data : allMessage
+		});
+	}
+
+	function renderMsg(message) {
 		var selectData = $('#userdiv').data('data');
-		if(selectData && (message.objectId == selectData.id )){
+		if (selectData && (message.objectId == selectData.id)) {
 			appendMessage(message);
-		}else{
+		} else {
 			//console.log(message);
 		}
 	}
@@ -315,23 +325,21 @@
 		var message = config.message || '';
 		var date = config.date || '';
 		var type = config.type;
-		
-		
+
 		var text = config.sendUserName;
 		var headpic = config.sendHeadpic;
-		
-		
-		
-		if(headpic &&  headpic.indexOf('hhcomm')==-1){
-	    	headpic =	"system-File-download?params={id:'"+headpic+"'}";
-	    }
-		
-		if(headpic){
-	    	headpic=" <img id='headpicimg' onClick='updateUser()' style=\"cursor: pointer;\" width=\"50\"		height=\"50\"		src=\""+headpic+"\" />";
-	    }else{
-	    	headpic="<img id='headpicimg' onClick='updateUser()' style=\"cursor: pointer;\" width=\"50\"		height=\"50\"		src=\"/hhcommon/images/icons/user/100/no_on_line_user.jpg\" />";
-	    }
-		
+
+		if (headpic && headpic.indexOf('hhcomm') == -1) {
+			headpic = "system-File-download?params={id:'" + headpic + "'}";
+		}
+
+		if (headpic) {
+			headpic = " <img id='headpicimg' onClick='void(0);' style=\"cursor: pointer;\" width=\"50\"		height=\"50\"		src=\""
+					+ headpic + "\" />";
+		} else {
+			headpic = "<img id='headpicimg' onClick='void(0);' style=\"cursor: pointer;\" width=\"50\"		height=\"50\"		src=\"/hhcommon/images/icons/user/100/no_on_line_user.jpg\" />";
+		}
+
 		var tdStr = '';
 
 		var align = 'right';
@@ -341,8 +349,8 @@
 			backColor = '#bdeea3';
 		}
 
-		var td1 = '<td style="width: 40px; text-align: center;">'+headpic+' <br />'
-				+ text+'</td>';
+		var td1 = '<td style="width: 40px; text-align: center;">' + headpic
+				+ ' <br />' + text + '</td>';
 		var td2 = '<td>'
 				+ '<div style="-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; background-color: '+backColor+'; width: 340px; height: auto; display: block; padding: 5px; float: '+align+'; color: #333333;table-layout:fixed;word-wrap: break-word; word-break: break-all;">'
 				+ '<font style="font-size: 14px;"><b>' + message
@@ -361,71 +369,75 @@
 	function init() {
 		dwr.engine.setActiveReverseAjax(true);
 		dwr.engine.setNotifyServerOnPageUnload(true, true);
-		
+
 		dwr.engine.setErrorHandler(function() {
 		});
 		onPageLoad();
-		
-		/*  if ($.hh.browser.type.indexOf('IE') > -1) {
-			 mysetInterval = setInterval(keepSession, 1000 * 60*4);
-		}  */
+		if ($.hh.browser.type.indexOf('IE') > -1) {
+			//mysetInterval = setInterval(keepSession, 1000 * 60 * 4);
+		}
 	}
-	
-	function keepSession(){
+
+	function keepSession() {
 		message.sendMessageAuto("");
+		Request.request('usersystem-System-loadDataTime', {
+			doing : false,
+			callback : function(result) {
+				$('#himessageDiv').append(
+						'dddd' + (new Date().getTime()) + '<br>');
+			}
+		});
 	}
 
 	function setHeight(height) {
 		$('#himessagediv').height(height - 218);
 	}
-	
+
 	function doSendMessage() {
 		var data = $('#userdiv').data('data');
-		if(data){
+		if (data) {
 			var messageData = {};
 			messageData.message = $('#messageSpan').getValue();
-			if(!messageData.message){
+			if (!messageData.message) {
 				Dialog.infomsg('请输入内容！');
 				return;
 			}
-			
+
 			messageData.sendUserId = loginUser.id;
 			messageData.sendUserName = loginUser.text;
-			messageData.sendHeadpic =  loginUser.headpic;
-			
-			messageData.toObjectHeadpic =data.headpic;
-			messageData.toObjectId =data.id;
-			messageData.toObjectName =data.text;
-			
-			messageData.sendObjectType =data.sendObjectType;
-			
+			messageData.sendHeadpic = loginUser.headpic;
+
+			messageData.toObjectHeadpic = data.headpic;
+			messageData.toObjectId = data.id;
+			messageData.toObjectName = data.text;
+
+			messageData.sendObjectType = data.sendObjectType;
+
 			messageData.date = $.hh.dateTimeToString($.hh.getDate());
-			messageData.type='my';
-			
-			messageData.addCylxr=data.addCylxr;
-			
-			
+			messageData.type = 'my';
+
+			messageData.addCylxr = data.addCylxr;
+
 			appendMessage(messageData);
-			
-			
+
 			message.sendMessageAuto($.hh.toString(messageData));
 			$('#messageSpan').setValue('');
-		}else{
+		} else {
 			Dialog.infomsg('请选择发送对象！');
 		}
 	}
-	
-	function appendMessage (data,isTop){
+
+	function appendMessage(data, isTop) {
 		$('#himessageDiv').append(getMyMsg(data));
-		if(!isTop){
-			$('#himessagediv').animate({scrollTop:5000},100);
+		if (!isTop) {
+			$('#himessagediv').animate({
+				scrollTop : 5000
+			}, 100);
 		}
 	}
-
 </script>
 </head>
-<body>
-	<div xtype="border_layout">
+<body xtype="border_layout">
 		<div config="render : 'west' ,width:260 ">
 			<div id="tabs" xtype="tab" configVar="tabconfig">
 				<ul>
@@ -470,12 +482,12 @@
 				</div>
 			</div>
 		</div>
-		
-		
+
+
 		<div config="render : 'east' ,width:332 , overflow : 'hidden' ">
-			<iframe id='eastiframe'  frameborder=0  width=100% height=100% src='jsp-usersystem-menu-zmtb' /> 
+			<iframe id='eastiframe' frameborder=0 width=100% height=100%
+				src='jsp-usersystem-menu-zmtb' />
 		</div>
-	</div>
 
 </body>
 </html>
