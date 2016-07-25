@@ -270,11 +270,15 @@
 		var userName = loginUser.text;
 		var deptId = loginUser.deptId;
 		var orgId = loginUser.orgId;
+		var usGroupIds = loginUser.usGroupIds;
+		var sysGroupIds = loginUser.sysGroupIds;
 		message.onPageLoad($.hh.toString({
 			'userId' : userId,
 			'userName' : userName,
 			'orgId' : orgId,
-			'deptId' : deptId
+			'deptId' : deptId,
+			'usGroupIds' : usGroupIds,
+			'sysGroupIds' : sysGroupIds
 		}));
 	}
 	function showMessage(autoMessage) {
