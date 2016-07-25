@@ -3,6 +3,7 @@ package com.hh.message.service;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
 
 import org.directwebremoting.Browser;
 import org.directwebremoting.ScriptBuffer;
@@ -11,6 +12,7 @@ import org.directwebremoting.ScriptSessionFilter;
 import org.directwebremoting.WebContextFactory;
 
 import com.hh.message.bean.SysMessage;
+import com.hh.message.util.DwrTask;
 import com.hh.system.service.impl.BeanFactoryHelper;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
@@ -24,6 +26,8 @@ import com.hh.usersystem.service.impl.LoginUserUtilService;
 public class MessageService {
 	static {
 		DwrScriptSessionManagerUtil.baseInit();
+//		Timer timer = new Timer();
+//		timer.schedule(new DwrTask(), 1000,1 * 60 * 1000);
 	}
 
 	private LoginUserUtilService loginUserUtilService = BeanFactoryHelper.getBeanFactory()
