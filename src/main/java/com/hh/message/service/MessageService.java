@@ -90,7 +90,10 @@ public class MessageService {
 					Map<String, Object> userMap = (Map<String, Object>) session.getAttribute("user");
 					return ((Convert.toString(userMap.get("userId"))).equals(toObjectId)
 							|| (Convert.toString(userMap.get("orgId"))).equals(toObjectId)
-							|| (Convert.toString(userMap.get("deptId"))).equals(toObjectId))
+							|| (Convert.toString(userMap.get("deptId"))).equals(toObjectId)
+							|| (Convert.toString(userMap.get("usGroupIds"))).equals(toObjectId)
+							|| (Convert.toString(userMap.get("sysGroupIds"))).equals(toObjectId)
+							)
 							&& !sendUserId.equals(userMap.get("userId"));
 				}
 			}

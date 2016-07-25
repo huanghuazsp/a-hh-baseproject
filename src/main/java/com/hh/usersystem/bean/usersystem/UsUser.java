@@ -75,6 +75,9 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	private String jobIdText;
 	private String deptIdText;
 	private String orgIdText;
+	
+	private String usGroupIds;
+	private String sysGroupIds;
 
 	@Transient
 	public UsOrganization getDept() {
@@ -389,15 +392,6 @@ public class UsUser extends BaseTwoEntity implements IUser {
 		this.orgIdText = orgIdText;
 	}
 
-	// @Transient
-	// public String getClientType() {
-	// return clientType;
-	// }
-	//
-	// public void setClientType(String clientType) {
-	// this.clientType = clientType;
-	// }
-
 	private int state;
 	@Column(name="STATE_")
 	public int getState() {
@@ -407,4 +401,22 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	public void setState(int state) {
 		this.state = state;
 	}
+	@Transient
+	public String getUsGroupIds() {
+		return usGroupIds;
+	}
+
+	public void setUsGroupIds(String usGroupIds) {
+		this.usGroupIds = usGroupIds;
+	}
+	@Transient
+	public String getSysGroupIds() {
+		return sysGroupIds;
+	}
+
+	public void setSysGroupIds(String sysGroupIds) {
+		this.sysGroupIds = sysGroupIds;
+	}
+	
+	
 }

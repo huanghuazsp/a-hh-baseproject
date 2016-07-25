@@ -21,10 +21,12 @@ import com.hh.system.util.model.ReturnModel;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.bean.usersystem.SysOper;
+import com.hh.usersystem.bean.usersystem.UsGroup;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.bean.usersystem.UsRole;
 import com.hh.usersystem.bean.usersystem.UsRoleMenu;
 import com.hh.usersystem.bean.usersystem.UsRoleOper;
+import com.hh.usersystem.bean.usersystem.UsSysGroup;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UsUserMenuZmtb;
 import com.hh.usersystem.util.app.LoginUser;
@@ -49,6 +51,11 @@ public class LoginService {
 	private IHibernateDAO<SysMenu> hhxtcdDao;
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserGroupService userGroupService;
+	@Autowired
+	private GroupService groupService;
 
 	private static final Logger logger = Logger.getLogger(BaseAction.class);
 
@@ -170,6 +177,8 @@ public class LoginService {
 					hhXtYh.setDesktopQuickList(hhXtCdZmtbList);
 
 					hhXtYh.setRoleList(roleList);
+					
+					addGroup(hhXtYh);
 
 					// createZmsx(hhXtYh);
 					UsUser hhXtYh2 = new UsUser();
@@ -189,6 +198,30 @@ public class LoginService {
 			}
 		}
 		return returnModel;
+	}
+
+	private void addGroup(UsUser hhXtYh) {
+		String usGroupId = "";
+		List<UsGroup> usGroupList = userGroupService.queryList(ParamFactory.getParamHb().like("users", hhXtYh.getId()));
+		for (UsGroup usGroup : usGroupList) {
+			usGroupId+=usGroup.getId()+",";
+		}
+		if (Check.isNoEmpty(usGroupId)) {
+			usGroupId = usGroupId.substring(0,usGroupId.length()-1);
+		}
+		hhXtYh.setUsGroupIds(usGroupId);
+		
+		
+		String sysGroupId = "";
+		List<UsSysGroup> usSysGroupList = groupService.queryList(ParamFactory.getParamHb().like("users", hhXtYh.getId()));
+		for (UsSysGroup usGroup : usSysGroupList) {
+			sysGroupId+=usGroup.getId()+",";
+		}
+		
+		if (Check.isNoEmpty(sysGroupId)) {
+			sysGroupId = sysGroupId.substring(0,sysGroupId.length()-1);
+		}
+		hhXtYh.setSysGroupIds(sysGroupId);
 	}
 
 	private void addOrg(UsUser hhXtYh) {
