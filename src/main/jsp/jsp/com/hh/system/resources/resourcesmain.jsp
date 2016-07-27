@@ -24,6 +24,11 @@
 			img : '/hhcommon/images/icons/folder/folder_magnify.png',
 			url : 'jsp-system-resources-sharemain',
 			onClick : onClick
+		},{
+			text : '附件管理',
+			img : '/hhcommon/images/icons/folder/folder_table.png',
+			url : 'jsp-system-systemfile-SystemFileList',
+			onClick : onClick
 		}
 		]
 	};

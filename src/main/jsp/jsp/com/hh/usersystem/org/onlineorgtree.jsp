@@ -295,7 +295,10 @@
 			}
 		} else {
 			if ($.hh.browser.type.indexOf('IE') > -1) {
-				$('#himessageDiv').append(new Date().getTime() + '<br>');
+				$('#himessageDiv').append(new Date()+ '<br>');
+				$('#himessagediv').animate({
+					scrollTop : 5000
+				}, 100);
 			}
 		}
 	}
@@ -348,7 +351,7 @@
 
 		var align = 'right';
 		var backColor = '#d4eede';
-		if (type == 'my') {
+		if (type != 'my') {
 			align = 'left';
 			backColor = '#bdeea3';
 		}
@@ -361,7 +364,7 @@
 				+ '</b></font>' + '<br />'
 				+ '<div style="padding-top: 6px; color: #a9b4a2;">' + date
 				+ '</div>' + '</div>' + '</td>';
-		if (type == 'my') {
+		if (type != 'my') {
 			tdStr = td1 + td2;
 		} else {
 			tdStr = td2 + td1;
@@ -375,6 +378,7 @@
 		dwr.engine.setNotifyServerOnPageUnload(true, true);
 
 		dwr.engine.setErrorHandler(function() {
+			alert('消息推送异常！');
 		});
 		onPageLoad();
 		if ($.hh.browser.type.indexOf('IE') > -1) {
@@ -388,7 +392,7 @@
 			doing : false,
 			callback : function(result) {
 				$('#himessageDiv').append(
-						'dddd' + (new Date().getTime()) + '<br>');
+						'dddd' + (new Date()) + '<br>');
 			}
 		});
 	}
