@@ -14,6 +14,7 @@ import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
+import com.hh.system.util.ThreadUtil;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
@@ -263,5 +264,49 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 
 
 		return queryList(paramInf, pageRange);
+	}
+	
+	public SysMessage saveMessage(Map<String, Object> paramMap) {
+		SysMessage message = new SysMessage();
+		UsUser user = loginUserUtilService.findLoginUser();
+
+		String currUserId = user.getId();
+		message.setVcreate(currUserId);
+		message.setVupdate(currUserId);
+		message.setVorgid(user.getOrgId());
+		message.setVdeptid(user.getDeptId());
+		message.setVjobid(user.getJobId());
+		message.setContent(Convert.toString(paramMap.get("message")));
+		message.setVcreateName(user.getText());
+		
+		message.setSendUserId(currUserId);
+		message.setSendUserName(user.getText());
+		message.setSendHeadpic(user.getHeadpic());
+		
+		
+		message.setSendUserId(currUserId);
+		message.setSendUserName(user.getText());
+		message.setSendHeadpic(user.getHeadpic());
+		
+		
+		message.setToObjectId(Convert.toString(paramMap.get("toObjectId")));
+		message.setToObjectName(Convert.toString(paramMap.get("toObjectName")));
+		message.setToObjectHeadpic(Convert.toString(paramMap.get("toObjectHeadpic")));
+		
+		message.setSendObjectType(Convert.toInt(paramMap.get("sendObjectType")));
+		
+		if (message.getSendObjectType()==0) {
+			message.setObjectId(message.getSendUserId());
+			message.setObjectName(message.getSendUserName());
+			message.setObjectHeadpic(message.getSendHeadpic());
+		}else{
+			message.setObjectId(message.getToObjectId());
+			message.setObjectName(message.getToObjectName());
+			message.setObjectHeadpic(message.getToObjectHeadpic());
+		}
+		
+
+		ThreadUtil.getThreadPool().execute(new MessageThread(message,Convert.toInt(paramMap.get("addCylxr"))));
+		return message;
 	}
 }

@@ -8,7 +8,8 @@
 <html>
 <head>
 <title>即时通讯</title>
-<%=SystemUtil.getBaseJs("layout", "ztree", "ckeditor") + SystemUtil.getUser()%>
+<%=SystemUtil.getBaseJs("layout", "ztree", "ckeditor")
+					+ SystemUtil.getUser()%>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/engine.js"></script>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/message.js"></script>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/util.js"></script>
@@ -281,21 +282,26 @@
 			'sysGroupIds' : sysGroupIds
 		}));
 	}
+	
+	function showMessage2(result){
+		var message = result.message;
+		if (message && message.message) {
+			renderMsg(message);
+		}
+
+		var allMessage = result.allMessage;
+		if (allMessage) {
+			renderAllMessage(allMessage);
+		}
+	}
+	
 	function showMessage(autoMessage) {
 		if (autoMessage) {
 			var result = $.hh.toObject(autoMessage);
-			var message = result.message;
-			if (message && message.message) {
-				renderMsg(message);
-			}
-
-			var allMessage = result.allMessage;
-			if (allMessage) {
-				renderAllMessage(allMessage);
-			}
+			showMessage2(result);
 		} else {
 			if ($.hh.browser.type.indexOf('IE') > -1) {
-				$('#himessageDiv').append(new Date()+ '<br>');
+				$('#himessageDiv').append(new Date() + '<br>');
 				$('#himessagediv').animate({
 					scrollTop : 5000
 				}, 100);
@@ -374,6 +380,59 @@
 	}
 
 	function init() {
+		//dwrInit();
+
+		messageInit();
+
+	}
+	
+	function errorLoad(){
+		Dialog.alert('推送失败需要重新加载页面！',function(){
+			$.hh.getRootFrame().location.reload();
+		});
+	}
+	
+	var errorLength = 0;
+	
+	function messageInit() {
+		$.ajax({
+			type : "POST",
+			url :  "message-SysMessage-poll",
+			dataType : "json",
+			timeout:70000, //超时时间,设置为60s.
+			data : {
+			},
+			success : function(result) {
+				for(var i=0;i<result.length;i++){
+					showMessage2(result[i]);
+				}
+				messageInit();
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				errorLength++;
+				if(errorLength>6){
+					errorLoad();
+				}else{
+					messageInit();
+				}
+			}
+		});
+	}
+	
+	function sendMessage(message){
+		$.ajax({
+			type : "POST",
+			url :  "message-SysMessage-sendMessage",
+			dataType : "json",
+			data : message,
+			success : function() {
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+			}
+		});
+	}
+	
+	function dwrInit(){
 		dwr.engine.setActiveReverseAjax(true);
 		dwr.engine.setNotifyServerOnPageUnload(true, true);
 
@@ -391,8 +450,7 @@
 		Request.request('usersystem-System-loadDataTime', {
 			doing : false,
 			callback : function(result) {
-				$('#himessageDiv').append(
-						'dddd' + (new Date()) + '<br>');
+				$('#himessageDiv').append('dddd' + (new Date()) + '<br>');
 			}
 		});
 	}
@@ -423,12 +481,13 @@
 
 			messageData.date = $.hh.dateTimeToString($.hh.getDate());
 			messageData.type = 'my';
-
 			messageData.addCylxr = data.addCylxr;
-
 			appendMessage(messageData);
 
-			message.sendMessageAuto($.hh.toString(messageData));
+			sendMessage(messageData);
+			
+			//message.sendMessageAuto($.hh.toString(messageData));
+			
 			$('#messageSpan').setValue('');
 		} else {
 			Dialog.infomsg('请选择发送对象！');
@@ -446,56 +505,55 @@
 </script>
 </head>
 <body xtype="border_layout">
-		<div config="render : 'west' ,width:260 ">
-			<div id="tabs" xtype="tab" configVar="tabconfig">
-				<ul>
-					<li><a href="#messDiv">消息</a></li>
-					<li><a href="#orgDiv">机构</a></li>
-					<li><a href="#grooupDiv">组</a></li>
-				</ul>
-				<div id="messDiv">
-					<span xtype=menu id="messDivspan" configVar=" messConfig "></span>
+	<div config="render : 'west' ,width:260 ">
+		<div id="tabs" xtype="tab" configVar="tabconfig">
+			<ul>
+				<li><a href="#messDiv">消息</a></li>
+				<li><a href="#orgDiv">机构</a></li>
+				<li><a href="#grooupDiv">组</a></li>
+			</ul>
+			<div id="messDiv">
+				<span xtype=menu id="messDivspan" configVar=" messConfig "></span>
+			</div>
+			<div id="orgDiv">
+				<span xtype="tree" configVar="orgtreeconfig"></span>
+			</div>
+			<div id="grooupDiv">
+				<span xtype="tree" configVar=" groupTreeConfig "></span>
+			</div>
+		</div>
+	</div>
+	<div>
+
+		<div xtype="border_layout">
+			<div>
+				<div id="userdiv" xtype="toolbar" config="type:'head'"
+					style="text-align: center; height: 28px; vertical-align: middle;">
 				</div>
-				<div id="orgDiv">
-					<span xtype="tree" configVar="orgtreeconfig"></span>
+				<div id="himessagediv"
+					style="padding: 10px; overflow-y: auto; overflow-x: hidden;">
+
+					<div id="himessageDiv"></div>
+
 				</div>
-				<div id="grooupDiv">
-					<span xtype="tree" configVar=" groupTreeConfig "></span>
+			</div>
+			<div config="render : 'south' ,width:160,spacing_open:0 ">
+				<span id="messageSpan"
+					config=" height:81,bottom:'hidden', name:'message' ,toolbar : ['Format',	'Font', 'FontSize', 'Styles'] "
+					xtype="ckeditor"></span>
+				<div xtype="toolbar" config="type:'head'" style="text-align: right;">
+					<span id="backbtn" xtype="button"
+						config="onClick: doSendMessage ,text:'发送'   "></span>
 				</div>
 			</div>
 		</div>
-		<div>
-
-			<div xtype="border_layout">
-				<div>
-					<div id="userdiv" xtype="toolbar" config="type:'head'"
-						style="text-align: center; height: 28px; vertical-align: middle;">
-					</div>
-					<div id="himessagediv"
-						style="padding: 10px; overflow-y: auto; overflow-x: hidden;">
-
-						<div id="himessageDiv"></div>
-
-					</div>
-				</div>
-				<div config="render : 'south' ,width:160,spacing_open:0 ">
-					<span id="messageSpan"
-						config=" height:81,bottom:'hidden', name:'message' ,toolbar : ['Format',	'Font', 'FontSize', 'Styles'] "
-						xtype="ckeditor"></span>
-					<div xtype="toolbar" config="type:'head'"
-						style="text-align: right;">
-						<span id="backbtn" xtype="button"
-							config="onClick: doSendMessage ,text:'发送'   "></span>
-					</div>
-				</div>
-			</div>
-		</div>
+	</div>
 
 
-		<div config="render : 'east' ,width:332 , overflow : 'hidden' ">
-			<iframe id='eastiframe' frameborder=0 width=100% height=100%
-				src='jsp-usersystem-menu-zmtb' />
-		</div>
+	<div config="render : 'east' ,width:332 , overflow : 'hidden' ">
+		<iframe id='eastiframe' frameborder=0 width=100% height=100%
+			src='jsp-usersystem-menu-zmtb' />
+	</div>
 
 </body>
 </html>
