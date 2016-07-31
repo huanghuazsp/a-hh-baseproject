@@ -147,11 +147,17 @@ public class Actionuser extends BaseServiceAction<UsUser>  {
 
 	public Object deleteCylxr() {
 		try {
-			userService.deleteCylxr(this.getParamsMap().get("cylxrid"));
+			userService.deleteCylxr(this.getParamsMap().get("cylxrId"));
 			return null;
 		} catch (MessageException e) {
 			return e;
 		}
+	}
+	
+	public void orderCylxr() {
+		String id1 = request.getParameter("id1");
+		String id2 = request.getParameter("id2");
+		userService.orderCylxr(id1,  id2 );
 	}
 
 	public Object queryUserByOrgId() {
