@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.Convert"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.SystemUtil"%>
 <%=SystemUtil.getBaseDoctype()%>
@@ -9,12 +10,10 @@
 	var params = $.hh.getIframeParams();
 	var width = 600;
 	var height = 500;
-
-	var objectid = params.row ? params.row.id : '';
 	var systemmanagerhide=params.systemmanagerhide;
-	if(objectid==''){
-		objectid = params.objectId||'';
-	}
+	
+	var view = '<%=Convert.toString(request.getParameter("view"))%>';
+	var objectid = '<%=Convert.toString(request.getParameter("id"))%>';
 	
 	function save() {
 		$.hh.validation.check('form', function(formData) {
@@ -37,7 +36,15 @@
 					id : objectid
 				},
 				callback : function(result) {
-					$('#form').setValue(result);
+					if(view){
+						$('#form').setValue(result,{view:true});
+						$('#saveBtn').hide();
+						$('[trtype=edit]').hide();
+						$('#headpictd').attr('rowspan',5);
+					}else{
+						$('#form').setValue(result);
+					}
+					
 					$('#span_deptId').setConfig({params:{node:result.orgId}});
 					$('#span_jobId').setConfig({params:{node:result.deptId}});
 				}
@@ -79,10 +86,10 @@
 				<tr>
 					<td xtype="label">用户名称：</td>
 					<td><span xtype="text" config=" name : 'text',required :true"></span></td>
-					<td colspan="2" rowspan="6"><span xtype="uploadpic"
+					<td id="headpictd" colspan="2" rowspan="6"><span xtype="uploadpic"
 						config="name: 'headpic' , type : 'headpic'  ,path:'/hhcommon/images/big/qq' "></span></td>
 				</tr>
-				<tr>
+				<tr  trtype="edit">
 					<td xtype="label">登录帐号：</td>
 					<td><span xtype="text"
 						config="name: 'vdlzh' ,required :true ,maxSize:16"></span></td>
@@ -127,7 +134,7 @@
 		</form>
 	</div>
 	<div xtype="toolbar">
-		<span xtype="button" config="text:'保存' , onClick : save "></span> <span
+		<span id="saveBtn" xtype="button" config="text:'保存' , onClick : save "></span> <span
 			xtype="button" config="text:'取消' , onClick : Dialog.close "></span>
 	</div>
 </body>
