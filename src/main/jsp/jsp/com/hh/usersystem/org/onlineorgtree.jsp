@@ -104,11 +104,12 @@
 		$('#himessageDiv').html('<h1>' + msg + '</h1>');
 		$('#backbtn').disabled();
 	}
+	
+	var indexpage = 1;
 
 	function clickMenu(data) {
 		data.sendObjectType = data.sendObjectType == null ? data.lx_
 				: data.sendObjectType;
-
 		$('#backbtn').undisabled();
 		if (data.sendObjectType != 0 && data.sendObjectType != 6
 				&& data.sendObjectType != 7) {
@@ -118,7 +119,6 @@
 				return;
 			}
 		}
-
 		var objectMap = $.hh.listToObject($('#messDivspan').data('data'));
 		if (objectMap[data.id] == null) {
 			data.addCylxr = 1;
@@ -128,15 +128,17 @@
 		$('#userdiv').html(
 				'<div style="margin-top:5px;">' + data.text + '</div>');
 		$('#userdiv').data('data', data);
-
-		var limit = 30;
-		var page = 1;
-		var start = limit * page - limit;
-
+		indexpage=1;
+		requestDataLoad(data);
+	}
+	
+	function requestDataLoad(data){
+		var limit = 5;
+		var start = limit * indexpage - limit;
 		Request.request('message-SysMessage-queryMyPagingDataBySendObjectId', {
 			data : {
 				limit : limit,
-				page : page,
+				page : indexpage,
 				start : start,
 				toObjectId : data.id,
 				sendObjectType : data.sendObjectType
@@ -145,20 +147,45 @@
 		}, function(dataList) {
 			loadData(dataList);
 		});
-
+	}
+	
+	function more(){
+		indexpage++;
+		requestDataLoad($('#userdiv').data('data'));
 	}
 
 	function loadData(dataList) {
-		$('#himessageDiv').empty();
-		for (var i = dataList.length - 1; i > -1; i--) {
-			var data = dataList[i];
-			data.date = $.hh.dateTimeToString(data.dcreate);
-			data.message = data.content;
-			data.type = data.sendUserId == loginUser.id ? 'my' : 'you';
-			data.sendHeadpic = data.sendHeadpic;
-			appendMessage(data, 1);
+		if(indexpage==1){
+			$('#himessageDiv').empty();
+			$('#himessageDiv').append('<div style="text-align:center;"><a href="javascript:more();">查看更多...</a></div>');
 		}
-		scroll1();
+		if(indexpage==1){
+			for (var i = dataList.length - 1; i > -1; i--) {
+				var data = dataList[i];
+				addData(data);
+			}
+		}else{
+			for (var i =0; i <dataList.length; i++) {
+				var data = dataList[i];
+				addData(data);
+			}
+		}
+		
+		if(indexpage>1){
+			$('#himessageDiv').prepend('<div style="text-align:center;"><a href="javascript:more();">查看更多...</a></div>');
+		}else{
+			scroll1();
+		}
+		
+	}
+	
+	function addData(data){
+		data.date = $.hh.dateTimeToString(data.dcreate);
+		data.message = data.content;
+		data.type = data.sendUserId == loginUser.id ? 'my' : 'you';
+		data.sendHeadpic = data.sendHeadpic;
+		data.indexpage = indexpage;
+		appendMessage(data, 1);
 	}
 
 	var grouprender = false;
@@ -570,7 +597,11 @@
 	}
 	
 	function appendMessage(data, isTop) {
-		$('#himessageDiv').append(getMyMsg(data));
+		if(data.indexpage>1){
+			$('#himessageDiv').prepend(getMyMsg(data));
+		}else{
+			$('#himessageDiv').append(getMyMsg(data));
+		}
 		if (!isTop) {
 			scroll1();
 		}
