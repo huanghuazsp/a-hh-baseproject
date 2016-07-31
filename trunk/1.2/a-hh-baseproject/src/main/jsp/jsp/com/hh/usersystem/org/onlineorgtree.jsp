@@ -93,7 +93,58 @@
 		onClick : function(data) {
 			data.li.find('.hh_red').remove();
 			clickMenu(data);
-		}
+		},
+		rightMenu : [ {
+			text : '删除',
+			img : $.hh.property.img_delete,
+			onClick : function(resultObject) {
+				Request.request('usersystem-user-deleteCylxr', {
+					data : {
+						'paramsMap.cylxrId' : resultObject.id
+					}
+				},function(){
+					resultObject.content.remove();
+				});
+			}
+		} ,{
+			text : '上移',
+			imgClass : 'hh_up',
+			onClick : function(resultObject) {
+				var content = resultObject.content;
+				var pretr = content.prev('li');
+				if (pretr && pretr.length>0) {
+					Request.request('usersystem-user-orderCylxr', {
+						data : {
+							id1 : resultObject.id,
+							id2 : pretr.data('data').id
+						}
+					},function(){
+						content.insertBefore(pretr);
+					});
+				}else{
+					Dialog.infomsg('已经是第一条了');
+				}
+			}
+		} ,{
+			text : '下移',
+			imgClass : 'hh_down',
+			onClick : function(resultObject) {
+				var content = resultObject.content;
+				var pretr = content.next('li');
+				if (pretr && pretr.length>0) {
+					Request.request('usersystem-user-orderCylxr', {
+						data : {
+							id1 : resultObject.id,
+							id2 : pretr.data('data').id
+						}
+					},function(){
+						content.insertAfter(pretr);
+					});
+				}else{
+					Dialog.infomsg('已经是最后一条了');
+				}
+			}
+		} ]
 	}
 
 	function msg(msg) {
@@ -208,8 +259,15 @@
 				$('#span_orgTree').render();
 			} else if (id == 'orgDiv' && orgrender == false) {
 				messrender = true;
-				$('#messDivspan').render();
+				renderMessDivspan();
 			}
+		}
+	}
+	
+	function renderMessDivspan(data){
+		$('#messDivspan').removeAttr('rightload');
+		if(data){
+			$('#messDivspan').render(data);
 		}
 	}
 
@@ -341,7 +399,7 @@
 			}
 			convertMenuImg(allMessage[i]);
 		}
-		$('#messDivspan').render({
+		renderMessDivspan({
 			data : allMessage
 		});
 	}
@@ -403,7 +461,7 @@
 
 				var dataList = $('#messDivspan').data('data');
 				dataList.unshift(data);
-				$('#messDivspan').render({
+				renderMessDivspan({
 					data : dataList
 				});
 
