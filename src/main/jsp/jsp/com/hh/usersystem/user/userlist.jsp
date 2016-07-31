@@ -27,8 +27,10 @@
 		$.hh.pagelist.callRow("pagelist", function(row) {
 			Dialog.open({
 				url : 'jsp-usersystem-user-useredit',
+				urlParams : {
+					id : row.id
+				},
 				params : {
-					row : row,
 					callback : function() {
 						$("#pagelist").loadData();
 					}

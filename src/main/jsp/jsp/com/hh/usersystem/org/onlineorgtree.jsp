@@ -122,7 +122,7 @@
 			data.addCylxr = 0;
 		}
 		$('#userdiv').html(
-				'<div style="margin-top:5px;">' + data.text + '<span style="float:right;"><a href="javascript:openHi(\''+data.id+'\',\''+data.sendObjectType+'\',\''+data.text+'\')">查看历史记录</a></span></div>');
+				'<div style="margin-top:5px;"><a href="javascript:viewUser('+data.sendObjectType+',\''+data.id+'\');">' + data.text + '</a><span style="float:right;"><a href="javascript:openHi(\''+data.id+'\',\''+data.sendObjectType+'\',\''+data.text+'\')">查看历史记录</a></span></div>');
 		$('#userdiv').data('data', data);
 		indexpage=1;
 		requestDataLoad(data);
@@ -433,16 +433,17 @@
 
 		var text = config.sendUserName;
 		var headpic = config.sendHeadpic;
+		var userId = config.sendUserId;
 
 		if (headpic && headpic.indexOf('hhcomm') == -1) {
 			headpic = "system-File-download?params={id:'" + headpic + "'}";
 		}
 
 		if (headpic) {
-			headpic = " <img id='headpicimg' onClick='void(0);' style=\"cursor: pointer;\" width=\"50\"		height=\"50\"		src=\""
+			headpic = " <img id='headpicimg' onClick='viewUser(0,\""+userId+"\");' style=\"cursor: pointer;\" width=\"50\"		height=\"50\"		src=\""
 					+ headpic + "\" />";
 		} else {
-			headpic = "<img id='headpicimg' onClick='void(0);' style=\"cursor: pointer;\" width=\"50\"		height=\"50\"		src=\"/hhcommon/images/icons/user/100/no_on_line_user.jpg\" />";
+			headpic = "<img id='headpicimg' onClick='viewUser(0,\""+userId+"\");' style=\"cursor: pointer;\" width=\"50\"		height=\"50\"		src=\"/hhcommon/images/icons/user/100/no_on_line_user.jpg\" />";
 		}
 
 		var tdStr = '';
@@ -605,6 +606,18 @@
 		}
 		if (!isTop) {
 			scroll1();
+		}
+	}
+	
+	function viewUser(type,id){
+		if(type==0){
+			Dialog.open({
+				url : 'jsp-usersystem-user-useredit',
+				urlParams : {
+					id : id,
+					view : 1
+				}
+			});
 		}
 	}
 </script>
