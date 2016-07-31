@@ -6,6 +6,10 @@
 <title>消息管理</title>
 <%=SystemUtil.getBaseJs()%>
 <script type="text/javascript">
+	var params = {
+			toObjectId : '<%=request.getParameter("toObjectId")%>',
+			sendObjectType : '<%=request.getParameter("sendObjectType")%>'
+	}
 	function doAdd() {
 		Dialog.open({
 			url : 'jsp-message-message-messageedit',
@@ -45,26 +49,24 @@
 			xtype="button" config="onClick:doDelete,text:'删除'"></span>
 	</div> -->
 	<div id="pagelist" xtype="pagelist"
-		config=" url: 'message-SysMessage-queryPagingData' ,column : [
+		config=" params : params ,url: 'message-SysMessage-queryPagingData' ,column : [
 		{
-			name : 'title' ,
-			text : '标题'
-		},{
 			name : 'content' ,
-			text : '内容'
-		},{
-			name : 'type' ,
-			text : '类型'
+			text : '内容',
+			align:'left'
 		},{
 			name : 'dcreate' ,
 			text : '时间',
-			render:'datetime'
+			render:'datetime',
+			width: 120
 		},{
 			name : 'sendUserName' ,
-			text : '发送人'
+			text : '发送人',
+			width: 80
 		},{
-			name : 'userNames' ,
-			text : '接收人'
+			name : 'toObjectName' ,
+			text : '接收对象',
+			width: 80
 		}
 	]">
 	</div>

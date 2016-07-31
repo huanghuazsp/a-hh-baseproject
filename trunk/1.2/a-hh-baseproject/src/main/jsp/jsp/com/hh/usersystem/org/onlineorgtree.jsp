@@ -66,11 +66,7 @@
 					}
 				}
 
-				if ($.hh.getRootFrame().addTab) {
-					$.hh.addTab(data)
-				} else {
-					Request.href(data.vsj);
-				}
+				$.hh.addTab(data)
 
 				/*Dialog.open({
 					url : 'jsp-message-email-writeemail',
@@ -126,10 +122,19 @@
 			data.addCylxr = 0;
 		}
 		$('#userdiv').html(
-				'<div style="margin-top:5px;">' + data.text + '</div>');
+				'<div style="margin-top:5px;">' + data.text + '<span style="float:right;"><a href="javascript:openHi(\''+data.id+'\',\''+data.sendObjectType+'\',\''+data.text+'\')">查看历史记录</a></span></div>');
 		$('#userdiv').data('data', data);
 		indexpage=1;
 		requestDataLoad(data);
+	}
+	
+	function openHi(id,sendObjectType,text){
+		var data = {
+				id : 'message_'+id,
+				text : text+'-聊天',
+				vsj : 'jsp-message-message-messagelist?toObjectId='+id+'&sendObjectType='+sendObjectType
+		};
+		$.hh.addTab(data);
 	}
 	
 	function requestDataLoad(data){
@@ -251,11 +256,7 @@
 					}
 				}
 
-				if ($.hh.getRootFrame().addTab) {
-					$.hh.addTab(data)
-				} else {
-					Request.href(data.vsj);
-				}
+				$.hh.addTab(data)
 
 			}
 		}, {
@@ -422,7 +423,7 @@
 	}
 
 	function openEmail(params) {
-		$.hh.getRootFrame().addTab(params);
+		$.hh.addTab(params);
 	}
 
 	function getMyMsg(config) {

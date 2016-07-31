@@ -41,9 +41,9 @@ public class SysMessageService extends BaseService<SysMessage> implements
 	@Override
 	public PagingData<SysMessage> queryPagingData(SysMessage entity,
 			PageRange pageRange) {
-		return dao.queryPagingData(this.getGenericType(0), ParamFactory
-				.getParamHb().orderDesc("dcreate"), pageRange, new String[] {
-				"id", "title", "dcreate", "type" });
+		UsUser user = loginUserUtilService.findLoginUser();
+		ParamInf paramInf = findParamList(entity.getSendObjectType(),entity.getToObjectId(), user);
+		return this.queryPagingData(pageRange,paramInf);
 	}
 
 	@Transactional
@@ -273,27 +273,9 @@ public class SysMessageService extends BaseService<SysMessage> implements
 	public List<SysMessage> queryMyPagingDataBySendObjectId(SysMessage object,
 			PageRange pageRange) {
 		UsUser user = loginUserUtilService.findLoginUser();
-		ParamInf paramInf = ParamFactory.getParamHb();
-		if (object.getSendObjectType() == 0) {
-			ParamInf paramInf2 = ParamFactory.getParamHb();
-			paramInf2.is("sendUserId", user.getId());
-			paramInf2.is("toObjectId", object.getToObjectId());
+		ParamInf paramInf = findParamList(object.getSendObjectType(),object.getToObjectId(), user);
 
-			ParamInf paramInf3 = ParamFactory.getParamHb();
-			paramInf3.is("sendUserId", object.getToObjectId());
-			paramInf3.is("toObjectId", user.getId());
-
-			paramInf.or(paramInf2, paramInf3);
-		} else {
-			paramInf.is("toObjectId", object.getToObjectId());
-		}
-
-		Map<String, Object> paramsMap = new HashMap<String, Object>();
-		paramsMap.put("userId", user.getId());
-		paramsMap.put("orgId", Convert.toString(user.getOrgId()));
-		paramsMap.put("deptId", Convert.toString(user.getDeptId()));
-
-
+		
 		String userId = user.getId();
 		String orgId = user.getOrgId();
 		String deptId = user.getDeptId();
@@ -307,15 +289,18 @@ public class SysMessageService extends BaseService<SysMessage> implements
 		if (Check.isNoEmpty(deptId)) {
 			toObjectIdList.add(deptId);
 		}
-
 		String whereSql = " toObjectId in (:toObjectIdList) ";
-
 		if (Check.isNoEmpty(sysGroupIds)) {
 			toObjectIdList.addAll(Convert.strToList(sysGroupIds));
 		}
 		if (Check.isNoEmpty(usGroupIds)) {
 			toObjectIdList.addAll(Convert.strToList(usGroupIds));
 		}
+		
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		paramsMap.put("userId", user.getId());
+		paramsMap.put("orgId", Convert.toString(user.getOrgId()));
+		paramsMap.put("deptId", Convert.toString(user.getDeptId()));
 		paramsMap.put("likeUserId", "%" + userId + "%");
 		paramsMap.put("toObjectIdList", toObjectIdList);
 
@@ -327,6 +312,24 @@ public class SysMessageService extends BaseService<SysMessage> implements
 						paramsMap);
 
 		return queryList(paramInf, pageRange);
+	}
+
+	private ParamInf findParamList(int sendObjectType,String toObjectId,  UsUser user) {
+		ParamInf paramInf = ParamFactory.getParamHb();
+		if (sendObjectType== 0) {
+			ParamInf paramInf2 = ParamFactory.getParamHb();
+			paramInf2.is("sendUserId", user.getId());
+			paramInf2.is("toObjectId", toObjectId);
+
+			ParamInf paramInf3 = ParamFactory.getParamHb();
+			paramInf3.is("sendUserId", toObjectId);
+			paramInf3.is("toObjectId", user.getId());
+
+			paramInf.or(paramInf2, paramInf3);
+		} else {
+			paramInf.is("toObjectId", toObjectId);
+		}
+		return paramInf;
 	}
 
 	public SysMessage saveMessage(Map<String, Object> paramMap) {

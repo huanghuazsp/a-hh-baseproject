@@ -73,7 +73,7 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 			paramInf.is("vcreate", userService.findUserId());
 		}
 
-		return super.queryPagingData(entity, pageRange, paramInf);
+		return super.queryPagingData( pageRange, paramInf);
 	}
 
 	@Override
