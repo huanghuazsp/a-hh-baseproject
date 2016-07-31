@@ -43,6 +43,7 @@ public class SysMessageService extends BaseService<SysMessage> implements
 			PageRange pageRange) {
 		UsUser user = loginUserUtilService.findLoginUser();
 		ParamInf paramInf = findParamList(entity.getSendObjectType(),entity.getToObjectId(), user);
+		paramInf.like("content", entity.getContent());
 		return this.queryPagingData(pageRange,paramInf);
 	}
 
