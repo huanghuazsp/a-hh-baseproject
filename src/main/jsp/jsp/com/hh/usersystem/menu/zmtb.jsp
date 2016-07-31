@@ -69,11 +69,7 @@ String hhxtcdStr =  gson.toJson(hhXtCds);
 			}
 		} ],
 		onClick : function(data) {
-			if ($.hh.getRootFrame().addTab) {
-				$.hh.getRootFrame().addTab(data);
-			} else {
-				Request.href(data.vsj);
-			}
+			$.hh.addTab(data);
 		},
 		update : function(id) {
 			Request.request('usersystem-Zmtb-orderIds', {
