@@ -10,44 +10,35 @@
 			toObjectId : '<%=request.getParameter("toObjectId")%>',
 			sendObjectType : '<%=request.getParameter("sendObjectType")%>'
 	}
-	function doAdd() {
-		Dialog.open({
-			url : 'jsp-message-message-messageedit',
-			params : {
-				callback : function() {
-					$("#pagelist").loadData();
-				}
-			}
-		});
-	}
-	function doEdit() {
-		$.hh.pagelist.callRow("pagelist", function(row) {
-			Dialog.open({
-				url : 'jsp-message-message-messageedit',
-				params : {
-					row : row,
-					callback : function() {
-						$("#pagelist").loadData();
-					}
-				}
-			});
-		});
-	}
 	function doDelete() {
 		$.hh.pagelist.deleteData({
 			pageid : 'pagelist',
 			action : 'message-SysMessage-deleteByIds'
 		});
 	}
-	
+	function doQuery() {
+		var paramsObj =  $('#queryForm').getValue();
+		$.extend(paramsObj,params);
+		$('#pagelist').loadData({
+			params : paramsObj
+		});
+	}
 </script>
 </head>
 <body>
-	<!-- <div xtype="toolbar" config="type:'head'">
-		<span xtype="button" config="onClick:doAdd,text:'添加'"></span> <span
-			xtype="button" config="onClick:doEdit,text:'修改'"></span> <span
+	<div xtype="toolbar" config="type:'head'">
+		 <span
 			xtype="button" config="onClick:doDelete,text:'删除'"></span>
-	</div> -->
+	</div> 
+	<table xtype="form" id="queryForm" style="width: 700px;">
+				<tr>
+					<td xtype="label">名称：</td>
+					<td><span xtype="text"
+						config=" name : 'content' ,enter: doQuery "></span></td>
+					<td><span xtype="button"
+						config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
+				</tr>
+	</table>
 	<div id="pagelist" xtype="pagelist"
 		config=" params : params ,url: 'message-SysMessage-queryPagingData' ,column : [
 		{
