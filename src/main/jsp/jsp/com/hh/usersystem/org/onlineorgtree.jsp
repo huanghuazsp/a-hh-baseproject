@@ -158,9 +158,7 @@
 			data.sendHeadpic = data.sendHeadpic;
 			appendMessage(data, 1);
 		}
-		$('#himessagediv').animate({
-			scrollTop : 5000
-		}, 100);
+		scroll1();
 	}
 
 	var grouprender = false;
@@ -282,8 +280,8 @@
 			'sysGroupIds' : sysGroupIds
 		}));
 	}
-	
-	function showMessage2(result){
+
+	function showMessage2(result) {
 		var message = result.message;
 		if (message && message.message) {
 			renderMsg(message);
@@ -294,7 +292,7 @@
 			renderAllMessage(allMessage);
 		}
 	}
-	
+
 	function showMessage(autoMessage) {
 		if (autoMessage) {
 			var result = $.hh.toObject(autoMessage);
@@ -302,9 +300,7 @@
 		} else {
 			if ($.hh.browser.type.indexOf('IE') > -1) {
 				$('#himessageDiv').append(new Date() + '<br>');
-				$('#himessagediv').animate({
-					scrollTop : 5000
-				}, 100);
+				scroll1();
 			}
 		}
 	}
@@ -315,10 +311,28 @@
 				allMessage[i].rightText = '<font class="hh_red">'
 						+ allMessage[i].count + '</font>';
 			}
+			convertMenuImg(allMessage[i]);
 		}
 		$('#messDivspan').render({
 			data : allMessage
 		});
+	}
+	
+	function convertMenuImg(data){
+		if(data.sendObjectType==0){
+			var headpic = data.headpic || '/hhcommon/images/icons/user/100/no_on_line_user.jpg';
+			if (data.headpic && data.headpic.indexOf("/hhcomm")==-1) {
+				headpic = "system-File-download?params={id:'" + headpic + "'}";
+			}
+			data.img=headpic
+		}else if(data.sendObjectType==6 || data.sendObjectType==7){
+			data.img='/hhcommon/images/icons/group/group.png';
+		}else if(data.sendObjectType==2){
+			data.img='/hhcommon/images/icons/user/group.png';
+		}else if(data.sendObjectType==1){
+			data.img='/hhcommon/images/myimage/org/org.png';
+		}
+		
 	}
 
 	function renderMsg(message) {
@@ -326,7 +340,57 @@
 		if (selectData && (message.objectId == selectData.id)) {
 			appendMessage(message);
 		} else {
-			//console.log(message);
+			var li = $('#messDivspan').find('[liid=' + message.objectId + ']');
+			if (li.length > 0) {
+				var count = $.hh.toInt(li.find('[litype=rightText]').text());
+				var rightText = '<font class="hh_red">' + (count + 1)
+						+ '</font>';
+				li.find('[litype=rightText]').html(rightText);
+			} else {
+				var ul = $('#messDivspan').find('ul');
+
+				var objectId = '';
+				var objectName = '';
+				var objectHeadpic = '';
+
+				if (message.sendObjectType == 0) {
+					objectId = message.sendUserId;
+					objectName = message.sendUserName;
+					objectHeadpic = message.sendHeadpic;
+				} else {
+					objectId = message.toObjectId;
+					objectName = message.toObjectName;
+					objectHeadpic = message.toObjectHeadpic;
+				}
+
+				var data = {
+					id : objectId,
+					text : objectName,
+					headpic : objectHeadpic,
+					sendObjectType : message.sendObjectType,
+					rightText : '<font class="hh_red">1</font>'
+				};
+				
+				convertMenuImg(data);
+
+				var dataList = $('#messDivspan').data('data');
+				dataList.unshift(data);
+				$('#messDivspan').render({
+					data : dataList
+				});
+
+				Request.request('usersystem-user-addCylxrObject', {
+					data : {
+						'paramsMap.yhId' : loginUser.id,
+						'paramsMap.cylxrId' : data.id,
+						'paramsMap.cylxrName' : data.text,
+						'paramsMap.headpic' : data.headpic,
+						'paramsMap.type' : data.sendObjectType
+					},
+					defaultMsg : false
+				});
+
+			}
 		}
 	}
 
@@ -385,44 +449,49 @@
 		messageInit();
 
 	}
-	
-	function errorLoad(){
-		Dialog.alert('推送失败需要重新加载页面！',function(){
+
+	function errorLoad() {
+		Dialog.alert('推送失败需要重新加载页面！', function() {
 			$.hh.getRootFrame().location.reload();
 		});
 	}
-	
-	var errorLength = 0;
-	
+
+	var timeoutTime = 3;
+	var errorlength = 0;
 	function messageInit() {
 		$.ajax({
 			type : "POST",
-			url :  "message-SysMessage-poll",
+			url : "message-SysMessage-poll",
 			dataType : "json",
-			timeout:70000, //超时时间,设置为60s.
+			timeout : 70000, //超时时间,设置为60s.
 			data : {
+				timeout : timeoutTime
 			},
 			success : function(result) {
-				for(var i=0;i<result.length;i++){
+				if (timeoutTime == 3) {
+					timeoutTime = 60;
+					renderAllMessage(result.allMessage)
+				}
+				for (var i = 0; i < result.length; i++) {
 					showMessage2(result[i]);
 				}
 				messageInit();
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				errorLength++;
-				if(errorLength>6){
+				if (errorlength > 6) {
 					errorLoad();
-				}else{
-					messageInit();
+				} else {
+					setTimeout(messageInit, 2000)
 				}
+				errorlength++;
 			}
 		});
 	}
-	
-	function sendMessage(message){
+
+	function sendMessage(message) {
 		$.ajax({
 			type : "POST",
-			url :  "message-SysMessage-sendMessage",
+			url : "message-SysMessage-sendMessage",
 			dataType : "json",
 			data : message,
 			success : function() {
@@ -431,8 +500,8 @@
 			}
 		});
 	}
-	
-	function dwrInit(){
+
+	function dwrInit() {
 		dwr.engine.setActiveReverseAjax(true);
 		dwr.engine.setNotifyServerOnPageUnload(true, true);
 
@@ -485,21 +554,25 @@
 			appendMessage(messageData);
 
 			sendMessage(messageData);
-			
+
 			//message.sendMessageAuto($.hh.toString(messageData));
-			
+
 			$('#messageSpan').setValue('');
 		} else {
 			Dialog.infomsg('请选择发送对象！');
 		}
 	}
 
+	function scroll1(){
+		$('#himessagediv').animate({
+			scrollTop : $('#himessagediv')[0].scrollHeight+ 500
+		}, 100);
+	}
+	
 	function appendMessage(data, isTop) {
 		$('#himessageDiv').append(getMyMsg(data));
 		if (!isTop) {
-			$('#himessagediv').animate({
-				scrollTop : 5000
-			}, 100);
+			scroll1();
 		}
 	}
 </script>
@@ -537,7 +610,7 @@
 
 				</div>
 			</div>
-			<div config="render : 'south' ,width:160,spacing_open:0 ">
+			<div config="render : 'south' ,width:160,spacing_open:0, overflow : 'hidden'  ">
 				<span id="messageSpan"
 					config=" height:81,bottom:'hidden', name:'message' ,toolbar : ['Format',	'Font', 'FontSize', 'Styles'] "
 					xtype="ckeditor"></span>

@@ -2,20 +2,16 @@ package com.hh.message.action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.gson.Gson;
 import com.hh.message.bean.SysMessage;
-import com.hh.message.service.MessageService;
 import com.hh.message.service.SysMessageService;
 import com.hh.system.service.impl.BaseService;
-import com.hh.system.util.BeanUtils;
 import com.hh.system.util.Convert;
-import com.hh.system.util.Json;
 import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.date.DateFormat;
 import com.hh.system.util.request.Request;
@@ -32,6 +28,8 @@ public class ActionSysMessage extends BaseServiceAction<SysMessage> {
 
 	private int addCylxr = 0;
 
+	private int timeout = 0;
+
 	@Autowired
 	private LoginUserUtilService userService;
 
@@ -46,23 +44,40 @@ public class ActionSysMessage extends BaseServiceAction<SysMessage> {
 
 	public Object poll() {
 		String userId = userService.findUserId();
-		for (int i = 0; i < 60; i++) {
+		if (timeout == 3) {
 			try {
-				if (messageMap.get(userId) != null
-						&& messageMap.get(userId).size() > 0) {
-					List<Map<String, Object>> returnMap = messageMap
-							.get(userId);
-					messageMap.remove(userId);
-					return returnMap;
-				}
-				Thread.sleep(1000);
-			} catch (Exception e) {
+				List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+				mapList.add(new HashMap<String, Object>());
+				messageMap.put(userId, mapList);
+				Thread.sleep(1500);
+				messageMap.remove(userId);
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			return service.load();
+		} else {
+			for (int i = 0; i < timeout; i++) {
+				try {
+					if (messageMap.get(userId) != null
+							&& messageMap.get(userId).size() > 0) {
+						List<Map<String, Object>> returnMap = messageMap
+								.get(userId);
+						if (returnMap.get(0).keySet().size()==0) {
+							return new StringBuffer("[]");
+						}
+						StringBuffer returnBuffer = new StringBuffer(
+								new Gson().toJson(returnMap));
+						messageMap.remove(userId);
+						return returnBuffer;
+					}else{
+						Thread.sleep(1000);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return new StringBuffer("[]");
 		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("test", "test");
-		return map;
 	}
 
 	public Object sendMessage() {
@@ -117,6 +132,14 @@ public class ActionSysMessage extends BaseServiceAction<SysMessage> {
 
 	public void setAddCylxr(int addCylxr) {
 		this.addCylxr = addCylxr;
+	}
+
+	public int getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(int timeout) {
+		this.timeout = timeout;
 	}
 
 }
