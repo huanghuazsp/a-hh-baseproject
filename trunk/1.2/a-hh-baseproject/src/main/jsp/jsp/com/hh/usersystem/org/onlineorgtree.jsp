@@ -678,6 +678,12 @@
 			});
 		}
 	}
+	
+	function renderAllQuickMenu(timeData){
+		if(window.frames['eastiframe'] && window.frames['eastiframe'].renderAllQuickMenu){
+			window.frames['eastiframe'].renderAllQuickMenu(timeData);
+		}
+	}
 </script>
 </head>
 <body xtype="border_layout">
@@ -727,7 +733,7 @@
 
 
 	<div config="render : 'east' ,width:332 , overflow : 'hidden' ">
-		<iframe id='eastiframe' frameborder=0 width=100% height=100%
+		<iframe id='eastiframe' name='eastiframe'  frameborder=0 width=100% height=100%
 			src='jsp-usersystem-menu-zmtb' />
 	</div>
 
