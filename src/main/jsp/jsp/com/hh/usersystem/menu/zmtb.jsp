@@ -16,16 +16,16 @@
 <%=SystemUtil.getBaseJs()%>
 <%
 	Gson gson = new Gson();
-UsUser hhXtYh =	(UsUser)session.getAttribute("loginuser");
-List<SysMenu> hhXtCds =  hhXtYh.getDesktopQuickList();
+	UsUser hhXtYh = (UsUser) session.getAttribute("loginuser");
+	List<SysMenu> hhXtCds = hhXtYh.getDesktopQuickList();
 
-MenuService menuService = BeanFactoryHelper.getBean(MenuService.class);
-ZmtbService zmtbService = BeanFactoryHelper.getBean(ZmtbService.class);
-if (hhXtCds.size() == 0) {
-	hhXtCds = menuService.addZmtb(StaticVar.systemProperties.get("menu.default_quickmenu"));
-}
+	MenuService menuService = BeanFactoryHelper.getBean(MenuService.class);
+	ZmtbService zmtbService = BeanFactoryHelper.getBean(ZmtbService.class);
+	if (hhXtCds.size() == 0) {
+		hhXtCds = menuService.addZmtb(StaticVar.systemProperties.get("menu.default_quickmenu"));
+	}
 
-String hhxtcdStr =  gson.toJson(hhXtCds);
+	String hhxtcdStr = gson.toJson(hhXtCds);
 %>
 <script type="text/javascript">
 	var hhxtcds =
@@ -62,7 +62,7 @@ String hhxtcdStr =  gson.toJson(hhXtCds);
 						id : id
 					}
 				}, function(result) {
-					if (result.success!=false) {
+					if (result.success != false) {
 						refresh();
 					}
 				});
@@ -94,6 +94,30 @@ String hhxtcdStr =  gson.toJson(hhXtCds);
 			}
 		} ]
 	};
+
+	function renderAllQuickMenu(timeData) {
+
+		var mapData = {};
+
+		var dataList = $('#gridView').getConfig('data');
+		for (var i = 0; i < dataList.length; i++) {
+			var data = dataList[i];
+			mapData[data.vsj] = data;
+		}
+		for ( var p in timeData) {
+			var data = timeData[p];
+			if ($.isPlainObject(data) && data.vsj) {
+				if (mapData[data.vsj]) {
+					var gridli = $('#gridView')
+					.find('#' + mapData[data.vsj].id);
+					if(gridli && gridli.length>0 && data.count && data.count>0){
+						gridli.append('<font class="hh_red" style="position: absolute; right: 3px;  top: 3px;">'+data.count+'</font>');
+					}
+				}
+
+			}
+		}
+	}
 </script>
 </head>
 <body>
