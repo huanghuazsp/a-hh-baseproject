@@ -189,7 +189,7 @@
 	}
 	
 	function requestDataLoad(data){
-		var limit = 5;
+		var limit = 30;
 		var start = limit * indexpage - limit;
 		Request.request('message-SysMessage-queryMyPagingDataBySendObjectId', {
 			data : {
