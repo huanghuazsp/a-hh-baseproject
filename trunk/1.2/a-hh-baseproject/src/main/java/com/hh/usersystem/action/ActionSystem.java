@@ -1,13 +1,12 @@
 package com.hh.usersystem.action;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.system.service.impl.SystemFileService;
-import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.StaticVar;
 import com.hh.system.util.base.BaseAction;
 import com.hh.usersystem.service.impl.SystemService;
@@ -30,9 +29,9 @@ public class ActionSystem extends BaseAction {
 	
 	public Object loadDataTime() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<LoadDataTime> loadDataTimeList = StaticVar.loadDataTimeList;
-		for (LoadDataTime loadDataTime : loadDataTimeList) {
-			map.putAll(loadDataTime.load());
+		Set<String> keySet = StaticVar.loadDataTimeMap.keySet();
+		for (String key : keySet) {
+			map.put(key,StaticVar.loadDataTimeMap.get(key).load());
 		}
 		return map;
 	}

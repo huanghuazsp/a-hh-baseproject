@@ -96,9 +96,7 @@
 	};
 
 	function renderAllQuickMenu(timeData) {
-
 		var mapData = {};
-
 		var dataList = $('#gridView').getConfig('data');
 		for (var i = 0; i < dataList.length; i++) {
 			var data = dataList[i];

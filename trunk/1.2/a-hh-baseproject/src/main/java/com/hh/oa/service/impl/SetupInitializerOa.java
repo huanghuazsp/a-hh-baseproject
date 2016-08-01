@@ -77,8 +77,8 @@ public class SetupInitializerOa {
 		
 
 		StaticProperties.hhXtCds.add(rootHhXtCd);
-		StaticVar.loadDataTimeList.add(sysShouEmailService);
-		StaticVar.loadDataTimeList.add(sysMessageService);
+		StaticVar.loadDataTimeMap.put("jsp-message-email-emailmain",sysShouEmailService);
+		StaticVar.loadDataTimeMap.put("message",sysMessageService);
 
 		StaticVar.fileOperMap.put("email", sysShouEmailService);
 		StaticVar.fileOperMap.put("headpic",userService );

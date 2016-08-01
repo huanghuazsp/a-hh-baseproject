@@ -89,8 +89,6 @@ public class SysMessageService extends BaseService<SysMessage> implements
 
 	public Map<String, Object> load() {
 		UsUser user = loginUserUtilService.findLoginUser();
-		Map<String, Object> map = new HashMap<String, Object>();
-
 		String userId = user.getId();
 		String orgId = user.getOrgId();
 		String deptId = user.getDeptId();
@@ -169,11 +167,8 @@ public class SysMessageService extends BaseService<SysMessage> implements
 		map2.put("id", "93bb64fe-e50a-40b2-ab59-b1ae543cd101");
 		map2.put("text", "消息提醒");
 		map2.put("vsj", "jsp-message-message-messagelistview");
-		map2.put("message", "jsp-message-message-messagelistview");
-
-		map.put("allMessage", sysMessagesList);
-		map.put("message", map2);
-		return map;
+		map2.put("allMessage", sysMessagesList);
+		return map2;
 	}
 
 	@Transactional

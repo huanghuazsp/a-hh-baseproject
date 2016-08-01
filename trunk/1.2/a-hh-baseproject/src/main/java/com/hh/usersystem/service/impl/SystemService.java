@@ -154,11 +154,9 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 	}
 
 	public Map<String, Object> load() {
-		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("count", LoginUser.getLoginUserCount());
-		map.put("onlineuser", map2);
-		return map;
+		return map2;
 	}
 
 	public static void setBeanSysFields(BaseBean object) {
