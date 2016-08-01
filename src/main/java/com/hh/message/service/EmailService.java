@@ -16,7 +16,6 @@ import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
-import com.hh.system.util.ThreadUtil;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
@@ -95,7 +94,6 @@ public class EmailService extends BaseService<SysEmail> implements
 	@Transactional
 	public Map<String, Object> load2(String userId) {
 
-		Map<String, Object> map = new HashMap<String, Object>();
 		int shouCount = findCount(ParamFactory.getParamHb()
 				.like("users", userId).nolike("readUserId", userId)
 				.nolike("deleteUserId", userId).is("type", "yfs")
@@ -105,23 +103,13 @@ public class EmailService extends BaseService<SysEmail> implements
 		map2.put("id", "e9fa8689-c362-4c66-bd75-d1b132bd5211");
 		map2.put("text", "个人邮件");
 		map2.put("vsj", "jsp-message-email-emailmain");
-		map.put("email", map2);
-		map.put("userId", userId);
-		return map;
+		return map2;
 	}
 
 	@Transactional
 	public SysEmail findObjectById(String id) {
 		String userId = loginUserUtilService.findUserId();
 		SysEmail sysEmail = super.findObjectById(id);
-		if (sysEmail != null) {
-			if (Convert.toString(sysEmail.getReadUserId()).indexOf(userId) == -1) {
-				sysEmail.setReadUserId(sysEmail.getReadUserId() + "," + userId);
-				dao.updateEntity(sysEmail);
-				ThreadUtil.getThreadPool().execute(
-						new EmailThread(loginUserUtilService.findUserId()));
-			}
-		}
 		return sysEmail;
 	}
 
