@@ -100,7 +100,7 @@
 				config=" url: 'usersystem-UsLeader-queryPagingData' ,column : [
 		{
 			name : 'leaderText' ,
-			text : '用户名称'
+			text : '领导名称'
 		},{
 			name : 'leaderVdzyj' ,
 			text : '电子邮件'
