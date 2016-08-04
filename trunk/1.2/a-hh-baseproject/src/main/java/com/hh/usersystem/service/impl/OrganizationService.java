@@ -36,6 +36,10 @@ public class OrganizationService extends BaseService<UsOrganization> {
 
 	@Autowired
 	private RoleService roleService;
+	
+	
+	@Autowired
+	private UsLeaderService usLeaderService;
 
 	public List<UsOrganization> queryTreeList(UsOrganization object) {
 		return organizationToIconCls(
@@ -192,52 +196,10 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	}
 
 	public void deleteByIds(String ids) {
-		List<String> idList = Convert.strToList(ids);
-		deleteYzNode(idList);
-		if (!Check.isEmpty(idList)) {
-
-			List<String> nodeList = new ArrayList<String>();
-			List<UsOrganization> menuList = dao.queryList(
-					UsOrganization.class,
-					Restrictions.in("id", Convert.strToList(ids)));
-			for (UsOrganization organization2 : menuList) {
-				nodeList.add(organization2.getNode());
-			}
-
-			dao.deleteEntity(UsOrganization.class, "id", idList);
-
-			// List<UsOrganization> organizations = dao.queryList(
-			// UsOrganization.class,
-			// ParamFactory.getParamHb().in("id", nodeList));
-			// if (nodeList.contains("root")) {
-			// UsOrganization parentOrganization = new UsOrganization();
-			// parentOrganization.setId("root");
-			// updateSubCode(parentOrganization);
-			// }
-			// for (UsOrganization organization2 : organizations) {
-			// updateSubCode(organization2);
-			// }
-
-		}
-
+		List<String> deleteIds =	deleteTreeByIds(ids);
+		usLeaderService.deleteLeaders(deleteIds);
 	}
 
-	private void deleteYzNode(List<String> idList) {
-		List<String> yzIdList = new ArrayList<String>();
-		if (!Check.isEmpty(idList)) {
-			List<UsOrganization> menuList = dao.queryList(
-					UsOrganization.class, Restrictions.in("node", idList));
-			for (UsOrganization hhXtCd : menuList) {
-				yzIdList.add(hhXtCd.getId());
-			}
-			if (!Check.isEmpty(yzIdList)) {
-				dao.deleteEntity(UsOrganization.class, "id", yzIdList);
-			}
-			deleteYzNode(yzIdList);
-
-		}
-
-	}
 
 	public List<UsOrganization> queryOrgAndUsersList(
 			UsOrganization organization1) {

@@ -63,6 +63,8 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 	private GroupService groupService;
 	@Autowired
 	private UserGroupService usGoupService;
+	
+	@Autowired UsLeaderService usLeaderService;
 
 	public Map<? extends String, ? extends Object> queryOnLinePagingData(UsUser hhXtYh, PageRange pageRange) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -230,6 +232,9 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 			// zmsxdao.deleteEntity(HHXtZmsx.class, "id", idList);
 			cylxrdao.deleteEntity(UsUserCyLxr.class, "yhId", idList);
 			cylxrdao.deleteEntity(UsUserCyLxr.class, "cylxrId", idList);
+			
+			
+			usLeaderService.deleteLeaders(idList);
 		}
 
 	}
