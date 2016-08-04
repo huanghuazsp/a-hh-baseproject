@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hh.system.util.PrimaryKey;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.util.steady.StaticProperties;
 
@@ -77,9 +78,16 @@ public class SetupInitializerUserSystem {
 				new SysMenu("5fe8a25c-696e-41c6-b510-090e9e2f8dc6", "用户管理",
 						"jsp-usersystem-user-userlist",
 						"/hhcommon/images/icons/user/user.png", 0, 1));
-
+		rootHhXtCd.getChildren().add(
+				new SysMenu("98c4457260f9427eb229ad282adef958", "分管配置",
+						"jsp-usersystem-user-usLeaderList",
+						"/hhcommon/images/icons/user/user_gray.png", 0, 1));
 		StaticProperties.hhXtCds.add(rootHhXtCd);
 
+	}
+	
+	public static void main(String[] args) {
+		System.err.println(PrimaryKey.getPrimaryKeyUUID());
 	}
 
 }
