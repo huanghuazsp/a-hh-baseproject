@@ -16,6 +16,7 @@ import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.usersystem.bean.usersystem.UsLeader;
+import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.bean.usersystem.UsUser;
 
 @Service
@@ -23,6 +24,9 @@ public class UsLeaderService extends BaseService<UsLeader> {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private OrganizationService organizationService;
 
 	public void addLeaders(UsLeader object) {
 		List<UsLeader> usLeaders = queryListByProperty("objectId", object.getObjectId());
@@ -56,15 +60,29 @@ public class UsLeaderService extends BaseService<UsLeader> {
 		if (Check.isNoEmpty(entity.getObjectId())) {
 			paramInf.is("objectId", entity.getObjectId());
 		}
+		if (Check.isNoEmpty(entity.getLeaderId())) {
+			paramInf.is("leaderId", entity.getLeaderId());
+		}
 		PagingData<UsLeader> pageData = super.queryPagingData(pageRange, paramInf);
 		List<UsLeader> usLeaderList = pageData.getItems();
 		List<String> leaderIdList = new ArrayList<String>();
+
+		List<String> objectIdList = new ArrayList<String>();
+
 		for (UsLeader usLeader : usLeaderList) {
 			leaderIdList.add(usLeader.getLeaderId());
+
+			leaderIdList.add(usLeader.getObjectId());
+			objectIdList.add(usLeader.getObjectId());
 		}
 		if (leaderIdList.size() > 0) {
 			List<UsUser> users = userService.queryListByIds(leaderIdList);
+
+			List<UsOrganization> organizations = organizationService.queryListByIds(objectIdList);
+
 			Map<String, UsUser> userMap = Convert.listToMap(users);
+			
+			Map<String, UsOrganization> organizationMap = Convert.listToMap(organizations);
 
 			for (UsLeader usLeader : usLeaderList) {
 				UsUser user = userMap.get(usLeader.getLeaderId());
@@ -72,6 +90,15 @@ public class UsLeaderService extends BaseService<UsLeader> {
 					usLeader.setLeaderText(user.getText());
 					usLeader.setLeaderVdh(user.getVdh());
 					usLeader.setLeaderVdzyj(user.getVdzyj());
+				}
+				
+				UsUser objectUser = userMap.get(usLeader.getObjectId());
+				if (objectUser != null) {
+					usLeader.setObjectText(objectUser.getText());
+				}
+				UsOrganization organization = organizationMap.get(usLeader.getObjectId());
+				if (organization != null) {
+					usLeader.setObjectText(organization.getText());
 				}
 			}
 		}

@@ -8,97 +8,113 @@
 <script>
 	var selectNode = null;
 	var orgtreeconfig = {
-			id : 'orgTree',
-			url : 'usersystem-Org-queryOrgAndUsersList',
-			onClick : function(node) {
-				doQuery(node);
-			},
-			rightMenu : [ {
-				text : '刷新',
-				img : $.hh.property.img_refresh,
-				onClick : function() {
-					$.hh.tree.refresh('orgTree');
-				}
-			} ],
-			itemRightMenu : [  {
-				text : '刷新',
-				img : $.hh.property.img_refresh,
-				onClick : function() {
-					$.hh.tree.refresh('orgTree');
-				}
-			} ]
-		}
+		id : 'orgTree',
+		url : 'usersystem-Org-queryOrgAndUsersList',
+		onClick : function(node) {
+			doQuery(node);
+		},
+		rightMenu : [ {
+			text : '刷新',
+			img : $.hh.property.img_refresh,
+			onClick : function() {
+				$.hh.tree.refresh('orgTree');
+			}
+		} ],
+		itemRightMenu : [ {
+			text : '刷新',
+			img : $.hh.property.img_refresh,
+			onClick : function() {
+				$.hh.tree.refresh('orgTree');
+			}
+		} ]
+	}
+	function allData(){
+		selectNode = null;
+		doQuery();
+	}
 	function doQuery(node) {
-		if(node){
-			selectNode=node;
+		if (node) {
+			selectNode = node;
 		}
-		var paramsObj = {};
-		paramsObj.objectId = selectNode.id;
+		if (selectNode) {
+			$('#selectNodeTd')
+					.html(
+							selectNode.text
+									+ '&nbsp;&nbsp;<a href="javascript:allData();">所有数据</a>');
+		} else {
+			$('#selectNodeTd').html('所有数据');
+		}
+
+		var paramsObj = $('#queryForm').getValue();
+		if(selectNode){
+			paramsObj.objectId = selectNode.id;
+		}
 		$('#pagelist').loadData({
 			params : paramsObj
 		});
 	}
-	
-	function deleteLeader(){
-		if(selectNode){
-			$.hh.pagelist.callRows('pagelist', function(rows) {
-				Dialog.confirm({
-					message : '您确认要删除数据吗？',
-					yes : function(result) {
-						var ids = $.hh.objsToStr(rows);
-						var data = {};
-						data.leaderId = ids;
-						data.objectId = selectNode.id;
-						Request.request('usersystem-UsLeader-deleteLeaders', {
-							data : data
-						}, function(result) {
-							doQuery();
-						});
-					}
-				});
-			});
-		}else{
-			Dialog.infomsg("请选中被分管对象！");
-		}
+
+	function deleteLeader() {
+		$.hh.pagelist.deleteData({
+			pageid : 'pagelist',
+			action : 'usersystem-UsLeader-deleteByIds'
+		});
 	}
-	
-	function addLeader(){
-		if(selectNode){
+
+	function addLeader() {
+		if (selectNode) {
 			$.hh.selectUser.openUser({
-				callback:function(data){
+				callback : function(data) {
 					Request.request('usersystem-UsLeader-addLeaders', {
 						data : {
 							objectId : selectNode.id,
 							leaderId : data.id
 						},
-						callback:function(){
+						callback : function() {
 							doQuery();
 						}
 					});
 				}
 			});
-		}else{
+		} else {
 			Dialog.infomsg("请选中被分管对象！");
 		}
 	}
 </script>
 </head>
-<body  xtype="border_layout">
+<body xtype="border_layout">
 	<div config="render : 'west' ,width:260 ">
+		<div xtype="toolbar" config="type:'head'">
+			<span xtype="button"
+				config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'tree'  "></span>
+		</div>
+
 		<span xtype="tree" configVar="orgtreeconfig"></span>
 	</div>
-	<div  style="overflow: visible;" >
-	
-	
-	<div xtype="toolbar" config="type:'head'">
-				<span xtype="button"
-					config="onClick:addLeader,text:'添加' , itype :'add' "></span> 
-				<span xtype="button"
-					config="onClick:deleteLeader,text:'删除' , itype :'delete' "></span> 
-			</div>
-	<div id="pagelist" xtype="pagelist"
-				config=" url: 'usersystem-UsLeader-queryPagingData' ,column : [
+	<div>
+
+		<div xtype="toolbar" config="type:'head'">
+			<span xtype="button"
+				config="onClick:addLeader,text:'添加' , itype :'add' "></span> <span
+				xtype="button"
+				config="onClick:deleteLeader,text:'删除' , itype :'delete' "></span>
+		</div>
+
+		<table xtype="form" id="queryForm" style="width: 650px;">
+			<tr>
+				<td width=200px id="selectNodeTd" style="text-align: center;">所有数据</td>
+				<td xtype="label">领导：</td>
+				<td><span xtype="selectUser" config="name: 'leaderId' ,radio:true " ></span></td>
+				<td><span xtype="button"
+					config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
+			</tr>
+		</table>
+		<div id="pagelist" xtype="pagelist"
+			config=" url: 'usersystem-UsLeader-queryPagingData' ,column : [
 		{
+			name : 'objectText' ,
+			text : '分管对象'
+		},{
 			name : 'leaderText' ,
 			text : '领导名称'
 		},{
@@ -109,7 +125,7 @@
 			text : '联系电话'
 		}
 	]">
-			</div>
+		</div>
 	</div>
 </body>
 </html>
