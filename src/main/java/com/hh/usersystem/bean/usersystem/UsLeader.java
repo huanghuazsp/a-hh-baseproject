@@ -5,12 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.hh.hibernate.util.base.BaseOneEntity;
-import com.hh.system.util.annotation.Cache;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Cache
+import com.hh.hibernate.util.base.BaseOneEntity;
+
+
 @Entity
 @Table(name = "US_LEADER")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class UsLeader extends BaseOneEntity {
 	private String objectId;
 	private String leaderId;
@@ -21,6 +24,8 @@ public class UsLeader extends BaseOneEntity {
 	private String leaderVdh;
 
 	private String objectText;
+	
+	private String node;
 	
 	@Column(name = "OBJECT_ID", length = 36)
 	public String getObjectId() {
@@ -83,6 +88,14 @@ public class UsLeader extends BaseOneEntity {
 
 	public void setObjectText(String objectText) {
 		this.objectText = objectText;
+	}
+	@Transient
+	public String getNode() {
+		return node;
+	}
+
+	public void setNode(String node) {
+		this.node = node;
 	}
 
 	

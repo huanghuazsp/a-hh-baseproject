@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hh.oa.bean.Schedule;
 import com.hh.oa.service.impl.ScheduleService;
 import com.hh.system.service.impl.BaseService;
+import com.hh.system.util.Check;
 import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
@@ -17,6 +18,8 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 
 	private Date startDate;
 	private Date endDate;
+
+	private String currUserId;
 
 	public BaseService<Schedule> getService() {
 		return scheduleService;
@@ -34,17 +37,18 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 	}
 
 	public Object queryListByDate() {
-		// Date start = DateFormat.strToDate("2013-10", "yyyy-MM");
-		// Date end = DateFormat.strToDate("2013-11", "yyyy-MM");
-		List<Schedule> schedules = scheduleService.queryList(ParamFactory
-				.getParamHb().ge("start", startDate).le("end", endDate)
-				.is("userId", loginUserUtilService.findUserId()));
+		String userId = loginUserUtilService.findUserId();
+		if (Check.isNoEmpty(currUserId)) {
+			userId = currUserId;
+		}
+
+		List<Schedule> schedules = scheduleService
+				.queryList(ParamFactory.getParamHb().ge("start", startDate).le("end", endDate).is("userId", userId));
 		return schedules;
 	}
 
 	public void ok() {
-		this.getService().update(this.object.getId(), "isOk",
-				this.object.getIsOk());
+		this.getService().update(this.object.getId(), "isOk", this.object.getIsOk());
 	}
 
 	public Date getStartDate() {
@@ -61,6 +65,14 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public String getCurrUserId() {
+		return currUserId;
+	}
+
+	public void setCurrUserId(String currUserId) {
+		this.currUserId = currUserId;
 	}
 
 }

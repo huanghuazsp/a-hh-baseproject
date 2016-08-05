@@ -81,7 +81,7 @@ public class UsLeaderService extends BaseService<UsLeader> {
 			List<UsOrganization> organizations = organizationService.queryListByIds(objectIdList);
 
 			Map<String, UsUser> userMap = Convert.listToMap(users);
-			
+
 			Map<String, UsOrganization> organizationMap = Convert.listToMap(organizations);
 
 			for (UsLeader usLeader : usLeaderList) {
@@ -91,7 +91,7 @@ public class UsLeaderService extends BaseService<UsLeader> {
 					usLeader.setLeaderVdh(user.getVdh());
 					usLeader.setLeaderVdzyj(user.getVdzyj());
 				}
-				
+
 				UsUser objectUser = userMap.get(usLeader.getObjectId());
 				if (objectUser != null) {
 					usLeader.setObjectText(objectUser.getText());
@@ -113,6 +113,25 @@ public class UsLeaderService extends BaseService<UsLeader> {
 		dao.deleteEntity(
 				"delete from " + UsLeader.class.getName() + " where objectId = :objectId and leaderId in (:leaderId) ",
 				paramsMap);
+	}
+
+	public List<UsOrganization> queryLeaderTree(String node) {
+		List<UsOrganization> usOrganizationList = new ArrayList<UsOrganization>();
+		node = "root".equals(node) ? "" : node;
+		String leaderId = loginUser.findUserId();
+		List<String> objectIdList = new ArrayList<String>();
+		if (Check.isEmpty(node)) {
+			List<UsLeader> leaders = queryListByProperty("leaderId", leaderId);
+			for (UsLeader usLeader : leaders) {
+				objectIdList.add(usLeader.getObjectId());
+			}
+			List<UsUser> hhXtYhs = userService.queryListByIds(objectIdList);
+			usOrganizationList.addAll(organizationService.addOrgUser(hhXtYhs));
+		}
+
+		usOrganizationList.addAll(organizationService.queryOrgAndUsersList(objectIdList, node));
+
+		return usOrganizationList;
 	}
 
 }

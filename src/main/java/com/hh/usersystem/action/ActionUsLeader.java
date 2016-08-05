@@ -26,5 +26,12 @@ public class ActionUsLeader extends BaseServiceAction<UsLeader> {
 		leaderService.deleteLeaders(object);
 	}
 	
+	public Object queryLeaderTree(){
+		return leaderService.queryLeaderTree(this.object.getNode());
+	}
 
+	
+
+	
+	
 }

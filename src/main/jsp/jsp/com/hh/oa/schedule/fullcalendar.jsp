@@ -6,61 +6,44 @@
 <title>日程安排</title>
 <%=SystemUtil.getBaseJs("layout", "ztree")%>
 <script>
-	var orgtreeconfig = {
-			render : false,
-			id : 'orgTree',
-			nheight : 42,
-			url : 'usersystem-Org-queryOrgAndUsersList',
-			onClick : function(node) {
-			},
-			rightMenu : [ {
-				text : '刷新',
-				img : $.hh.property.img_refresh,
-				onClick : function() {
-					$.hh.tree.refresh('orgTree');
-				}
-			} ],
-			itemRightMenu : [  {
-				text : '刷新',
-				img : $.hh.property.img_refresh,
-				onClick : function() {
-					$.hh.tree.refresh('orgTree');
-				}
-			} ]
-		}
-	
-	var scheduleConfig = {
-			
+var orgtreeconfig = {
+		id : 'orgTree',
+		url : 'usersystem-UsLeader-queryLeaderTree',
+		onClick : function(node) {
+			if(node.lx_==0){
+				$('[name=jsp-oa-schedule-fullcalendarview]').attr('src','jsp-oa-schedule-fullcalendarview?currUserId='+node.id);
+			}
+		},
+		rightMenu : [ {
+			text : '刷新',
+			img : $.hh.property.img_refresh,
+			onClick : function() {
+				$.hh.tree.refresh('orgTree');
+			}
+		} ],
+		itemRightMenu : [ {
+			text : '刷新',
+			img : $.hh.property.img_refresh,
+			onClick : function() {
+				$.hh.tree.refresh('orgTree');
+			}
+		} ]
 	}
-	
-	var tabconfig = {
-		activate : function(ui) {
-			var newPanel = ui.newPanel;
-			var id = newPanel.attr('id');
-			if (id == 'scheduleDiv' && grouprender == false) {
-			} else if (id == 'shareDiv' && orgrender == false) {
-			} 
-		}
+	function doMyData(){
+		$('[name=jsp-oa-schedule-fullcalendarview]').attr('src','jsp-oa-schedule-fullcalendarview');
 	}
 </script>
 </head>
 <body  xtype="border_layout">
-	<div config="render : 'west' ,width:260 ">
-		<div id="tabs" xtype="tab" configVar="tabconfig">
-			<ul>
-				<li><a href="#scheduleDiv">日程</a></li>
-				<li><a href="#shareDiv">共享</a></li>
-			</ul>
-			<div id="scheduleDiv">
-				<span xtype=menu id="schedulespan" configVar=" scheduleConfig "></span>
+	<div config="render : 'west' ,width:260 , closeText : '分管人员日程' ,initClose:true ">
+		<div xtype="toolbar" config="type:'head'">
+				<span xtype="button"
+					config="onClick:doMyData,text:'刷新本人日程' ,width:'100%' " ></span>
 			</div>
-			<div id="shareDiv">
-				<span xtype="tree" configVar="orgtreeconfig"></span>
-			</div>
-		</div>
+		<span xtype="tree" configVar="orgtreeconfig"></span>
 	</div>
 	<div  style="overflow: visible;" >
-		<iframe  width=100%
+		<iframe name="jsp-oa-schedule-fullcalendarview"  width=100%
 				height=100% frameborder=0 src="jsp-oa-schedule-fullcalendarview"></iframe>
 	</div>
 </body>
