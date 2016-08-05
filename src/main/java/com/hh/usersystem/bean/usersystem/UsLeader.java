@@ -20,6 +20,8 @@ public class UsLeader extends BaseOneEntity {
 	private String leaderVdzyj;
 	private String leaderVdh;
 
+	private String objectText;
+	
 	@Column(name = "OBJECT_ID", length = 36)
 	public String getObjectId() {
 		return objectId;
@@ -72,6 +74,15 @@ public class UsLeader extends BaseOneEntity {
 
 	public void setLeaderVdh(String leaderVdh) {
 		this.leaderVdh = leaderVdh;
+	}
+
+	@Transient
+	public String getObjectText() {
+		return objectText;
+	}
+
+	public void setObjectText(String objectText) {
+		this.objectText = objectText;
 	}
 
 	

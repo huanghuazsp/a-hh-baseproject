@@ -84,10 +84,15 @@
 	
 	function orgTreeClick( treeNode) {
 		selectOrgId = treeNode.id;
+		$('#selectNodeTd')
+					.html(
+							treeNode.text
+									+ '&nbsp;&nbsp;<a href="javascript:allData();">所有数据</a>');
 		doQuery();
 	}
-	function noSelectOrg(){
+	function allData(){
 		selectOrgId = '';
+		$('#selectNodeTd').html('所有数据');
 		doQuery();
 	}
 </script>
@@ -98,8 +103,6 @@
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button"
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'orgTree'  "></span>
-				<span xtype="button"
-					config="onClick : noSelectOrg ,text : '所有机构' ,params: 'orgTree'  "></span>
 			</div>
 			<span xtype="tree"
 				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick ,nheight:42 "></span>
@@ -123,12 +126,13 @@
 				<span xtype="button"
 					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 			</div>
-			<table xtype="form" id="queryForm" style="width: 700px;">
+			<table xtype="form" id="queryForm" style="width: 800px;">
 				<tr>
-					<td xtype="label">名称：</td>
+					<td width=200px id="selectNodeTd" style="text-align: center;">所有数据</td>
+					<td xtype="label" style="width:50px">名称：</td>
 					<td><span xtype="text"
 						config=" name : 'text' ,enter: doQuery "></span></td>
-					<td xtype="label">性别：</td>
+					<td xtype="label" style="width:50px">性别：</td>
 					<td><span xtype="radio"
 						config="name: 'nxb'  ,defaultValue : 2 , data :[{id:2,text:'所有'},{id:1,text:'男'},{id:0,text:'女'}]"></span></td>
 					<td><span xtype="button"
