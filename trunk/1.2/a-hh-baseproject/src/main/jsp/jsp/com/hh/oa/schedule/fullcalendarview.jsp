@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.Convert"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.SystemUtil"%>
 <%=SystemUtil.getBaseDoctype()%>
@@ -82,145 +83,150 @@
 	$(document)
 			.ready(
 					function() {
-						$('#calendar')
-								.fullCalendar(
-										{
-											//lazyFetching : false,
-											header : {
-												left : 'title',
-												center : 'prevYear,prev,next,nextYear today',
-												right : 'month,agendaWeek,agendaDay'
-											},
-											titleFormat : {
-												month : 'YYYY年MM月',
-												day : 'YYYY年MM月DD日'
-											},
-											monthNames : [ "一月", "二月", "三月",
-													"四月", "五月", "六月", "七月",
-													"八月", "九月", "十月", "十一月",
-													"十二月" ],
-											monthNamesShort : [ "一月", "二月",
-													"三月", "四月", "五月", "六月",
-													"七月", "八月", "九月", "十月",
-													"十一月", "十二月" ],
-											dayNames : [ "周日", "周一", "周二",
-													"周三", "周四", "周五", "周六" ],
-											dayNamesShort : [ "周日", "周一", "周二",
-													"周三", "周四", "周五", "周六" ],
-											today : [ "今天" ],
-											buttonText : {
-												today : '当前',
-												month : '月',
-												week : '周',
-												day : '日',
-												prev : '‹', // ‹
-												next : '›', // ›
-												prevYear : '«', // «
-												nextYear : '»' // »
-											},
-											selectable : true,
-											selectHelper : true,
-											eventClick : function(calEvent,
-													jsEvent, view) {
-												var object = getEventObject(calEvent);
-												Dialog
-														.open({
-															url : 'jsp-oa-schedule-calendaredit?ctype='
-																	+ object.ctype,
-															params : {
-																object : object,
-																callback : function(
-																		resultData) {
-																	if (resultData == 'delete') {
-																		$(
-																				'#calendar')
-																				.fullCalendar(
-																						'removeEvents',
-																						[ object.id ]);
-																	} else {
-																		$
-																				.extend(
-																						calEvent,
-																						toEvent(resultData));
-																		$(
-																				'#calendar')
-																				.fullCalendar(
-																						'updateEvent',
-																						calEvent,
-																						true);
-																		renderEvent();
-																	}
-
-																}
-															}
-														});
-											},
-											eventDrop : function(event) {
-												Request
-														.request(
-																'oa-Schedule-save',
-																{
-																	data : getEventObject(event)
-																});
-											},
-											eventResize : function(event) {
-												Request
-														.request(
-																'oa-Schedule-save',
-																{
-																	data : getEventObject(event)
-																});
-											},
-											select : function(start, end) {
-												var object = {
-													start : start
-															.format('YYYY-MM-DD HH:mm:ss'),
-													end : end
-															.format('YYYY-MM-DD HH:mm:ss')
-												};
-												Dialog
-														.open({
-															url : 'jsp-oa-schedule-calendaredit',
-															params : {
-																object : object,
-																callback : function(
-																		resultData) {
-																	$(
-																			'#calendar')
-																			.fullCalendar(
-																					'renderEvent',
-																					toEvent(resultData));
-																	$(
-																			'#calendar')
-																			.fullCalendar(
-																					'unselect');
-																	renderEvent();
-																}
-															}
-														});
-											},
-											editable : true,
-											events : function(start, end, ddd,
-													callback) {
-												Request
-														.request(
-																'oa-Schedule-queryListByDate',
-																{
-																	data : {
-																		startDate : start
-																				.format('YYYY-MM-DD HH:mm:ss'),
-																		endDate : end
-																				.format('YYYY-MM-DD HH:mm:ss')
-																	}
-																},
-																function(result) {
-																	callback(toEvents(result));
-																	renderEvent();
-																});
-											}
-										});
-
+						renderData();
 					});
+	
+	function renderData(){
+		$('#calendar')
+		.fullCalendar(
+				{
+					//lazyFetching : false,
+					header : {
+						left : 'title',
+						center : 'prevYear,prev,next,nextYear today',
+						right : 'month,agendaWeek,agendaDay'
+					},
+					titleFormat : {
+						month : 'YYYY年MM月',
+						day : 'YYYY年MM月DD日'
+					},
+					monthNames : [ "一月", "二月", "三月",
+							"四月", "五月", "六月", "七月",
+							"八月", "九月", "十月", "十一月",
+							"十二月" ],
+					monthNamesShort : [ "一月", "二月",
+							"三月", "四月", "五月", "六月",
+							"七月", "八月", "九月", "十月",
+							"十一月", "十二月" ],
+					dayNames : [ "周日", "周一", "周二",
+							"周三", "周四", "周五", "周六" ],
+					dayNamesShort : [ "周日", "周一", "周二",
+							"周三", "周四", "周五", "周六" ],
+					today : [ "今天" ],
+					buttonText : {
+						today : '当前',
+						month : '月',
+						week : '周',
+						day : '日',
+						prev : '‹', // ‹
+						next : '›', // ›
+						prevYear : '«', // «
+						nextYear : '»' // »
+					},
+					selectable : true,
+					selectHelper : true,
+					eventClick : function(calEvent,
+							jsEvent, view) {
+						var object = getEventObject(calEvent);
+						Dialog
+								.open({
+									url : 'jsp-oa-schedule-calendaredit?ctype='
+											+ object.ctype,
+									params : {
+										object : object,
+										callback : function(
+												resultData) {
+											if (resultData == 'delete') {
+												$(
+														'#calendar')
+														.fullCalendar(
+																'removeEvents',
+																[ object.id ]);
+											} else {
+												$
+														.extend(
+																calEvent,
+																toEvent(resultData));
+												$(
+														'#calendar')
+														.fullCalendar(
+																'updateEvent',
+																calEvent,
+																true);
+												renderEvent();
+											}
+
+										}
+									}
+								});
+					},
+					eventDrop : function(event) {
+						Request
+								.request(
+										'oa-Schedule-save',
+										{
+											data : getEventObject(event)
+										});
+					},
+					eventResize : function(event) {
+						Request
+								.request(
+										'oa-Schedule-save',
+										{
+											data : getEventObject(event)
+										});
+					},
+					select : function(start, end) {
+						var object = {
+							start : start
+									.format('YYYY-MM-DD HH:mm:ss'),
+							end : end
+									.format('YYYY-MM-DD HH:mm:ss')
+						};
+						Dialog
+								.open({
+									url : 'jsp-oa-schedule-calendaredit',
+									params : {
+										object : object,
+										callback : function(
+												resultData) {
+											$(
+													'#calendar')
+													.fullCalendar(
+															'renderEvent',
+															toEvent(resultData));
+											$(
+													'#calendar')
+													.fullCalendar(
+															'unselect');
+											renderEvent();
+										}
+									}
+								});
+					},
+					editable : true,
+					events : function(start, end, ddd,
+							callback) {
+						Request
+								.request(
+										'oa-Schedule-queryListByDate',
+										{
+											data : {
+												startDate : start
+														.format('YYYY-MM-DD HH:mm:ss'),
+												endDate : end
+														.format('YYYY-MM-DD HH:mm:ss'),
+														'currUserId':'<%=Convert.toString(request.getParameter("currUserId"))%>'
+											}
+										},
+										function(result) {
+											callback(toEvents(result));
+											renderEvent();
+										});
+					}
+				});
+
+	}
 	
 	
 	function renderEvent(){

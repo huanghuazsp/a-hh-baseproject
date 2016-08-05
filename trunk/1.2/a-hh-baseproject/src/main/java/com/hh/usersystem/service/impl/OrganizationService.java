@@ -44,25 +44,25 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	public List<UsOrganization> queryTreeList(UsOrganization object) {
 		return organizationToIconCls(
 				queryTreeList(object.getNode(),
-						ParamFactory.getParamHb()), null);
+						ParamFactory.getParamHb()));
 	}
 
 	public List<UsOrganization> queryTreeList(ParamInf paramList) {
 
-		return organizationToIconCls(super.queryTreeList(paramList), null);
+		return organizationToIconCls(super.queryTreeList(paramList));
 	}
 
 	public List<UsOrganization> queryTreeListByLx(UsOrganization object) {
 		return organizationToIconCls(
 				queryTreeList(object.getNode(), ParamFactory
-						.getParamHb().le("lx_", object.getLx_())), null);
+						.getParamHb().le("lx_", object.getLx_())));
 	}
 
 	public List<UsOrganization> organizationToIconCls(
-			List<UsOrganization> organizationList, String selectType) {
+			List<UsOrganization> organizationList) {
 		for (UsOrganization organization : organizationList) {
 			if (organization.getChildren() != null) {
-				organizationToIconCls(organization.getChildren(), selectType);
+				organizationToIconCls(organization.getChildren());
 			}
 			if (organization != null) {
 				String clasString = organization.getLx_() == 0 ? "group"
@@ -76,11 +76,6 @@ public class OrganizationService extends BaseService<UsOrganization> {
 										: organization.getLx_() == 2 ? "/hhcommon/images/myimage/org/dept.png"
 												: organization.getLx_() == 3 ? "/hhcommon/images/myimage/org/job.png"
 														: "");
-				if (selectType != null) {
-					if (!selectType.equals(clasString)) {
-						organization.setNocheck(true);
-					}
-				}
 			}
 		}
 		return organizationList;
@@ -101,24 +96,30 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		hqlParamList.nis("state", 1);
 		hqlParamList.is("lx_", organization.getLx_());
 		return organizationToIconCls(
-				dao.queryTreeList(UsOrganization.class, hqlParamList), null);
+				dao.queryTreeList(UsOrganization.class, hqlParamList));
 	}
-
-	public List<UsOrganization> queryOrgListByPid(UsOrganization organization,
-			String orgs, String selectType) {
-		String node = organization.getNode();
+	public List<UsOrganization> queryOrgListByPid(String node,
+			List<String> orgs) {
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		List<UsOrganization> organizationList = null;
-		if (Check.isNoEmpty(orgs)) {
-			hqlParamList.in("id", Convert.strToList(orgs));
+		if (Check.isNoEmpty(node)) {
+			hqlParamList.is("node", node);
+		}else if (Check.isNoEmpty(orgs)) {
+			hqlParamList.in("id", orgs);
+		}else{
+			hqlParamList.is("node", node);
 		}
-		hqlParamList.is("node", node);
+		
 		hqlParamList.nis("lx_", 3);
 		hqlParamList.nis("state", 1);
 		hqlParamList.order("lx_");
 		organizationList = dao
 				.queryTreeList(UsOrganization.class, hqlParamList);
-		return organizationToIconCls(organizationList, selectType);
+		return organizationToIconCls(organizationList);
+	}
+	public List<UsOrganization> queryOrgListByPid(String node,
+			String orgs) {
+		return queryOrgListByPid(node, Convert.strToList(orgs));
 	}
 
 	public UsOrganization findObjectById(String id) {
@@ -200,11 +201,24 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		usLeaderService.deleteLeaders(deleteIds);
 	}
 
+	
+	public List<UsOrganization> queryOrgAndUsersList(List<String> orgIdList,String node) {
+		List<UsOrganization> organizations = this.queryOrgListByPid(
+				node, orgIdList);
+		for (UsOrganization organization : organizations) {
+			organization.setLeaf(0);
+			updateLeaf(organization);
+		}
+		if (Check.isNoEmpty(node)) {
+			organizations.addAll(addOrgUser(node));
+		}
+		return organizations;
+	}
 
 	public List<UsOrganization> queryOrgAndUsersList(
 			UsOrganization organization1) {
 		List<UsOrganization> organizations = this.queryOrgListByPid(
-				organization1, null, null);
+				organization1.getNode(),"");
 		for (UsOrganization organization : organizations) {
 			organization.setLeaf(0);
 			updateLeaf(organization);
@@ -250,7 +264,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		return addOrgUser(hhXtYhs);
 	}
 
-	private List<UsOrganization> addOrgUser(List<UsUser> hhXtYhs) {
+	public List<UsOrganization> addOrgUser(List<UsUser> hhXtYhs) {
 		List<UsOrganization> organizations = new ArrayList<UsOrganization>();
 		if (!Check.isEmpty(hhXtYhs)) {
 //			organization.setExpanded(1);
@@ -292,7 +306,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				organization.setId(organization.getCode_());
 			}
 		}
-		return organizationToIconCls(organizations, null);
+		return organizationToIconCls(organizations);
 	}
 
 	public void save(List<Map<String, Object>> mapList) {

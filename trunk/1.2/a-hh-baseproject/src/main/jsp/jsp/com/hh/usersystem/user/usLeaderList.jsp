@@ -84,11 +84,6 @@
 </head>
 <body xtype="border_layout">
 	<div config="render : 'west' ,width:260 ">
-		<div xtype="toolbar" config="type:'head'">
-			<span xtype="button"
-				config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'tree'  "></span>
-		</div>
-
 		<span xtype="tree" configVar="orgtreeconfig"></span>
 	</div>
 	<div>

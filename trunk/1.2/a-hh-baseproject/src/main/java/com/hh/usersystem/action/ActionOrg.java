@@ -31,7 +31,6 @@ import com.hh.usersystem.service.impl.RoleService;
 @SuppressWarnings("serial")
 public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	private String orgs;
-	private String selectType;
 
 	@Autowired
 	private OrganizationService organizationService;
@@ -59,7 +58,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	}
 
 	public Object queryOrgListByPid() {
-		List<UsOrganization> organizationList = organizationService.queryOrgListByPid(object, orgs, selectType);
+		List<UsOrganization> organizationList = organizationService.queryOrgListByPid(object.getNode(), orgs);
 		return organizationList;
 	}
 
@@ -126,13 +125,6 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 		this.orgs = orgs;
 	}
 
-	public String getSelectType() {
-		return selectType;
-	}
-
-	public void setSelectType(String selectType) {
-		this.selectType = selectType;
-	}
 
 	private File attachment;
 	private String attachmentFileName;
