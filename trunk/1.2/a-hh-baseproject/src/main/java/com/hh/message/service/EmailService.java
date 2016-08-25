@@ -46,7 +46,6 @@ public class EmailService extends BaseService<SysEmail> implements
 		UsUser hhXtYh = loginUserUtilService.findLoginUser();
 		entity.setSendUserId(hhXtYh.getId());
 		entity.setSendUserName(hhXtYh.getText());
-
 		if (Check.isEmpty(entity.getId())) {
 			dao.createEntity(entity);
 		} else {
