@@ -10,7 +10,7 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 
 @Entity
 @Table(name = "SYS_EMAIL")
-public class SysEmail extends BaseTwoEntity implements java.io.Serializable {
+public class SysEmail extends BaseTwoEntity {
 	
 	private String type;
 	private String content;
