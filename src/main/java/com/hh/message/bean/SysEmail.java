@@ -41,6 +41,7 @@ public class SysEmail extends BaseTwoEntity {
 		this.type = type;
 	}
 
+	@Transient
 	public String getUsers() {
 		return users;
 	}
