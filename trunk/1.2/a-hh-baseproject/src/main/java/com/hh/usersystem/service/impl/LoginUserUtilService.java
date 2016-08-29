@@ -26,12 +26,16 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 	private static Gson gson = new Gson();
 
 	public UsUser findLoginUser() {
-		if (ActionContext.getContext() == null) {
+		if (ActionContext.getContext() == null || ActionContext.getContext().getSession()==null) {
 			return null;
 		}
-		UsUser hhXtYh = (UsUser) ActionContext.getContext().getSession()
+		Object userObject = ActionContext.getContext().getSession()
 				.get("loginuser");
-		return hhXtYh;
+		if (userObject!=null) {
+			UsUser hhXtYh = (UsUser)userObject ;
+			return hhXtYh;
+		}
+		return null;
 	}
 	
 	public UsUser findLoginUserSimple() {

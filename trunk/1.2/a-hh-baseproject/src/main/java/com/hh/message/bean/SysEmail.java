@@ -6,6 +6,8 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Index;
+
 import com.hh.hibernate.util.base.BaseTwoEntity;
 
 @Entity
@@ -15,26 +17,21 @@ public class SysEmail extends BaseTwoEntity {
 	private String type;
 	private String content;
 	private String title;
-//	private String files;
 	
 	private String users="";
 	private String userNames="";
 	private String sendUserId="";
 	private String sendUserName="";
-	private String readUserId="";
-	
-	private String deleteUserId="";
-	
-	private String thoroughDeleteUserId="";
-	
 	
 	private int read=0;
+	
+	private int meDelete =0;
 
 	private enum Type {
 		yfs, cgx
 	}
 
-	
+	@Index(name="SYS_EMAIL_INDEX_TYPE_")
 	@Column(name = "TYPE_", length = 16)
 	public String getType() {
 		return type;
@@ -44,8 +41,6 @@ public class SysEmail extends BaseTwoEntity {
 		this.type = type;
 	}
 
-	@Lob
-	@Column(name="USERS")
 	public String getUsers() {
 		return users;
 	}
@@ -73,16 +68,6 @@ public class SysEmail extends BaseTwoEntity {
 		this.title = title;
 	}
 
-//	@Lob
-//	@Column(name="FILES")
-//	public String getFiles() {
-//		return files;
-//	}
-//
-//	public void setFiles(String files) {
-//		this.files = files;
-//	}
-
 	@Lob
 	@Column(name="USER_NAMES")
 	public String getUserNames() {
@@ -93,6 +78,8 @@ public class SysEmail extends BaseTwoEntity {
 		this.userNames = userNames;
 	}
 
+	
+	@Index(name="SYS_EMAIL_INDEX_SEND_USERID")
 	@Column(name="SEND_USERID",length=36)
 	public String getSendUserId() {
 		return sendUserId;
@@ -111,36 +98,6 @@ public class SysEmail extends BaseTwoEntity {
 		this.sendUserName = sendUserName;
 	}
 
-	@Lob
-	@Column(name="READ_USERID")
-	public String getReadUserId() {
-		return readUserId;
-	}
-
-	public void setReadUserId(String readUserId) {
-		this.readUserId = readUserId;
-	}
-
-	@Lob
-	@Column(name="DELETE_USERID")
-	public String getDeleteUserId() {
-		return deleteUserId;
-	}
-
-	public void setDeleteUserId(String deleteUserId) {
-		this.deleteUserId = deleteUserId;
-	}
-
-	@Lob
-	@Column(name="THOROUGH_DELETE_USERID")
-	public String getThoroughDeleteUserId() {
-		return thoroughDeleteUserId;
-	}
-
-	public void setThoroughDeleteUserId(String thoroughDeleteUserId) {
-		this.thoroughDeleteUserId = thoroughDeleteUserId;
-	}
-
 	@Transient
 	public int getRead() {
 		return read;
@@ -149,5 +106,15 @@ public class SysEmail extends BaseTwoEntity {
 	public void setRead(int read) {
 		this.read = read;
 	}
+
+	@Column(name="ME_DELETE")
+	public int getMeDelete() {
+		return meDelete;
+	}
+
+	public void setMeDelete(int meDelete) {
+		this.meDelete = meDelete;
+	}
+	
 	
 }

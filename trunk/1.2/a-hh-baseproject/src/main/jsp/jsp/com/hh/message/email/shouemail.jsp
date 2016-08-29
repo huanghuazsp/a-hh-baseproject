@@ -16,7 +16,7 @@
 	var shouObject = null;
 	function findData() {
 		if (objectid) {
-			Request.request('message-Email-findObjectById', {
+			Request.request('message-Email-findReadObjectById', {
 				data : {
 					id : objectid
 				},
