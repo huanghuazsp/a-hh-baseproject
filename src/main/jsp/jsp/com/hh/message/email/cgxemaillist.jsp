@@ -9,7 +9,7 @@
 	function doDelete() {
 		$.hh.pagelist.deleteData({
 			pageid : 'pagelist',
-			action : 'message-Email-deleteByIds'
+			action : 'message-Email-deleteMeByIds'
 		});
 	}
 	function doView() {
@@ -38,7 +38,7 @@
 	<div xtype="toolbar" config="type:'head'">
 		<span xtype="button" config="onClick: doView ,text:'查看'"></span>
 		<span xtype="button" config="onClick: doEdit ,text:'编辑'"></span>
-		<span xtype="button" config="onClick:doDelete,text:'删除'"></span>
+		<span xtype="button" config="onClick:doDelete,text:'测底删除'"></span>
 	</div>
 	<table xtype="form" id="queryForm" style="width: 700px;">
 		<tr>
