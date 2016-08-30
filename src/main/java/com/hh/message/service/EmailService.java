@@ -144,14 +144,20 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 
 		String hql = "select a.id as id, a.title  as title, a.dcreate  as dcreate, a.type as type,  a.sendUserName as sendUserName, a.userNames as userNames,b.read as read from "
 				+ SysEmail.class.getName() + " a , " + SysEmailUser.class.getName()
-				+ " b  where  (b.type=8 and a.id=b.emailId and b.userId=:userId)  ORDER BY b.dupdate DESC";
+				+ " b  where  (b.type=8 and a.id=b.emailId and b.userId=:userId) ";
 		String hqlCount = "select count(b) from " + SysEmail.class.getName() + " a , " + SysEmailUser.class.getName()
 				+ " b  where  (b.type=8 and a.id=b.emailId and b.userId=:userId)  ";
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userId", userId);
+		
+		String whereSql = "";
+		if (Check.isNoEmpty(object.getTitle())) {
+			paramMap.put("title","%"+ object.getTitle()+"%");
+			whereSql+=" and a.title like :title ";
+		}
 
-		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql, hqlCount, paramMap, pageRange);
+		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql+whereSql+" ORDER BY b.dupdate DESC", hqlCount+whereSql, paramMap, pageRange);
 
 		return page;
 	}
@@ -178,14 +184,19 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 
 		String hql = "select a.id as id, a.title  as title, a.dcreate  as dcreate, a.type as type , a.sendUserName as sendUserName, a.userNames as userNames,b.read as read from "
 				+ SysEmail.class.getName() + " a , " + SysEmailUser.class.getName()
-				+ " b  where a.type='yfs' and b.type=0 and a.id=b.emailId and b.userId=:userId ORDER BY b.dupdate DESC";
+				+ " b  where a.type='yfs' and b.type=0 and a.id=b.emailId and b.userId=:userId ";
 		String hqlCount = "select count(b) from " + SysEmail.class.getName() + " a , " + SysEmailUser.class.getName()
 				+ " b  where a.type='yfs' and b.type=0 and a.id=b.emailId and b.userId=:userId";
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userId", userId);
+		String whereSql = "";
+		if (Check.isNoEmpty(object.getTitle())) {
+			paramMap.put("title","%"+ object.getTitle()+"%");
+			whereSql+=" and a.title like :title ";
+		}
 
-		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql, hqlCount, paramMap, pageRange);
+		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql+whereSql+" ORDER BY b.dupdate DESC", hqlCount+whereSql, paramMap, pageRange);
 
 		return page;
 	}
@@ -225,14 +236,14 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 				dao.updateEntity("update " + SysEmailUser.class.getName()
 						+ " set type=0 where userId=:userId and emailId in :emailIdList ", paramsMap);
 				
-				update("id", ids, "meDelete", 0);
+				update("id", Convert.strToList(ids), "meDelete", 0);
 		}
 	}
 
 	public void deleteMeByIds(String ids) {
 		if (Check.isNoEmpty(ids)) {
 			if (Check.isNoEmpty(ids)) {
-				update("id", ids, "meDelete", 1);
+				update("id", Convert.strToList(ids), "meDelete", 1);
 			}
 		}
 
