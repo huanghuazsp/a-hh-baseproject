@@ -62,6 +62,7 @@
 
 	function init() {
 		findData();
+		$('table').css('background',$.hh.property.classObject.themeContent)
 	}
 	
 	function shoujianlist(){
@@ -80,31 +81,24 @@
 <body>
 	<div xtype="hh_content">
 		<form id="form" xtype="form">
-			<table xtype="form">
+			<div></div>
+			<table width=100%>
 				<tr>
-					<td xtype="label" style="width: 80px;">标题：</td>
-					<td colspan="3"><span xtype="text" config=" name : 'title',required :true"></span></td>
-				</tr>
-				<tr>
-					<td xtype="label">发件人：</td>
-					<td><span xtype="text" config="name: 'sendUserName' "></span></td>
-					<td xtype="label">时间：</td>
-					<td><span xtype="date" config="name: 'dcreate' ,type:'datetime'"></span></td>
-				</tr>
-				<tr>
-					<td xtype="label">收件人：</td>
-					<td  colspan="3"><span xtype="text" config="name: 'userNames' "></span></td>
-				</tr>
-				<tr>
-					<td xtype="label">附件：</td>
-					<td  colspan="3">
-					<span xtype="fileUpload"
-						config="name: 'file' , type:'email' ,request:true"></span></td>
+					<td xtype="label" style="text-align:left;padding:10px;">
+						<font size=4 ><b><span xtype="text" config=" name : 'title',required :true"></span></b></font><br>
+						发&nbsp;件&nbsp;人：<span xtype="text" config="name: 'sendUserName' "></span><br>
+						时&nbsp;&nbsp;&nbsp;间：<span xtype="date" config="name: 'dcreate' ,type:'yyyy年MM月dd日 （EEE） HH:mm'"></span><br>
+						收&nbsp;件&nbsp;人：<span xtype="text" config="name: 'userNames' "></span><br>
+						附&nbsp;&nbsp;&nbsp;件： <span xtype="fileUpload"
+						config="name: 'file' , type:'email' ,request:true"></span>
+					</td>
+					<td xtype="label">
+					</td>
 				</tr>
 			</table>
-			<div>
+			<div style="padding:25px;">
 						<span xtype="textarea" config="name: 'content' "></span>
-					</div>
+			</div>
 		</form>
 	</div>
 	<div xtype="toolbar">
