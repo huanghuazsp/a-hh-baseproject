@@ -71,7 +71,7 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 		paramsMap.put("userId", userId);
 		
 		String sjhqlCount = "select count(b) from " + SysEmail.class.getName() + " a , " + SysEmailUser.class.getName()
-				+ " b  where a.type='yfs' and b.type=0 and a.id=b.emailId and b.userId='" + userId + "'";
+				+ " b  where a.type='yfs' and b.type=0 and a.id=b.emailId and b.userId=:userId";
 
 		int sjCount = dao.findCount(sjhqlCount, paramsMap);
 
