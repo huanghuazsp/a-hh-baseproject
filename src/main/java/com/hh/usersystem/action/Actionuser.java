@@ -47,6 +47,7 @@ public class Actionuser extends BaseServiceAction<UsUser>  {
 	private OrganizationService organizationService;
 
 	private String oldPassword;
+	private int selectType;
 
 	@Override
 	public BaseService<UsUser> getService() {
@@ -54,19 +55,19 @@ public class Actionuser extends BaseServiceAction<UsUser>  {
 	}
 
 	public Object queryPagingData() {
-		return userService.queryPagingData(object, this.getPageRange(), this.getIds(), orgs, roles, groups,usgroups);
+		return userService.queryPagingData(object, this.getPageRange(),selectType, this.getIds(), orgs, roles, groups,usgroups);
 	}
 
 	public Object queryPagingDataCombox() {
 		if (Check.isNoEmpty(this.object.getId())) {
 			return userService.queryItemsByIdsStr(object.getId());
 		} else {
-			return userService.queryPagingData(object, this.getPageRange(), null, null, null, null,null);
+			return userService.queryPagingData(object, this.getPageRange(), 0,null, null, null, null,null);
 		}
 	}
 
 	public Object queryPagingDataList() {
-		return userService.queryPagingData(object, this.getPageRange(), null, null, null, null,null);
+		return userService.queryPagingData(object, this.getPageRange(),0, null, null, null, null,null);
 	}
 
 	public Object queryOnLinePagingData() {
@@ -395,4 +396,12 @@ public class Actionuser extends BaseServiceAction<UsUser>  {
 		this.usgroups = usgroups;
 	}
 
+	public int getSelectType() {
+		return selectType;
+	}
+
+	public void setSelectType(int selectType) {
+		this.selectType = selectType;
+	}
+	
 }

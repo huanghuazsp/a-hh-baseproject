@@ -81,8 +81,14 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 		}
 	}
 
-	public PagingData<UsUser> queryPagingData(UsUser hhXtYh, PageRange pageRange, String ids, String orgs, String roles,
+	public PagingData<UsUser> queryPagingData(UsUser hhXtYh, PageRange pageRange,int selectType, String ids, String orgs, String roles,
 			String groups, String usgroups) {
+		UsUser user = loginUserUtilService.findLoginUser();
+		if (selectType==1) {
+			orgs=user.getDeptId();
+		}else if (selectType==2) {
+			orgs=user.getOrgId();
+		}
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (!Check.isEmpty(hhXtYh.getText())) {
 			hqlParamList
