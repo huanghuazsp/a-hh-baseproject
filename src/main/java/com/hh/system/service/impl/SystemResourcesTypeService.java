@@ -28,10 +28,21 @@ public class SystemResourcesTypeService extends BaseService<SystemResourcesType>
 		List<SystemResourcesType> resourcesTypes = super.queryTreeList(object.getNode(),paramInf);
 		if (object.getState()==0) {
 			render(resourcesTypes);
+		}else if (object.getState()==1) {
+			render2(resourcesTypes);
 		}
 		return resourcesTypes;
 	}
-	
+	private void render2(List<SystemResourcesType> resourcesTypes) {
+		if (resourcesTypes!=null) {
+			for (SystemResourcesType systemResourcesType : resourcesTypes) {
+				if (systemResourcesType.getState()==1) {
+					systemResourcesType.setText(systemResourcesType.getText()+"["+systemResourcesType.getVcreateName()+"]");;
+				}
+				render2(systemResourcesType.getChildren());
+			}
+		}
+	}
 	private void render(List<SystemResourcesType> resourcesTypes) {
 		if (resourcesTypes!=null) {
 			for (SystemResourcesType systemResourcesType : resourcesTypes) {
