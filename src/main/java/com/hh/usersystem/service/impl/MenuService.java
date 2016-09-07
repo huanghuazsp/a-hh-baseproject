@@ -3,8 +3,6 @@ package com.hh.usersystem.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +11,6 @@ import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
-import com.hh.system.util.dto.PageRange;
-import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.model.ExtCheckTree;
@@ -23,7 +19,6 @@ import com.hh.usersystem.bean.usersystem.SysOper;
 import com.hh.usersystem.bean.usersystem.UsRoleMenu;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UsUserMenuZmtb;
-import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.opensymphony.xwork2.ActionContext;
 
 @Service
@@ -187,8 +182,8 @@ public class MenuService extends BaseService<SysMenu> {
 			List<String> idList = Convert.strToList(ids);
 			for (String id : idList) {
 				UsUserMenuZmtb hhXtYhCdZmtb = new UsUserMenuZmtb();
-				SysMenu hhXtCd = dao.findEntityByPK(SysMenu.class, id);
-				hhXtYhCdZmtb.setHhXtCd(hhXtCd);
+				// SysMenu hhXtCd = dao.findEntityByPK(SysMenu.class, id);
+				hhXtYhCdZmtb.setCdId(id);
 				hhXtYhCdZmtb.setYhId(loginUserUtilService.findLoginUser().getId());
 				xtyhcdzmtb.createEntity(hhXtYhCdZmtb);
 			}
@@ -227,5 +222,17 @@ public class MenuService extends BaseService<SysMenu> {
 				getSubNodes(sysMenu.getId(), sysMenuList, returnsysMenuList);
 			}
 		}
+	}
+
+	public List<SysMenu> queryListByZmtb(List<UsUserMenuZmtb> desktopQuickList) {
+		List<SysMenu> hhXtCdZmtbList = new ArrayList<SysMenu>();
+		if (desktopQuickList.size() > 0) {
+			List<String> cdidList = new ArrayList<String>();
+			for (UsUserMenuZmtb usUserMenuZmtb : desktopQuickList) {
+				cdidList.add(usUserMenuZmtb.getCdId());
+			}
+			hhXtCdZmtbList = queryListByIds(cdidList);
+		}
+		return hhXtCdZmtbList;
 	}
 }

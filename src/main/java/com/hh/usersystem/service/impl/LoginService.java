@@ -56,6 +56,9 @@ public class LoginService {
 	private UserGroupService userGroupService;
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private MenuService menuService;
 
 	private static final Logger logger = Logger.getLogger(BaseAction.class);
 
@@ -244,17 +247,6 @@ public class LoginService {
 				ParamFactory.getParamHb().is("yhId", hhXtYh.getId())
 		// .addCondition(Order.asc(StaticVar.ORDER))
 		);
-
-		List<SysMenu> hhXtCdZmtbList = new ArrayList<SysMenu>();
-		for (UsUserMenuZmtb hhXtYhCdZmtb : desktopQuickList) {
-			if (hhXtYhCdZmtb.getHhXtCd() != null) {
-				if (hhxtcdIdList.contains(hhXtYhCdZmtb.getHhXtCd().getId())) {
-					hhXtCdZmtbList.add(hhXtYhCdZmtb.getHhXtCd());
-				}
-
-			}
-		}
-
-		return hhXtCdZmtbList;
+		return menuService.queryListByZmtb(desktopQuickList);
 	}
 }
