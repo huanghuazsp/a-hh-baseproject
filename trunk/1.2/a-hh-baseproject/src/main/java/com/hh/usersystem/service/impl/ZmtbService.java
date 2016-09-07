@@ -39,11 +39,8 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 	public List<SysMenu> queryZmtbByUserId(String userId) {
 		List<UsUserMenuZmtb> desktopQuickList = dao.queryList(UsUserMenuZmtb.class,
 				ParamFactory.getParamHb().is("yhId", userId));
-		List<SysMenu> hhXtCds = new ArrayList<SysMenu>();
-		for (UsUserMenuZmtb hhXtYhCdZmtb : desktopQuickList) {
-			hhXtCds.add(hhXtYhCdZmtb.getHhXtCd());
-		}
-		return hhXtCds;
+		
+		return menuService.queryListByZmtb(desktopQuickList);
 	}
 	
 	
@@ -60,8 +57,8 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 		deleteByProperty("yhId", userid);
 		for (int i = idList.size() - 1; i > -1; i--) {
 			UsUserMenuZmtb hhXtYhCdZmtb = new UsUserMenuZmtb();
-			SysMenu hhXtCd = menuService.findObjectById2(idList.get(i));
-			hhXtYhCdZmtb.setHhXtCd(hhXtCd);
+//			SysMenu hhXtCd = menuService.findObjectById2(idList.get(i));
+			hhXtYhCdZmtb.setCdId(idList.get(i));
 			hhXtYhCdZmtb.setOrder(PrimaryKey.getPrimaryKeyTime(this.getGenericType(0).getName()));
 			hhXtYhCdZmtb.setYhId(userid);
 			dao.createEntity(hhXtYhCdZmtb);

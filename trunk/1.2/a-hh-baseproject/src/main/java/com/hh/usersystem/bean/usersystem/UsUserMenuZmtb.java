@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -21,9 +22,9 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 @Table(name = "US_USER_MENU_ZMTB")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order
-public class UsUserMenuZmtb extends BaseTwoEntity implements java.io.Serializable {
+public class UsUserMenuZmtb extends BaseTwoEntity {
 	private String cdId;
-	@Column(name = "HHXTCD_ID", length = 36,insertable=false,updatable=false)
+	@Column(name = "HHXTCD_ID", length = 36)
 	public String getCdId() {
 		return this.cdId;
 	}
@@ -32,16 +33,7 @@ public class UsUserMenuZmtb extends BaseTwoEntity implements java.io.Serializabl
 		this.cdId = cdId;
 	}
 	private String yhId;
-	private SysMenu hhXtCd = new SysMenu();
 
-	@ManyToOne(cascade={CascadeType.ALL}) 
-	public SysMenu getHhXtCd() {
-		return hhXtCd;
-	}
-
-	public void setHhXtCd(SysMenu hhXtCd) {
-		this.hhXtCd = hhXtCd;
-	}
 
 	@Column(name = "YH_ID", length = 36)
 	public String getYhId() {

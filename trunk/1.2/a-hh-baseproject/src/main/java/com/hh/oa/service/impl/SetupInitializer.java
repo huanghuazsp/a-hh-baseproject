@@ -17,7 +17,7 @@ import com.hh.usersystem.service.impl.UserService;
 import com.hh.usersystem.util.steady.StaticProperties;
 
 @Service
-public class SetupInitializerOa {
+public class SetupInitializer {
 
 	@Autowired
 	private EmailService sysShouEmailService;
