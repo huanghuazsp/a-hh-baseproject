@@ -159,7 +159,7 @@
 				: data.sendObjectType;
 		$('#backbtn').undisabled();
 		if (data.sendObjectType != 0 && data.sendObjectType != 6
-				&& data.sendObjectType != 7) {
+				&& data.sendObjectType != 7 && data.sendObjectType != 11) {
 			if (data.id != loginUser.orgId && data.id != loginUser.deptId) {
 				msg('您不在本机构/本部门');
 				$('#backbtn').disabled();
@@ -417,6 +417,8 @@
 			data.img='/hhcommon/images/icons/user/group.png';
 		}else if(data.sendObjectType==1){
 			data.img='/hhcommon/images/myimage/org/org.png';
+		}else if(data.sendObjectType==11){
+			data.img='/hhcommon/images/icons/email/email.png';
 		}
 		
 	}
