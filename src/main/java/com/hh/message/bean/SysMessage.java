@@ -6,6 +6,8 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Index;
+
 import com.hh.hibernate.dao.inf.Order;
 import com.hh.hibernate.util.base.BaseTwoEntity;
 
@@ -80,6 +82,7 @@ public class SysMessage extends BaseTwoEntity {
 		this.read = read;
 	}
 	
+	@Index(name="SYS_MESSAGE_INDEX_SEND_OBJECT_TYPE")
 	@Column(name="SEND_OBJECT_TYPE")
 	public int getSendObjectType() {
 		return sendObjectType;
@@ -117,6 +120,7 @@ public class SysMessage extends BaseTwoEntity {
 		this.sendUserName = sendUserName;
 	}
 
+	@Index(name="SYS_MESSAGE_INDEX_TO_OBJECTID")
 	@Column(name="TO_OBJECTID",length=36)
 	public String getToObjectId() {
 		return toObjectId;
