@@ -11,10 +11,11 @@
 	EmailService emailService = BeanFactoryHelper.getBean( EmailService.class);
 
 	Map<String, Object> map =emailService.count();
-	
+	String id = request.getParameter("id");
 
 %>
 <script type="text/javascript">
+	var id = '<%=id%>'
 	var emailMenu = {
 		data : [ {
 			text : '写信',
@@ -102,6 +103,8 @@
 		String baseurl = "jsp-message-email-shouemaillist";
 		if("write".equals(request.getParameter("type"))){
 			baseurl = "jsp-message-email-writeemail";
+		}else if("shouemail".equals(request.getParameter("type"))){
+			baseurl = "jsp-message-email-shouemail?id="+id;
 		}
 	%>
 </script>

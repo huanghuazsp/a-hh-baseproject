@@ -39,9 +39,9 @@ public class SysMessage extends BaseTwoEntity {
 	
 	private int sendObjectType = 0;
 	
-	private enum Type {
-		message
-	}
+	
+	private String params = "";
+	
 
 	@Lob
 	@Column(name = "CONTENT")
@@ -176,5 +176,15 @@ public class SysMessage extends BaseTwoEntity {
 		this.objectHeadpic = objectHeadpic;
 	}
 
+	@Column(name="PARAMS_",length=128)
+	public String getParams() {
+		return params;
+	}
+
+	public void setParams(String params) {
+		this.params = params;
+	}
+
+	
 	
 }

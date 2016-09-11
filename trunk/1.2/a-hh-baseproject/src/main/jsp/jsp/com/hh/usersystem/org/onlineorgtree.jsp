@@ -486,6 +486,14 @@
 		$.hh.addTab(params);
 	}
 
+	function openEmail(params){
+		$.hh.addTab({
+			id : 'e9fa8689-c362-4c66-bd75-d1b132bd5211',
+			text :  '个人邮件',
+			src : 'jsp-message-email-emailmain?type=shouemail&id=' +params
+		});
+	}
+	
 	function getMyMsg(config) {
 		var message = config.message || '';
 		var date = config.date || '';
@@ -494,6 +502,11 @@
 		var text = config.sendUserName;
 		var headpic = config.sendHeadpic;
 		var userId = config.sendUserId;
+		
+		
+		if(config.sendObjectType==11 && config.params){
+			message = '<a href="javascript:openEmail(\''+config.params+'\')">'+message+'</a>';
+		}
 
 		if (headpic && headpic.indexOf('hhcomm') == -1) {
 			headpic = "system-File-download?params={id:'" + headpic + "'}";

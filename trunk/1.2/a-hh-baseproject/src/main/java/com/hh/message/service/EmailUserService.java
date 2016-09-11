@@ -43,6 +43,7 @@ public class EmailUserService extends BaseService<SysEmailUser> {
 //			message.setObjectId("email");
 			message.setObjectName("邮件");
 //			message.setObjectHeadpic("/hhcommon/images/icons/email/email.png");
+			message.setParams(entity.getId());
 			
 			ThreadUtil.getThreadPool().execute(new MessageThread(message, 0));
 		}
