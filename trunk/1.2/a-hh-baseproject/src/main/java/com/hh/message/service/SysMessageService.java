@@ -222,6 +222,8 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 			paramInf3.is("toObjectId", user.getId());
 
 			paramInf.or(paramInf2, paramInf3);
+		} else if (sendObjectType == 11 || sendObjectType == 12) {
+			paramInf.is("toObjectId", user.getId());
 		} else {
 			paramInf.is("toObjectId", toObjectId);
 		}

@@ -40,7 +40,7 @@ public class EmailUserService extends BaseService<SysEmailUser> {
 			SysMessage message = sysMessageService.findMessage(11, content, sysEmailUser.getUserId(), sysEmailUser.getUserName(), "");
 
 			
-//			message.setObjectId("email");
+			message.setObjectId("email");
 			message.setObjectName("邮件");
 //			message.setObjectHeadpic("/hhcommon/images/icons/email/email.png");
 			message.setParams(entity.getId());
