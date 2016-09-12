@@ -8,7 +8,7 @@
 <html>
 <head>
 <title>即时通讯</title>
-<%=SystemUtil.getBaseJs("layout", "ztree", "ckeditor")
+<%=SystemUtil.getBaseJs("layout", "ztree", "ckeditor", "workflow")
 					+ SystemUtil.getUser()%>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/engine.js"></script>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/message.js"></script>
@@ -159,7 +159,7 @@
 				: data.sendObjectType;
 		$('#backbtn').undisabled();
 		if (data.sendObjectType != 0 && data.sendObjectType != 6
-				&& data.sendObjectType != 7 && data.sendObjectType != 11) {
+				&& data.sendObjectType != 7 && data.sendObjectType != 11 && data.sendObjectType != 12) {
 			if (data.id != loginUser.orgId && data.id != loginUser.deptId) {
 				msg('您不在本机构/本部门');
 				$('#backbtn').disabled();
@@ -419,6 +419,8 @@
 			data.img='/hhcommon/images/myimage/org/org.png';
 		}else if(data.sendObjectType==11){
 			data.img='/hhcommon/images/icons/email/email.png';
+		}else if(data.sendObjectType==12){
+			data.img='/hhcommon/images/extjsico/txt.gif';
 		}
 		
 	}
@@ -485,6 +487,13 @@
 	function openEmail(params) {
 		$.hh.addTab(params);
 	}
+	
+	function openTask(params) {
+		WF.manager({
+			id : params,
+			actionType : 'manager'
+		});
+	}
 
 	function openEmail(params){
 		$.hh.addTab({
@@ -506,6 +515,8 @@
 		
 		if(config.sendObjectType==11 && config.params){
 			message = '<a href="javascript:openEmail(\''+config.params+'\')">'+message+'</a>';
+		}else if(config.sendObjectType==12 && config.params){
+			message = '<a href="javascript:openTask(\''+config.params+'\')">'+message+'</a>';
 		}
 
 		if (headpic && headpic.indexOf('hhcomm') == -1) {
