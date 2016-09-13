@@ -35,9 +35,9 @@ public class EmailUserService extends BaseService<SysEmailUser> {
 			sysEmailUser.setUserId(ids.get(i));
 			sysEmailUser.setUserName(names.get(i));
 			dao.createEntity(sysEmailUser);
-			UsUser user = loginUserUtilService.findLoginUser();
-			String content = user.getText()+"向您发送了一封邮件<br>["+entity.getTitle()+"]";
-			SysMessage message = sysMessageService.findMessage(11, content, sysEmailUser.getUserId(), sysEmailUser.getUserName(), "");
+//			UsUser user = loginUserUtilService.findLoginUser();
+//			String content = user.getText()+"向您发送了一封邮件<br>["+entity.getTitle()+"]";
+			SysMessage message = sysMessageService.findMessage(11, entity.getTitle(), sysEmailUser.getUserId(), sysEmailUser.getUserName(), "");
 
 			
 			message.setObjectId("email");
