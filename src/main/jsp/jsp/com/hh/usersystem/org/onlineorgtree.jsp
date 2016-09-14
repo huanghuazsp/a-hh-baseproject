@@ -149,7 +149,7 @@
 
 	function msg(msg) {
 		$('#himessageDiv').html('<h1>' + msg + '</h1>');
-		$('#backbtn').disabled();
+		$('#sendbtn').disabled();
 	}
 	
 	var indexpage = 1;
@@ -157,14 +157,17 @@
 	function clickMenu(data) {
 		data.sendObjectType = data.sendObjectType == null ? data.lx_
 				: data.sendObjectType;
-		$('#backbtn').undisabled();
+		$('#sendbtn').undisabled();
 		if (data.sendObjectType != 0 && data.sendObjectType != 6
 				&& data.sendObjectType != 7 && data.sendObjectType != 11 && data.sendObjectType != 12) {
 			if (data.id != loginUser.orgId && data.id != loginUser.deptId) {
 				msg('您不在本机构/本部门');
-				$('#backbtn').disabled();
+				$('#sendbtn').disabled();
 				return;
 			}
+		}
+		if(data.sendObjectType==11 || data.sendObjectType==12){
+			$('#sendbtn').disabled();
 		}
 		var objectMap = $.hh.listToObject($('#messDivspan').data('data'));
 		if (objectMap[data.id] == null) {
@@ -750,8 +753,8 @@
 					config=" height:81,bottom:'hidden', name:'message' ,toolbar : ['Format',	'Font', 'FontSize', 'Styles'] "
 					xtype="ckeditor"></span>
 				<div xtype="toolbar" config="type:'head'" style="text-align: right;">
-					<span id="backbtn" xtype="button"
-						config="onClick: doSendMessage ,text:'发送'   "></span>
+					<span id="sendbtn" xtype="button"
+						config="onClick: doSendMessage ,text:'发送' , disabled :true  "></span>
 				</div>
 			</div>
 		</div>
