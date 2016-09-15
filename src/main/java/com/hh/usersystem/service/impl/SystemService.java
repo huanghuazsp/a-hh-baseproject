@@ -20,8 +20,8 @@ import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.service.inf.SystemServiceInf;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
-import com.hh.system.util.PrimaryKey;
 import com.hh.system.util.StaticVar;
+import com.hh.system.util.pk.PrimaryKey;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.bean.usersystem.UsRole;
@@ -165,7 +165,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		object.setVorgid("system");
 		object.setDcreate(new Date());
 		object.setDupdate(new Date());
-		object.setOrder(PrimaryKey.getTime(object.getClass().getName()));
+		object.setOrder(PrimaryKey.getTime());
 	}
 	
 }
