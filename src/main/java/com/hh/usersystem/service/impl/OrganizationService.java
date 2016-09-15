@@ -150,7 +150,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		}
 
 		if (Check.isEmpty(organization.getId())) {
-			organization.setId(UUID.randomUUID().toString());
+			organization.setId(PrimaryKey.getPrimaryKeyUUID());
 			dao.createEntity(organization);
 		} else {
 			if (organization.getId().equals(organization.getNode())) {
