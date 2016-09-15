@@ -166,7 +166,7 @@
 				return;
 			}
 		}
-		if(data.sendObjectType==11 || data.sendObjectType==12){
+		if(data.sendObjectType>10){
 			$('#sendbtn').disabled();
 		}
 		var objectMap = $.hh.listToObject($('#messDivspan').data('data'));
