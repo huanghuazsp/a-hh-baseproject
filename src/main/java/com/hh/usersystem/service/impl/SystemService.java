@@ -90,7 +90,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 			setBeanSysFields(hhXtJsCd);
 			hhXtJsCd.setJsId(hhXtJs.getId());
 			hhXtJsCd.setCdId(string);
-			hhXtJsCd.setId(string.replaceAll("-", "_"));
+			hhXtJsCd.setId(PrimaryKey.getUUID());
 			jscddao.saveOrUpdateEntity(hhXtJsCd);
 		}
 		return hhXtJs;
