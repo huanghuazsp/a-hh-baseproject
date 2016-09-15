@@ -20,6 +20,7 @@ import com.hh.system.service.inf.IFileOper;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
+import com.hh.system.util.PrimaryKey;
 import com.hh.system.util.StaticVar;
 import com.hh.system.util.date.DateFormat;
 import com.hh.system.util.dto.PageRange;
@@ -201,7 +202,7 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 			// HHXtZmsx hhXtZmsx = new HHXtZmsx();
 			// hhXtYh.setHhXtZmsx(hhXtZmsx);
 			hhXtYh.setVmm("123456");
-			hhXtYh.setId(UUID.randomUUID().toString());
+			hhXtYh.setId(PrimaryKey.getPrimaryKeyUUID());
 			hhXtYh.setTheme("base");
 			xtyhdao.createEntity(hhXtYh);
 		} else {
