@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Convert;
-import com.hh.system.util.PrimaryKey;
 import com.hh.system.util.StaticVar;
 import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.pk.PrimaryKey;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UsUserMenuZmtb;
@@ -59,7 +59,7 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 			UsUserMenuZmtb hhXtYhCdZmtb = new UsUserMenuZmtb();
 //			SysMenu hhXtCd = menuService.findObjectById2(idList.get(i));
 			hhXtYhCdZmtb.setCdId(idList.get(i));
-			hhXtYhCdZmtb.setOrder(PrimaryKey.getTime(this.getGenericType(0).getName()));
+			hhXtYhCdZmtb.setOrder(PrimaryKey.getTime());
 			hhXtYhCdZmtb.setYhId(userid);
 			dao.createEntity(hhXtYhCdZmtb);
 		}
