@@ -101,7 +101,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		hhXtYh.setDsr(new Date());
 		hhXtYh.setNxb(1);
 		hhXtYh.setState(0);
-		hhXtYh.setId("92b38970-69d8-4f5e-b7fc-f06f458a9f1f");
+		hhXtYh.setId("admin");
 		hhXtYh.setText("超级管理员");
 		hhXtYh.setVdh("123456");
 		hhXtYh.setVdlzh("admin");
@@ -111,7 +111,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 //		HHXtZmsx hhXtZmsx = new HHXtZmsx();
 //		hhXtYh.setHhXtZmsx(hhXtZmsx);
 		hhXtYh.setVmm("123456");
-		hhXtYh.setId("92b38970-69d8-4f5e-b7fc-f06f458a9f1f");
+		hhXtYh.setId("admin");
 //		hhXtZmsx.setId(hhXtYh.getId());
 		hhXtYh.setTheme("base");
 		hhXtYh.setRoleIds(hhXtJs.getId());
