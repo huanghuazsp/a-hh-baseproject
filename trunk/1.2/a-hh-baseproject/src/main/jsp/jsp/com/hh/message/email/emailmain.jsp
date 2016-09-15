@@ -104,7 +104,7 @@
 		if("write".equals(request.getParameter("type"))){
 			baseurl = "jsp-message-email-writeemail";
 		}else if("shouemail".equals(request.getParameter("type"))){
-			baseurl = "jsp-message-email-shouemail?id="+id;
+			baseurl = "jsp-message-email-shouemail?type=shouemaillist&id="+id;
 		}
 	%>
 </script>
