@@ -150,7 +150,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		}
 
 		if (Check.isEmpty(organization.getId())) {
-			organization.setId(PrimaryKey.getPrimaryKeyUUID());
+			organization.setId(PrimaryKey.getUUID());
 			dao.createEntity(organization);
 		} else {
 			if (organization.getId().equals(organization.getNode())) {
@@ -331,7 +331,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			}
 
 			UsOrganization organization = null;
-			String id = PrimaryKey.getPrimaryKeyUUID();
+			String id = PrimaryKey.getUUID();
 			String name = Convert.toString(map.get("名称"));
 			if (Check.isNoEmpty(map.get("标识"))) {
 				id = Convert.toString(map.get("标识"));

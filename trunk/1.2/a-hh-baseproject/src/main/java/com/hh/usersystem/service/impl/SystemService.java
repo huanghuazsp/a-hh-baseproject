@@ -165,7 +165,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		object.setVorgid("system");
 		object.setDcreate(new Date());
 		object.setDupdate(new Date());
-		object.setOrder(PrimaryKey.getPrimaryKeyTime(object.getClass().getName()));
+		object.setOrder(PrimaryKey.getTime(object.getClass().getName()));
 	}
 	
 }

@@ -59,7 +59,7 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 			UsUserMenuZmtb hhXtYhCdZmtb = new UsUserMenuZmtb();
 //			SysMenu hhXtCd = menuService.findObjectById2(idList.get(i));
 			hhXtYhCdZmtb.setCdId(idList.get(i));
-			hhXtYhCdZmtb.setOrder(PrimaryKey.getPrimaryKeyTime(this.getGenericType(0).getName()));
+			hhXtYhCdZmtb.setOrder(PrimaryKey.getTime(this.getGenericType(0).getName()));
 			hhXtYhCdZmtb.setYhId(userid);
 			dao.createEntity(hhXtYhCdZmtb);
 		}
