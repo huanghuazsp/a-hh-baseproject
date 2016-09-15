@@ -33,8 +33,7 @@ public class SetupInitializer {
 	
 	@PostConstruct
 	public void initialize() {
-		SysMenu rootHhXtCd = new SysMenu(
-				"c4ef89f5-b94a-4737-a935-e49bfce0105e", "个人办公",
+		SysMenu rootHhXtCd = new SysMenu("YKfDaj9fJWf16D4ovWH","个人办公",
 				"com.hh.global.NavigAtionWindow",
 				"/hhcommon/images/extjsico/17460359.png", 1, 0);
 		rootHhXtCd.setChildren(new ArrayList<SysMenu>());
@@ -57,21 +56,20 @@ public class SetupInitializer {
 		// "jsp-message-email-sendemaillist",
 		// "/hhcommon/images/icons/email/email_edit.png", 0, 1));
 
-		SysMenu rootMailHhXtCd = new SysMenu(
-				"e9fa8689-c362-4c66-bd75-d1b132bd5211", "个人邮件",
+		SysMenu rootMailHhXtCd = new SysMenu( "Mj38uTS5EDGou2cOCY4","个人邮件",
 				"jsp-message-email-emailmain",
 				"/hhcommon/images/icons/email/email.png", 0, 1);
 
 		rootHhXtCd.getChildren().add(rootMailHhXtCd);
 
 		rootHhXtCd.getChildren().add(
-				new SysMenu("fb7ac8da-63f1-467c-8822-791591f00559", "日程安排",
+				new SysMenu("7fmZpjkk034UGEL6K7W","日程安排",
 						"jsp-oa-schedule-fullcalendar",
 						"/hhcommon/images/extjsico/17460310.png", 0, 1));
 		
 		
 		rootHhXtCd.getChildren().add(
-				new SysMenu("05be78a2-f5d7-459d-b179-788b7c7f1111", "网盘",
+				new SysMenu("5P4L5383QPwpsjwvjN0", "网盘",
 						"jsp-system-resources-resourcesmain",
 						"/hhcommon/images/icons/folder/folder.png", 0, 1));
 		

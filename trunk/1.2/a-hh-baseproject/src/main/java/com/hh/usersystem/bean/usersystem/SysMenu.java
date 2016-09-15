@@ -10,6 +10,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
 import com.hh.hibernate.util.base.BaseTreeNodeEntity;
+import com.hh.system.util.PinYinUtil;
+import com.hh.system.util.pk.PrimaryKey;
 
 /**
  * HhXtCd entity.
@@ -33,7 +35,7 @@ public class SysMenu extends BaseTreeNodeEntity<SysMenu> {
 	public SysMenu(){
 		
 	}
-	public SysMenu(String id, String text, String vsj, String icon, int exp,
+	public SysMenu(String id,String text, String vsj, String icon, int exp,
 			int leaf) {
 		this.setId(id);
 		this.setText(text);
@@ -113,8 +115,5 @@ public class SysMenu extends BaseTreeNodeEntity<SysMenu> {
 		this.mobileUrl = mobileUrl;
 		return this;
 	}
-	
-	
-
 
 }
