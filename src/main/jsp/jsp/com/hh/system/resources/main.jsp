@@ -7,7 +7,9 @@
 <head>
 <title>数据列表</title>
 <%=BaseSystemUtil.getBaseJs("layout","ztree", "ztree_edit")%>
-<%String iframeId = PrimaryKey.getPrimaryKeyUUID();%>
+<%
+	String iframeId = PrimaryKey.getUUID();
+%>
 <style type="text/css">
 .ztree li span.button.share_ico_docu{margin-right:2px; background: url(/hhcommon/images/icons/folder/folder_star.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
 .ztree li span.button.share_ico_open{margin-right:2px; background: url(/hhcommon/images/icons/folder/folder_star.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}

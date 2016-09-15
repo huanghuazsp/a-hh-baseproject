@@ -55,7 +55,7 @@ public class SetupInitializer {
 	}
 	
 	public static void main(String[] args) {
-		System.err.println(PrimaryKey.getPrimaryKeyUUID());
+		System.err.println(PrimaryKey.getUUID());
 	}
 
 }

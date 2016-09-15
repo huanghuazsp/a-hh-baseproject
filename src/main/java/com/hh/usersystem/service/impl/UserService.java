@@ -202,7 +202,7 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 			// HHXtZmsx hhXtZmsx = new HHXtZmsx();
 			// hhXtYh.setHhXtZmsx(hhXtZmsx);
 			hhXtYh.setVmm("123456");
-			hhXtYh.setId(PrimaryKey.getPrimaryKeyUUID());
+			hhXtYh.setId(PrimaryKey.getUUID());
 			hhXtYh.setTheme("base");
 			xtyhdao.createEntity(hhXtYh);
 		} else {
