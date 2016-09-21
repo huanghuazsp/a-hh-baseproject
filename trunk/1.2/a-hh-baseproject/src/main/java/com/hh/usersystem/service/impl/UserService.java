@@ -485,6 +485,9 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 			user.setOrgId(jg);
 			user.setDeptId(bm);
 			user.setJobId(gw);
+			user.setOrgIdText(jgName);
+			user.setDeptIdText(bmName);
+			user.setJobIdText(gwName);
 			save(user);
 		}
 	}
