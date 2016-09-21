@@ -30,7 +30,7 @@ import com.hh.usersystem.util.steady.StaticProperties;
 @Service
 public class OrganizationService extends BaseService<UsOrganization> {
 	@Autowired
-	private IHibernateDAO<UsUser> xtyhdao;
+	private UserService userService;
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 
@@ -99,16 +99,22 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				dao.queryTreeList(UsOrganization.class, hqlParamList));
 	}
 	public List<UsOrganization> queryOrgListByPid(String node,
-			List<String> orgs) {
+			List<String> orgs,String text) {
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		List<UsOrganization> organizationList = null;
-		if (Check.isNoEmpty(node)) {
-			hqlParamList.is("node", node);
-		}else if (Check.isNoEmpty(orgs)) {
-			hqlParamList.in("id", orgs);
+		
+		if (Check.isNoEmpty(text) && "root".equals(node)) {
+			hqlParamList.like("text", text);
 		}else{
-			hqlParamList.is("node", node);
+			if (Check.isNoEmpty(node)) {
+				hqlParamList.is("node", node);
+			}else if (Check.isNoEmpty(orgs)) {
+				hqlParamList.in("id", orgs);
+			}else{
+				hqlParamList.is("node", node);
+			}
 		}
+		
 		
 		hqlParamList.nis("lx_", 3);
 		hqlParamList.nis("state", 1);
@@ -118,8 +124,8 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		return organizationToIconCls(organizationList);
 	}
 	public List<UsOrganization> queryOrgListByPid(String node,
-			String orgs) {
-		return queryOrgListByPid(node, Convert.strToList(orgs));
+			String orgs,String text) {
+		return queryOrgListByPid(node, Convert.strToList(orgs),text);
 	}
 
 	public UsOrganization findObjectById(String id) {
@@ -204,13 +210,13 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	
 	public List<UsOrganization> queryOrgAndUsersList(List<String> orgIdList,String node) {
 		List<UsOrganization> organizations = this.queryOrgListByPid(
-				node, orgIdList);
+				node, orgIdList,"");
 		for (UsOrganization organization : organizations) {
 			organization.setLeaf(0);
 			updateLeaf(organization);
 		}
 		if (Check.isNoEmpty(node)) {
-			organizations.addAll(addOrgUser(node));
+			organizations.addAll(addOrgUser(node,""));
 		}
 		return organizations;
 	}
@@ -218,7 +224,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	public List<UsOrganization> queryOrgAndUsersList(
 			UsOrganization organization1) {
 		List<UsOrganization> organizations = this.queryOrgListByPid(
-				organization1.getNode(),"");
+				organization1.getNode(),"",organization1.getText());
 		for (UsOrganization organization : organizations) {
 			organization.setLeaf(0);
 			updateLeaf(organization);
@@ -231,13 +237,13 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			usOrganization.setText("未分配部门人员");
 			usOrganization.setNode("root");
 			usOrganization.setIcon("/hhcommon/images/myimage/org/org.png");
-			List<UsUser> hhXtYhs = xtyhdao.queryList(UsUser.class, ParamFactory
+			List<UsUser> hhXtYhs = userService.queryList(ParamFactory
 					.getParamHb().isNull("deptId"));
 			usOrganization.setChildren(addOrgUser(hhXtYhs));
 			organizations.add(usOrganization);
 		}
 		
-		organizations.addAll(addOrgUser(organization1.getNode()));
+		organizations.addAll(addOrgUser(organization1.getNode(),organization1.getText()));
 		return organizations;
 	}
 
@@ -251,14 +257,22 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		
 	}
 
-	private List<UsOrganization> addOrgUser(String orgId) {
+	private List<UsOrganization> addOrgUser(String orgId,String text) {
 //		if (organization.getChildren() != null) {
 //			for (UsOrganization organization2 : organization.getChildren()) {
 //				addOrgUser(organization2);
 //			}
 //		}
-		List<UsUser> hhXtYhs = xtyhdao.queryList(UsUser.class, ParamFactory
-				.getParamHb().in("deptId", orgId.split(",")));
+		List<UsUser> hhXtYhs = null;
+		if (Check.isNoEmpty(text) && "root".equals(orgId)) {
+			 hhXtYhs = userService.queryList(ParamFactory
+						.getParamHb()
+						.or(ParamFactory.getParamHb().like("text", text).like("textpinyin", text)));
+		}else{
+			 hhXtYhs = userService.queryList( ParamFactory
+						.getParamHb().in("deptId", orgId.split(",")));
+		}
+		
 		
 		
 		return addOrgUser(hhXtYhs);

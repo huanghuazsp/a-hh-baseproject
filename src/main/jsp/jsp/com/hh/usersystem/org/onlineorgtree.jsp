@@ -19,7 +19,7 @@
 		//render : false,
 		render : false,
 		id : 'orgTree',
-		nheight : 42,
+		nheight : 78 ,
 		url : 'usersystem-Org-queryOrgAndUsersList',
 		onClick : function(node) {
 			if (node.id == 'default') {
@@ -713,6 +713,12 @@
 			window.frames['eastiframe'].renderAllQuickMenu(timeData);
 		}
 	}
+	
+	function queryOrgtree(){
+		$('#span_orgTree').loadData({
+			params : {text:$('#span_orgText').getValue()}
+		});
+	}
 </script>
 </head>
 <body xtype="border_layout">
@@ -727,6 +733,10 @@
 				<span xtype=menu id="messDivspan" configVar=" messConfig "></span>
 			</div>
 			<div id="orgDiv">
+				<div style="padding:2px;">
+				<span xtype="text" config=" name : 'orgText' ,width:190 ,enter: queryOrgtree"></span>
+				<span xtype="button" config=" icon :'hh_img_query' , onClick : queryOrgtree "></span>
+				</div>
 				<span xtype="tree" configVar="orgtreeconfig"></span>
 			</div>
 			<div id="grooupDiv">

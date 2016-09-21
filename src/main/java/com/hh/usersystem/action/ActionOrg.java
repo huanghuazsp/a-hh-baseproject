@@ -58,7 +58,7 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	}
 
 	public Object queryOrgListByPid() {
-		List<UsOrganization> organizationList = organizationService.queryOrgListByPid(object.getNode(), orgs);
+		List<UsOrganization> organizationList = organizationService.queryOrgListByPid(object.getNode(), orgs,"");
 		return organizationList;
 	}
 
