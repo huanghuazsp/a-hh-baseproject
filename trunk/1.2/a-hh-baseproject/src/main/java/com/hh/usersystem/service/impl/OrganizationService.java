@@ -42,9 +42,15 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	private UsLeaderService usLeaderService;
 
 	public List<UsOrganization> queryTreeList(UsOrganization object) {
+		String node =Check.isEmpty(object.getNode()) ? "root" : object.getNode();
+		ParamInf hqlParamList = ParamFactory.getParamHb();
+		if (Check.isNoEmpty(object.getText()) && "root".equals(node)) {
+			hqlParamList.like("text", object.getText());
+		}else{
+			hqlParamList.is("node", node);
+		}
 		return organizationToIconCls(
-				queryTreeList(object.getNode(),
-						ParamFactory.getParamHb()));
+				queryTreeList(hqlParamList	));
 	}
 
 	public List<UsOrganization> queryTreeList(ParamInf paramList) {

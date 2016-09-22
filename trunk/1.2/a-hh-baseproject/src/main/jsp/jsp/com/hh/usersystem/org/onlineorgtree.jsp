@@ -732,9 +732,9 @@
 			<div id="messDiv">
 				<span xtype=menu id="messDivspan" configVar=" messConfig "></span>
 			</div>
-			<div id="orgDiv">
+			<div id="orgDiv" style="overflow :hidden; ">
 				<div style="padding:2px;">
-				<span xtype="text" config=" name : 'orgText' ,width:190 ,enter: queryOrgtree"></span>
+				<span xtype="text" config=" name : 'orgText' ,width:210 ,enter: queryOrgtree"></span>
 				<span xtype="button" config=" icon :'hh_img_query' , onClick : queryOrgtree "></span>
 				</div>
 				<span xtype="tree" configVar="orgtreeconfig"></span>

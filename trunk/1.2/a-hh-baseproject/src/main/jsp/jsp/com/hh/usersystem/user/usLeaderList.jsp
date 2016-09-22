@@ -8,7 +8,7 @@
 <script>
 	var selectNode = null;
 	var orgtreeconfig = {
-		id : 'orgTree',
+		id : 'orgTree' ,nheight:42,
 		url : 'usersystem-Org-queryOrgAndUsersList',
 		onClick : function(node) {
 			doQuery(node);
@@ -80,10 +80,19 @@
 			Dialog.infomsg("请选中被分管对象！");
 		}
 	}
+	function querytree(){
+		$('#span_orgTree').loadData({
+			params : {text:$('#span_orgText').getValue()}
+		});
+	}
 </script>
 </head>
 <body xtype="border_layout">
-	<div config="render : 'west' ,width:260 ">
+	<div config="render : 'west' ,width:260 "  style="overflow :hidden; ">
+		<div xtype="toolbar" config="type:'head'">
+			<span xtype="text" config=" name : 'orgText' ,width:210 ,enter: querytree"></span>
+			<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
+		</div>
 		<span xtype="tree" configVar="orgtreeconfig"></span>
 	</div>
 	<div>
