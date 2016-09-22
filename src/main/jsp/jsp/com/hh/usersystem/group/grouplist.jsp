@@ -49,11 +49,16 @@
 	function init(){
 		$('#centerdiv').disabled('请选择要编辑的用户组或添加新的数据！');
 	}
+	function querytree(){
+		$('#span_groupTree').loadData({
+			params : {text:$('#span_treeText').getValue()}
+		});
+	}
 </script>
 </head>
 <body>
 	<div xtype="border_layout">
-		<div config="render : 'west'">
+		<div config="render : 'west'"  style="overflow :hidden; ">
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span> <span
 					xtype="button"
@@ -63,8 +68,12 @@
 				<span xtype="button"
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'groupTree'  "></span>
 			</div>
+			<div style="padding:2px;">
+			<span xtype="text" config=" name : 'treeText' ,width:150 ,enter: querytree"></span>
+			<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
+			</div>
 			<span xtype="tree"
-				config=" id:'groupTree', url:'usersystem-Group-queryTreeList' ,remove: doDelete , onClick : orgTreeClick  "></span>
+				config=" id:'groupTree' ,nheight:72, url:'usersystem-Group-queryTreeList' ,remove: doDelete , onClick : orgTreeClick  "></span>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="orgeditiframe" name="orgeditiframe" width=100%

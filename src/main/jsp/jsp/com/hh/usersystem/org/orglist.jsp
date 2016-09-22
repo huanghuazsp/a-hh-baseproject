@@ -116,11 +116,16 @@
 	function init(){
 		$('#centerdiv').disabled('请选择要编辑的机构树或添加新的数据！！');
 	}
+	function querytree(){
+		$('#span_orgTree').loadData({
+			params : {text:$('#span_orgText').getValue()}
+		});
+	}
 </script>
 </head>
 <body>
 	<div xtype="border_layout">
-		<div config="render : 'west' ,width:290">
+		<div config="render : 'west' ,width:290" style="overflow :hidden; ">
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span> <span
 					xtype="button"
@@ -135,8 +140,12 @@
 				<span xtype="button"
 					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 			</div>
+			<div style="padding:2px;">
+			<span xtype="text" config=" name : 'orgText' ,width:240 ,enter: querytree"></span>
+			<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
+			</div>
 			<span xtype="tree"
-				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick ,nheight:42 "></span>
+				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick ,nheight:72 "></span>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="orgeditiframe" name="orgeditiframe" width=100%

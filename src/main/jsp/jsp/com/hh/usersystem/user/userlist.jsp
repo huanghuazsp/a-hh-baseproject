@@ -95,14 +95,19 @@
 		$('#selectNodeTd').html('所有数据');
 		doQuery();
 	}
+	function querytree(){
+		$('#span_orgTree').loadData({
+			params : {text:$('#span_orgText').getValue()}
+		});
+	}
 </script>
 </head>
 <body>
 	<div xtype="border_layout">
-		<div config="render : 'west' ,width:290">
+		<div config="render : 'west' ,width:290" style="overflow :hidden; ">
 			<div xtype="toolbar" config="type:'head'">
-				<span xtype="button"
-					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'orgTree'  "></span>
+				<span xtype="text" config=" name : 'orgText' ,width:240 ,enter: querytree"></span>
+				<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
 			</div>
 			<span xtype="tree"
 				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick ,nheight:42 "></span>
