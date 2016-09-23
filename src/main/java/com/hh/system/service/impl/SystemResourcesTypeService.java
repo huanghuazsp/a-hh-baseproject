@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hh.system.bean.SystemResourcesType;
+import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
@@ -25,7 +26,17 @@ public class SystemResourcesTypeService extends BaseService<SystemResourcesType>
 		}else{
 			paramInf.is("vcreate", userService.findUserId());
 		}
-		List<SystemResourcesType> resourcesTypes = super.queryTreeList(object.getNode(),paramInf);
+		
+		
+		
+		String node =Check.isEmpty(object.getNode()) ? "root" : object.getNode();
+		if (Check.isNoEmpty(object.getText()) && "root".equals(node)) {
+			paramInf.like("text", object.getText());
+		}else{
+			paramInf.is("node", node);
+		}
+		
+		List<SystemResourcesType> resourcesTypes = super.queryTreeList(paramInf);
 		if (object.getState()==0) {
 			render(resourcesTypes);
 		}else if (object.getState()==1) {

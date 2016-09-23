@@ -117,6 +117,11 @@
 	function outExcel(){
 		Request.submit('system-SysDataType-download',{});
 	}
+	function querytree(){
+		$('#typeTreeSpan').loadData({
+			params : {text:$('#span_treeText').getValue()}
+		});
+	}
 </script>
 </head>
 <body>
@@ -125,17 +130,16 @@
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button" config="onClick:addType,text:'添加'"></span>
 				<span xtype="button"
-					config="onClick : function(){typeTreeObject.refresh()},text : '刷新'"></span>
-					
-				<span xtype="button"
 					config="onClick : inExcel ,text : '导入'"></span>
 				<span xtype="button"
 					config="onClick : outExcel ,text : '导出'"></span>
 				<span xtype="button"
 					config="onClick : downloadExcel ,text : '下载模板'"></span>
+				<span xtype="text" config=" name : 'treeText' ,width:160 ,enter: querytree"></span>
+				<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
 			</div>
 			<span id="typeTreeSpan" xtype="tree"
-				config=" dragAction : 'system-SysDataType-drag', dragInnerAction : 'system-SysDataType-dragInner' , id:'typeTree' , url:'system-SysDataType-queryTreeList' , remove : removeType , edit : editType , onClick : typeTreeClick"></span>
+				config=" dragAction : 'system-SysDataType-drag', dragInnerAction : 'system-SysDataType-dragInner' , id:'typeTree' , url:'system-SysDataType-queryTreeList' , remove : removeType , edit : editType , onClick : typeTreeClick  ,nheight:42 "></span>
 		</div>
 		<div id="datacenter">
 			<div xtype="toolbar" config="type:'head'">

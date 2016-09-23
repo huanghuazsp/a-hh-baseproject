@@ -49,11 +49,16 @@
 	function doQXGX(){
 		doSetState(0);
 	}
+	function querytree(){
+		$('#span_tree').loadData({
+			params : {text:$('#span_treeText').getValue()}
+		});
+	}
 </script>
 </head>
 <body>
 	<div xtype="border_layout">
-		<div config="render : 'west',width:220">
+		<div config="render : 'west',width:220"  style="overflow :hidden; ">
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button"
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'tree'  "></span>
@@ -62,8 +67,12 @@
 			<span
 			xtype="button" config="onClick: doQXGX ,text:'取消共享' "></span>
 			</div>
+			<div style="padding:2px;">
+			<span xtype="text" config=" name : 'treeText' ,width:160 ,enter: querytree"></span>
+			<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
+			</div>
 			<span xtype="tree"
-				config=" id:'tree', url:'system-ResourcesType-queryTreeList' ,onClick : treeClick  "></span>
+				config=" id:'tree', url:'system-ResourcesType-queryTreeList' ,onClick : treeClick ,nheight:72  "></span>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="<%=iframeId%>" name="<%=iframeId%>" width=100%

@@ -86,11 +86,16 @@
 	function showBtn(treeid,node){
 		return node.vcreate==loginUser.id;
 	}
+	function querytree(){
+		$('#span_tree').loadData({
+			params : {text:$('#span_treeText').getValue()}
+		});
+	}
 </script>
 </head>
 <body>
 	<div xtype="border_layout">
-		<div config="render : 'west'">
+		<div config="render : 'west'"  style="overflow :hidden; ">
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span> <span
 					id="upBtn" xtype="button"
@@ -100,8 +105,12 @@
 				<span xtype="button"
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'tree'  "></span>
 			</div>
+			<div style="padding:2px;">
+			<span xtype="text" config=" name : 'treeText' ,width:150 ,enter: querytree"></span>
+			<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
+			</div>
 			<span xtype="tree"
-				config=" id:'tree', showRemoveBtn : showBtn, url:'system-ResourcesType-queryTreeList' ,params:{state:2} ,remove: doDelete , onClick : treeClick  "></span>
+				config=" id:'tree', showRemoveBtn : showBtn, url:'system-ResourcesType-queryTreeList' ,params:{state:2} ,remove: doDelete , onClick : treeClick ,nheight:72 "></span>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="<%=iframeId%>" name="<%=iframeId%>" width=100%
