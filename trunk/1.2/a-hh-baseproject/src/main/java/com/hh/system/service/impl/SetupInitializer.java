@@ -38,12 +38,12 @@ public class SetupInitializer {
 		rootHhXtCd.setChildren(new ArrayList<SysMenu>());
 
 
-		rootHhXtCd.getChildren().add(new SysMenu("OwRQNE6v1UxH11SMDBw", "计划任务",
+		/*rootHhXtCd.getChildren().add(new SysMenu("OwRQNE6v1UxH11SMDBw", "计划任务",
 				"jsp-system-systemplantask-SystemPlantaskList", "/hhcommon/images/extjsico/timer.gif", 0, 1));
 
 
 		rootHhXtCd.getChildren().add(new SysMenu( "mT0b8fG6qGemkKtnXiA","数据库管理",
-				"jsp-database-connect-main", "/hhcommon/images/icons/page/page_white_database.png", 0, 1));
+				"jsp-database-connect-main", "/hhcommon/images/icons/page/page_white_database.png", 0, 1));*/
 
 
 		rootHhXtCd.getChildren().add(new SysMenu( "oAgFhe9tIBMdd2TeZA8","数据字典",
