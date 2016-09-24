@@ -88,8 +88,7 @@
 		</form>
 	</div>
 	<div xtype="toolbar">
-		<span xtype="button" config="text:'保存' , onClick : save "></span> <span
-			xtype="button" config="text:'取消' , onClick : Dialog.close "></span>
+		<span xtype="button" config="text:'保存' , onClick : save "></span> 
 	</div>
 </body>
 </html>
