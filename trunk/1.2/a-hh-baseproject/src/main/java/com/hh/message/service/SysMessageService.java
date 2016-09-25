@@ -152,7 +152,7 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("count", shouCount);
-		map2.put("id", "93bb64fe-e50a-40b2-ab59-b1ae543cd101");
+		map2.put("id", "onlineorgtree");
 		map2.put("text", "消息提醒");
 		map2.put("vsj", "jsp-message-message-messagelistview");
 		map2.put("allMessage", sysMessagesList);
