@@ -112,7 +112,7 @@
 			<span xtype="tree"
 				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick ,nheight:42 "></span>
 		</div>
-		<div style="overflow: visible;" id=centerdiv>
+		<div  id=centerdiv>
 			<div xtype="toolbar" config="type:'head'">
 				<span xtype="button"
 					config="onClick:doAdd,text:'添加' , itype :'add' "></span> <span
