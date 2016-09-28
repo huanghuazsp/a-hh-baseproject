@@ -26,10 +26,10 @@
 </script>
 </head>
 <body>
-	<div xtype="toolbar" config="type:'head'">
+	<!-- <div xtype="toolbar" config="type:'head'">
 		 <span
 			xtype="button" config="onClick:doDelete,text:'删除'"></span>
-	</div> 
+	</div>  -->
 	<table xtype="form" id="queryForm" style="width: 700px;">
 				<tr>
 					<td xtype="label">名称：</td>
