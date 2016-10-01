@@ -33,7 +33,7 @@ public class SetupInitializer {
 	
 	@PostConstruct
 	public void initialize() {
-		SysMenu rootHhXtCd = new SysMenu("YKfDaj9fJWf16D4ovWH","个人办公",
+		SysMenu rootHhXtCd = new SysMenu("YKfDaj9fJWf16D4ovWH","协同办公",
 				"com.hh.global.NavigAtionWindow",
 				"/hhcommon/images/extjsico/17460359.png", 1, 0);
 		rootHhXtCd.setChildren(new ArrayList<SysMenu>());
