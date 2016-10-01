@@ -78,10 +78,10 @@
 				<tr>
 					<td xtype="label">类型：</td>
 					<td><span id="lxspan" xtype="radio"
-						config="name: 'leaf' ,defaultValue : 0, data :[{id:1,text:'菜单'},{id:0,text:'类别'}] , onChange : lxChange "></span></td>
+						config="name: 'leaf' ,value : 0, data :[{id:1,text:'菜单'},{id:0,text:'类别'}] , onChange : lxChange "></span></td>
 					<td xtype="label">是否展开：</td>
 					<td><span lxchange="false" xtype="radio"
-						config="name: 'expanded' ,defaultValue : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
+						config="name: 'expanded' ,value : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">小图标：</td>
@@ -105,7 +105,7 @@
 				<tr>
 					<td xtype="label">打开类型：</td>
 					<td colspan="3"><span  xtype="radio"
-						config="name: 'openType' ,defaultValue : 0, data :[{id:0,text:'tab页签'},{id:1,text:'浏览器href'}]  "></td>
+						config="name: 'openType' ,value : 0, data :[{id:0,text:'tab页签'},{id:1,text:'浏览器href'}]  "></td>
 				</tr>
 				<tr>
 					<td xtype="label">参数：</td>

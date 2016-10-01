@@ -85,10 +85,10 @@
 			<table width=100%>
 				<tr>
 					<td xtype="label" style="text-align:left;padding:10px;">
-						<font size=4 ><b><span xtype="text" config=" name : 'title',required :true"></span></b></font><br>
-						发&nbsp;件&nbsp;人：<span xtype="text" config="name: 'sendUserName' "></span><br>
-						时&nbsp;&nbsp;&nbsp;间：<span xtype="date" config="name: 'dcreate' ,type:'yyyy年MM月dd日 （EEE） HH:mm'"></span><br>
-						收&nbsp;件&nbsp;人：<span xtype="text" config="name: 'userNames' "></span><br>
+						<font size=4 ><b><span xtype="html" config=" name : 'title' "></span></b></font><br>
+						发&nbsp;件&nbsp;人：<span xtype="html" config="name: 'sendUserName' "></span><br>
+						时&nbsp;&nbsp;&nbsp;间：<span xtype="html" config="name: 'dcreate' ,dateType:'yyyy年MM月dd日 （EEE） HH:mm'"></span><br>
+						收&nbsp;件&nbsp;人：<span xtype="html" config="name: 'userNames' "></span><br>
 						附&nbsp;&nbsp;&nbsp;件： <span xtype="fileUpload"
 						config="name: 'file' , type:'email' ,request:true"></span>
 					</td>
@@ -97,7 +97,7 @@
 				</tr>
 			</table>
 			<div style="padding:25px;">
-						<span xtype="textarea" config="name: 'content' "></span>
+						<span xtype="html" config="name: 'content' "></span>
 			</div>
 		</form>
 	</div>

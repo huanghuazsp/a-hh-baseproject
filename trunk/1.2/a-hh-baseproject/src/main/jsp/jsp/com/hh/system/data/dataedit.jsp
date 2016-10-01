@@ -85,7 +85,7 @@
 					<tr>
 						<td xtype="label">是否展开：</td>
 						<td  colspan="3"><span xtype="radio" 
-							config="name: 'expanded' ,defaultValue : 1,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
+							config="name: 'expanded' ,value : 1,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
 					</tr>
 					<tr>
 						<td xtype="label">编码：<img id="refreshName" style="cursor:pointer;"  src="/hhcommon/opensource/jquery/image/16/refresh.png"  title="根据中文名获取拼音"  /></td>
