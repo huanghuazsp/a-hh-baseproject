@@ -109,7 +109,7 @@
 				<td width=200px id="selectNodeTd" style="text-align: center;">所有数据</td>
 				<td xtype="label">领导：</td>
 				<td><span xtype="selectUser" config="name: 'leaderId' ,radio:true " ></span></td>
-				<td><span xtype="button"
+				<td width="80px"><span xtype="button"
 					config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
 			</tr>
 		</table>

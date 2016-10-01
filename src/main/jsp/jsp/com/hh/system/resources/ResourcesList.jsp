@@ -181,7 +181,7 @@
 				<%if(!"1".equals(request.getParameter("share"))){%>
 			<td xtype="label">是否共享：</td>
 			<td><span xtype="radio"
-				config="name: 'state'  ,defaultValue : 2 , data :[{id:2,text:'所有'},{id:1,text:'共享'},{id:0,text:'个人'}]"></span></td>
+				config="name: 'state'  ,value : 2 , data :[{id:2,text:'所有'},{id:1,text:'共享'},{id:0,text:'个人'}]"></span></td>
 				<%}%>
 				<td><span xtype="button"
 				config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>

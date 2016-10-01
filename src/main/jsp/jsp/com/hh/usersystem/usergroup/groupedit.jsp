@@ -71,7 +71,7 @@
 					<tr>
 						<td xtype="label">是否展开：</td>
 						<td><span xtype="radio"
-							config="name: 'expanded' ,defaultValue : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
+							config="name: 'expanded' ,value : 0,  data :[{id:1,text:'是'},{id:0,text:'否'}]"></span></td>
 					</tr>
 					<tr>
 						<td xtype="label">组员：</td>

@@ -139,7 +139,7 @@
 						config=" name : 'text' ,enter: doQuery "></span></td>
 					<td xtype="label" style="width:50px">性别：</td>
 					<td><span xtype="radio"
-						config="name: 'nxb'  ,defaultValue : 2 , data :[{id:2,text:'所有'},{id:1,text:'男'},{id:0,text:'女'}]"></span></td>
+						config="name: 'nxb'  ,value : 2 , data :[{id:2,text:'所有'},{id:1,text:'男'},{id:0,text:'女'}]"></span></td>
 					<td><span xtype="button"
 						config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
 				</tr>
