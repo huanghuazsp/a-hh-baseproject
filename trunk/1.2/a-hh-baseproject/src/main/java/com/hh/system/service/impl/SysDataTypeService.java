@@ -26,18 +26,9 @@ public class SysDataTypeService extends BaseService<SysDataType> {
 	public List<SysDataType> queryTreeListCode(SysDataType baseTreeNodeEntity) {
 		List<SysDataType> sysDataTypes = super.queryTreeList(
 				baseTreeNodeEntity.getNode());
-		updateId(sysDataTypes);
 		return sysDataTypes;
 	}
 
-	private void updateId(List<SysDataType> sysDataTypes) {
-		if (sysDataTypes != null) {
-			for (SysDataType sysDataType : sysDataTypes) {
-				sysDataType.setId(sysDataType.getCode());
-				updateId(sysDataType.getChildren());
-			}
-		}
-	}
 
 	protected boolean checkCodeOnly(SysDataType hhXtData) {
 		return dao.findWhetherData("select count(o) from "
