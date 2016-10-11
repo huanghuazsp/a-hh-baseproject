@@ -641,7 +641,7 @@
 	}
 
 	function setHeight(height) {
-		$('#himessagediv').height(height - 218);
+		$('#himessagediv').height(height - 225);
 	}
 
 	function doSendMessage() {
