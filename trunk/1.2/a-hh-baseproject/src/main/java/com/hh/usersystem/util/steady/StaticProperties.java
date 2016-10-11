@@ -32,7 +32,7 @@ public class StaticProperties {
 		} else if ("BJG".equals(operString)) {
 			return 4;
 		} else {
-			return 5;
+			return 0;
 		}
 	}
 

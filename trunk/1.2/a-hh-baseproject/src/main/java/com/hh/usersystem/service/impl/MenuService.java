@@ -62,6 +62,7 @@ public class MenuService extends BaseService<SysMenu> {
 			xtjscddao.deleteEntity(UsRoleMenu.class, "cdId", idList);
 			xtyhcdzmtb.deleteEntity(UsUserMenuZmtb.class, "cdId", idList);
 			dao.deleteEntity(SysMenu.class, "id", idList);
+			operateService.deleteByMenuIdList(idList);
 		}
 
 	}
