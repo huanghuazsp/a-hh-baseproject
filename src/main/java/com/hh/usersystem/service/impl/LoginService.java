@@ -59,6 +59,8 @@ public class LoginService {
 	
 	@Autowired
 	private MenuService menuService;
+	@Autowired
+	private OperateService operateService;
 
 	private static final Logger logger = Logger.getLogger(BaseAction.class);
 
@@ -142,30 +144,41 @@ public class LoginService {
 					Map<String, List<String>> operPageTextMap = new HashMap<String, List<String>>();
 
 					// 多个角色 获取权限最大的操作级别
+					List<String> hhxtczIdList = new ArrayList<String>();
+					for (UsRoleOper hhXtJsCd : hhXtJsCzList) {
+						hhxtczIdList.add(hhXtJsCd.getCzId());
+					}
+					List<SysOper> operList = new ArrayList<SysOper>();
+					Map<String, SysOper> operTempMap = new HashMap<String, SysOper> ();
+					if (hhxtczIdList.size() > 0) {
+						operList = operateService.queryListByIds(hhxtczIdList);
+						for (SysOper sysOper : operList) {
+							operTempMap.put(sysOper.getId(), sysOper);
+						}
+					}
+					
 					for (UsRoleOper hhXtJsCz : hhXtJsCzList) {
-						SysOper hhXtCz = hhXtJsCz.getHhXtCz();
-						if (Check.isEmpty(hhXtCz.getOperLevel())) {
-							hhXtCz.setOperLevel(hhXtJsCz.getOperLevel());
-						} else {
+						SysOper hhXtCz = operTempMap.get(hhXtJsCz.getCzId());
+						if (hhXtCz!=null) {
 							if (StaticProperties.findOperationLevel(hhXtJsCz.getOperLevel()) > StaticProperties
 									.findOperationLevel(hhXtCz.getOperLevel())) {
 								hhXtCz.setOperLevel(hhXtJsCz.getOperLevel());
 							}
-						}
-						if (!operUrlList.contains(hhXtCz.getVurl())
-								|| !operPageTextList.contains(hhXtCz.getPageText())) {
-							if (Check.isNoEmpty(hhXtCz.getVurl())) {
-								operUrlList.add(hhXtCz.getVurl());
-							}
-							if (Check.isNoEmpty(hhXtCz.getPageText())) {
-								operPageTextList.add(hhXtCz.getPageText());
-								List<String> menuCzList = operPageTextMap.get(hhXtCz.getMenuUrl());
-								if (menuCzList == null) {
-									operPageTextMap.put(hhXtCz.getMenuUrl(), new ArrayList<String>());
+							if (!operUrlList.contains(hhXtCz.getVurl())
+									|| !operPageTextList.contains(hhXtCz.getPageText())) {
+								if (Check.isNoEmpty(hhXtCz.getVurl())) {
+									operUrlList.add(hhXtCz.getVurl());
 								}
-								operPageTextMap.get(hhXtCz.getMenuUrl()).add(hhXtCz.getPageText());
+								if (Check.isNoEmpty(hhXtCz.getPageText())) {
+									operPageTextList.add(hhXtCz.getPageText());
+									List<String> menuCzList = operPageTextMap.get(hhXtCz.getMenuUrl());
+									if (menuCzList == null) {
+										operPageTextMap.put(hhXtCz.getMenuUrl(), new ArrayList<String>());
+									}
+									operPageTextMap.get(hhXtCz.getMenuUrl()).add(hhXtCz.getPageText());
+								}
+								operMap.put(hhXtCz.getVurl(), hhXtCz);
 							}
-							operMap.put(hhXtCz.getVurl(), hhXtCz);
 						}
 					}
 					hhXtCdZmtbList = queryZmtbList(hhXtYh, hhxtcdIdList);

@@ -1,5 +1,6 @@
 package com.hh.usersystem.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,27 +33,24 @@ public class RoleService extends BaseService<UsRole> {
 	private IHibernateDAO<UsRoleOper> hhxtjsczDao;
 	@Autowired
 	private IHibernateDAO<SysOper> xtczdao;
-	
+
 	@Autowired
 	private OperateService operateService;
 
 	public List<UsRole> queryAllRoleList() {
-		return xtjsdao.queryList(UsRole.class,
-				ParamFactory.getParamHb().nis("state", 1));
+		return xtjsdao.queryList(UsRole.class, ParamFactory.getParamHb().nis("state", 1));
 	}
 
-	public PagingData<UsRole> queryPagingData(UsRole hhXtJs, String roles,
-			PageRange pageRange) {
+	public PagingData<UsRole> queryPagingData(UsRole hhXtJs, String roles, PageRange pageRange) {
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (!Check.isEmpty(hhXtJs.getText())) {
-			hqlParamList.like("text",  hhXtJs.getText()
-					);
+			hqlParamList.like("text", hhXtJs.getText());
 		}
 		if (!Check.isEmpty(roles)) {
 			hqlParamList.add(Restrictions.in("id", Convert.strToList(roles)));
 		}
-		
-		if (hhXtJs.getState()==1) {
+
+		if (hhXtJs.getState() == 1) {
 			hqlParamList.nis("state", 1);
 		}
 		return xtjsdao.queryPagingData(UsRole.class, hqlParamList, pageRange);
@@ -79,9 +77,7 @@ public class RoleService extends BaseService<UsRole> {
 			hhXtJsCd.setJsId(paramsMap.get("roleid"));
 			hhXtJsCddao.createEntity(hhXtJsCd);
 		} else {
-			hhXtJsCddao.deleteEntity(
-					"delete HhXtJsCd o where jsId=:roleid and cdId=:menuid",
-					paramsMap);
+			hhXtJsCddao.deleteEntity("delete HhXtJsCd o where jsId=:roleid and cdId=:menuid", paramsMap);
 		}
 	}
 
@@ -96,27 +92,27 @@ public class RoleService extends BaseService<UsRole> {
 		}
 	}
 
-	public void saveJsOper(String menuIds, String jsid, String czid_operlevel) {
-		List<ExtTree>  extTrees = operateService.queryOperateListByPid(menuIds);
-		for (ExtTree extTree : extTrees) {
-			Map<String, String> paramsMap = new HashMap<String, String>();
-			paramsMap.put("roleid", jsid);
-			paramsMap.put("czid", extTree.getId());
-			hhxtjsczDao
-			.deleteEntity(
-					"delete UsRoleOper o where jsId=:roleid and hhXtCz.id=:czid",
-					paramsMap);
-		}
+	public void saveJsOper(String menuId, String jsid, String czid_operlevel) {
 		List<String> czid_operlevelList = Convert.strToList(czid_operlevel);
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		paramsMap.put("roleid", jsid);
+		if (Check.isNoEmpty(menuId)) {
+			paramsMap.put("menuId", menuId);
+			hhxtjsczDao.deleteEntity("delete UsRoleOper o where jsId=:roleid and cdId =:menuId", paramsMap);
+		} else {
+			hhxtjsczDao.deleteEntity("delete UsRoleOper o where jsId=:roleid ", paramsMap);
+		}
+
 		for (String czid_oper : czid_operlevelList) {
-			String czid = czid_oper.split("_")[0];
+			String cdid = czid_oper.split("_")[0];
+			String czid = czid_oper.split("_")[1];
 			String operlevel = "";
-			if (czid_oper.split("_").length>1) {
-				operlevel = czid_oper.split("_")[1];
+			if (czid_oper.split("_").length > 1) {
+				operlevel = czid_oper.split("_")[2];
 			}
 			UsRoleOper hhXtJsCd = new UsRoleOper();
-			SysOper hhXtCd = xtczdao.loadEntityByPK(SysOper.class, czid);
-			hhXtJsCd.setHhXtCz(hhXtCd);
+			hhXtJsCd.setCzId(czid);
+			hhXtJsCd.setCdId(cdid);
 			hhXtJsCd.setJsId(jsid);
 			hhXtJsCd.setOperLevel(operlevel);
 			hhxtjsczDao.createEntity(hhXtJsCd);
@@ -124,36 +120,5 @@ public class RoleService extends BaseService<UsRole> {
 
 	}
 
-	public void insertOrdeleteOperate(Map<String, String> paramsMap) {
-		if ("true".equals(paramsMap.get("checked"))) {
-			UsRoleOper hhXtJsCd = new UsRoleOper();
-			SysOper hhXtCd = xtczdao.loadEntityByPK(SysOper.class,
-					paramsMap.get("menuid"));
-			// hhXtCd.setId(paramsMap
-			// .get("menuid"));
-			hhXtJsCd.setHhXtCz(hhXtCd);
-			hhXtJsCd.setJsId(paramsMap.get("roleid"));
-			hhxtjsczDao.createEntity(hhXtJsCd);
-		} else {
-			hhxtjsczDao
-					.deleteEntity(
-							"delete HhXtJsCz o where jsId=:roleid and hhXtCz.id=:menuid",
-							paramsMap);
-		}
-	}
-
-	public void updateOperateLevel(Map<String, String> paramsMap) {
-		if ("true".equals(paramsMap.get("checked"))) {
-			hhxtjsczDao
-					.updateEntity(
-							"update HhXtJsCz o set o.operLevel=:operateLevel where o.jsId=:roleid and o.hhXtCz.id=:menuid",
-							paramsMap);
-		} else {
-			hhxtjsczDao
-					.updateEntity(
-							"update HhXtJsCz o set o.operLevel='' where o.jsId=:roleid and o.hhXtCz.id=:menuid",
-							paramsMap);
-		}
-	}
 
 }

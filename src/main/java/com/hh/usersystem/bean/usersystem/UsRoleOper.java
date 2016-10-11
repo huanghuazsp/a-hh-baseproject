@@ -1,9 +1,7 @@
 package com.hh.usersystem.bean.usersystem;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -31,15 +29,6 @@ public class UsRoleOper extends BaseTwoEntity implements java.io.Serializable {
 	public void setOperLevel(String operLevel) {
 		this.operLevel = operLevel;
 	}
-	private SysOper hhXtCz = new SysOper();
-	@ManyToOne(cascade={CascadeType.ALL}) 
-	public SysOper getHhXtCz() {
-		return hhXtCz;
-	}
-
-	public void setHhXtCz(SysOper hhXtCz) {
-		this.hhXtCz = hhXtCz;
-	}
 
 	@Column(name = "JS_ID", nullable = false, length = 36)
 	public String getJsId() {
@@ -51,13 +40,24 @@ public class UsRoleOper extends BaseTwoEntity implements java.io.Serializable {
 	}
 	private String czId;
 
-	@Column(name = "HHXTCZ_ID", length = 36,insertable=false,updatable=false)
+	@Column(name = "CZ_ID", length = 36,nullable = false)
 	public String getCzId() {
 		return czId;
 	}
 
 	public void setCzId(String czId) {
 		this.czId = czId;
+	}
+	
+	private String cdId;
+
+	@Column(name = "CD_ID", length = 36,nullable = false)
+	public String getCdId() {
+		return cdId;
+	}
+
+	public void setCdId(String cdId) {
+		this.cdId = cdId;
 	}
 	
 

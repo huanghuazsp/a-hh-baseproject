@@ -49,6 +49,10 @@
 		$('#span_menuUrl').setValue(params.selectMenuNode.vsj);
 		findData();
 	}
+	
+	function blur(){
+		$('#span_pageText').setValue($('#span_text').getValue());
+	}
 </script>
 </head>
 <body>
@@ -58,7 +62,7 @@
 			<table xtype="form">
 				<tr>
 					<td xtype="label">名称：</td>
-					<td><span xtype="text" config=" name : 'text',required :true"></span></td>
+					<td><span xtype="text" config=" name : 'text',required :true , blur:blur"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">所在页面地址：</td>

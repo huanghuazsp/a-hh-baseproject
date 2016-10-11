@@ -67,6 +67,9 @@
 				}
 			});
 		}
+		
+		menuTreeClick();
+		
 	}
 
 	function doSave() {
@@ -99,12 +102,12 @@
 	}
 
 	function menuTreeClick(treeNode) {
-		if (treeNode.leaf == 1) {
+			treeNode=treeNode||{};
 			$("#czTreeDiv").undisabled();
-			$("#czTreeDivspan").html(treeNode.text);
+			$("#czTreeDivspan").html(treeNode.text||'所有菜单');
 			cztreeconfig.params = {
 				roleid : saveRoleId,
-				vpid : treeNode.id
+				vpid : treeNode.id ||''
 			};
 			if ($('#cztreespan').length == 0) {
 				var menuTree = $('<span id="cztreespan" xtype="tree" configVar="cztreeconfig"></span>');
@@ -115,20 +118,16 @@
 					params : cztreeconfig.params
 				});
 			}
-		} else {
-			$("#czTreeDiv").disabled('请选择菜单！');
-		}
 	}
 
 	function doOperSave() {
-		var menuId = cztreeconfig.params.vpid;
 		var roleId = cztreeconfig.params.roleid;
-		if (roleId && menuId) {
+		if (roleId ) {
 			var czid_operLevel = $.hh.objsToStr($.hh.tree
 					.getCheckedNodes('cztree'), 'id');
 			Request.request('usersystem-role-saveJsOper', {
 				data : {
-					menuIds : menuId,
+					menuIds : cztreeconfig.params.vpid||'',
 					roles : roleId,
 					czid_operLevel : czid_operLevel
 				}
@@ -181,8 +180,7 @@
 						width: 150
 					},{
 						name : 'vbz' ,
-						text : '备注',
-						width: 150
+						text : '备注'
 					},{
 						name : 'id' ,
 						text : '操作',
@@ -192,7 +190,7 @@
 				]">
 		</div>
 	</div>
-	<div config="render : 'east' ,width:400 ">
+	<div config="render : 'east' ,width:450 ">
 		<div xtype="border_layout">
 			<div id="menuTreeDiv" config="render : 'west'"  >
 				<div xtype="toolbar" config="type:'head'">

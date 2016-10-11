@@ -47,13 +47,7 @@ public class Actionrole  extends BaseServiceAction<UsRole> {
 		roleService.saveJsOper(menuIds,roles,czid_operLevel);
 	}
 
-	public void insertOrdeleteOperate() {
-		roleService.insertOrdeleteOperate(this.getParamsMap());
-	}
 	
-	public void updateOperateLevel() {
-		roleService.updateOperateLevel(this.getParamsMap());
-	}
 
 	public String getRoles() {
 		return roles;
