@@ -11,15 +11,13 @@
 	var height = 400
 
 	var objectid = params.object ? params.object.id : '';
-
+	params.selectMenuNode = params.selectMenuNode||{};
 	function save() {
 		$.hh.validation.check('form', function(formData) {
 			if(!formData.vurl && !formData.pageText){
 				Dialog.infomsg('页面名字和请求地址不能同时为空!');
 				return;
 			}
-			formData.vpid=params.selectMenuNode.id;
-			formData.vpname=params.selectMenuNode.name;
 			Request.request('usersystem-operate-save', {
 				data : formData,
 				callback : function(result) {
@@ -47,11 +45,21 @@
 
 	function init() {
 		$('#span_menuUrl').setValue(params.selectMenuNode.vsj);
+		if(params.selectMenuNode){
+			$('#span_menuId').setValue({
+				id : params.selectMenuNode.id,
+				text : params.selectMenuNode.name
+			});
+		}
 		findData();
 	}
 	
 	function blur(){
 		$('#span_pageText').setValue($('#span_text').getValue());
+	}
+	
+	function menuChange(data){
+		$('#span_menuUrl').setValue(data.vsj);
 	}
 </script>
 </head>
@@ -61,12 +69,17 @@
 			<span xtype="text" config=" hidden:true,name : 'id'"></span>
 			<table xtype="form">
 				<tr>
-					<td xtype="label">名称：</td>
-					<td><span xtype="text" config=" name : 'text',required :true , blur:blur"></span></td>
+					<td xtype="label">所属菜单：</td>
+					<td><span  xtype="selectTree"
+						config="onChange: menuChange ,name: 'menuId' ,required :true,  findTextAction : 'usersystem-menu-findObjectById' , url : 'usersystem-menu-queryMenuListByPid'"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">所在页面地址：</td>
 					<td><span xtype="text" config=" name : 'menuUrl',required :true"></span></td>
+				</tr>
+				<tr>
+					<td xtype="label">名称：</td>
+					<td><span xtype="text" config=" name : 'text',required :true , blur:blur"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">页面名称：</td>
