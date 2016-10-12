@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +23,17 @@ import com.hh.system.util.StaticVar;
 import com.hh.system.util.pk.PrimaryKey;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.SysMenu;
+import com.hh.usersystem.bean.usersystem.SysOper;
 import com.hh.usersystem.bean.usersystem.UsRole;
 import com.hh.usersystem.bean.usersystem.UsRoleMenu;
+import com.hh.usersystem.bean.usersystem.UsRoleOper;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.util.app.LoginUser;
 import com.hh.usersystem.util.steady.StaticProperties;
+import com.hh.usersystem.util.steady.StaticProperties.OperationLevel;
 
 @Service
-public class SystemService implements LoadDataTime ,SystemServiceInf{
+public class SystemService implements LoadDataTime, SystemServiceInf {
 	@Autowired
 	private IHibernateDAO<UsUser> xtyhdao;
 	@Autowired
@@ -39,22 +41,36 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 	@Autowired
 	private IHibernateDAO<UsRoleMenu> jscddao;
 	@Autowired
+	private IHibernateDAO<UsRoleOper> jsczdao;
+	@Autowired
 	private IHibernateDAO<SysMenu> menuService;
+
+	@Autowired
+	private OperateService operateService;
 
 	@Transactional
 	public void initMenuAndUser() {
 		List<String> menuIdList = new ArrayList<String>();
 		initMenu(menuIdList);
+
+		initOper();
+
 		UsRole hhXtJs = initRole(menuIdList);
 		initSysUser(hhXtJs);
+	}
+	private void initOper() {
+		for (SysOper sysOper : StaticProperties.sysOperList) {
+			setBeanSysFields( sysOper);
+			operateService.saveOrUpdate(sysOper);
+		}
+
 	}
 
 	private void initMenu(List<String> menuIdList) {
 		saveMenu(StaticProperties.sysMenuList, "root", menuIdList);
 	}
 
-	private void saveMenu(List<SysMenu> hhXtCds, String node,
-			List<String> menuIdList) {
+	private void saveMenu(List<SysMenu> hhXtCds, String node, List<String> menuIdList) {
 		for (SysMenu hhXtCd : hhXtCds) {
 			menuIdList.add(hhXtCd.getId());
 			hhXtCd.setNode(node);
@@ -65,7 +81,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 			}
 		}
 	}
-	
+
 	private UsRole initRole(List<String> menuIdList) {
 		UsRole hhXtJs = new UsRole();
 		setBeanSysFields(hhXtJs);
@@ -75,7 +91,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		hhXtJs.setJssx("admin");
 		hhXtJs.setNlx(3);
 		roledao.saveOrUpdateEntity(hhXtJs);
-		
+
 		UsRole hhXtJs2 = new UsRole();
 		setBeanSysFields(hhXtJs2);
 		hhXtJs2.setId(StaticVar.role_default_id);
@@ -84,7 +100,8 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		hhXtJs2.setJssx("default");
 		hhXtJs2.setNlx(3);
 		roledao.saveOrUpdateEntity(hhXtJs2);
-		
+
+		jscddao.deleteEntity(UsRoleMenu.class, "jsId", hhXtJs.getId());
 		for (String string : menuIdList) {
 			UsRoleMenu hhXtJsCd = new UsRoleMenu();
 			setBeanSysFields(hhXtJsCd);
@@ -92,6 +109,19 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 			hhXtJsCd.setCdId(string);
 			hhXtJsCd.setId(PrimaryKey.getUUID());
 			jscddao.saveOrUpdateEntity(hhXtJsCd);
+		}
+		jsczdao.deleteEntity(UsRoleOper.class, "jsId", hhXtJs.getId());
+		for (SysOper sysOper : StaticProperties.sysOperList) {
+			UsRoleOper usRoleOper = new UsRoleOper();
+			setBeanSysFields( usRoleOper);
+			
+			usRoleOper.setJsId(hhXtJs.getId());
+			usRoleOper.setCzId(sysOper.getId());
+			usRoleOper.setId(PrimaryKey.getUUID());
+			usRoleOper.setCdId(sysOper.getMenuId());
+			usRoleOper.setOperLevel(OperationLevel.ALL+"");
+			
+			jsczdao.saveOrUpdateEntity( usRoleOper);
 		}
 		return hhXtJs;
 	}
@@ -108,11 +138,11 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		hhXtYh.setVdzyj("admin@hh.com");
 		hhXtYh.setHeadpic("/hhcommon/images/big/qq/10.gif");
 		setBeanSysFields(hhXtYh);
-//		HHXtZmsx hhXtZmsx = new HHXtZmsx();
-//		hhXtYh.setHhXtZmsx(hhXtZmsx);
+		// HHXtZmsx hhXtZmsx = new HHXtZmsx();
+		// hhXtYh.setHhXtZmsx(hhXtZmsx);
 		hhXtYh.setVmm("123456");
 		hhXtYh.setId("admin");
-//		hhXtZmsx.setId(hhXtYh.getId());
+		// hhXtZmsx.setId(hhXtYh.getId());
 		hhXtYh.setTheme("base");
 		hhXtYh.setRoleIds(hhXtJs.getId());
 		xtyhdao.saveOrUpdateEntity(hhXtYh);
@@ -121,8 +151,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 	public Map<String, Object> queryCacheListPage() {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		Set<String> keySet = xtyhdao.getSessionFactory().getAllClassMetadata()
-				.keySet();
+		Set<String> keySet = xtyhdao.getSessionFactory().getAllClassMetadata().keySet();
 
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
@@ -167,5 +196,5 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 		object.setDupdate(new Date());
 		object.setOrder(PrimaryKey.getTime());
 	}
-	
+
 }

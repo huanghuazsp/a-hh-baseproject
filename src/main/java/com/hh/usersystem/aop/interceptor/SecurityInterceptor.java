@@ -11,20 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.google.gson.Gson;
 import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
-import com.hh.system.util.ExceptionUtil;
 import com.hh.system.util.SysParam;
 import com.hh.usersystem.bean.usersystem.SysOper;
-import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.OperateService;
 import com.hh.usersystem.service.impl.OrganizationService;
 import com.hh.usersystem.util.steady.StaticProperties.OperationLevel;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 
@@ -35,8 +32,6 @@ public class SecurityInterceptor implements Interceptor {
 	public static Map<String, List<String>> all_manage_page_text_map = new HashMap<String, List<String>>();
 
 	private static int isLoadManagerRequest = 0;
-	@Autowired
-	private IHibernateDAO<SysOper> hibernateDAO;
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 	@Autowired
@@ -147,7 +142,10 @@ public class SecurityInterceptor implements Interceptor {
 				.getParameter("deptids"));
 		String jobids = Convert.toString(request
 				.getParameter("jobids"));
-		if (OperationLevel.BJG.toString().equals(
+		if (OperationLevel.ALL.toString().equals(
+				hhXtCz.getOperLevel())) {
+			noSecurity = null;
+		}else if (OperationLevel.BJG.toString().equals(
 				hhXtCz.getOperLevel())) {
 			UsOrganization organization = hhXtYh.getOrg();
 			noSecurity = findNoSecurityStr(orgids,

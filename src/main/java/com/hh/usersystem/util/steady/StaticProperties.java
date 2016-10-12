@@ -21,7 +21,7 @@ public class StaticProperties {
 	public static List<SysOper> sysOperList = new ArrayList<SysOper>();
 
 	public static enum OperationLevel {
-		BR, BGW, BBM, BJG, BJT
+		ALL,BR, BGW, BBM, BJG, BJT
 	}
 
 	public static int findOperationLevel(String operString) {
@@ -33,6 +33,8 @@ public class StaticProperties {
 			return 3;
 		} else if ("BJG".equals(operString)) {
 			return 4;
+		}else if ("ALL".equals(operString)) {
+			return 5;
 		} else {
 			return 0;
 		}
