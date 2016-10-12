@@ -52,11 +52,10 @@ public class SystemService implements LoadDataTime, SystemServiceInf {
 	public void initMenuAndUser() {
 		List<String> menuIdList = new ArrayList<String>();
 		initMenu(menuIdList);
-
 		initOper();
-
 		UsRole hhXtJs = initRole(menuIdList);
 		initSysUser(hhXtJs);
+		operateService.initOperPower();
 	}
 	private void initOper() {
 		for (SysOper sysOper : StaticProperties.sysOperList) {
