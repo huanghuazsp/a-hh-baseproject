@@ -17,15 +17,14 @@ public class Actionoperate extends BaseServiceAction<SysOper> {
 	private OperateService operateService;
 
 	public Object queryOperateListByPid() {
-		List<ExtTree> hhxtczList = operateService.queryOperateListByPid(object
-				.getVpid());
+		List<ExtTree> hhxtczList = operateService.queryOperateListByPid(object.getMenuId());
 		return hhxtczList;
 	}
 
 	public Object queryCheckOperateListByPid() {
 		System.out.println(request.getParameter("node"));
 		List<ExtCheckTree> hhxtczList = operateService
-				.queryCheckOperateListByPid(object.getVpid(), roleid,
+				.queryCheckOperateListByPid(object.getMenuId(), roleid,
 						findParam("node"));
 		return hhxtczList;
 	}

@@ -35,7 +35,7 @@
 			action : 'usersystem-menu-deleteByIds',
 			id : treeNode.id,
 			callback:function(){
-				$("#czTreeDiv").disabled('请选择菜单！');
+				$.hh.tree.refresh('cztreespan');
 			}
 		});
 	}
@@ -50,34 +50,16 @@
 	var selectMenuNode = null;
 
 	function doLoadOper() {
-		var selectNode = $.hh.tree.getSelectNode('menuTree');
-		if (selectNode) {
-			if (selectNode.leaf == 1) {
-				selectMenuNode = selectNode;
-				$('#operspan').html('（'+selectMenuNode.text+'）');
-				var menuId = selectNode.id;
-				$("#czTreeDiv").undisabled();
-				if ($('#cztreespan').length == 0) {
-					cztreeconfig.params = {
-						vpid : menuId
-					};
-					var menuTree = $('<span id="cztreespan" xtype="tree" configVar="cztreeconfig"></span>');
-					$('#czTreeDiv').append(menuTree);
-					menuTree.render();
-				} else {
-					$.hh.tree.loadData('cztree', {
-						params : {
-							vpid : menuId
-						}
-					});
-				}
-			} else {
-				Dialog.infomsg("请先选中菜单！");
-				$("#czTreeDiv").disabled('请选择菜单！');
+		var selectNode = $.hh.tree.getSelectNode('menuTree') || {};
+		selectMenuNode = selectNode;
+		$('#operspan').html('（'+selectMenuNode.text+'）');
+		var menuId = selectNode.id;
+		
+		$.hh.tree.loadData('cztree', {
+			params : {
+				menuId : menuId
 			}
-		} else {
-			Dialog.infomsg("请先选中菜单！");
-		}
+		});
 	}
 
 	function doAddOper() {
@@ -117,7 +99,6 @@
 	}
 
 	function init() {
-		$("#czTreeDiv").disabled('请选择菜单！');
 	}
 </script>
 </head>
@@ -141,8 +122,10 @@
 		</div>
 		<div id="czTreeDiv">
 			<div xtype="toolbar" config="type:'head'">
-				<span xtype="button" config="onClick: doAddOper ,text:'添加' "></span>&nbsp;&nbsp;<span id="operspan" style="color:red;" ></span>
+				<span xtype="button" config="onClick: doAddOper ,text:'添加' "></span>
+				&nbsp;&nbsp;<span id="operspan" style="color:red;" ></span>
 			</div>
+			<span id="cztreespan" xtype="tree" configVar="cztreeconfig"></span>
 		</div>
 	</div>
 </body>

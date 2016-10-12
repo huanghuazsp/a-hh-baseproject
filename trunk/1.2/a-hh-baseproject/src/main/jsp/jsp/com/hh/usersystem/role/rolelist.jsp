@@ -107,7 +107,7 @@
 			$("#czTreeDivspan").html(treeNode.text||'所有菜单');
 			cztreeconfig.params = {
 				roleid : saveRoleId,
-				vpid : treeNode.id ||''
+				menuId : treeNode.id ||''
 			};
 			if ($('#cztreespan').length == 0) {
 				var menuTree = $('<span id="cztreespan" xtype="tree" configVar="cztreeconfig"></span>');
@@ -127,7 +127,7 @@
 					.getCheckedNodes('cztree'), 'id');
 			Request.request('usersystem-role-saveJsOper', {
 				data : {
-					menuIds : cztreeconfig.params.vpid||'',
+					menuIds : cztreeconfig.params.menuId||'',
 					roles : roleId,
 					czid_operLevel : czid_operLevel
 				}

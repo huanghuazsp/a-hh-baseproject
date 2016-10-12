@@ -37,8 +37,11 @@ public class OperateService  extends BaseService<SysOper> {
 	public List<ExtTree> queryOperateListByPid(String node) {
 		List<SysOper> hhXtCzList = new ArrayList<SysOper>();
 		ParamInf hqlParamList = ParamFactory.getParamHb();
-		hhXtCzList = dao.queryList(SysOper.class,
-				hqlParamList.is("vpid", node));
+		if (Check.isNoEmpty(node)) {
+			hqlParamList.is("menuId", node);
+		}
+		hqlParamList.order("menuIdText");
+		hhXtCzList = dao.queryList(SysOper.class,hqlParamList);
 		List<ExtTree> extTreeList = new ArrayList<ExtTree>();
 		for (SysOper hhXtCd : hhXtCzList) {
 			ExtTree extTree = new ExtTree();
@@ -51,7 +54,7 @@ public class OperateService  extends BaseService<SysOper> {
 			if (Check.isNoEmpty(hhXtCd.getVurl())) {
 				text+="（请求）";
 			}
-			text+="【"+hhXtCd.getVpname()+"】";
+			text="【"+hhXtCd.getMenuIdText()+"】"+text;
 			extTree.setText(text);
 			extTree.setLeaf(1);
 			extTreeList.add(extTree);
@@ -59,17 +62,17 @@ public class OperateService  extends BaseService<SysOper> {
 		return extTreeList;
 	}
 
-	public List<ExtCheckTree> queryCheckOperateListByPid(String vpid,
+	public List<ExtCheckTree> queryCheckOperateListByPid(String menuId,
 			String roleid, String node) {
 		List<ExtCheckTree> extTreeList = new ArrayList<ExtCheckTree>();
 		if ("root".equals(node)) {
 			List<SysOper> hhXtCzList = new ArrayList<SysOper>();
 			ParamInf hqlParamList = ParamFactory.getParamHb();
 			
-			if (Check.isNoEmpty(vpid)) {
-				hqlParamList.is("vpid", vpid);
+			if (Check.isNoEmpty(menuId)) {
+				hqlParamList.is("menuId", menuId);
 			}
-			
+			hqlParamList.order("menuIdText");
 			hhXtCzList = dao.queryList(SysOper.class,hqlParamList);
 
 			List<String> czidList = new ArrayList<String>();
@@ -78,9 +81,9 @@ public class OperateService  extends BaseService<SysOper> {
 				ExtCheckTree extTree = new ExtCheckTree();
 				extTree.setId(hhXtCd.getId());
 				String text = hhXtCd.getText();
-				if (Check.isEmpty(vpid)) {
-					if (Check.isNoEmpty(hhXtCd.getVpname())) {
-						text="【"+hhXtCd.getVpname()+"】"+text;
+				if (Check.isEmpty(menuId)) {
+					if (Check.isNoEmpty(hhXtCd.getMenuIdText())) {
+						text="【"+hhXtCd.getMenuIdText()+"】"+text;
 					}
 				}
 				if (Check.isNoEmpty(hhXtCd.getPageText())) {
@@ -93,7 +96,7 @@ public class OperateService  extends BaseService<SysOper> {
 				extTree.setLeaf(0);
 				extTree.setExpanded(1);
 				Map<String, Object> propertys = new HashMap<String, Object>();
-				propertys.put("vpid", hhXtCd.getVpid());
+				propertys.put("menuId", hhXtCd.getMenuId());
 				extTree.setPropertys(propertys);
 				extTreeList.add(extTree);
 				extTree.setNocheck(true);
@@ -131,25 +134,25 @@ public class OperateService  extends BaseService<SysOper> {
 				UsRoleOper hhXtJsCz =UsRoleOperMap.get(extCheckTree_parent.getId());
 
 				ExtCheckTree extTree5 = new ExtCheckTree();
-				extTree5.setId(extCheckTree_parent.getPropertys().get("vpid")+"_"+extCheckTree_parent.getId() + "_"+ OperationLevel.BR.toString());
+				extTree5.setId(extCheckTree_parent.getPropertys().get("menuId")+"_"+extCheckTree_parent.getId() + "_"+ OperationLevel.BR.toString());
 				extTree5.setText("本人");
 				extTree5.setLeaf(1);
 				extTreeListchild.add(extTree5);
 
 				ExtCheckTree extTree1 = new ExtCheckTree();
-				extTree1.setId(extCheckTree_parent.getPropertys().get("vpid")+"_"+extCheckTree_parent.getId() + "_"
+				extTree1.setId(extCheckTree_parent.getPropertys().get("menuId")+"_"+extCheckTree_parent.getId() + "_"
 						+ OperationLevel.BGW.toString());
 				extTree1.setText("本岗位");
 				extTree1.setLeaf(1);
 				extTreeListchild.add(extTree1);
 				ExtCheckTree extTree2 = new ExtCheckTree();
-				extTree2.setId(extCheckTree_parent.getPropertys().get("vpid")+"_"+extCheckTree_parent.getId() + "_"
+				extTree2.setId(extCheckTree_parent.getPropertys().get("menuId")+"_"+extCheckTree_parent.getId() + "_"
 						+ OperationLevel.BBM.toString());
 				extTree2.setText("本部门");
 				extTree2.setLeaf(1);
 				extTreeListchild.add(extTree2);
 				ExtCheckTree extTree3 = new ExtCheckTree();
-				extTree3.setId(extCheckTree_parent.getPropertys().get("vpid")+"_"+extCheckTree_parent.getId() + "_"
+				extTree3.setId(extCheckTree_parent.getPropertys().get("menuId")+"_"+extCheckTree_parent.getId() + "_"
 						+ OperationLevel.BJG.toString());
 				extTree3.setText("本机构");
 				extTree3.setLeaf(1);
@@ -184,7 +187,7 @@ public class OperateService  extends BaseService<SysOper> {
 	}
 	
 	public List<SysOper> queryOperateListByPids(List<String> pids) {
-		return this.queryList(ParamFactory.getParamHb().in("vpid", pids));
+		return this.queryList(ParamFactory.getParamHb().in("menuId", pids));
 	}
 
 	public SysOper save(SysOper hhXtCz) {

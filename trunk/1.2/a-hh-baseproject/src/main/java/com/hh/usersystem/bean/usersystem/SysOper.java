@@ -10,14 +10,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.util.base.BaseTwoEntity;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "SYS_OPER")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "eternal")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SysOper extends BaseTwoEntity {
 	private String text;
-	private String vpid;
-	private String vpname;
+	private String menuId;
+	private String menuIdText;
 	private String menuUrl;
 //	private String vsj;
 	private String vurl;
@@ -44,24 +43,6 @@ public class SysOper extends BaseTwoEntity {
 	public void setText(String text) {
 		this.text = text;
 	}
-
-	@Column(name = "VPID", length = 128)
-	public String getVpid() {
-		return vpid;
-	}
-
-	public void setVpid(String vpid) {
-		this.vpid = vpid;
-	}
-
-//	@Column(name = "VSJ", length = 256)
-//	public String getVsj() {
-//		return vsj;
-//	}
-//
-//	public void setVsj(String vsj) {
-//		this.vsj = vsj;
-//	}
 
 	@Column(name = "VURL", length = 256)
 	public String getVurl() {
@@ -98,13 +79,23 @@ public class SysOper extends BaseTwoEntity {
 		this.type = type;
 	}
 
-	public String getVpname() {
-		return vpname;
+	
+	@Column(name = "MENU_ID", length = 128)
+	public String getMenuId() {
+		return menuId;
 	}
 
-	@Column(name="VPNAME", length = 128)
-	public void setVpname(String vpname) {
-		this.vpname = vpname;
+	public void setMenuId(String menuId) {
+		this.menuId = menuId;
+	}
+
+	@Column(name = "MENU_ID_TEXT", length = 128)
+	public String getMenuIdText() {
+		return menuIdText;
+	}
+
+	public void setMenuIdText(String menuIdText) {
+		this.menuIdText = menuIdText;
 	}
 	
 	
