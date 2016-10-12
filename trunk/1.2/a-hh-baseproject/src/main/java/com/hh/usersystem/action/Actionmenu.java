@@ -41,7 +41,7 @@ public class Actionmenu extends BaseServiceAction<SysMenu> {
 	}
 	
 	public Object queryAllMenuList() {
-		return StaticProperties.hhXtCds;
+		return StaticProperties.sysMenuList;
 	}
 
 	public Object queryMenuAllListByPid() {

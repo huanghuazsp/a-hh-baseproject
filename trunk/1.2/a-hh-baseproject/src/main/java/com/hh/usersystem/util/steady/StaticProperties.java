@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hh.usersystem.bean.usersystem.SysMenu;
+import com.hh.usersystem.bean.usersystem.SysOper;
 
 public class StaticProperties {
 	// 默认背景
@@ -16,7 +17,8 @@ public class StaticProperties {
 	public static final String HHXT_NO_ON_LINE_USER_ICON = "/hhcommon/images/icons/user/no_on_line_user.jpg";
 	
 	
-	public static List<SysMenu> hhXtCds = new ArrayList<SysMenu>();
+	public static List<SysMenu> sysMenuList = new ArrayList<SysMenu>();
+	public static List<SysOper> sysOperList = new ArrayList<SysOper>();
 
 	public static enum OperationLevel {
 		BR, BGW, BBM, BJG, BJT

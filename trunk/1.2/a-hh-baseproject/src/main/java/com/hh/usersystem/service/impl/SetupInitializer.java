@@ -50,7 +50,7 @@ public class SetupInitializer {
 				new SysMenu("AtEKV96zooROUbwJnkW", "分管配置",
 						"jsp-usersystem-user-usLeaderList",
 						"/hhcommon/images/icons/user/user_gray.png", 0, 1));
-		StaticProperties.hhXtCds.add(rootHhXtCd);
+		StaticProperties.sysMenuList.add(rootHhXtCd);
 
 	}
 	

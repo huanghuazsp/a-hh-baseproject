@@ -50,7 +50,7 @@ public class SystemService implements LoadDataTime ,SystemServiceInf{
 	}
 
 	private void initMenu(List<String> menuIdList) {
-		saveMenu(StaticProperties.hhXtCds, "root", menuIdList);
+		saveMenu(StaticProperties.sysMenuList, "root", menuIdList);
 	}
 
 	private void saveMenu(List<SysMenu> hhXtCds, String node,
