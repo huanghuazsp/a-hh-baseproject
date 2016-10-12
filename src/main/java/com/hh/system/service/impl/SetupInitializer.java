@@ -51,7 +51,7 @@ public class SetupInitializer {
 		rootHhXtCd.getChildren().add(new SysMenu( "oAgFhe9tIBMdd2TeZA8","数据字典",
 				"jsp-system-data-datalist", "/hhcommon/images/extjsico/17460321.png", 0, 1));
 
-		StaticProperties.hhXtCds.add(rootHhXtCd);
+		StaticProperties.sysMenuList.add(rootHhXtCd);
 
 
 		rootHhXtCd.getChildren().add(new SysMenu("2PfT85tR2RRcqSAdmCS", "系统工具",

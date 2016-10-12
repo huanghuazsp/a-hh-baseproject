@@ -74,7 +74,7 @@ public class SetupInitializer {
 						"/hhcommon/images/icons/folder/folder.png", 0, 1));
 		
 
-		StaticProperties.hhXtCds.add(rootHhXtCd);
+		StaticProperties.sysMenuList.add(rootHhXtCd);
 		StaticVar.loadDataTimeMap.put("jsp-message-email-emailmain",sysShouEmailService);
 		StaticVar.loadDataTimeMap.put("message",sysMessageService);
 
