@@ -21,6 +21,7 @@ import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 import com.hh.system.util.pk.PrimaryKey;
+import com.hh.usersystem.bean.usersystem.SysOper;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.bean.usersystem.UsRole;
 import com.hh.usersystem.bean.usersystem.UsUser;
@@ -332,6 +333,22 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	}
 
 	public List<UsOrganization> queryCurrOrgTree(String node, String action) {
+		UsUser hhXtYh = loginUserUtilService.findLoginUser();
+		Map<String, SysOper> operMap = hhXtYh.getOperMap();
+		SysOper hhXtCz = operMap.get(action);
+		if (StaticProperties.OperationLevel.ALL.equals(hhXtCz.getOperLevel())) {
+			 node =Check.isEmpty(node) ? "root" : node;
+			ParamInf hqlParamList = ParamFactory.getParamHb();
+//			if (Check.isNoEmpty(object.getText()) && "root".equals(node)) {
+//				hqlParamList.like("text", object.getText());
+//			}else{
+				hqlParamList.is("node", node);
+//			}
+			return organizationToIconCls(
+					queryTreeList(hqlParamList	));
+		}
+		
+		
 		List<UsOrganization> organizations = new ArrayList<UsOrganization>();
 		if ("root".equals(node)) {
 			organizations

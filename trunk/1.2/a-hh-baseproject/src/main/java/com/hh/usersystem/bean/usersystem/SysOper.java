@@ -14,16 +14,41 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 @Table(name = "SYS_OPER")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SysOper extends BaseTwoEntity {
+
+	public SysOper() {
+
+	}
+
+	public SysOper(String id, String text, SysMenu menu) {
+		gz(id, text, menu);
+	}
+
+	public SysOper(String id, String text, String vurl, SysMenu menu) {
+		gz(id, text, menu);
+
+		this.setVurl(vurl);
+	}
+
+	private void gz(String id, String text, SysMenu menu) {
+		this.setId(id);
+		this.setText(text);
+		this.setPageText(text);
+
+		this.setMenuId(menu.getId());
+		this.setMenuIdText(menu.getText());
+		this.setMenuUrl(menu.getVsj());
+	}
+
 	private String text;
 	private String menuId;
 	private String menuIdText;
 	private String menuUrl;
-//	private String vsj;
+	// private String vsj;
 	private String vurl;
 	private String pageText;
 	private String operLevel;
-	
-	//类型1是菜单
+
+	// 类型1是菜单
 	private int type;
 
 	@Transient
@@ -61,6 +86,7 @@ public class SysOper extends BaseTwoEntity {
 	public void setPageText(String pageText) {
 		this.pageText = pageText;
 	}
+
 	@Column(name = "MENU_URL", length = 256)
 	public String getMenuUrl() {
 		return menuUrl;
@@ -79,7 +105,6 @@ public class SysOper extends BaseTwoEntity {
 		this.type = type;
 	}
 
-	
 	@Column(name = "MENU_ID", length = 128)
 	public String getMenuId() {
 		return menuId;
@@ -97,7 +122,5 @@ public class SysOper extends BaseTwoEntity {
 	public void setMenuIdText(String menuIdText) {
 		this.menuIdText = menuIdText;
 	}
-	
-	
 
 }

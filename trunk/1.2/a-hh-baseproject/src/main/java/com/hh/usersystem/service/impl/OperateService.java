@@ -138,6 +138,14 @@ public class OperateService  extends BaseService<SysOper> {
 				extTree5.setText("本人");
 				extTree5.setLeaf(1);
 				extTreeListchild.add(extTree5);
+				
+				
+				ExtCheckTree allTree = new ExtCheckTree();
+				allTree.setId(extCheckTree_parent.getPropertys().get("menuId")+"_"+extCheckTree_parent.getId() + "_"
+						+ OperationLevel.ALL.toString());
+				allTree.setText("所有");
+				allTree.setLeaf(1);
+				extTreeListchild.add(allTree);
 
 				ExtCheckTree extTree1 = new ExtCheckTree();
 				extTree1.setId(extCheckTree_parent.getPropertys().get("menuId")+"_"+extCheckTree_parent.getId() + "_"
