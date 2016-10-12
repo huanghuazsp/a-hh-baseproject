@@ -132,13 +132,6 @@ public class OperateService  extends BaseService<SysOper> {
 				extCheckTree_parent.setChildren(extTreeListchild);
 				
 				UsRoleOper hhXtJsCz =UsRoleOperMap.get(extCheckTree_parent.getId());
-
-				ExtCheckTree extTree5 = new ExtCheckTree();
-				extTree5.setId(extCheckTree_parent.getPropertys().get("menuId")+"_"+extCheckTree_parent.getId() + "_"+ OperationLevel.BR.toString());
-				extTree5.setText("本人");
-				extTree5.setLeaf(1);
-				extTreeListchild.add(extTree5);
-				
 				
 				ExtCheckTree allTree = new ExtCheckTree();
 				allTree.setId(extCheckTree_parent.getPropertys().get("menuId")+"_"+extCheckTree_parent.getId() + "_"
@@ -147,6 +140,12 @@ public class OperateService  extends BaseService<SysOper> {
 				allTree.setLeaf(1);
 				extTreeListchild.add(allTree);
 
+				ExtCheckTree extTree5 = new ExtCheckTree();
+				extTree5.setId(extCheckTree_parent.getPropertys().get("menuId")+"_"+extCheckTree_parent.getId() + "_"+ OperationLevel.BR.toString());
+				extTree5.setText("本人");
+				extTree5.setLeaf(1);
+				extTreeListchild.add(extTree5);
+				
 				ExtCheckTree extTree1 = new ExtCheckTree();
 				extTree1.setId(extCheckTree_parent.getPropertys().get("menuId")+"_"+extCheckTree_parent.getId() + "_"
 						+ OperationLevel.BGW.toString());
@@ -223,7 +222,7 @@ public class OperateService  extends BaseService<SysOper> {
 	public void deleteByMenuIdList(List<String> idList) {
 		if (!Check.isEmpty(idList)) {
 			hhxtjsczDao.deleteEntity(UsRoleOper.class, "cdId", idList);
-			dao.deleteEntity(SysOper.class, "vpid", idList);
+			dao.deleteEntity(SysOper.class, "menuId", idList);
 			initOperPower();
 		}
 	}
