@@ -66,6 +66,7 @@ public class SysOper extends BaseTwoEntity {
 	}
 
 	public void setText(String text) {
+		this.name=text;
 		this.text = text;
 	}
 
@@ -122,5 +123,18 @@ public class SysOper extends BaseTwoEntity {
 	public void setMenuIdText(String menuIdText) {
 		this.menuIdText = menuIdText;
 	}
+
+	private int leaf = 1;
+
+	@Transient
+	public int getLeaf() {
+		return leaf;
+	}
+
+	public void setLeaf(int leaf) {
+		this.leaf = leaf;
+	}
+	
+	private String name;
 
 }

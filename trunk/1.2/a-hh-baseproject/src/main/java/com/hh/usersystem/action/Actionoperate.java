@@ -22,11 +22,9 @@ public class Actionoperate extends BaseServiceAction<SysOper> {
 	}
 
 	public Object queryCheckOperateListByPid() {
-		System.out.println(request.getParameter("node"));
-		List<ExtCheckTree> hhxtczList = operateService
+		return operateService
 				.queryCheckOperateListByPid(object.getMenuId(), roleid,
 						findParam("node"));
-		return hhxtczList;
 	}
 
 	public Object findObjectById() {
