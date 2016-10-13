@@ -90,14 +90,23 @@
 	var cztreeconfig = {
 		id : 'cztree',
 		url : 'usersystem-operate-queryCheckOperateListByPid',
-		check : {
-			radioType : 'level',
-			chkStyle : "radio",
-			enable : true,
-			chkboxType : {
-				"Y" : "ps",
-				"N" : "ps"
-			}
+		showIcon : false,
+		addDiyDom:function(treeId, treeNode){
+			var aObj = $("#" + treeNode.tId + '_a');
+			var select = $("<select style='width:65px;height:20px;' id='diyBtn_" +treeNode.id+ "'></select>");
+			select.append('<option value="">无权限</option>');
+			select.append('<option value="ALL">所有</option>');
+			select.append('<option value="BR">本人</option>');
+			select.append('<option value="BGW">本岗位</option>');
+			select.append('<option value="BBM">本部门</option>');
+			select.append('<option value="BJG">本机构</option>');
+			
+			var comboboxfield = select.find("option[value=" + treeNode.operLevel + "]");
+			comboboxfield.attr("selected", true);
+			
+			aObj.before(select);
+			select.change( function(){
+			});
 		}
 	}
 
@@ -123,8 +132,18 @@
 	function doOperSave() {
 		var roleId = cztreeconfig.params.roleid;
 		if (roleId ) {
-			var czid_operLevel = $.hh.objsToStr($.hh.tree
-					.getCheckedNodes('cztree'), 'id');
+			var czid_operLevel = '';
+			var nodes = $.hh.tree.getTree('cztree').getNodes();
+			for(var i=0;i<nodes.length;i++){
+				var node = nodes[i];
+				var operLevel=$("#diyBtn_" +node.id).find('option:selected').val();
+				if(operLevel){
+					czid_operLevel+=node.menuId+'_'+node.id+'_'+operLevel+',';
+				}
+			}
+			if(czid_operLevel){
+				czid_operLevel=czid_operLevel.substr(0,czid_operLevel.length-1);
+			}
 			Request.request('usersystem-role-saveJsOper', {
 				data : {
 					menuIds : cztreeconfig.params.menuId||'',
@@ -190,7 +209,7 @@
 				]">
 		</div>
 	</div>
-	<div config="render : 'east' ,width:450 ">
+	<div config="render : 'east' ,width:'50%' ">
 		<div xtype="border_layout">
 			<div id="menuTreeDiv" config="render : 'west'"  >
 				<div xtype="toolbar" config="type:'head'">
