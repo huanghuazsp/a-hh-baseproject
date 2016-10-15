@@ -78,6 +78,10 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	
 	private String usGroupIds;
 	private String sysGroupIds;
+	
+	private String propertys;
+	
+	private Map<String, Object> propertysMap;
 
 	@Transient
 	public UsOrganization getDept() {
@@ -417,6 +421,24 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	public void setSysGroupIds(String sysGroupIds) {
 		this.sysGroupIds = sysGroupIds;
 	}
-	
+
+	@Lob
+	@Column(name="PROPERTYS")
+	public String getPropertys() {
+		return propertys;
+	}
+
+	public void setPropertys(String propertys) {
+		this.propertys = propertys;
+	}
+
+	@Transient
+	public Map<String, Object> getPropertysMap() {
+		return propertysMap;
+	}
+
+	public void setPropertysMap(Map<String, Object> propertysMap) {
+		this.propertysMap = propertysMap;
+	}
 	
 }
