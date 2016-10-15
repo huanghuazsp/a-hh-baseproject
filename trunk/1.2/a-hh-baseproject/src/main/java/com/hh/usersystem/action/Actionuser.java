@@ -208,6 +208,10 @@ public class Actionuser extends BaseServiceAction<UsUser>  {
 	public void updateTheme() {
 		userService.updateTheme(object);
 	}
+	
+	public void updateProperty() {
+		userService.updateProperty(object,paramsMap);
+	}
 
 	public Object importData() throws Exception {
 		response.setContentType("text/html");

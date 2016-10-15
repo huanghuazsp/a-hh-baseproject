@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
+import com.hh.system.util.Json;
 import com.hh.system.util.base.BaseAction;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.MsgProperties;
@@ -194,6 +195,8 @@ public class LoginService {
 
 					hhXtYh.setRoleList(roleList);
 					
+					hhXtYh.setPropertysMap(Json.toMap(hhXtYh.getPropertys()));
+					
 					addGroup(hhXtYh);
 
 					// createZmsx(hhXtYh);
@@ -201,6 +204,7 @@ public class LoginService {
 					try {
 						BeanUtils.copyProperties(hhXtYh2, hhXtYh);
 						hhXtYh2.setVmm("");
+						hhXtYh2.setPropertys(null);
 						// hhXtYh2.setHhXtZmsx(hhXtYh.getHhXtZmsx());
 						ActionContext.getContext().getSession().put("loginuser", hhXtYh2);
 					} catch (IllegalAccessException e) {

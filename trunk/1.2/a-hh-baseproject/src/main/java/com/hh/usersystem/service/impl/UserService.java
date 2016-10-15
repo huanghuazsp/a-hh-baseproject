@@ -19,6 +19,7 @@ import com.hh.system.service.impl.BaseService;
 import com.hh.system.service.inf.IFileOper;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
+import com.hh.system.util.Json;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.StaticVar;
 import com.hh.system.util.date.DateFormat;
@@ -64,8 +65,9 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 	private GroupService groupService;
 	@Autowired
 	private UserGroupService usGoupService;
-	
-	@Autowired UsLeaderService usLeaderService;
+
+	@Autowired
+	UsLeaderService usLeaderService;
 
 	public Map<? extends String, ? extends Object> queryOnLinePagingData(UsUser hhXtYh, PageRange pageRange) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -82,13 +84,13 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 		}
 	}
 
-	public PagingData<UsUser> queryPagingData(UsUser hhXtYh, PageRange pageRange,int selectType, String ids, String orgs, String roles,
-			String groups, String usgroups) {
+	public PagingData<UsUser> queryPagingData(UsUser hhXtYh, PageRange pageRange, int selectType, String ids,
+			String orgs, String roles, String groups, String usgroups) {
 		UsUser user = loginUserUtilService.findLoginUser();
-		if (selectType==1) {
-			orgs=user.getDeptId();
-		}else if (selectType==2) {
-			orgs=user.getOrgId();
+		if (selectType == 1) {
+			orgs = user.getDeptId();
+		} else if (selectType == 2) {
+			orgs = user.getOrgId();
 		}
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (!Check.isEmpty(hhXtYh.getText())) {
@@ -239,8 +241,7 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 			// zmsxdao.deleteEntity(HHXtZmsx.class, "id", idList);
 			cylxrdao.deleteEntity(UsUserCyLxr.class, "yhId", idList);
 			cylxrdao.deleteEntity(UsUserCyLxr.class, "cylxrId", idList);
-			
-			
+
 			usLeaderService.deleteLeaders(idList);
 		}
 
@@ -373,11 +374,17 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 				new Object[] { orgid, userId });
 	}
 
-	public void updateTheme(UsUser hhXtZmsx) {
+	public void updateTheme(UsUser user) {
 		UsUser hhXtYh = loginUserUtilService.findLoginUser();
-		hhXtZmsx.setId(hhXtYh.getId());
-		dao.updateEntity("update " + UsUser.class.getName() + " o set o.theme=:theme where o.id=:id", hhXtZmsx);
-		hhXtYh.setTheme(hhXtZmsx.getTheme());
+		update("id", hhXtYh.getId(), "theme", user.getTheme());
+		hhXtYh.setTheme(user.getTheme());
+		ActionContext.getContext().getSession().put("loginuser", hhXtYh);
+	}
+
+	public void updateProperty(UsUser object, Map<String, String> paramsMap) {
+		UsUser hhXtYh = loginUserUtilService.findLoginUser();
+		hhXtYh.getPropertysMap().putAll(paramsMap);
+		update("id", hhXtYh.getId(), "propertys", Json.toStr(hhXtYh.getPropertysMap()));
 		ActionContext.getContext().getSession().put("loginuser", hhXtYh);
 	}
 
@@ -520,9 +527,9 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 			UsUserCyLxr u2 = user2.get(0);
 			long order2_ = u2.getOrder();
 			dao.updateEntity("update " + UsUserCyLxr.class.getName() + " o set o.order=? where yhId=? and o.cylxrId=?",
-					new Object[] { order1_, userId,id2 });
+					new Object[] { order1_, userId, id2 });
 			dao.updateEntity("update " + UsUserCyLxr.class.getName() + " o set o.order=? where yhId=? and o.cylxrId=?",
-					new Object[] { order2_, userId,id1 });
+					new Object[] { order2_, userId, id1 });
 		}
 
 	}
