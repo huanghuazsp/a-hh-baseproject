@@ -9,7 +9,7 @@
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
 	var width = 600;
-	var height = 500;
+	var height = 550;
 	var systemmanagerhide=params.systemmanagerhide;
 	
 	var view = '<%=Convert.toString(request.getParameter("view"))%>';

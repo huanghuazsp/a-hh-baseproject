@@ -8,7 +8,7 @@
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
 	var width = 720;
-	var height = 450
+	var height = 570
 
 	var objectid = params.object ? params.object.id : '';
 
