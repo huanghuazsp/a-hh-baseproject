@@ -59,6 +59,7 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	private Map<String, List<String>> operPageTextMap = new HashMap<String, List<String>>();//页面文字权限控制
 
 	private String roleIds;// 角色ID
+	private String roleIdsText;// 角色ID
 
 	private String vzmbj = StaticProperties.HHXT_USERSYSTEM_ZMBJ;
 	private int pageSize = 15;
@@ -440,5 +441,16 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	public void setPropertysMap(Map<String, Object> propertysMap) {
 		this.propertysMap = propertysMap;
 	}
+
+	@Column(name = "ROLE_IDS_TEXT", length = 64)
+	public String getRoleIdsText() {
+		return roleIdsText;
+	}
+
+	public void setRoleIdsText(String roleIdsText) {
+		this.roleIdsText = roleIdsText;
+	}
+	
+	
 	
 }
