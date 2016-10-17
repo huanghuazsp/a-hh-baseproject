@@ -85,18 +85,18 @@ public class SystemService implements LoadDataTime, SystemServiceInf {
 		UsRole hhXtJs = new UsRole();
 		setBeanSysFields(hhXtJs);
 		hhXtJs.setId(StaticVar.role_admin_id);
-		hhXtJs.setText("超级管理员");
-		hhXtJs.setVbz("超级管理员");
-		hhXtJs.setJssx("admin");
+		hhXtJs.setText(StaticVar.role_admin_text);
+		hhXtJs.setVbz(StaticVar.role_admin_text);
+		hhXtJs.setJssx(StaticVar.role_admin_id);
 		hhXtJs.setNlx(3);
 		roledao.saveOrUpdateEntity(hhXtJs);
 
 		UsRole hhXtJs2 = new UsRole();
 		setBeanSysFields(hhXtJs2);
 		hhXtJs2.setId(StaticVar.role_default_id);
-		hhXtJs2.setText("默认角色");
-		hhXtJs2.setVbz("默认角色");
-		hhXtJs2.setJssx("default");
+		hhXtJs2.setText(StaticVar.role_default_text);
+		hhXtJs2.setVbz(StaticVar.role_default_text);
+		hhXtJs2.setJssx(StaticVar.role_default_id);
 		hhXtJs2.setNlx(3);
 		roledao.saveOrUpdateEntity(hhXtJs2);
 
@@ -144,6 +144,7 @@ public class SystemService implements LoadDataTime, SystemServiceInf {
 		// hhXtZmsx.setId(hhXtYh.getId());
 		hhXtYh.setTheme("base");
 		hhXtYh.setRoleIds(hhXtJs.getId());
+		hhXtYh.setRoleIdsText(hhXtJs.getText());
 		xtyhdao.saveOrUpdateEntity(hhXtYh);
 	}
 

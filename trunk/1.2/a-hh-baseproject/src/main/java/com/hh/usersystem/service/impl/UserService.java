@@ -199,6 +199,7 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 		}
 		if (Check.isEmpty(hhXtYh.getRoleIds())) {
 			hhXtYh.setRoleIds(StaticVar.role_default_id);
+			hhXtYh.setRoleIdsText(StaticVar.role_default_text);
 		}
 		if (Check.isEmpty(hhXtYh.getId())) {
 			// HHXtZmsx hhXtZmsx = new HHXtZmsx();
@@ -489,6 +490,7 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 			user.setState(zt);
 			user.setDsr(sr);
 			user.setRoleIds(js);
+			user.setRoleIdsText(jsName);
 			user.setOrgId(jg);
 			user.setDeptId(bm);
 			user.setJobId(gw);
