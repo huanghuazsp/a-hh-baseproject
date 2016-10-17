@@ -118,7 +118,7 @@
 				<tr trtype="systemmanager" >
 					<td xtype="label">角色：</td>
 					<td colspan="3"><span xtype="selectPageList"
-						config="name: 'roleIds'  , url:'usersystem-role-queryPagingData' ,tableName:'US_ROLE' "></td>
+						config="name: 'roleIds'  , url:'usersystem-role-queryPagingData' ,findTextAction:'usersystem-role-findObjectById' "></td>
 				</tr>
 				<tr trtype="systemmanager" >
 					<td xtype="label">机构：</td>
