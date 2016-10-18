@@ -96,7 +96,7 @@
 				</tr>
 				<tr>
 					<td xtype="label">收件人：</td>
-					<td><span id="shoujianrenspan" xtype="selectUser" config="name: 'users' "></span></td>
+					<td><span id="shoujianrenspan" xtype="selectUser" config="name: 'users',many:true "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">附件：</td>

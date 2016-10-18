@@ -56,7 +56,7 @@
 				<tr>
 					<td xtype="label">接收人：</td>
 					<td><span xtype="selectUser"
-						config="radio:true,name: 'shouUser' "></span></td>
+						config="radio:true,name: 'shouUser',many:true "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">地址：</td>

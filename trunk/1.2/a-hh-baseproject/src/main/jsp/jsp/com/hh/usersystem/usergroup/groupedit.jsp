@@ -75,7 +75,7 @@
 					</tr>
 					<tr>
 						<td xtype="label">组员：</td>
-						<td><span xtype="selectUser" config="name: 'users' "></td>
+						<td><span xtype="selectUser" config="name: 'users',many:true "></td>
 					</tr>
 					<tr>
 						<td xtype="label">备注：</td>
