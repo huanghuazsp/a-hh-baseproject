@@ -394,40 +394,6 @@
 		}
 	}
 
-	function renderAllMessage(allMessage) {
-		for (var i = 0; i < allMessage.length; i++) {
-			if (allMessage[i].count) {
-				allMessage[i].rightText = '<font class="hh_red">'
-						+ allMessage[i].count + '</font>';
-			}
-			convertMenuImg(allMessage[i]);
-		}
-		renderMessDivspan({
-			data : allMessage
-		});
-	}
-	
-	function convertMenuImg(data){
-		if(data.sendObjectType==0){
-			var headpic = data.headpic || '/hhcommon/images/icons/user/100/no_on_line_user.jpg';
-			if (data.headpic && data.headpic.indexOf("/hhcomm")==-1) {
-				headpic = "system-File-download?params={id:'" + headpic + "'}";
-			}
-			data.img=headpic
-		}else if(data.sendObjectType==6 || data.sendObjectType==7){
-			data.img='/hhcommon/images/icons/group/group.png';
-		}else if(data.sendObjectType==2){
-			data.img='/hhcommon/images/icons/user/group.png';
-		}else if(data.sendObjectType==1){
-			data.img='/hhcommon/images/myimage/org/org.png';
-		}else if(data.sendObjectType==11){
-			data.img='/hhcommon/images/icons/email/email.png';
-		}else if(data.sendObjectType==12){
-			data.img='/hhcommon/images/extjsico/txt.gif';
-		}
-		
-	}
-
 	function renderMsg(message) {
 		var selectData = $('#userdiv').data('data');
 		if (selectData && (message.objectId == selectData.id)) {
@@ -572,38 +538,6 @@
 		});
 	}
 
-	var timeoutTime = 3;
-	var errorlength = 0;
-	function messageInit() {
-		$.ajax({
-			type : "POST",
-			url : "message-SysMessage-poll",
-			dataType : "json",
-			timeout : 70000, //超时时间,设置为60s.
-			data : {
-				timeout : timeoutTime
-			},
-			success : function(result) {
-				if (timeoutTime == 3) {
-					timeoutTime = 60;
-					renderAllMessage(result.allMessage)
-				}
-				for (var i = 0; i < result.length; i++) {
-					showMessage2(result[i]);
-				}
-				messageInit();
-			},
-			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				if (errorlength > 6) {
-					errorLoad();
-				} else {
-					setTimeout(messageInit, 2000)
-				}
-				errorlength++;
-			}
-		});
-	}
-
 	function sendMessage(message) {
 		$.ajax({
 			type : "POST",
@@ -718,6 +652,78 @@
 		$('#span_orgTree').loadData({
 			params : {text:$('#span_orgText').getValue()}
 		});
+	}
+	
+	
+	
+	
+	
+	
+	
+	var timeoutTime = 3;
+	var errorlength = 0;
+	function messageInit() {
+		$.ajax({
+			type : "POST",
+			url : "message-SysMessage-poll",
+			dataType : "json",
+			timeout : 70000, //超时时间,设置为60s.
+			data : {
+				timeout : timeoutTime
+			},
+			success : function(result) {
+				if (timeoutTime == 3) {
+					timeoutTime = 60;
+					renderAllMessage(result.allMessage)
+				}
+				for (var i = 0; i < result.length; i++) {
+					showMessage2(result[i]);
+				}
+				messageInit();
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				if (errorlength > 6) {
+					errorLoad();
+				} else {
+					setTimeout(messageInit, 2000)
+				}
+				errorlength++;
+			}
+		});
+	}
+	
+	function renderAllMessage(allMessage) {
+		for (var i = 0; i < allMessage.length; i++) {
+			if (allMessage[i].count) {
+				allMessage[i].rightText = '<font class="hh_red">'
+						+ allMessage[i].count + '</font>';
+			}
+			convertMenuImg(allMessage[i]);
+		}
+		renderMessDivspan({
+			data : allMessage
+		});
+	}
+	
+	function convertMenuImg(data){
+		if(data.sendObjectType==0){
+			var headpic = data.headpic || '/hhcommon/images/icons/user/100/no_on_line_user.jpg';
+			if (data.headpic && data.headpic.indexOf("/hhcomm")==-1) {
+				headpic = "system-File-download?params={id:'" + headpic + "'}";
+			}
+			data.img=headpic
+		}else if(data.sendObjectType==6 || data.sendObjectType==7){
+			data.img='/hhcommon/images/icons/group/group.png';
+		}else if(data.sendObjectType==2){
+			data.img='/hhcommon/images/icons/user/group.png';
+		}else if(data.sendObjectType==1){
+			data.img='/hhcommon/images/myimage/org/org.png';
+		}else if(data.sendObjectType==11){
+			data.img='/hhcommon/images/icons/email/email.png';
+		}else if(data.sendObjectType==12){
+			data.img='/hhcommon/images/extjsico/txt.gif';
+		}
+		
 	}
 </script>
 </head>
