@@ -83,6 +83,8 @@ public class UsUser extends BaseTwoEntity implements IUser {
 	private String propertys;
 	
 	private Map<String, Object> propertysMap;
+	
+	private String mobileHead;
 
 	@Transient
 	public UsOrganization getDept() {
@@ -449,6 +451,15 @@ public class UsUser extends BaseTwoEntity implements IUser {
 
 	public void setRoleIdsText(String roleIdsText) {
 		this.roleIdsText = roleIdsText;
+	}
+
+	@Transient
+	public String getMobileHead() {
+		return mobileHead;
+	}
+
+	public void setMobileHead(String mobileHead) {
+		this.mobileHead = mobileHead;
 	}
 	
 	

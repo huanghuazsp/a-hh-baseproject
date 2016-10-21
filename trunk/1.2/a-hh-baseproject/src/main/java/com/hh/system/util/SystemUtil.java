@@ -62,67 +62,10 @@ public class SystemUtil {
 	}
 
 	private static LoginUserUtilService userService = BeanFactoryHelper.getBean(LoginUserUtilService.class);
-	private static MenuService MenuService = BeanFactoryHelper.getBean(MenuService.class);
 
 	public static String getMobileHead(String quickMenu) {
-		String returnstr = "";
-		if (Request.getSession() != null) {
-			String mobileHead = Convert.toString(Request.getSession().get("mobileHead"));
-			if (Check.isEmpty(mobileHead)) {
-				UsUser hhXtYh = userService.findLoginUser();
-				StringBuffer str = new StringBuffer();
-				str.append("<div id='page' data-role='page'	data-theme='a'>");
-				str.append("<script type='text/javascript'>	$(function() {	$('[data-role=collapsible]').eq(0).find('a').click();	});</script>");
-				str.append("<div id='leftpanel' data-role='panel' data-display='overlay'	data-theme='b'>");
-				
-				str.append("<ul data-role='listview'  data-filter='false' data-inset='true'>");
-				str.append("<li data-icon='home' style='text-align:center;'><a data-ajax='false' href='webapp-desktop-mobiledesktop'  >主页</a></li>");
-				str.append("</ul>");
-				
-				str.append("<div data-role='collapsible-set'>");
-				List<SysMenu> menuList = hhXtYh.getMenuList();
-				for (SysMenu hhXtCd : menuList) {
-					if ("root".equals(hhXtCd.getNode())) {
-						List<SysMenu> submenuList = MenuService.getSubNodes(hhXtCd.getId(), menuList);
-						if (submenuList.size() > 0) {
-							str.append("<div data-role='collapsible'>");
-							str.append("<h2>");
-							str.append("<img src='" + hhXtCd.getIcon() + "' alt='" + hhXtCd.getText()
-									+ "' class='ui-li-icon'>&nbsp;" + hhXtCd.getText() + "");
-							str.append("</h2>");
-							str.append("<ul data-role='listview'>");
-							for (SysMenu subhhXtCd : submenuList) {
-								str.append("<li><a data-ajax='false' href='" + subhhXtCd.getMobileUrl()
-										+ "'><img	src='" + subhhXtCd.getIcon() + "' alt='" + hhXtCd.getText()
-										+ "'	class='ui-li-icon'>" + subhhXtCd.getText() + "</a></li>");
-							}
-							str.append("</ul>");
-							str.append("</div>");
-
-						}
-					}
-				}
-
-				str.append("</div>");
-				str.append("</div>");
-
-				str.append("<div data-role='header'>");
-				str.append(
-						"<a href='#leftpanel' data-role='button' data-position='fixed' data-icon='home'	data-iconpos='notext'></a>");
-				str.append("<h1>" + SysParam.sysParam.getSysName() + "</h1>");
-
-				str.append("right_tool");
-
-				str.append("</div>");
-				str.append("right_panel");
-
-				Request.getSession().put("mobileHead", str.toString());
-				returnstr = str.toString();
-			} else {
-				returnstr = mobileHead;
-			}
-		}
-
+		UsUser hhXtYh = userService.findLoginUser();
+		String returnstr=hhXtYh.getMobileHead();
 		if (Check.isNoEmpty(quickMenu)) {
 			List<Map<String, Object>> mapList = Json.toMapList(quickMenu);
 			StringBuffer str = new StringBuffer();
