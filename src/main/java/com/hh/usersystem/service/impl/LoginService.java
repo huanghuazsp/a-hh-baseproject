@@ -15,10 +15,12 @@ import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.Json;
+import com.hh.system.util.SysParam;
 import com.hh.system.util.base.BaseAction;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.model.MsgProperties;
 import com.hh.system.util.model.ReturnModel;
+import com.hh.system.util.request.Request;
 //import com.hh.usersystem.bean.usersystem.HHXtZmsx;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.bean.usersystem.SysOper;
@@ -52,18 +54,70 @@ public class LoginService {
 	private IHibernateDAO<SysMenu> hhxtcdDao;
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private UserGroupService userGroupService;
 	@Autowired
 	private GroupService groupService;
-	
+
 	@Autowired
 	private MenuService menuService;
 	@Autowired
 	private OperateService operateService;
 
 	private static final Logger logger = Logger.getLogger(BaseAction.class);
+
+	public String updateMobileHead(UsUser hhXtYh) {
+		StringBuffer str = new StringBuffer();
+		str.append("<div id='page' data-role='page'	data-theme='a'>");
+		str.append(
+				"<script type='text/javascript'>	$(function() {	$('[data-role=collapsible]').eq(0).find('a').click();	});</script>");
+		str.append("<div id='leftpanel' data-role='panel' data-display='overlay'	data-theme='b'>");
+
+		str.append("<ul data-role='listview'  data-filter='false' data-inset='true'>");
+		str.append(
+				"<li data-icon='home' style='text-align:center;'><a data-ajax='false' href='webapp-desktop-mobiledesktop'  >主页</a></li>");
+		str.append("</ul>");
+
+		str.append("<div data-role='collapsible-set'>");
+		List<SysMenu> menuList = hhXtYh.getMenuList();
+		for (SysMenu hhXtCd : menuList) {
+			if ("root".equals(hhXtCd.getNode())) {
+				List<SysMenu> submenuList = MenuService.getSubNodes(hhXtCd.getId(), menuList);
+				if (submenuList.size() > 0) {
+					str.append("<div data-role='collapsible'>");
+					str.append("<h2>");
+					str.append("<img src='" + hhXtCd.getIcon() + "' alt='" + hhXtCd.getText()
+							+ "' class='ui-li-icon'>&nbsp;" + hhXtCd.getText() + "");
+					str.append("</h2>");
+					str.append("<ul data-role='listview'>");
+					for (SysMenu subhhXtCd : submenuList) {
+						str.append("<li><a data-ajax='false' href='" + subhhXtCd.getMobileUrl() + "'><img	src='"
+								+ subhhXtCd.getIcon() + "' alt='" + hhXtCd.getText() + "'	class='ui-li-icon'>"
+								+ subhhXtCd.getText() + "</a></li>");
+					}
+					str.append("</ul>");
+					str.append("</div>");
+
+				}
+			}
+		}
+
+		str.append("</div>");
+		str.append("</div>");
+
+		str.append("<div data-role='header'>");
+		str.append(
+				"<a href='#leftpanel' data-role='button' data-position='fixed' data-icon='home'	data-iconpos='notext'></a>");
+		str.append("<h1>" + SysParam.sysParam.getSysName() + "</h1>");
+
+		str.append("right_tool");
+
+		str.append("</div>");
+		str.append("right_panel");
+		hhXtYh.setMobileHead(str.toString());
+		return hhXtYh.getMobileHead();
+	}
 
 	public ReturnModel savefindLogin(UsUser xtYh) {
 		ReturnModel returnModel = new ReturnModel();
@@ -91,7 +145,7 @@ public class LoginService {
 						return returnModel;
 					}
 
-					returnModel.setHref("webapp-desktop-desktop" );
+					returnModel.setHref("webapp-desktop-desktop");
 
 					List<String> jsids = Convert.strToList(hhXtYh.getRoleIds());
 
@@ -150,17 +204,17 @@ public class LoginService {
 						hhxtczIdList.add(hhXtJsCd.getCzId());
 					}
 					List<SysOper> operList = new ArrayList<SysOper>();
-					Map<String, SysOper> operTempMap = new HashMap<String, SysOper> ();
+					Map<String, SysOper> operTempMap = new HashMap<String, SysOper>();
 					if (hhxtczIdList.size() > 0) {
 						operList = operateService.queryListByIds(hhxtczIdList);
 						for (SysOper sysOper : operList) {
 							operTempMap.put(sysOper.getId(), sysOper);
 						}
 					}
-					
+
 					for (UsRoleOper hhXtJsCz : hhXtJsCzList) {
 						SysOper hhXtCz = operTempMap.get(hhXtJsCz.getCzId());
-						if (hhXtCz!=null) {
+						if (hhXtCz != null) {
 							if (StaticProperties.findOperationLevel(hhXtJsCz.getOperLevel()) > StaticProperties
 									.findOperationLevel(hhXtCz.getOperLevel())) {
 								hhXtCz.setOperLevel(hhXtJsCz.getOperLevel());
@@ -194,9 +248,9 @@ public class LoginService {
 					hhXtYh.setDesktopQuickList(hhXtCdZmtbList);
 
 					hhXtYh.setRoleList(roleList);
-					
+
 					hhXtYh.setPropertysMap(Json.toMap(hhXtYh.getPropertys()));
-					
+
 					addGroup(hhXtYh);
 
 					// createZmsx(hhXtYh);
@@ -205,6 +259,7 @@ public class LoginService {
 						BeanUtils.copyProperties(hhXtYh2, hhXtYh);
 						hhXtYh2.setVmm("");
 						hhXtYh2.setPropertys(null);
+						updateMobileHead(hhXtYh2);
 						// hhXtYh2.setHhXtZmsx(hhXtYh.getHhXtZmsx());
 						ActionContext.getContext().getSession().put("loginuser", hhXtYh2);
 					} catch (IllegalAccessException e) {
@@ -224,22 +279,22 @@ public class LoginService {
 		String usGroupId = "";
 		List<UsGroup> usGroupList = userGroupService.queryList(ParamFactory.getParamHb().like("users", hhXtYh.getId()));
 		for (UsGroup usGroup : usGroupList) {
-			usGroupId+=usGroup.getId()+",";
+			usGroupId += usGroup.getId() + ",";
 		}
 		if (Check.isNoEmpty(usGroupId)) {
-			usGroupId = usGroupId.substring(0,usGroupId.length()-1);
+			usGroupId = usGroupId.substring(0, usGroupId.length() - 1);
 		}
 		hhXtYh.setUsGroupIds(usGroupId);
-		
-		
+
 		String sysGroupId = "";
-		List<UsSysGroup> usSysGroupList = groupService.queryList(ParamFactory.getParamHb().like("users", hhXtYh.getId()));
+		List<UsSysGroup> usSysGroupList = groupService
+				.queryList(ParamFactory.getParamHb().like("users", hhXtYh.getId()));
 		for (UsSysGroup usGroup : usSysGroupList) {
-			sysGroupId+=usGroup.getId()+",";
+			sysGroupId += usGroup.getId() + ",";
 		}
-		
+
 		if (Check.isNoEmpty(sysGroupId)) {
-			sysGroupId = sysGroupId.substring(0,sysGroupId.length()-1);
+			sysGroupId = sysGroupId.substring(0, sysGroupId.length() - 1);
 		}
 		hhXtYh.setSysGroupIds(sysGroupId);
 	}
