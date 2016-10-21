@@ -68,10 +68,9 @@ public class SystemUtil {
 		String returnstr = "";
 		if (Request.getSession() != null) {
 			String mobileHead = Convert.toString(Request.getSession().get("mobileHead"));
-			if (Check.isNoEmpty(mobileHead)) {
-				StringBuffer str = new StringBuffer();
+			if (Check.isEmpty(mobileHead)) {
 				UsUser hhXtYh = userService.findLoginUser();
-
+				StringBuffer str = new StringBuffer();
 				str.append("<div id='page' data-role='page'	data-theme='a'>");
 				str.append("<script type='text/javascript'>	$(function() {	$('[data-role=collapsible]').eq(0).find('a').click();	});</script>");
 				str.append("<div id='leftpanel' data-role='panel' data-display='overlay'	data-theme='b'>");

@@ -175,11 +175,13 @@ public class Actionlogin extends BaseAction {
 
 	public String logout() {
 		session.remove("loginuser");
+		session.remove("mobileHead");
 		return "login";
 	}
 
 	public String logoutMain() {
 		session.remove("loginuser");
+		session.remove("mobileHead");
 		return "main";
 	}
 
