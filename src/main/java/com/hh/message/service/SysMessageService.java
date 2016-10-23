@@ -201,13 +201,23 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 		paramsMap.put("deptId", Convert.toString(user.getDeptId()));
 		paramsMap.put("likeUserId", "%" + userId + "%");
 		paramsMap.put("toObjectIdList", toObjectIdList);
+		paramsMap.put("objectId", object.getToObjectId());
+		
+		List<SysMessage> sysMessages = queryList(paramInf, pageRange);
+		boolean as = false;
+		for (SysMessage sysMessage : sysMessages) {
+			if (Convert.toString(sysMessage.getReadUserId()).indexOf(userId)==-1) {
+				as=true;
+			}
+		}
+		if (as) {
+			this.getDao()
+			.updateEntity("update " + SysMessage.class.getName()
+					+ " set readUserId = CONCAT(readUserId,:userId,',') where (" + whereSql
+					+ ") and readUserId not like :likeUserId and objectId = :objectId", paramsMap);
+		}
 
-		this.getDao()
-				.updateEntity("update " + SysMessage.class.getName()
-						+ " set readUserId = CONCAT(readUserId,:userId,',') where (" + whereSql
-						+ ") and readUserId not like :likeUserId ", paramsMap);
-
-		return queryList(paramInf, pageRange);
+		return sysMessages;
 	}
 
 	private ParamInf findParamList(int sendObjectType, String toObjectId, UsUser user) {
