@@ -32,7 +32,7 @@
 </head>
 <body>
 	<div xtype="hh_content">
-		<form id="form" xtype="form">
+		<form id="form" xtype="form" class="form">
 			<table xtype="form" id="table">
 				<tr>
 					<td xtype="label" width=100px>系统名称</td>
