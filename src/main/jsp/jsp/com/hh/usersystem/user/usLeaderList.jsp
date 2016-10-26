@@ -74,7 +74,7 @@
 							doQuery();
 						}
 					});
-				}
+				},many:true
 			});
 		} else {
 			Dialog.infomsg("请选中被分管对象！");
