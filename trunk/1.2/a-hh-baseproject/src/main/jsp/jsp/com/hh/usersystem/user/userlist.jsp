@@ -47,6 +47,7 @@
 		return value == 0 ? '正常' : '<font color=red>冻结</font>';
 	}
 	function doQuery() {
+		debugger;
 		var paramsObj =  $('#queryForm').getValue();
 		paramsObj.orgs = selectOrgId;
 		$('#pagelist').loadData({
@@ -131,7 +132,7 @@
 				<span xtype="button"
 					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 			</div>
-			<table xtype="form" id="queryForm" style="width: 800px;">
+			<table xtype="form" id="queryForm" style="width: 100%;">
 				<tr>
 					<td width=200px id="selectNodeTd" style="text-align: center;">所有数据</td>
 					<td xtype="label" style="width:50px">名称：</td>
