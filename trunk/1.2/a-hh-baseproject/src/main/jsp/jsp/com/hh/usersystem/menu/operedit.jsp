@@ -65,7 +65,7 @@
 </head>
 <body>
 	<div xtype="hh_content">
-		<form id="form" xtype="form">
+		<form id="form" xtype="form" class="form">
 			<span xtype="text" config=" hidden:true,name : 'id'"></span>
 			<table xtype="form">
 				<tr>

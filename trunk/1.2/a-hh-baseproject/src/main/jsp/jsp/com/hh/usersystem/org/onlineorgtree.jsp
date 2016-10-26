@@ -764,7 +764,7 @@
 
 				</div>
 			</div>
-			<div config="render : 'south' ,width:160,spacing_open:0, overflow : 'hidden'  ">
+			<div config="render : 'south' ,width:160,open:0, overflow : 'hidden'  ">
 				<span id="messageSpan"
 					config=" height:81,bottom:'hidden', name:'message' ,toolbar : ['Format',	'Font', 'FontSize', 'Styles'] "
 					xtype="ckeditor"></span>

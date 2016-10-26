@@ -27,7 +27,7 @@
 </head>
 <body>
 	<div xtype="hh_content">
-		<form xtype="form" id="form">
+		<form id="form" xtype="form" class="form">
 			<table xtype="form">
 				<tbody>
 					<tr>

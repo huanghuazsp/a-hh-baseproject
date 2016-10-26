@@ -80,7 +80,7 @@
 </head>
 <body>
 	<div xtype="hh_content">
-		<form id="form" xtype="form">
+		<form id="form" xtype="form" class="form">
 			<div></div>
 			<table width=100%>
 				<tr>
