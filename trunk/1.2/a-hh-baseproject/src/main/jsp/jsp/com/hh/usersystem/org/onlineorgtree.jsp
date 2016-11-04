@@ -239,7 +239,7 @@
 	}
 	
 	function addData(data){
-		data.date = $.hh.dateTimeToString(data.dcreate);
+		data.date = $.hh.formatDate(data.dcreate,'yyyy-MM-dd HH:mm:ss');
 		data.message = data.content;
 		data.type = data.sendUserId == loginUser.id ? 'my' : 'you';
 		data.sendHeadpic = data.sendHeadpic;
@@ -598,7 +598,7 @@
 
 			messageData.sendObjectType = data.sendObjectType;
 
-			messageData.date = $.hh.dateTimeToString($.hh.getDate());
+			messageData.date = $.hh.formatDate($.hh.getDate(),'yyyy-MM-dd HH:mm:ss');
 			messageData.type = 'my';
 			messageData.addCylxr = data.addCylxr;
 			appendMessage(messageData);

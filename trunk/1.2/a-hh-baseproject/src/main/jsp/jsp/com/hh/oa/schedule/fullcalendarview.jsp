@@ -53,8 +53,8 @@
 		if (data) {
 			var data = $.extend(data, {
 				title : data.content,
-				start : $.hh.dateTimeToString(data.start),
-				end : $.hh.dateTimeToString(data.end),
+				start : $.hh.formatDate(data.start,'yyyy-MM-dd HH:mm:ss'),
+				end : $.hh.formatDate(data.end,'yyyy-MM-dd HH:mm:ss'),
 				color : getBackground(data.isOk),
 				className : getClassName(data.level),
 				textColor : getType(data.ctype),
