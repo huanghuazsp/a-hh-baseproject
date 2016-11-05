@@ -42,9 +42,7 @@
 				for (var i = 0; i < result.length; i++) {
 					result[i].img = result[i].vdtp;
 				}
-				$('#gridView').setConfig({
-					data : result
-				});
+				gridViewConfig.data = result;
 				$('#gridView').render();
 			}
 		});
