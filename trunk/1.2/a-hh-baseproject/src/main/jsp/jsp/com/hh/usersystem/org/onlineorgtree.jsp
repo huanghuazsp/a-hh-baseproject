@@ -512,8 +512,8 @@
 				+ ' <br />' + text + '</td>';
 		var td2 = '<td>'
 				+ '<div style="-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; background-color: '+backColor+'; width: 340px; height: auto; display: block; padding: 5px; float: '+align+'; color: #333333;table-layout:fixed;word-wrap: break-word; word-break: break-all;">'
-				+ '<font style="font-size: 14px;"><b>' + message
-				+ '</b></font>' + '<br />'
+				+ '<font style="font-size: 14px;"><p><b>' + message
+				+ '</b></p></font>' 
 				+ '<div style="padding-top: 6px; color: #a9b4a2;">' + date
 				+ '</div>' + '</div>' + '</td>';
 		if (type != 'my') {
