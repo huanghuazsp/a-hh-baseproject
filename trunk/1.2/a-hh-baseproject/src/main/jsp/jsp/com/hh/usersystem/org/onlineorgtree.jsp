@@ -8,7 +8,7 @@
 <html>
 <head>
 <title>即时通讯</title>
-<%=SystemUtil.getBaseJs("layout", "ztree", "ckeditor", "workflow")
+<%=SystemUtil.getBaseJs("layout", "ztree", "ueditor", "workflow")
 					+ SystemUtil.getUser()%>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/engine.js"></script>
 <script type="text/javascript" src="/hhcommon/opensource/dwr/message.js"></script>
@@ -764,9 +764,9 @@
 
 				</div>
 			</div>
-			<div config="render : 'south' ,width:160,open:0, overflow : 'hidden'  ">
+			<div config="render : 'south' ,width:165,open:0  ">
 				<span id="messageSpan"
-					config=" height:81,bottom:'hidden', name:'message' ,toolbar : ['Format',	'Font', 'FontSize', 'Styles'] "
+					config=" height:70,bottom:'hidden', name:'message'  "
 					xtype="ckeditor"></span>
 				<div xtype="toolbar" config="type:'head'" style="text-align: right;">
 					<span id="sendbtn" xtype="button"

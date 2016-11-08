@@ -6,7 +6,7 @@
 <html>
 <head>
 <title>数据编辑</title>
-<%=BaseSystemUtil.getBaseJs("checkform","date","fileUpload", "ckeditor")%>
+<%=BaseSystemUtil.getBaseJs("checkform","date","fileUpload", "ueditor")%>
 <%
 	String type =   Convert.toString(request.getParameter("type"));
 %>
