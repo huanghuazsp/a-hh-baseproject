@@ -6,7 +6,7 @@
 <html>
 <head>
 <title>写邮件</title>
-<%=SystemUtil.getBaseJs("checkform", "ckeditor","fileUpload")%>
+<%=SystemUtil.getBaseJs("checkform", "ueditor","fileUpload")%>
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
 	var width = 800;
@@ -105,7 +105,8 @@
 				</tr>
 				<tr>
 					<td xtype="label">内容：</td>
-					<td><span xtype="ckeditor" config="name: 'content' ,nheight:300 ,mheight:200"></span></td>
+					<td>
+					<span xtype="ckeditor" config="name: 'content' ,nheight:300 ,mheight:200"></span></td>
 				</tr>
 			</table>
 		</form>
