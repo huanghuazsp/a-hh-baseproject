@@ -69,7 +69,7 @@ public class SetupInitializer {
 		
 		
 		rootHhXtCd.getChildren().add(
-				new SysMenu("5P4L5383QPwpsjwvjN0", "网盘",
+				new SysMenu("5P4L5383QPwpsjwvjN0", "文件中心",
 						"jsp-system-resources-resourcesmain",
 						"/hhcommon/images/icons/folder/folder.png", 0, 1));
 		
