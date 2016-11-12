@@ -9,11 +9,13 @@ public class SaveOperLogThread extends Thread {
 	private String userId;
 	private String userName;
 	private String message;
+	private String ipStr;
 
-	public SaveOperLogThread(String userId, String userName, String message) {
+	public SaveOperLogThread(String ipStr,String userId, String userName, String message) {
 		this.userId =userId;
 		this.userName = userName;
 		this.message = message;
+		this.ipStr = ipStr;
 	}
 
 	@Override
@@ -28,6 +30,7 @@ public class SaveOperLogThread extends Thread {
 			systemOperLog.setUserId(userId);
 			systemOperLog.setUserName(userName);
 			systemOperLog.setMessage(message);
+			systemOperLog.setIpStr(ipStr);
 			systemOperLogService.save(systemOperLog);
 		} catch (MessageException e1) {
 			e1.printStackTrace();

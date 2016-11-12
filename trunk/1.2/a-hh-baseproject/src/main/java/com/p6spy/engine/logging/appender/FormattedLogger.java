@@ -20,7 +20,7 @@ public abstract class FormattedLogger {
 					// + "|" + category
 					// + "|" + prepared
 					+ "；SQL语句：\n" + sql;
-			if (!sql.toLowerCase().contains("sys_sql")) {
+			if (!sql.toLowerCase().contains("sys_sql") && !sql.toLowerCase().contains("sys_oper_log")) {
 				if (1 == SysParam.sysParam.getLogSql()) {
 					logText(logEntry);
 				}

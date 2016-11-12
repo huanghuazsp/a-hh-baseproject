@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.hh.system.service.impl.SaveOperLogThread;
 import com.hh.system.util.ThreadUtil;
+import com.hh.system.util.request.Request;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.util.app.LoginUser;
 
@@ -20,7 +21,7 @@ public class SessionListener implements HttpSessionAttributeListener
 		if (event.getName().equals("loginuser")) {
 			UsUser object = (UsUser) event.getValue();
 			ThreadUtil.getThreadPool().execute(
-					new SaveOperLogThread(object.getId(), object.getText() , object.getText() + "上线了......"));
+					new SaveOperLogThread(Request.getRequest().getRemoteAddr(),object.getId(), object.getText() , object.getText() + "上线了......"));
 			logger.info(object.getText() + "上线了......");
 			LoginUser.put(object.getId(), object, event.getSession());
 			logger.info("当前在线数：" + LoginUser.getLoginUserCount());
@@ -31,7 +32,7 @@ public class SessionListener implements HttpSessionAttributeListener
 		if (event.getName().equals("loginuser")) {
 			UsUser object = (UsUser) event.getValue();
 			ThreadUtil.getThreadPool().execute(
-					new SaveOperLogThread(object.getId(), object.getText() , object.getText() +"下线了......"));
+					new SaveOperLogThread(Request.getRequest().getRemoteAddr(),object.getId(), object.getText() , object.getText() +"下线了......"));
 			logger.info(object.getText() + "下线了......");
 			LoginUser.remove(object.getId());
 			logger.info("当前在线数：" + LoginUser.getLoginUserCount());
