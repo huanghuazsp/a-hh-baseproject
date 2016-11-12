@@ -52,6 +52,11 @@
 						config="name: 'dataBaseSql' ,data :[{id:1,text:'开'},{id:0,text:'关'}]"></span></td>
 				</tr>
 				<tr>
+					<td xtype="label">请求入库</td>
+					<td colspan="3"><span xtype="radio"
+						config="name: 'dataBaseRequest' ,data :[{id:1,text:'开'},{id:0,text:'关'}]"></span></td>
+				</tr>
+				<tr>
 					<td xtype="label">打开菜单方式</td>
 					<td colspan="3"><span xtype="radio"
 						config="name: 'onePage' ,data : [{	'id' : 1,	'text': 'onePage'}, {'id' : 0,'text' : '内嵌iframe'}, {'id' : 2,'text' : '弹出浏览器页签'}]"></span></td>

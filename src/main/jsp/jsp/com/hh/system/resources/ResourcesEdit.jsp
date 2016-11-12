@@ -82,7 +82,7 @@
 					<tr>
 						<td xtype="label">资源描述：</td>
 						<td colspan="3" style="width:700px;">
-						<span xtype="ckeditor" config="name: 'content' , nheight :300 ,mheight:200"></span>
+						<span xtype="textarea" config="name: 'content' , nheight :300 ,mheight:200"></span>
 						</td>
 					</tr>
 			</table>
