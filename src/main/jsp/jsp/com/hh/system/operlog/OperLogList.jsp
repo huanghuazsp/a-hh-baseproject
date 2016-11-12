@@ -72,12 +72,17 @@
 		
 			{
 				name : 'userName' ,
-				text : '操作人员'
+				text : '操作人员',
+				width:120
 			},{
 				name : 'dcreate' ,
 				text : '操作时间',
 				render:'datetime',
 				width:120
+			},
+			{
+				name : 'ipStr' ,
+				text : 'ip'
 			},
 			{
 				name : 'message' ,

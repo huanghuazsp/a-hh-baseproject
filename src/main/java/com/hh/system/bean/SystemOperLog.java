@@ -14,6 +14,7 @@ import com.hh.hibernate.dao.inf.Order;
 @Entity
 @Table(name="SYS_OPER_LOG")
 public class SystemOperLog  extends BaseTwoEntity{
+	private String ipStr;
 	//userName
 	private String userName;
 	
@@ -46,5 +47,15 @@ public class SystemOperLog  extends BaseTwoEntity{
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	@Column(name="IP_STR", length = 128)
+	public String getIpStr() {
+		return ipStr;
+	}
+	public void setIpStr(String ipStr) {
+		this.ipStr = ipStr;
+	}
+	
+	
 	
 }
