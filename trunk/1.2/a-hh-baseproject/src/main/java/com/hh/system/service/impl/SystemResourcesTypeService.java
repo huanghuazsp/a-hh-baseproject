@@ -71,5 +71,12 @@ public class SystemResourcesTypeService extends BaseService<SystemResourcesType>
 		map.put("state", state);
 		dao.updateEntity("update " + SystemResourcesType.class.getName() + " o set o.state=:state where o.id in :id", map);
 	}
+	
+	
+	protected boolean checkTextOnly(SystemResourcesType entity) {
+		entity.setVcreate(userService.findUserId());
+		return dao.findWhetherData("select count(o) from " + entity.getClass().getName() + " o "
+				+ "where o.text=:text and (o.id!=:id or :id is null) and node = :node and vcreate = :vcreate ", entity);
+	}
 }
  

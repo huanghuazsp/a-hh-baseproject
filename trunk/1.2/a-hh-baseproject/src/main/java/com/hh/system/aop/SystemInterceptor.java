@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.hh.system.service.impl.SaveErrorThread;
 import com.hh.system.service.impl.SaveOperLogThread;
 import com.hh.system.util.ExceptionUtil;
+import com.hh.system.util.SysParam;
 import com.hh.system.util.ThreadUtil;
 import com.hh.system.util.request.Request;
 import com.hh.usersystem.IUser;
@@ -58,7 +59,7 @@ public class SystemInterceptor implements Interceptor {
 					+ requestUri + "】耗时："
 					+ (System.currentTimeMillis() - startTime) + "毫秒  ";
 			logger.debug(logStr);
-			if ( requestUri.contains("jsp")) {
+			if (1 == SysParam.sysParam.getDataBaseRequest() && requestUri.contains("jsp")) {
 				ThreadUtil.getThreadPool().execute(
 						new SaveOperLogThread(request.getRemoteAddr(), userid,
 								userName, requestUri+"【"+(System.currentTimeMillis() - startTime) + "毫秒】"));

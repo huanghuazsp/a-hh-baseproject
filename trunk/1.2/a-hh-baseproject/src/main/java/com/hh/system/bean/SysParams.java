@@ -17,6 +17,9 @@ import com.hh.system.util.SysParam;
 public class SysParams extends BaseOneEntity {
 	private int logSql;
 	private int dataBaseSql;
+	
+	private int dataBaseRequest;
+	
 	private int power;
 	private String sysName;
 	private String sysIcon;
@@ -101,5 +104,13 @@ public class SysParams extends BaseOneEntity {
 	public void setLoginBackImg(String loginBackImg) {
 		this.loginBackImg = loginBackImg;
 	}
+	@Column(columnDefinition="INT default 0")
+	public int getDataBaseRequest() {
+		return dataBaseRequest;
+	}
+	public void setDataBaseRequest(int dataBaseRequest) {
+		this.dataBaseRequest = dataBaseRequest;
+	}
+	
 	
 }
