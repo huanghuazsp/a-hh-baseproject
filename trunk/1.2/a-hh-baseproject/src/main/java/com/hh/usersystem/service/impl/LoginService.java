@@ -132,7 +132,11 @@ public class LoginService {
 				if (LoginUser.loginUserMap.containsKey(xtYhList.get(0).getId())) {
 					logger.info("用户已经在线（" + xtYhList.get(0).getText() + "：" + xtYhList.get(0).getVdlzh() + "），重新登录！！");
 					if (ActionContext.getContext().getSession().get("loginuser") == null) {
-						LoginUser.loginUserSession.get(xtYhList.get(0).getId()).invalidate();
+						try {
+							LoginUser.loginUserSession.get(xtYhList.get(0).getId()).invalidate();
+						} catch (Exception e) {
+							LoginUser.remove(xtYhList.get(0).getId());
+						}
 					}
 				}
 				if (xtYhList.get(0).getVmm().equals(xtYh.getVmm())) {
