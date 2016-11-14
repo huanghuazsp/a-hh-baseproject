@@ -85,7 +85,9 @@
 			<table width=100%>
 				<tr>
 					<td xtype="label" style="text-align:left;padding:10px;">
-						<font size=4 ><b><span xtype="html" config=" name : 'title' "></span></b></font><br>
+						<div style="text-align:center;">
+						<font size=4 ><b><span xtype="html" config=" name : 'title' "></span></b></font>
+						</div>
 						发&nbsp;件&nbsp;人：<span xtype="html" config="name: 'sendUserName' "></span><br>
 						时&nbsp;&nbsp;&nbsp;间：<span xtype="html" config="name: 'dcreate' ,dateType:'yyyy年MM月dd日 （EEE） HH:mm'"></span><br>
 						收&nbsp;件&nbsp;人：<span xtype="html" config="name: 'userNames' "></span><br>

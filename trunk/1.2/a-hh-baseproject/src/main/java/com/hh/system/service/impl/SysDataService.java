@@ -8,6 +8,7 @@ import com.hh.system.bean.SysData;
 import com.hh.system.bean.SysDataType;
 import com.hh.system.util.Check;
 import com.hh.system.util.MessageException;
+import com.hh.system.util.dto.ParamFactory;
 import com.hh.system.util.dto.ParamInf;
 
 @Service
@@ -64,6 +65,11 @@ public class SysDataService  extends BaseService<SysData> {
 		} catch (MessageException e) {
 			throw new MessageException(e.getMessage()+msg);
 		}
+	}
+	
+	public List<SysData> queryListByCode(String code) {
+		List<SysData> sysDataTypes = queryList(ParamFactory.getParamHb().is("dataTypeId", code));
+		return sysDataTypes;
 	}
 	
 }

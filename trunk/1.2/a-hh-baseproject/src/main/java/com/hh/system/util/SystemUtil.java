@@ -1,23 +1,22 @@
 package com.hh.system.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.struts2.ServletActionContext;
 
 import com.google.gson.Gson;
+import com.hh.system.bean.SysData;
 import com.hh.system.service.impl.BeanFactoryHelper;
-import com.hh.system.util.request.Request;
-import com.hh.usersystem.bean.usersystem.SysMenu;
+import com.hh.system.service.impl.SysDataService;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
-import com.hh.usersystem.service.impl.MenuService;
 
 public class SystemUtil {
 	private static LoginUserUtilService loginUserUtilService;
+	private static SysDataService sysDataService;
 	private static Gson gson = new Gson();
 
 	public static LoginUserUtilService getLoginUserUtilService() {
@@ -25,6 +24,13 @@ public class SystemUtil {
 			loginUserUtilService = BeanFactoryHelper.getBeanFactory().getBean(LoginUserUtilService.class);
 		}
 		return loginUserUtilService;
+	}
+	
+	public static SysDataService getSysDataService() {
+		if (sysDataService == null) {
+			sysDataService = BeanFactoryHelper.getBeanFactory().getBean(SysDataService.class);
+		}
+		return sysDataService;
 	}
 
 	public static String getBaseDoctype() {
@@ -96,7 +102,19 @@ public class SystemUtil {
 
 	public static String getMobileDown() {
 		return "</div>";
-
+	}
+	
+	
+	public static String getJsonDataByCode(String code) {
+		List<SysData> sysDatas = getSysDataService().queryListByCode(code);
+		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+		for (SysData sysData : sysDatas) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("id", sysData.getId());
+			map.put("text", sysData.getText());
+			mapList.add(map);
+		}
+		return gson.toJson(mapList).replaceAll("\"", "'");
 	}
 
 }
