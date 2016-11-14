@@ -16,7 +16,10 @@ import com.hh.message.service.MessageThread;
 import com.hh.message.service.SysMessageService;
 import com.hh.oa.bean.OaNotice;
 import com.hh.oa.bean.OaNoticeUser;
+import com.hh.system.bean.SystemFile;
 import com.hh.system.service.impl.BaseService;
+import com.hh.system.service.inf.IFileOper;
+import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
@@ -30,7 +33,7 @@ import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.UserService;
 
 @Service
-public class OaNoticeService extends BaseService<OaNotice> {
+public class OaNoticeService extends BaseService<OaNotice> implements LoadDataTime, IFileOper {
 
 	@Autowired
 	private UserService userService;
@@ -175,8 +178,34 @@ public class OaNoticeService extends BaseService<OaNotice> {
 				Convert.strToList(ids));
 		super.deleteByIds(ids);
 	}
+
+	@Override
+	public Map<String, Object> load() {
+		String userId = loginUserUtilService.findUserId();
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		paramsMap.put("userId", userId);
+		String wdHqlCount = "select count(b) from "
+				+ OaNotice.class.getName()
+				+ " a , "
+				+ OaNoticeUser.class.getName()
+				+ " b  where a.deploy=1 and b.read=0 and a.id=b.objectId and b.userId=:userId";
+
+		int wdCount = dao.findCount(wdHqlCount, paramsMap);
+		
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("count", wdCount);
+		map2.put("id", "QoGVp009MF5vDM5qCQs");
+		map2.put("text", "公告通知");
+		map2.put("vsj", "jsp-oa-notice-noticemain");
+		return map2;
+	}	
 	
-	
-	
+	@Override
+	public void fileOper(SystemFile systemFile) {
+		OaNotice OaNotice = findObjectById(systemFile.getServiceId());
+		if (OaNotice == null) {
+			systemFile.setDestroy(1);
+		}
+	}
 	
 }

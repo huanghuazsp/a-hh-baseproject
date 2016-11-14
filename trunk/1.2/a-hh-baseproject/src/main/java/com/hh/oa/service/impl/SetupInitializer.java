@@ -31,6 +31,9 @@ public class SetupInitializer {
 	private SysParamService sysParamService;
 	@Autowired
 	private SystemResourcesService systemResourcesService;
+	
+	@Autowired
+	private OaNoticeService oaNoticeService;
 
 	@PostConstruct
 	public void initialize() {
@@ -88,6 +91,10 @@ public class SetupInitializer {
 		StaticProperties.sysMenuList.add(rootHhXtCd);
 		StaticVar.loadDataTimeMap.put("jsp-message-email-emailmain",
 				sysShouEmailService);
+		
+		StaticVar.loadDataTimeMap.put("jsp-oa-notice-noticemain",
+				oaNoticeService);
+		
 		StaticVar.loadDataTimeMap.put("message", sysMessageService);
 
 		StaticVar.fileOperMap.put("email", sysShouEmailService);
