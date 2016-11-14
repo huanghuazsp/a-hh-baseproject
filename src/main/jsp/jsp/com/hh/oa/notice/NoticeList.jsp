@@ -76,6 +76,10 @@
 			text : '发布人',
 			width:100
 		},<%} %>{
+			name : 'typeText' ,
+			text : '公告类型',
+			width :60
+		},{
 			name : 'dcreate' ,
 			text : '时间',
 			render:'datetime',
