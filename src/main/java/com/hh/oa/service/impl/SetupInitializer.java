@@ -12,7 +12,9 @@ import com.hh.message.service.SysMessageService;
 import com.hh.system.service.impl.SysParamService;
 import com.hh.system.service.impl.SystemResourcesService;
 import com.hh.system.util.StaticVar;
+import com.hh.system.util.pk.PrimaryKey;
 import com.hh.usersystem.bean.usersystem.SysMenu;
+import com.hh.usersystem.bean.usersystem.SysOper;
 import com.hh.usersystem.service.impl.UserService;
 import com.hh.usersystem.util.steady.StaticProperties;
 
@@ -29,11 +31,10 @@ public class SetupInitializer {
 	private SysParamService sysParamService;
 	@Autowired
 	private SystemResourcesService systemResourcesService;
-	
-	
+
 	@PostConstruct
 	public void initialize() {
-		SysMenu rootHhXtCd = new SysMenu("YKfDaj9fJWf16D4ovWH","协同办公",
+		SysMenu rootHhXtCd = new SysMenu("YKfDaj9fJWf16D4ovWH", "协同办公",
 				"com.hh.global.NavigAtionWindow",
 				"/hhcommon/images/extjsico/17460359.png", 1, 0);
 		rootHhXtCd.setChildren(new ArrayList<SysMenu>());
@@ -56,32 +57,47 @@ public class SetupInitializer {
 		// "jsp-message-email-sendemaillist",
 		// "/hhcommon/images/icons/email/email_edit.png", 0, 1));
 
-		SysMenu rootMailHhXtCd = new SysMenu( "Mj38uTS5EDGou2cOCY4","个人邮件",
+		SysMenu rootMailHhXtCd = new SysMenu("Mj38uTS5EDGou2cOCY4", "个人邮件",
 				"jsp-message-email-emailmain",
 				"/hhcommon/images/icons/email/email.png", 0, 1);
 
 		rootHhXtCd.getChildren().add(rootMailHhXtCd);
 
 		rootHhXtCd.getChildren().add(
-				new SysMenu("7fmZpjkk034UGEL6K7W","日程安排",
+				new SysMenu("7fmZpjkk034UGEL6K7W", "日程安排",
 						"jsp-oa-schedule-fullcalendar",
 						"/hhcommon/images/extjsico/17460310.png", 0, 1));
-		
-		
+
 		rootHhXtCd.getChildren().add(
 				new SysMenu("5P4L5383QPwpsjwvjN0", "文件中心",
 						"jsp-system-resources-resourcesmain",
 						"/hhcommon/images/icons/folder/folder.png", 0, 1));
+
+		SysMenu notice = new SysMenu("QoGVp009MF5vDM5qCQs", "公告通知",
+				"jsp-oa-notice-noticemain",
+				"/hhcommon/images/icons/newspaper/newspaper.png", 0, 1);
+		rootHhXtCd.getChildren().add(notice);
 		
+		StaticProperties.sysOperList.add(new SysOper("ZV29BtmO0mtRQf3rM9V",
+				"发布公告", notice));
+		StaticProperties.sysOperList.add(new SysOper("i5XcfE1mIpAvTxRgSkB",
+				"我发布的", notice));
+		StaticProperties.sysOperList.add(new SysOper("eQBBKL23YIku7EmYequ",
+				"所有公告", notice));
 
 		StaticProperties.sysMenuList.add(rootHhXtCd);
-		StaticVar.loadDataTimeMap.put("jsp-message-email-emailmain",sysShouEmailService);
-		StaticVar.loadDataTimeMap.put("message",sysMessageService);
+		StaticVar.loadDataTimeMap.put("jsp-message-email-emailmain",
+				sysShouEmailService);
+		StaticVar.loadDataTimeMap.put("message", sysMessageService);
 
 		StaticVar.fileOperMap.put("email", sysShouEmailService);
-		StaticVar.fileOperMap.put("headpic",userService );
-		StaticVar.fileOperMap.put("param",sysParamService );
-		StaticVar.fileOperMap.put("sysresources",systemResourcesService );
-		
+		StaticVar.fileOperMap.put("headpic", userService);
+		StaticVar.fileOperMap.put("param", sysParamService);
+		StaticVar.fileOperMap.put("sysresources", systemResourcesService);
+
+	}
+
+	public static void main(String[] args) {
+		System.out.println(PrimaryKey.getUUID());
 	}
 }
