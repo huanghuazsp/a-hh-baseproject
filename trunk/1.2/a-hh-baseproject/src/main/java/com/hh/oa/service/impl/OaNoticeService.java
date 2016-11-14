@@ -68,7 +68,7 @@ public class OaNoticeService extends BaseService<OaNotice> implements LoadDataTi
 			PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
 
-		String hql = "select a.id as id, a.title  as title, a.dcreate  as dcreate, a.type as type , a.vcreateName as vcreateName,b.read as read from "
+		String hql = "select a.typeText as typeText,a.id as id, a.title  as title, a.dcreate  as dcreate, a.type as type , a.vcreateName as vcreateName,b.read as read from "
 				+ OaNotice.class.getName()
 				+ " a , "
 				+ OaNoticeUser.class.getName()
