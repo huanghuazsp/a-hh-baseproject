@@ -51,6 +51,10 @@
 		$('#iframe').attr('src','jsp-oa-notice-NoticeList?type=wfbd');
 	}
 	
+	function updateGG(id){
+		$('#iframe').attr('src','jsp-oa-notice-NoticeEdit?id='+id);
+	}
+	
 	
 	<%
 		String baseurl = "jsp-oa-notice-NoticeList?type=ggtz";

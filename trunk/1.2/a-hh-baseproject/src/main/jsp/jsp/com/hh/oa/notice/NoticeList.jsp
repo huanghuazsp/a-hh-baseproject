@@ -39,10 +39,22 @@
 			});
 	}
 	
+	function doUpdate() {
+		$.hh.pagelist.callRow("pagelist", function(row) {
+				parent.updateGG(row.id);
+		});
+}
+	
 	function readrender(value) {
 		return value == 0 ? '<img src="'+$.hh.property.img_email_close+'" />'
 				: '<img src="'+$.hh.property.img_email_open+'" />';
 	}
+	
+	function deployrender(value) {
+		return value == 0 ? '未发布'
+				: '已发布';
+	}
+	
 </script>
 </head>
 <body>
@@ -50,6 +62,8 @@
 		<span xtype="button"
 			config="onClick: doView ,text:'查看' , itype :'view' "></span>
 			<% if("wfbd".equals(type)){ %>
+			<span
+			xtype="button" config="onClick: doUpdate ,text:'修改' , itype :'edit' "></span>
 		<span
 			xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span>
 			<%} %>
@@ -71,7 +85,15 @@
 			width :30,
 			render : 'readrender'
 		},
-		<%} %><% if("sygg".equals(type)){ %>{
+		<%}else{ %>
+		{
+			name : 'deploy' ,
+			text : '是否发布',
+			width :50,
+			render : deployrender
+		},
+		<%} %>
+		<% if("sygg".equals(type)){ %>{
 			name : 'vcreateName' ,
 			text : '发布人',
 			width:100
