@@ -159,7 +159,7 @@
 				: data.sendObjectType;
 		$('#sendbtn').undisabled();
 		if (data.sendObjectType != 0 && data.sendObjectType != 6
-				&& data.sendObjectType != 7 && data.sendObjectType != 11 && data.sendObjectType != 12 && data.sendObjectType != 13) {
+				&& data.sendObjectType != 7 && data.sendObjectType != 11 && data.sendObjectType != 12 && data.sendObjectType != 13 && data.sendObjectType != 14) {
 			if (data.id != loginUser.orgId && data.id != loginUser.deptId) {
 				msg('您不在本机构/本部门');
 				$('#sendbtn').disabled();
@@ -473,6 +473,15 @@
 			});
 	}
 	
+	function openMeeting(params) {
+		Dialog.open({
+			url : 'jsp-oa-meetingapply-MeetingApplyView' ,
+			urlParams : {
+				id : params
+			}
+		});
+}
+	
 
 	function openEmail(params){
 		$.hh.addTab({
@@ -498,6 +507,8 @@
 			message = '<a href="javascript:openTask(\''+config.params+'\')">'+message+'</a>';
 		}else if(config.sendObjectType==13 && config.params){
 			message = '<a href="javascript:openNotice(\''+config.params+'\')">'+message+'</a>';
+		}else if(config.sendObjectType==14 && config.params){
+			message = '<a href="javascript:openMeeting(\''+config.params+'\')">'+message+'</a>';
 		}
 
 		if (headpic && headpic.indexOf('hhcomm') == -1) {
@@ -736,6 +747,8 @@
 			data.img='/hhcommon/images/extjsico/txt.gif';
 		}else if(data.sendObjectType==13){
 			data.img='/hhcommon/images/icons/newspaper/newspaper.png';
+		}else if(data.sendObjectType==14){
+			data.img='/hhcommon/images/icons/telephone/telephone.png';
 		}
 		
 	}

@@ -121,6 +121,7 @@ public class OaNoticeService extends BaseService<OaNotice> implements LoadDataTi
 	public void addUserByNotice(OaNotice entity, List<UsUser> userList) {
 		noticeUserDao.deleteEntity(OaNoticeUser.class, "objectId",
 				entity.getId());
+		sysMessageService.deleteByProperty("params", entity.getId());
 		for (UsUser usUser : userList) {
 			OaNoticeUser noticeUser = new OaNoticeUser();
 			noticeUser.setObjectId(entity.getId());
@@ -181,6 +182,7 @@ public class OaNoticeService extends BaseService<OaNotice> implements LoadDataTi
 	public void deleteByIds(String ids) {
 		noticeUserDao.deleteEntity(OaNoticeUser.class, "objectId",
 				Convert.strToList(ids));
+		sysMessageService.deleteByProperty("params",Convert.strToList(ids));
 		super.deleteByIds(ids);
 	}
 

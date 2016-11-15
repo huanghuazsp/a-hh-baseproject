@@ -17,6 +17,18 @@
 				$('#iframe').attr('src','jsp-oa-meetingapply-main');
 			}
 		},{
+			text : '我参与的',
+			img : '/hhcommon/images/icons/telephone/telephone-plus.png',
+			onClick : function() {
+				$('#iframe').attr('src','jsp-oa-meetingapply-PartMeetingApplyList');
+			}
+		},{
+			text : '我申请的',
+			img : '/hhcommon/images/icons/telephone/telephone-plus.png',
+			onClick : function() {
+				$('#iframe').attr('src','jsp-oa-meetingapply-MeetingApplyList');
+			}
+		},{
 			text : '会议管理',
 			img : '/hhcommon/images/icons/telephone/telephone.png',
 			onClick : function() {
