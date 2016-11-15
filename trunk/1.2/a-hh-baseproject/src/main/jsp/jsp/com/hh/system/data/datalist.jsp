@@ -128,6 +128,9 @@
 	<div xtype="border_layout">
 		<div config="render : 'west' ,width:'50%' ">
 			<div xtype="toolbar" config="type:'head'">
+				
+				<table  style="font-size: 12" width=100%  cellspacing="0" cellpadding="0" ><tr>
+				<td >
 				<span xtype="button" config="onClick:addType,text:'添加'"></span>
 				<span xtype="button"
 					config="onClick : inExcel ,text : '导入'"></span>
@@ -135,8 +138,17 @@
 					config="onClick : outExcel ,text : '导出'"></span>
 				<span xtype="button"
 					config="onClick : downloadExcel ,text : '下载模板'"></span>
-				<span xtype="text" config=" name : 'treeText' ,width:160 ,enter: querytree"></span>
+				</td>
+				<td >
+				<table style="font-size: 12" width=100%  cellspacing="0" cellpadding="0" ><tr>
+				<td >
+				<span xtype="text" config=" name : 'treeText'  ,enter: querytree"></span>
+				</td>
+				<td width="40px" style="text-align:right;">
 				<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
+				</td><tr></table>
+				
+				</td><tr></table>
 			</div>
 			<span id="typeTreeSpan" xtype="tree"
 				config=" dragAction : 'system-SysDataType-drag', dragInnerAction : 'system-SysDataType-dragInner' , id:'typeTree' , url:'system-SysDataType-queryTreeList' , remove : removeType , edit : editType , onClick : typeTreeClick  ,nheight:42 "></span>
