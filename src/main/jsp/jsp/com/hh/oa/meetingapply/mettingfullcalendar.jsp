@@ -90,8 +90,8 @@
 		$('#calendar')
 		.fullCalendar(
 				{
-					defaultView:'agendaWeek',
 					//lazyFetching : false,
+					defaultView:'agendaWeek',
 					header : {
 						left : 'title',
 						center : 'prevYear,prev,next,nextYear today',
@@ -131,7 +131,7 @@
 						var object = getEventObject(calEvent);
 						Dialog
 								.open({
-									url : 'jsp-oa-schedule-calendaredit?ctype='
+									url : 'jsp-oa-meetingapply-calendaredit?ctype='
 											+ object.ctype,
 									params : {
 										object : object,
@@ -164,7 +164,7 @@
 					eventDrop : function(event) {
 						Request
 								.request(
-										'oa-Schedule-save',
+										'oa-MeetingApply-save',
 										{
 											data : getEventObject(event)
 										});
@@ -172,7 +172,7 @@
 					eventResize : function(event) {
 						Request
 								.request(
-										'oa-Schedule-save',
+										'oa-MeetingApply-save',
 										{
 											data : getEventObject(event)
 										});
@@ -186,7 +186,7 @@
 						};
 						Dialog
 								.open({
-									url : 'jsp-oa-schedule-calendaredit',
+									url : 'jsp-oa-meetingapply-calendaredit',
 									params : {
 										object : object,
 										callback : function(
@@ -208,22 +208,28 @@
 					editable : true,
 					events : function(start, end, ddd,
 							callback) {
-						Request
-								.request(
-										'oa-Schedule-queryListByDate',
-										{
-											data : {
-												startDate : start
-														.format('YYYY-MM-DD HH:mm:ss'),
-												endDate : end
-														.format('YYYY-MM-DD HH:mm:ss'),
-														'currUserId':'<%=Convert.toString(request.getParameter("currUserId"))%>'
-											}
-										},
-										function(result) {
-											callback(toEvents(result));
-											renderEvent();
-										});
+						var meetingId = '<%=Convert.toString(request.getParameter("meetingId"))%>';
+						if(meetingId){
+							Request
+							.request(
+									'oa-MeetingApply-queryListByDate',
+									{
+										data : {
+											startDate : start
+													.format('YYYY-MM-DD HH:mm:ss'),
+											endDate : end
+													.format('YYYY-MM-DD HH:mm:ss'),
+											'meetingId':meetingId
+										}
+									},
+									function(result) {
+										callback(toEvents(result));
+										renderEvent();
+									});
+							$("#calendar").undisabled();
+						}else{
+							$("#calendar").disabled('请选择会议室！');
+						}
 					}
 				});
 
