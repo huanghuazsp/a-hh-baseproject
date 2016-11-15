@@ -47,7 +47,6 @@
 		return value == 0 ? '正常' : '<font color=red>冻结</font>';
 	}
 	function doQuery() {
-		debugger;
 		var paramsObj =  $('#queryForm').getValue();
 		paramsObj.orgs = selectOrgId;
 		$('#pagelist').loadData({
