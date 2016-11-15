@@ -87,6 +87,12 @@ public class SetupInitializer {
 				"我发布的", notice));
 		StaticProperties.sysOperList.add(new SysOper("eQBBKL23YIku7EmYequ",
 				"所有公告", notice));
+		
+		
+		SysMenu meeting = new SysMenu("id04ZkRCOJ78aUzjwW", "会议管理",
+				"jsp-oa-meeting-meetingmain",
+				"/hhcommon/images/icons/telephone/telephone.png", 0, 1);
+		rootHhXtCd.getChildren().add(meeting);
 
 		StaticProperties.sysMenuList.add(rootHhXtCd);
 		StaticVar.loadDataTimeMap.put("jsp-message-email-emailmain",

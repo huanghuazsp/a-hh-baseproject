@@ -15,6 +15,7 @@ import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.Json;
+import com.hh.system.util.LogUtil;
 import com.hh.system.util.SysParam;
 import com.hh.system.util.base.BaseAction;
 import com.hh.system.util.dto.ParamFactory;
@@ -135,8 +136,9 @@ public class LoginService {
 						try {
 							LoginUser.loginUserSession.get(xtYhList.get(0).getId()).invalidate();
 						} catch (Exception e) {
-							LoginUser.remove(xtYhList.get(0).getId());
+							LogUtil.error("销毁session异常："+e.getMessage());
 						}
+						LoginUser.remove(xtYhList.get(0).getId());
 					}
 				}
 				if (xtYhList.get(0).getVmm().equals(xtYh.getVmm())) {

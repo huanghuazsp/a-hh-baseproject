@@ -6,7 +6,7 @@
 <%=SystemUtil.getBaseDoctype()%>
 <html>
 <head>
-<title>个人邮件</title>
+<title>公告通知</title>
 <%=SystemUtil.getBaseJs("layout")%>
 <% 
 	OaNoticeService noticeService = BeanFactoryHelper.getBean( OaNoticeService.class);

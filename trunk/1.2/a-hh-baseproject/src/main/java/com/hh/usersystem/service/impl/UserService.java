@@ -20,6 +20,7 @@ import com.hh.system.service.inf.IFileOper;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.Json;
+import com.hh.system.util.LogUtil;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.StaticVar;
 import com.hh.system.util.date.DateFormat;
@@ -79,7 +80,11 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 	public void deleteOnLineByIds(String ids) {
 		List<String> idList = Convert.strToList(ids);
 		for (String string : idList) {
-			LoginUser.loginUserSession.get(string).invalidate();
+			try {
+				LoginUser.loginUserSession.get(string).invalidate();
+			} catch (Exception e) {
+				LogUtil.error("销毁session异常："+e.getMessage());
+			}
 			LoginUser.remove(string);
 		}
 	}

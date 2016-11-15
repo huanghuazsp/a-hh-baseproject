@@ -2,4 +2,31 @@
 
 <project id="e8bc1ba7-0596-4293-9596-f779ff357be4" name="oa" text="oa" type="project">
   <table id="0b883f6d-3a0b-432b-ab95-1473eee6ba89" name="Notice" text="Notice" type="table"/>
+  <table id="48b3af55-bb18-4aad-90a9-0c46abc22847" name="Meeting" text="Meeting" type="table">
+    <column defaultValue="" empty="true" id="4e23d5a1-737c-4e7c-b152-be376dd732a0" length="256" name="text" primary="false" text="会议名称" type="String"/>
+    <column defaultValue="" empty="true" id="45e1aac6-5cd9-4933-b76b-b2ca94a83a33" length="" name="peopleNumber" primary="false" text="可容纳人数" type="int"/>
+    <column defaultValue="" empty="true" id="2be7b2e0-6233-4a79-8396-cb69183a595c" length="1024" name="device" primary="false" text="设备情况" type="String"/>
+    <column defaultValue="" empty="true" id="769fbb0a-d1b7-43c9-ac7c-714214ae2f8e" length="1024" name="locale" primary="false" text="所在地点" type="String"/>
+    <column defaultValue="" empty="true" id="c1fcb542-4dc3-47d0-9582-7527c893eb66" length="1024" name="describe" primary="false" text="会议室描述" type="String"/>
+    <column defaultValue="" empty="true" id="ae6f3bb0-b742-4241-be31-2419e6b6dd5c" length="36" name="manager" primary="false" text="管理员" type="String"/>
+    <column defaultValue="" empty="true" id="b8f426d2-04be-483c-bb68-26a4f83f20c0" length="64" name="managerText" primary="false" text="管理员名称" type="String"/>
+  </table>
+  <table id="b3276996-0b96-4397-84e1-c82951168672" name="MeetingApply" text="MeetingApply" type="table">
+    <column defaultValue="" empty="true" id="f9e25bfd-6c19-47ca-9d15-93d4e64ff5d4" length="1024" name="text" primary="false" text="会议主题" type="String"/>
+    <column defaultValue="" empty="true" id="423b3675-d25c-4319-a2bf-9f82f1196f84" length="大字段" name="AttendUser" primary="false" text="出席人员" type="String"/>
+    <column defaultValue="" empty="true" id="2ce501aa-2415-4283-a249-a511e63a871b" length="大字段" name="AttendUserText" primary="false" text="出席人员名称" type="String"/>
+    <column defaultValue="" empty="true" id="363c3265-602e-4981-a8b2-6237accc0010" length="大字段" name="AttendOrg" primary="false" text="出席部门" type="String"/>
+    <column defaultValue="" empty="true" id="c5dc516e-3d29-4359-9a2b-c6c81b11ace2" length="大字段" name="AttendOrgText" primary="false" text="出席部门名称" type="String"/>
+    <column defaultValue="" empty="true" id="f1049479-470c-4f29-9d14-c5d0fe08fbd8" length="" name="startDate" primary="false" text="开始时间" type="Date"/>
+    <column defaultValue="" empty="true" id="ebe731eb-1025-4077-9ae3-1521f5639c05" length="16" name="endDate" primary="false" text="结束时间" type="Date"/>
+    <column defaultValue="" empty="true" id="8faa6d40-4049-468e-b54b-c1ecb55effb7" length="大字段" name="describe" primary="false" text="描述" type="String"/>
+    <column defaultValue="" empty="true" id="e42c45ea-0a6b-46a6-9377-f692993742d1" length="36" name="meetingId" primary="false" text="会议id" type="String"/>
+    <column defaultValue="" empty="true" id="fc7e0d8c-d58e-4a21-909a-e33f75a0d251" length="64" name="meetingIdText" primary="false" text="会议名称" type="String"/>
+  </table>
+  <table id="059cbd39-ebf0-45f1-b881-438ffde7a9e8" name="MeetingApplyUser" text="MeetingApplyUser" type="table">
+    <column defaultValue="" empty="true" id="19f781ac-3494-4a59-b1c9-5215b5738c2f" length="36" name="objectId" primary="false" text="主ID" type="String"/>
+    <column defaultValue="" empty="true" id="1820d65a-00b6-4d6a-8abd-39e8b6f9247b" length="36" name="userId" primary="false" text="userId" type="String"/>
+    <column defaultValue="" empty="true" id="adcc3422-b2b8-4c27-b9c4-2200c24b5d89" length="64" name="userName" primary="false" text="userName" type="String"/>
+    <column defaultValue="" empty="true" id="95888357-f801-433f-9873-3080343f3045" length="16" name="read" primary="false" text="read" type="int"/>
+  </table>
 </project>
