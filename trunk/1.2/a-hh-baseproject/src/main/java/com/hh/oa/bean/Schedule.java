@@ -15,7 +15,6 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 @Entity
 @Table(name = "SYS_SCHEDULE")
 public class Schedule extends BaseTwoEntity {
-	private int ctype;
 	private boolean allDay;
 	private String content;
 	
@@ -43,13 +42,6 @@ public class Schedule extends BaseTwoEntity {
 		this.userId = userId;
 	}
 	
-	@Transient
-	public int getCtype() {
-		return ctype;
-	}
-	public void setCtype(int ctype) {
-		this.ctype = ctype;
-	}
 	
 	@Lob
 	@Column(name = "CONTENT_")

@@ -34,13 +34,6 @@
 		}
 		return img;
 	}
-	function getType(ctype) {
-		var img = '';
-		if (ctype == 1) {
-			img = '#000000';
-		}
-		return img;
-	}
 
 	function toEvents(dataList) {
 		var resultList = [];
@@ -57,8 +50,8 @@
 				end : $.hh.formatDate(data.end,'yyyy-MM-dd HH:mm:ss'),
 				color : getBackground(data.isOk),
 				className : getClassName(data.level),
-				textColor : getType(data.ctype),
-				borderColor : getType(data.ctype)
+				textColor : null,
+				borderColor : null
 			});
 		}
 		return data;
@@ -76,7 +69,6 @@
 		object.level = event.level;
 		object.isOk = event.isOk;
 		object.userId = event.userId;
-		object.ctype = event.ctype;
 		return object;
 	}
 
@@ -131,8 +123,7 @@
 						var object = getEventObject(calEvent);
 						Dialog
 								.open({
-									url : 'jsp-oa-schedule-calendaredit?ctype='
-											+ object.ctype,
+									url : 'jsp-oa-schedule-calendaredit',
 									params : {
 										object : object,
 										callback : function(
