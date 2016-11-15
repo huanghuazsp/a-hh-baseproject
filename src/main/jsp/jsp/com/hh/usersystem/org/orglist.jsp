@@ -141,8 +141,13 @@
 					config=" text:'更多',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 			</div>
 			<div style="padding:2px;">
-			<span xtype="text" config=" name : 'orgText' ,width:240 ,enter: querytree"></span>
+			<table style="font-size: 12" width=100%  cellspacing="0" cellpadding="0" ><tr>
+			<td >
+			<span xtype="text" config=" name : 'orgText' ,enter: querytree"></span>
+			</td>
+			<td width="40px" style="text-align:right;">
 			<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
+			</td><tr></table>
 			</div>
 			<span xtype="tree"
 				config=" id:'orgTree', url:'usersystem-Org-queryTreeList' ,remove: doDelete , onClick : orgTreeClick ,nheight:72 "></span>

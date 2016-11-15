@@ -754,8 +754,13 @@
 			</div>
 			<div id="orgDiv" style="overflow :hidden; ">
 				<div style="padding:2px;">
-				<span xtype="text" config=" name : 'orgText' ,width:210 ,enter: queryOrgtree"></span>
+				<table style="font-size: 12" width=100%  cellspacing="0" cellpadding="0" ><tr>
+				<td >
+				<span xtype="text" config=" name : 'orgText' , enter: queryOrgtree"></span>
+				</td>
+				<td width="40px" style="text-align:right;">
 				<span xtype="button" config=" icon :'hh_img_query' , onClick : queryOrgtree "></span>
+				</td><tr></table>
 				</div>
 				<span xtype="tree" configVar="orgtreeconfig"></span>
 			</div>

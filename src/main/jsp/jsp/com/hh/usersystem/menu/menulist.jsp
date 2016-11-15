@@ -106,16 +106,25 @@
 	<div xtype="border_layout">
 		<div config="render : 'west' ,width:'50%'">
 			<div xtype="toolbar" config="type:'head'">
+			
+				<table style="font-size: 12" width=100%  cellspacing="0" cellpadding="0" ><tr>
+				<td >
+				
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span>
 				<span xtype="button"
 					config="onClick: $.hh.tree.doUp , params:{treeid:'menuTree',action:'usersystem-menu-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
 				<span xtype="button"
 					config="onClick: $.hh.tree.doDown , params:{treeid:'menuTree',action:'usersystem-menu-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
-				
-
-
-				<span xtype="text" config=" name : 'treeText' ,width:150 ,enter: querytree"></span>
+				</td>
+				<td width="300px" >
+				<table style="font-size: 12" width=100%  cellspacing="0" cellpadding="0" ><tr>
+				<td >
+				<span xtype="text" config=" name : 'treeText' ,enter: querytree"></span>
+				</td>
+				<td width="40px" style="text-align:right;">
 				<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
+				</td><tr></table>
+				</td></tr></table>
 			</div>
 			<span xtype="tree"
 				config=" id:'menuTree' , url:'usersystem-menu-queryList' ,remove:doDelete , edit : doEdit,onClick : doLoadOper "></span>

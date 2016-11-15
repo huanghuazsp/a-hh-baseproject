@@ -68,8 +68,14 @@
 			xtype="button" config="onClick: doQXGX ,text:'取消共享' "></span>
 			</div>
 			<div style="padding:2px;">
-			<span xtype="text" config=" name : 'treeText' ,width:160 ,enter: querytree"></span>
-			<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
+			
+			<table style="font-size: 12" width=100%  cellspacing="0" cellpadding="0" ><tr>
+				<td >
+				<span xtype="text" config=" name : 'treeText' ,enter: querytree"></span>
+				</td>
+				<td width="40px" style="text-align:right;">
+				<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
+				</td><tr></table>
 			</div>
 			<span xtype="tree"
 				config=" id:'tree', url:'system-ResourcesType-queryTreeList' ,onClick : treeClick ,nheight:72  "></span>

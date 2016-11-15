@@ -106,8 +106,15 @@
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'tree'  "></span>
 			</div>
 			<div style="padding:2px;">
-			<span xtype="text" config=" name : 'treeText' ,width:150 ,enter: querytree"></span>
+			
+			
+			<table style="font-size: 12" width=100%  cellspacing="0" cellpadding="0" ><tr>
+			<td >
+			<span xtype="text" config=" name : 'treeText' ,enter: querytree"></span>
+			</td>
+			<td width="40px" style="text-align:right;">
 			<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
+			</td><tr></table>
 			</div>
 			<span xtype="tree"
 				config=" id:'tree', showRemoveBtn : showBtn, url:'system-ResourcesType-queryTreeList' ,params:{state:2} ,remove: doDelete , onClick : treeClick ,nheight:72 "></span>
