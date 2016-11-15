@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.system.util.Check;
+import com.hh.system.util.MessageException;
 import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.dto.ParamFactory;
 import com.hh.oa.bean.OaMeetingApply;
@@ -17,12 +18,6 @@ import com.hh.oa.service.impl.OaMeetingApplyService;
 @SuppressWarnings("serial")
 public class ActionMeetingApply extends BaseServiceAction< OaMeetingApply > {
 	
-	private Date startDate;
-	private Date endDate;
-
-	private String meetingId;
-	
-	
 	@Autowired
 	private OaMeetingApplyService oameetingapplyService;
 	public BaseService<OaMeetingApply> getService() {
@@ -33,42 +28,18 @@ public class ActionMeetingApply extends BaseServiceAction< OaMeetingApply > {
 	
 	public Object queryListByDate() {
 		List<OaMeetingApply> schedules = oameetingapplyService
-				.queryList(ParamFactory.getParamHb().ge("startDate", startDate).le("endDate", endDate).is("meetingId", meetingId));
+				.queryList(ParamFactory.getParamHb().ge("start", object.getStart()).le("end", object.getEnd()).is("meetingId", object.getMeetingId()));
 		return schedules;
 	}
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	public Date getStartDate() {
-		return startDate;
+	public void updateDate() {
+			 oameetingapplyService.updateDate(this.object);
 	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public String getMeetingId() {
-		return meetingId;
-	}
-
-	public void setMeetingId(String meetingId) {
-		this.meetingId = meetingId;
-	}
+	
+	
+	
 	
 }
  

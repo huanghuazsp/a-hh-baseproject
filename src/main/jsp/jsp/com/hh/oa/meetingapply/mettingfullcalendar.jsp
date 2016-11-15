@@ -18,21 +18,10 @@
 <script
 	src='/hhcommon/opensource/jquery/fullcalendar/2.0.1/fullcalendar.min.js'></script>
 <script>
+	var meetingId = '<%=Convert.toString(request.getParameter("meetingId"))%>';
+	var meetingIdText = '<%=Convert.toString(request.getParameter("meetingIdText"))%>';
 	function getBackground(isOk) {
 		return isOk == 0 ? 'red' : 'green';
-	}
-	function getClassName(level) {
-		var img = '';
-		if (level == '1') {
-			img = 'green';
-		} else if (level == '2') {
-			img = 'blue';
-		} else if (level == '3') {
-			img = 'yellow';
-		} else if (level == '4') {
-			img = 'red';
-		}
-		return img;
 	}
 
 	function toEvents(dataList) {
@@ -45,11 +34,10 @@
 	function toEvent(data) {
 		if (data) {
 			var data = $.extend(data, {
-				title : data.content,
+				title : data.text,
 				start : $.hh.formatDate(data.start,'yyyy-MM-dd HH:mm:ss'),
 				end : $.hh.formatDate(data.end,'yyyy-MM-dd HH:mm:ss'),
 				color : getBackground(data.isOk),
-				className : getClassName(data.level),
 				textColor : null,
 				borderColor : null
 			});
@@ -64,7 +52,7 @@
 			object.end = event.end.format('YYYY-MM-DD HH:mm:ss');
 		}
 		object.id = event.id;
-		object.content = event.content;
+		object.text = event.text;
 		object.participants = event.participants;
 		object.level = event.level;
 		object.isOk = event.isOk;
@@ -121,6 +109,8 @@
 					eventClick : function(calEvent,
 							jsEvent, view) {
 						var object = getEventObject(calEvent);
+						object.meetingId=meetingId;
+						object.meetingIdText=meetingIdText;
 						Dialog
 								.open({
 									url : 'jsp-oa-meetingapply-calendaredit',
@@ -155,7 +145,7 @@
 					eventDrop : function(event) {
 						Request
 								.request(
-										'oa-MeetingApply-save',
+										'oa-MeetingApply-updateDate',
 										{
 											data : getEventObject(event)
 										});
@@ -163,7 +153,7 @@
 					eventResize : function(event) {
 						Request
 								.request(
-										'oa-MeetingApply-save',
+										'oa-MeetingApply-updateDate',
 										{
 											data : getEventObject(event)
 										});
@@ -175,6 +165,8 @@
 							end : end
 									.format('YYYY-MM-DD HH:mm:ss')
 						};
+						object.meetingId=meetingId;
+						object.meetingIdText=meetingIdText;
 						Dialog
 								.open({
 									url : 'jsp-oa-meetingapply-calendaredit',
@@ -199,16 +191,15 @@
 					editable : true,
 					events : function(start, end, ddd,
 							callback) {
-						var meetingId = '<%=Convert.toString(request.getParameter("meetingId"))%>';
 						if(meetingId){
 							Request
 							.request(
 									'oa-MeetingApply-queryListByDate',
 									{
 										data : {
-											startDate : start
+											start : start
 													.format('YYYY-MM-DD HH:mm:ss'),
-											endDate : end
+											end : end
 													.format('YYYY-MM-DD HH:mm:ss'),
 											'meetingId':meetingId
 										}
