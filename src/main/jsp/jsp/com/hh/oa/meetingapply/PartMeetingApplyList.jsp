@@ -66,7 +66,7 @@
 		</tr>
 	</table> -->
 	<div id="pagelist" xtype="pagelist"
-		config=" url: 'oa-MeetingApplyUser-queryPagingData' ,column : [
+		config=" url: 'oa-MeetingApplyUser-queryShouPage' ,column : [
 		
 		
 		

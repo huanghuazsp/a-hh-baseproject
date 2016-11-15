@@ -560,5 +560,20 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 		hqlParamList.or(hqlParamList2);
 		return queryList(hqlParamList);
 	}
+	
+	public List<UsUser> queryListByOrgIds(String orgIds,String userIds) {
+		ParamInf hqlParamList2 = ParamFactory.getParamHb();
+		if (Check.isNoEmpty(orgIds)) {
+			hqlParamList2.in("orgId", Convert.strToList(orgIds));
+			hqlParamList2.in("jobId", Convert.strToList(orgIds));
+			hqlParamList2.in("deptId", Convert.strToList(orgIds));
+		}
+		if (Check.isNoEmpty(userIds)) {
+			hqlParamList2.in("id", Convert.strToList(userIds));
+		}
+		ParamInf hqlParamList = ParamFactory.getParamHb();
+		hqlParamList.or(hqlParamList2);
+		return queryList(hqlParamList);
+	}
 
 }

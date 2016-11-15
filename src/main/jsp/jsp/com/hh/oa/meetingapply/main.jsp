@@ -34,7 +34,7 @@
 	menuConfig.data = dataList;
 	
 	function meetingClick(data){
-		$('[name=jsp-oa-meetingapply-mettingfullcalendar]').attr('src','jsp-oa-meetingapply-mettingfullcalendar?meetingId='+data.id+'&meetingIdText='+data.text);
+		$('[name=jsp-oa-meetingapply-mettingfullcalendar]').attr('src','jsp-oa-meetingapply-mettingfullcalendar?meetingId='+data.id+'&meetingIdText='+data.basetext);
 	}
 </script>
 </head>
