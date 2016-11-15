@@ -18,13 +18,13 @@
 			}
 		},{
 			text : '我参与的',
-			img : '/hhcommon/images/icons/telephone/telephone-plus.png',
+			img : '/hhcommon/images/icons/telephone/telephone-off.png',
 			onClick : function() {
 				$('#iframe').attr('src','jsp-oa-meetingapply-PartMeetingApplyList');
 			}
 		},{
 			text : '我申请的',
-			img : '/hhcommon/images/icons/telephone/telephone-plus.png',
+			img : '/hhcommon/images/icons/telephone/telephone-arrow.png',
 			onClick : function() {
 				$('#iframe').attr('src','jsp-oa-meetingapply-MeetingApplyList');
 			}

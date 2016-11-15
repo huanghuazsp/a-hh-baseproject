@@ -8,35 +8,14 @@
 <%=BaseSystemUtil.getBaseJs()%>
 
 <script type="text/javascript">
-	function doDelete() {
-		$.hh.pagelist.deleteData({
-			pageid : 'pagelist',
-			action : 'oa-MeetingApply-deleteByIds'
-		});
-	}
-	function doAdd() {
-		Dialog.open({
-			url : 'jsp-oa-meetingapply-MeetingApplyEdit',
-			params : {
-				callback : function() {
-					$("#pagelist").loadData();
-				}
-			}
-		});
-	}
-	function doEdit() {
+	function doView() {
 		$.hh.pagelist.callRow("pagelist", function(row) {
-			Dialog.open({
-				url : 'jsp-oa-meetingapply-MeetingApplyEdit',
-				urlParams : {
-					id : row.id
-				},
-				params : {
-					callback : function() {
-						$("#pagelist").loadData();
+				Dialog.open({
+					url : 'jsp-oa-meetingapply-MeetingApplyView',
+					urlParams : {
+						id : row.id
 					}
-				}
-			});
+				});
 		});
 	}
 	function doQuery() {
@@ -44,20 +23,24 @@
 			params : $('#queryForm').getValue()
 		});
 	}
+	function openMeeting(params) {
+		Dialog.open({
+			url : 'jsp-oa-meeting-MeetingView' ,
+			urlParams : {
+				id : params
+			}
+		});
+	}
+	
+	function renderMeeting(value,data){
+		return '<a href="javascript:openMeeting(\''+data.meetingId+'\')">'+value+'</a>';
+	}
 </script>
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
-		<span xtype="button" config="onClick:doAdd,text:'添加' , itype :'add' "></span>
 		<span xtype="button"
-			config="onClick:doEdit,text:'修改' , itype :'edit' "></span> <span
-			xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span>
-		<!--  <span
-			xtype="button" config="onClick: doQuery ,text:'查询' , itype :'query' "></span> --> <span
-			xtype="button"
-			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'oa-MeetingApply-order'}  ,  icon : 'hh_up' "></span>
-		<span xtype="button"
-			config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'oa-MeetingApply-order'} , icon : 'hh_down' "></span>
+			config="onClick: doView ,text:'查看' , itype :'view' "></span>
 	</div>
 	<!-- <table xtype="form" id="queryForm" style="width:600px;">
 		<tr>
@@ -76,33 +59,28 @@
 			},
 		
 			{
-				name : 'AttendUser' ,
+				name : 'attendUserText' ,
 				text : '出席人员'
 			},
 		
-			{
-				name : 'AttendUserText' ,
-				text : '出席人员名称'
-			},
 		
 			{
-				name : 'AttendOrg' ,
+				name : 'attendOrgText' ,
 				text : '出席部门'
 			},
 		
 			{
-				name : 'AttendOrgText' ,
-				text : '出席部门名称'
+				name : 'start' ,
+				text : '开始时间',
+				render:'datetime',
+				width:120
 			},
 		
 			{
-				name : 'startDate' ,
-				text : '开始时间'
-			},
-		
-			{
-				name : 'endDate' ,
-				text : '结束时间'
+				name : 'end' ,
+				text : '结束时间',
+				render:'datetime',
+				width:120
 			},
 		
 			{
@@ -111,13 +89,9 @@
 			},
 		
 			{
-				name : 'meetingId' ,
-				text : '会议id'
-			},
-		
-			{
 				name : 'meetingIdText' ,
-				text : '会议名称'
+				text : '会议名称',
+				render : renderMeeting
 			}
 		
 	]">

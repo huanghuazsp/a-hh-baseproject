@@ -45,8 +45,9 @@ public class OaMeetingApplyService extends BaseService<OaMeetingApply> {
 	public OaMeetingApply save(OaMeetingApply entity) throws MessageException {
 		List<UsUser> userList = userService.queryListByOrgIds(entity
 				.getAttendOrg(),entity.getAttendUser());
+		OaMeetingApply oaMeetingApply =  super.save(entity);
 		oaMeetingApplyUserService.addUserByMeetingApply(entity, userList);
-		return super.save(entity);
+		return oaMeetingApply;
 	}
 	
 	@Override
@@ -73,7 +74,8 @@ public class OaMeetingApplyService extends BaseService<OaMeetingApply> {
 			PageRange pageRange) {
 
 		ParamInf hqlParamList = ParamFactory.getParamHb();
-
+		String userId = loginUserUtilService.findUserId();
+		hqlParamList.is("vcreate", userId);
 		if (Check.isNoEmpty(entity.getText())) {
 			hqlParamList.like("text", entity.getText());
 		}
@@ -84,7 +86,7 @@ public class OaMeetingApplyService extends BaseService<OaMeetingApply> {
 			PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
 
-		String hql = "select a.id as id, a.text  as text, a.dcreate  as dcreate , a.vcreateName as vcreateName,b.read as read from "
+		String hql = "select a.meetingId as meetingId,a.meetingIdText as meetingIdText,a.describe as describe,a.end as end,a.start as start,a.attendOrgText as attendOrgText,a.attendUserText as attendUserText, a.id as id, a.text  as text, a.dcreate  as dcreate , a.vcreateName as vcreateName,b.read as read from "
 				+ OaMeetingApply.class.getName()
 				+ " a , "
 				+ OaMeetingApplyUser.class.getName()

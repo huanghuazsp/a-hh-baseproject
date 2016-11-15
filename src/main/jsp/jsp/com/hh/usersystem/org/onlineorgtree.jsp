@@ -480,7 +480,7 @@
 				id : params
 			}
 		});
-}
+	}
 	
 
 	function openEmail(params){
