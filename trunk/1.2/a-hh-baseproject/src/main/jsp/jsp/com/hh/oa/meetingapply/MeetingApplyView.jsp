@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>数据编辑</title>
+<title>会议室申请信息</title>
 <%=BaseSystemUtil.getBaseJs("checkform","date")%>
 
 <script type="text/javascript">
@@ -17,15 +17,27 @@
 
 	function findData() {
 		if (objectid) {
-			Request.request('oa-MeetingApply-findObjectById', {
+			Request.request('oa-MeetingApply-findReadObjectById', {
 				data : {
 					id : objectid
 				},
 				callback : function(result) {
 					$('#form').setValue(result, {view:true});
+					$('#meeting_a').click(function(){
+						openMeeting(result.meetingId);
+					});
 				}
 			});
 		}
+	}
+	
+	function openMeeting(params) {
+		Dialog.open({
+			url : 'jsp-oa-meeting-MeetingView' ,
+			urlParams : {
+				id : params
+			}
+		});
 	}
 
 	function init() {
@@ -41,7 +53,7 @@
 				
 					<tr>
 						<td xtype="label">会议名称：</td>
-						<td colspan="3"><span xtype="html" config=" name : 'meetingIdText' "></span></td>
+						<td colspan="3"><a id="meeting_a" href="javascript:void(0);"><span xtype="html" config=" name : 'meetingIdText' "></span></a></td>
 					</tr>
 				
 					<tr>
