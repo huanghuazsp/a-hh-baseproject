@@ -1,4 +1,5 @@
- package com.hh.system.service.impl;
+package com.hh.system.service.impl;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,50 +15,59 @@ import com.hh.system.util.dto.ParamInf;
 import com.hh.usersystem.LoginUserServiceInf;
 
 @Service
-public class SystemResourcesTypeService extends BaseService<SystemResourcesType> {
+public class SystemResourcesTypeService extends
+		BaseService<SystemResourcesType> {
 
 	@Autowired
 	private LoginUserServiceInf userService;
-	
+
 	public List<SystemResourcesType> queryTreeList(SystemResourcesType object) {
 		ParamInf paramInf = ParamFactory.getParamHb();
-		if (object.getState()==1) {
-			paramInf.is("state",1);
-		}else{
+		if (object.getState() == 1) {
+			paramInf.is("state", 1);
+		} else {
 			paramInf.is("vcreate", userService.findUserId());
 		}
-		
-		
-		
-		String node =Check.isEmpty(object.getNode()) ? "root" : object.getNode();
+
+		if (Check.isNoEmpty(object.getVcreate())) {
+			paramInf.is("vcreate", object.getVcreate());
+		}
+
+		String node = Check.isEmpty(object.getNode()) ? "root" : object
+				.getNode();
 		if (Check.isNoEmpty(object.getText()) && "root".equals(node)) {
 			paramInf.like("text", object.getText());
-		}else{
+		} else {
 			paramInf.is("node", node);
 		}
-		
-		List<SystemResourcesType> resourcesTypes = super.queryTreeList(paramInf);
-		if (object.getState()==0) {
+
+		List<SystemResourcesType> resourcesTypes = super
+				.queryTreeList(paramInf);
+		if (object.getState() == 0) {
 			render(resourcesTypes);
-		}else if (object.getState()==1) {
+		} else if (object.getState() == 1) {
 			render2(resourcesTypes);
 		}
 		return resourcesTypes;
 	}
+
 	private void render2(List<SystemResourcesType> resourcesTypes) {
-		if (resourcesTypes!=null) {
+		if (resourcesTypes != null) {
 			for (SystemResourcesType systemResourcesType : resourcesTypes) {
-				if (systemResourcesType.getState()==1) {
-					systemResourcesType.setText(systemResourcesType.getText()+"["+systemResourcesType.getVcreateName()+"]");;
+				if (systemResourcesType.getState() == 1) {
+					systemResourcesType.setText(systemResourcesType.getText()
+							+ "[" + systemResourcesType.getVcreateName() + "]");
+					;
 				}
 				render2(systemResourcesType.getChildren());
 			}
 		}
 	}
+
 	private void render(List<SystemResourcesType> resourcesTypes) {
-		if (resourcesTypes!=null) {
+		if (resourcesTypes != null) {
 			for (SystemResourcesType systemResourcesType : resourcesTypes) {
-				if (systemResourcesType.getState()==1) {
+				if (systemResourcesType.getState() == 1) {
 					systemResourcesType.setIconSkin("share");
 				}
 				render(systemResourcesType.getChildren());
@@ -65,18 +75,22 @@ public class SystemResourcesTypeService extends BaseService<SystemResourcesType>
 		}
 	}
 
-	public void doSetState(String ids,int state) {
+	public void doSetState(String ids, int state) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", Convert.strToList(ids));
 		map.put("state", state);
-		dao.updateEntity("update " + SystemResourcesType.class.getName() + " o set o.state=:state where o.id in :id", map);
+		dao.updateEntity("update " + SystemResourcesType.class.getName()
+				+ " o set o.state=:state where o.id in :id", map);
 	}
-	
-	
+
 	protected boolean checkTextOnly(SystemResourcesType entity) {
 		entity.setVcreate(userService.findUserId());
-		return dao.findWhetherData("select count(o) from " + entity.getClass().getName() + " o "
-				+ "where o.text=:text and (o.id!=:id or :id is null) and node = :node and vcreate = :vcreate ", entity);
+		return dao
+				.findWhetherData(
+						"select count(o) from "
+								+ entity.getClass().getName()
+								+ " o "
+								+ "where o.text=:text and (o.id!=:id or :id is null) and node = :node and vcreate = :vcreate ",
+						entity);
 	}
 }
- 
