@@ -108,6 +108,8 @@
 					.find('#' + mapData[data.vsj].id);
 					if(gridli && gridli.length>0 && data.count && data.count>0){
 						gridli.append('<font class="hh_red" style="position: absolute; right: 3px;  top: 3px;">'+data.count+'</font>');
+					}else if(gridli && gridli.length>0 && data.count==0){
+						gridli.find('.hh_red').remove();
 					}
 				}
 

@@ -102,29 +102,31 @@
 			<table xtype="form">
 				<tr>
 					<td xtype="label" style="width: 80px;">标题：</td>
-					<td colspan="2"><span xtype="text" config=" name : 'title' ,required :true"></span></td>
+					<td ><span xtype="text" config=" name : 'title' ,required :true"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label" style="width: 80px;">公告类型：</td>
-					<td colspan="2"><span xtype="combobox" config=" name : 'type' ,required :true  , data : <%=SystemUtil.getJsonDataByCode("gonggaoleixing")%> "></span></td>
+					<td ><span xtype="combobox" config=" name : 'type' ,required :true  , data : <%=SystemUtil.getJsonDataByCode("gonggaoleixing")%> "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">发布范围：</td>
-					<td width=170>
+					<td >
 						<span xtype="radio"
 						config="  onChange: rangeTypeChange , name: 'rangeType' ,value : 1 ,data : [{id:1,text:'所有'},{id:0,text:'选择机构/部门'}] ">
 						</span>
+						&nbsp;&nbsp;
+						
+						<span  xtype="selectOrg" config="name: 'range',many:true  "></span>
 					</td>
-					<td><span  xtype="selectOrg" config="name: 'range',many:true  "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">附件：</td>
-					<td colspan="2"><span xtype="fileUpload"
+					<td ><span xtype="fileUpload"
 						config=" name : 'file',type:'notice' ,request:true"></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">内容：</td>
-					<td colspan="2">
+					<td >
 					<span xtype="ckeditor" config="name: 'content' ,required :true "></span></td>
 				</tr>
 			</table>

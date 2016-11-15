@@ -52,7 +52,7 @@
 						<div style="text-align:center;">
 						<font size=4 ><b><span xtype="html" config=" name : 'title' "></span></b></font>
 						</div>
-						发&nbsp;件&nbsp;人：<span xtype="html" config="name: 'vcreateName' "></span><br>
+						创&nbsp;建&nbsp;人：<span xtype="html" config="name: 'vcreateName' "></span>&nbsp;&nbsp;【<span xtype="html" config="name: 'deployDept' "></span>】<br>
 						时&nbsp;&nbsp;&nbsp;间：<span xtype="html" config="name: 'dcreate' ,dateType:'yyyy年MM月dd日 （EEE） HH:mm'"></span><br>
 						范&nbsp;&nbsp;&nbsp;围：<span xtype="radio"
 						config="   name: 'rangeType' ,value : 1 ,data : [{id:1,text:'所有'},{id:0,text:'选择机构/部门'}] ">

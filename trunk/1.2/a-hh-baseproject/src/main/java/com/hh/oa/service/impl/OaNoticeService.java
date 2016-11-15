@@ -97,7 +97,12 @@ public class OaNoticeService extends BaseService<OaNotice> implements LoadDataTi
 	@Override
 	public OaNotice save(OaNotice entity) throws MessageException {
 		UsUser user = loginUserUtilService.findLoginUser();
-		entity.setDeployDept(user.getOrgText()+"/"+user.getDeptText());
+		if (Check.isNoEmpty(user.getOrgText()) && Check.isNoEmpty(user.getDeptText())) {
+			entity.setDeployDept(user.getOrgText()+"/"+user.getDeptText());
+		}else if(Check.isNoEmpty(user.getOrgText())){
+			entity.setDeployDept(user.getOrgText());
+		}
+		
 		OaNotice OaNotice = super.save(entity);
 		if (entity.getDeploy() == 1) {
 			if (entity.getRangeType() == 1) {

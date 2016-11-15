@@ -20,7 +20,10 @@
 	}
 	function querytree(){
 		$('#span_tree').loadData({
-			params : {text:$('#span_treeText').getValue()}
+			params : {
+				text:$('#span_treeText').getValue(),
+				vcreate :$('#span_vcreate').getValue()
+			}
 		});
 	}
 
@@ -30,6 +33,7 @@
 	<div xtype="border_layout">
 		<div config="render : 'west',width:220"  style="overflow :hidden; ">
 			<div xtype="toolbar" config="type:'head'">
+				<span xtype="selectUser" config=" name : 'vcreate' "></span>
 				<span xtype="text" config=" name : 'treeText' ,width:160 ,enter: querytree"></span>
 				<span xtype="button" config=" icon :'hh_img_query' , onClick : querytree "></span>
 			</div>
