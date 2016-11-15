@@ -4,7 +4,7 @@
 <%=SystemUtil.getBaseDoctype()%>
 <html>
 <head>
-<title>日程编辑</title>
+<title>会议申请</title>
 <%=SystemUtil.getBaseJs("checkform", "date")%>
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
@@ -14,33 +14,14 @@
 	var object = params.object;
 	var objectid = object ? object.id : '';
 
-	var yxjconfig = {
-		name : 'level',
-		data : [
-				{
-					'id' : '4',
-					'text' : '<img src=\'/hhcommon/images/icons/flag/flag_red.png\'/>重要紧急'
-				},
-				{
-					'id' : '3',
-					'text' : '<img src=\'/hhcommon/images/icons/flag/flag_yellow.png\'/>重要不紧急'
-				},
-				{
-					'id' : '2',
-					'text' : '<img src=\'/hhcommon/images/icons/flag/flag_blue.png\'/>紧急不重要'
-				},
-				{
-					'id' : '1',
-					'text' : '<img src=\'/hhcommon/images/icons/flag/flag_green.png\'/>不重要不紧急'
-				}, {
-					'id' : '',
-					'text' : '无优先级'
-				} ]
-	}
 
 	function save() {
 		$.hh.validation.check('form', function(formData) {
-			Request.request('oa-Schedule-save', {
+			if(params.object){
+				formData.meetingId=params.object.meetingId;
+				formData.meetingIdText=params.object.meetingIdText;
+			}
+			Request.request('oa-MeetingApply-save', {
 				data : formData,
 				callback : function(result) {
 					if (result.success!=false) {
@@ -52,27 +33,9 @@
 		});
 	}
 
-	function ok(ok) {
-		if (objectid) {
-			Request.request('oa-Schedule-ok', {
-				data : {
-					id : objectid,
-					isOk : ok
-				}
-			}, function(result) {
-				if (result.success!=false) {
-					object.isOk = ok;
-					object.start = $.hh.stringToDate(object.start);
-					object.end = $.hh.stringToDate(object.end);
-					params.callback(object);
-					Dialog.close();
-				}
-			});
-		}
-	}
 	function doDelete() {
 		if (objectid) {
-			Request.request('oa-Schedule-deleteByIds', {
+			Request.request('oa-MeetingApply-deleteByIds', {
 				data : {
 					ids : objectid
 				}
@@ -88,11 +51,6 @@
 	function findData() {
 		if (object) {
 			if (object.id) {
-				if (object.isOk == 1) {
-					$('#nookspan').show();
-				} else {
-					$('#okspan').show();
-				}
 				$('#deletespan').show();
 			}
 				$('#form').setValue(object);
@@ -110,15 +68,10 @@
 			<span xtype="text" config=" hidden:true,name : 'id'"></span>
 			<table xtype="form">
 				<tr>
-					<td xtype="label">内容：</td>
+					<td xtype="label">会议主题：</td>
 					<td colspan="3"><span xtype="text"
-						config=" name : 'content' ,required :true "></span></td>
+						config=" name : 'text' ,required :true "></span></td>
 				</tr>
-				<!-- <tr>
-					<td xtype="label">发布范围：</td>
-					<td colspan="3"><span xtype="selectUser"
-						config="name: 'participants' "></span></td>
-				</tr> -->
 				<tr>
 					<td xtype="label">开始：</td>
 					<td><span xtype="date"
@@ -127,18 +80,11 @@
 					<td><span xtype="date"
 						config="name: 'end'  ,type:'datetime'  "></span></td>
 				</tr>
-				<tr>
-					<td xtype="label">优先级：</td>
-					<td colspan="3"><span xtype="radio" configVar="yxjconfig"></span></td>
-				</tr>
 			</table>
 		</form>
 	</div>
 	<div xtype="toolbar">
-		<span id="okspan" xtype="button"
-			config="text:'完成' , onClick : ok ,hidden:true ,params:1"></span><span
-			id="nookspan" xtype="button"
-			config="text:'未完成' , onClick : ok ,hidden:true,params:0"></span> <span
+		 <span
 			id="deletespan" xtype="button"
 			config="text:'删除' , onClick : doDelete ,hidden:true"></span> <span
 			id="savespan" xtype="button" config="text:'保存' , onClick : save "></span>

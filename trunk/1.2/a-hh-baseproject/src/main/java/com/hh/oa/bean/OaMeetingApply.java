@@ -74,27 +74,27 @@ public class OaMeetingApply  extends BaseTwoEntity{
 	}
 	
 	//开始时间
-	private Date startDate;
+	private Date start;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="START_DATE",length = 7)
-	public Date getStartDate() {
-		return startDate;
+	public Date getStart() {
+		return start;
 	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStart(Date start) {
+		this.start = start;
 	}
 	
 	//结束时间
-	private Date endDate;
+	private Date end;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="END_DATE",length = 7)
-	public Date getEndDate() {
-		return endDate;
+	public Date getEnd() {
+		return end;
 	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEnd(Date end) {
+		this.end = end;
 	}
 	
 	//描述
