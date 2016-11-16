@@ -25,7 +25,7 @@ public class OaMeetingApply  extends BaseTwoEntity{
 		this.text = text;
 	}
 	
-	//出席人员
+	//参与人员
 	private String attendUser;
 	
 	@Lob
@@ -37,7 +37,7 @@ public class OaMeetingApply  extends BaseTwoEntity{
 		this.attendUser = attendUser;
 	}
 	
-	//出席人员名称
+	//参与人员名称
 	private String attendUserText;
 	
 	@Lob
@@ -49,7 +49,7 @@ public class OaMeetingApply  extends BaseTwoEntity{
 		this.attendUserText = attendUserText;
 	}
 	
-	//出席部门
+	//参与部门
 	private String attendOrg;
 	
 	@Lob
@@ -61,7 +61,7 @@ public class OaMeetingApply  extends BaseTwoEntity{
 		this.attendOrg = attendOrg;
 	}
 	
-	//出席部门名称
+	//参与部门名称
 	private String attendOrgText;
 	
 	@Lob

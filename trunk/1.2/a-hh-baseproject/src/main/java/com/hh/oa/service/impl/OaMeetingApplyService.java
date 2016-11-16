@@ -37,12 +37,26 @@ public class OaMeetingApplyService extends BaseService<OaMeetingApply> {
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 	
-	public void updateDate(OaMeetingApply object) {
+	public void updateDate(OaMeetingApply object)  throws MessageException{
+		if (asDate(object)) {
+			throw new MessageException("会议室，时间段不能重叠！");
+		}
 		dao.updateEntity("update "+OaMeetingApply.class.getName()+" o set o.start=:start,o.end=:end where o.id=:id ", object);
 	}
 
+	public boolean asDate(OaMeetingApply entity) {
+		return dao.findWhetherData("select count(o) from " + entity.getClass().getName() + " o "
+				+ "where ((o.start>=:start and :end>=o.end) or (o.start<:start and :start<o.end) or (o.start<:end and :end<o.end))  and (o.id!=:id or :id is null) and meetingId=:meetingId ", entity);
+	}
+	
 	@Override
 	public OaMeetingApply save(OaMeetingApply entity) throws MessageException {
+		
+	
+		if ( asDate(entity)) {
+			throw new MessageException("会议室，时间段不能重叠！");
+		}
+		
 		List<UsUser> userList = userService.queryListByOrgIds(entity
 				.getAttendOrg(),entity.getAttendUser());
 		OaMeetingApply oaMeetingApply =  super.save(entity);

@@ -62,12 +62,12 @@
 					</tr>
 				
 					<tr>
-						<td xtype="label">出席人员：</td>
+						<td xtype="label">参与人员：</td>
 						<td colspan="3"><span xtype="html" config=" name : 'attendUserText' "></span></td>
 					</tr>
 				
 					<tr>
-						<td xtype="label">出席部门：</td>
+						<td xtype="label">参与部门：</td>
 						<td colspan="3"><span xtype="html" config=" name : 'attendOrgText' "></span></td>
 					</tr>
 				

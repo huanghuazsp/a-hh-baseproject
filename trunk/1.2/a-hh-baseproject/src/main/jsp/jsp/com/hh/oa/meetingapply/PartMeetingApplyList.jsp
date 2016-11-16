@@ -60,13 +60,13 @@
 		
 			{
 				name : 'attendUserText' ,
-				text : '出席人员'
+				text : '参与人员'
 			},
 		
 		
 			{
 				name : 'attendOrgText' ,
-				text : '出席部门'
+				text : '参与部门'
 			},
 		
 			{
