@@ -31,6 +31,10 @@
 			}
 		});
 	}
+	function readrender(value) {
+		return value == 0 ? '<img src="'+$.hh.property.img_email_close+'" />'
+				: '<img src="'+$.hh.property.img_email_open+'" />';
+	}
 	
 	function renderMeeting(value,data){
 		return '<a href="javascript:openMeeting(\''+data.meetingId+'\')">'+value+'</a>';
@@ -52,7 +56,12 @@
 		config=" url: 'oa-MeetingApplyUser-queryShouPage' ,column : [
 		
 		
-		
+		{
+			name : 'read' ,
+			text : '状态',
+			width :30,
+			render : 'readrender'
+		},
 			{
 				name : 'text' ,
 				text : '会议主题'

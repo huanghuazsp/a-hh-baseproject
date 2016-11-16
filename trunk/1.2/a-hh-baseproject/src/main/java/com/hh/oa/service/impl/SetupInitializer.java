@@ -92,6 +92,9 @@ public class SetupInitializer {
 		SysMenu meeting = new SysMenu("id04ZkRCOJ78aUzjwW", "会议管理",
 				"jsp-oa-meeting-meetingmain",
 				"/hhcommon/images/icons/telephone/telephone.png", 0, 1);
+		
+		StaticProperties.sysOperList.add(new SysOper("lzl2ky7M7RRiyO9D3uJ",
+				"会议室管理", meeting));
 		rootHhXtCd.getChildren().add(meeting);
 
 		StaticProperties.sysMenuList.add(rootHhXtCd);
