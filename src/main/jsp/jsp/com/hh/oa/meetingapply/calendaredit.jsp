@@ -20,6 +20,11 @@
 				formData.meetingId = params.object.meetingId;
 				formData.meetingIdText = params.object.meetingIdText;
 			}
+			
+			if(!formData.attendUser && !formData.attendOrg){
+				Dialog.alert('请选择参与部门或参与人员');
+				return;
+			}
 			Request.request('oa-MeetingApply-save', {
 				data : formData,
 				callback : function(result) {
@@ -92,12 +97,12 @@
 						config=" name : 'text' ,required :true "></span></td>
 				</tr>
 				<tr>
-					<td xtype="label">出席人员：</td>
+					<td xtype="label">参与人员：</td>
 					<td colspan="3"><span xtype="selectUser"
 						config=" name : 'attendUser' ,many:true "></span></td>
 				</tr>
 				<tr>
-					<td xtype="label">出席部门：</td>
+					<td xtype="label">参与部门：</td>
 					<td colspan="3"><span  xtype="selectOrg" config="name: 'attendOrg',many:true  "></span></td>
 				</tr>
 				<tr>
@@ -106,7 +111,7 @@
 						config="name: 'start'  ,type:'datetime' ,required :true"></span></td>
 					<td xtype="label">结束：</td>
 					<td><span xtype="date"
-						config="name: 'end'  ,type:'datetime'  "></span></td>
+						config="name: 'end'  ,type:'datetime' ,required :true "></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">描述：</td>

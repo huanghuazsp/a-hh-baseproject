@@ -30,14 +30,19 @@ public class ActionMeetingApply extends BaseServiceAction<OaMeetingApply> {
 	public Object queryListByDate() {
 		List<OaMeetingApply> schedules = oameetingapplyService
 				.queryList(ParamFactory.getParamHb()
-						.ge("start", object.getStart())
-						.le("end", object.getEnd())
+						.gt("start", object.getStart())
+						.lt("end", object.getEnd())
 						.is("meetingId", object.getMeetingId()));
 		return schedules;
 	}
 
-	public void updateDate() {
-		oameetingapplyService.updateDate(this.object);
+	public Object updateDate() {
+		try {
+			oameetingapplyService.updateDate(this.object);
+			return null;
+		} catch (MessageException e) {
+			return e;
+		}
 	}
 
 	public Object findReadObjectById() {
@@ -45,6 +50,5 @@ public class ActionMeetingApply extends BaseServiceAction<OaMeetingApply> {
 				.findReadObjectById(this.object.getId());
 		return object;
 	}
-	
 
 }

@@ -142,20 +142,34 @@
 									}
 								});
 					},
-					eventDrop : function(event) {
+					eventDrop :  function(event,dayDelta,minuteDelta,revertFunc) {
+						var object = getEventObject(event);
+						object.meetingId=meetingId;
 						Request
 								.request(
 										'oa-MeetingApply-updateDate',
 										{
-											data : getEventObject(event)
+											data : object,
+											callback : function(result) {
+												if (result.success == false) {
+													$('#calendar').fullCalendar('refetchEvents');
+												}
+											}
 										});
 					},
-					eventResize : function(event) {
+					eventResize : function(event,dayDelta,minuteDelta,revertFunc) {
+						var object = getEventObject(event);
+						object.meetingId=meetingId;
 						Request
 								.request(
 										'oa-MeetingApply-updateDate',
 										{
-											data : getEventObject(event)
+											data : object,
+											callback : function(result) {
+												if (result.success == false) {
+													$('#calendar').fullCalendar('refetchEvents');
+												}
+											}
 										});
 					},
 					select : function(start, end) {

@@ -60,22 +60,22 @@
 					</tr>
 				
 					<tr>
-						<td xtype="label">出席人员：</td>
+						<td xtype="label">参与人员：</td>
 						<td><span xtype="text" config=" name : 'AttendUser' "></span></td>
 					</tr>
 				
 					<tr>
-						<td xtype="label">出席人员名称：</td>
+						<td xtype="label">参与人员名称：</td>
 						<td><span xtype="text" config=" name : 'AttendUserText' "></span></td>
 					</tr>
 				
 					<tr>
-						<td xtype="label">出席部门：</td>
+						<td xtype="label">参与部门：</td>
 						<td><span xtype="text" config=" name : 'AttendOrg' "></span></td>
 					</tr>
 				
 					<tr>
-						<td xtype="label">出席部门名称：</td>
+						<td xtype="label">参与部门名称：</td>
 						<td><span xtype="text" config=" name : 'AttendOrgText' "></span></td>
 					</tr>
 				
