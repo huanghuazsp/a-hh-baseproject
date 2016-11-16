@@ -29,7 +29,7 @@
 				$('#iframe').attr('src','jsp-oa-meetingapply-MeetingApplyList');
 			}
 		},{
-			text : '会议管理',
+			text : '会议室管理',
 			img : '/hhcommon/images/icons/telephone/telephone.png',
 			onClick : function() {
 				$('#iframe').attr('src','jsp-oa-meeting-MeetingList');
