@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project id="8484186b-5c83-431d-895a-8e65c126b013" name="pj" text="pj" type="project">
+  <table id="d34ca729-8aa4-4c84-b404-4ab9edef06a2" name="ProjectInfo" text="ProjectInfo" type="table">
+    <column defaultValue="" empty="true" id="9e4845c8-83ef-4d10-934f-d37b2c76a392" length="128" name="text" primary="false" text="项目名称" type="String"/>
+    <column defaultValue="" empty="true" id="ec068f07-76dc-4d53-bc74-4e40f8780a98" length="36" name="manager" primary="false" text="项目经理" type="String"/>
+    <column defaultValue="" empty="true" id="b5accfa4-9b94-4140-bab9-7a4e5ceeeb80" length="64" name="managerText" primary="false" text="项目经理名称" type="String"/>
+    <column defaultValue="" empty="true" id="d201254e-ec31-49d8-9f98-ecff4de997bb" length="256" name="client" primary="false" text="客户" type="String"/>
+    <column defaultValue="" empty="true" id="f8f116a1-9e9b-49ff-a562-707b8b6462ff" length="16" name="money" primary="false" text="项目金额" type="Long"/>
+    <column defaultValue="" empty="true" id="f3080f16-c5ec-4f1a-ba27-f4dbd4a0522b" length="大字段" name="describe" primary="false" text="描述" type="String"/>
+    <column defaultValue="" empty="true" id="3256720a-c857-4097-b75c-d27f113d16c3" length="" name="startDate" primary="false" text="开始日期" type="Date"/>
+    <column defaultValue="" empty="true" id="f15d380c-b9bf-41f2-bc7e-2d2413a28e88" length="" name="planEndDate" primary="false" text="计划结束日期" type="Date"/>
+    <column defaultValue="" empty="true" id="f259e71b-f8f9-4fa9-b539-eb0f69c0d52e" length="16" name="endDate" primary="false" text="结束日期" type="Date"/>
+  </table>
+  <table id="3b41c8a0-1a4f-44ff-b1b2-8b764a7bfeda" name="ProjectUserInfo" text="ProjectUserInfo" type="table">
+    <column defaultValue="" empty="true" id="4dcf6bd8-ec87-4508-9468-84d941983eed" length="36" name="user" primary="false" text="成员id" type="String"/>
+    <column defaultValue="" empty="true" id="862c4211-309f-4d13-b4b2-27765e7ed2c2" length="64" name="userName" primary="false" text="成员名称" type="String"/>
+    <column defaultValue="" empty="true" id="e2db7620-d5e6-43b4-a93e-00e1201fe4af" length="64" name="roleName" primary="false" text="角色" type="String"/>
+    <column defaultValue="" empty="true" id="42f3f9ee-a66d-47a9-a0cb-d4dee12fa07e" length="128" name="duty" primary="false" text="职责" type="String"/>
+    <column defaultValue="" empty="true" id="0623f099-0f38-493b-8e85-6ee202ebb7c0" length="16" name="joinDate" primary="false" text="加入日期" type="Date"/>
+    <column defaultValue="" empty="true" id="fe8427f7-1cf7-4016-a66b-8e850a6ce0d4" length="64" name="directManager" primary="false" text="直接上级" type="String"/>
+    <column defaultValue="" empty="true" id="b105db30-b532-4d47-b87e-8d611467543e" length="大字段" name="describe" primary="false" text="描述" type="String"/>
+  </table>
+</project>
