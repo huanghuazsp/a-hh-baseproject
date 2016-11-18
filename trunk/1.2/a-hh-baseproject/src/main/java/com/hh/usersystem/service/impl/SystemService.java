@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.hibernate.util.base.BaseBean;
+import com.hh.system.service.impl.SysDataTypeService;
 import com.hh.system.service.inf.LoadDataTime;
 import com.hh.system.service.inf.SystemServiceInf;
 import com.hh.system.util.Check;
@@ -48,6 +49,9 @@ public class SystemService implements LoadDataTime, SystemServiceInf {
 	@Autowired
 	private OperateService operateService;
 
+	@Autowired
+	private SysDataTypeService sysDataTypeService;
+	
 	@Transactional
 	public void initMenuAndUser() {
 		List<String> menuIdList = new ArrayList<String>();
@@ -195,6 +199,10 @@ public class SystemService implements LoadDataTime, SystemServiceInf {
 		object.setDcreate(new Date());
 		object.setDupdate(new Date());
 		object.setOrder(PrimaryKey.getTime());
+	}
+	@Override
+	public void initDataList() {
+		sysDataTypeService.save(StaticProperties.dataList);
 	}
 
 }

@@ -96,8 +96,45 @@ public class SetupInitializer {
 		StaticProperties.sysOperList.add(new SysOper("lzl2ky7M7RRiyO9D3uJ",
 				"会议室管理", meeting));
 		rootHhXtCd.getChildren().add(meeting);
+		
+		
+		
+		SysMenu project = new SysMenu("dL8F5prALiQFtgnnH4K", "项目管理",
+				"jsp-project-projectinfo-projectmain",
+				"/hhcommon/images/icons/project/project.png", 0, 1);
+		
+		rootHhXtCd.getChildren().add(project);
+		
 
 		StaticProperties.sysMenuList.add(rootHhXtCd);
+		
+		
+		
+		
+		
+		
+		
+		StaticProperties.addData("公告", "", "类别", "", "", "");
+		StaticProperties.addData("公告类型", "公告", "类别", "", "", "");
+		
+		StaticProperties.addData("决定", "", "字典", "公告类型", "1", "");
+		StaticProperties.addData("通知", "", "字典", "公告类型", "2", "");
+		StaticProperties.addData("通报", "", "字典", "公告类型", "3", "");
+		StaticProperties.addData("人事", "", "字典", "公告类型", "4", "");
+		StaticProperties.addData("行政", "", "字典", "公告类型", "5", "");
+		StaticProperties.addData("其他", "", "字典", "公告类型", "255", "");
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
 		StaticVar.loadDataTimeMap.put("jsp-message-email-emailmain",
 				sysShouEmailService);
 		

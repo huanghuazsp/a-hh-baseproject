@@ -1,8 +1,11 @@
 package com.hh.usersystem.util.steady;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.hh.system.util.Convert;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.bean.usersystem.SysOper;
 
@@ -19,6 +22,33 @@ public class StaticProperties {
 	
 	public static List<SysMenu> sysMenuList = new ArrayList<SysMenu>();
 	public static List<SysOper> sysOperList = new ArrayList<SysOper>();
+	
+	
+	public static List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
+	
+	static{
+		addData("基础数据字典", "", "类别", "", "", "");
+		addData("性别", "基础数据字典", "类别", "", "", "");
+		
+		addData("男", "", "字典", "性别", "1", "");
+		addData("女", "", "字典", "性别", "0", "");
+		
+		addData("是否", "基础数据字典", "类别", "", "", "");
+		
+		addData("是", "", "字典", "是否", "1", "");
+		addData("否", "", "字典", "是否", "0", "");
+	}
+	
+	public static void addData(String text ,String parentText,String type,String parentType,String code,String id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("类型",type);
+		map.put("上级名称",parentText);
+		map.put("标识",id);
+		map.put("名称",text);
+		map.put("编码",code);
+		map.put("所属类别",parentType);
+		dataList.add(map);
+	}
 
 	public static enum OperationLevel {
 		ALL,BR, BGW, BBM, BJG, BJT

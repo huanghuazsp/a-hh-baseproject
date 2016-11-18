@@ -20,5 +20,17 @@
     <column defaultValue="" empty="true" id="0623f099-0f38-493b-8e85-6ee202ebb7c0" length="16" name="joinDate" primary="false" text="加入日期" type="Date"/>
     <column defaultValue="" empty="true" id="fe8427f7-1cf7-4016-a66b-8e850a6ce0d4" length="64" name="directManager" primary="false" text="直接上级" type="String"/>
     <column defaultValue="" empty="true" id="b105db30-b532-4d47-b87e-8d611467543e" length="大字段" name="describe" primary="false" text="描述" type="String"/>
+    <column defaultValue="" empty="true" id="6887848c-b37a-4d85-b3e1-a4577ea74852" length="36" name="projectId" primary="false" text="项目id" type="String"/>
+  </table>
+  <table id="ae1f822e-b97e-4de6-9d28-508761cc7e3d" name="ProjectModular" text="ProjectModular" type="table">
+    <column defaultValue="" empty="true" id="cc7118fd-c46f-4e58-8477-58419b43cf59" length="128" name="text" primary="false" text="名称" type="String"/>
+    <column defaultValue="" empty="true" id="e7202497-3088-43b9-bee9-9150c05a8ffb" length="大字段" name="describe" primary="false" text="描述" type="String"/>
+    <column defaultValue="" empty="true" id="f2cc22c9-e4bf-477d-ae5d-cf9f965e3ac7" length="36" name="projectId" primary="false" text="项目id" type="String"/>
+  </table>
+  <table id="5b5d622f-0345-4abc-96aa-99b5c3babf7f" name="ProjectFile" text="ProjectFile" type="table">
+    <column defaultValue="" empty="true" id="3b435174-fcec-4e6c-ba8a-2a5efcaa9af9" length="512" name="text" primary="false" text="文档名称" type="String"/>
+    <column defaultValue="" empty="true" id="cca0c218-28da-4f87-a048-43023770f676" length="64" name="type" primary="false" text="类型" type="String"/>
+    <column defaultValue="" empty="true" id="42928831-ce61-48cd-a85d-94e78a3f23c9" length="36" name="fileId" primary="false" text="附件id" type="String"/>
+    <column defaultValue="" empty="true" id="6b09b1ab-607f-4065-9850-672e83fee745" length="36" name="projectId" primary="false" text="项目id" type="String"/>
   </table>
 </project>
