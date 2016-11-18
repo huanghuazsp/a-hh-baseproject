@@ -40,7 +40,18 @@ public class DataInitializationService {
 					systemService.initMenuAndUser();
 				}
 			} catch (Exception e) {
-				logger.error("菜单加载失败！！");
+				logger.error("菜单初始化失败！！");
+				e.printStackTrace();
+			}
+			
+			try {
+				SystemServiceInf systemService = BeanFactoryHelper.getBeanFactory()
+						.getBean(SystemServiceInf.class);
+				if (systemService != null) {
+					systemService.initDataList();
+				}
+			} catch (Exception e) {
+				logger.error("数据字典初始化失败！！");
 				e.printStackTrace();
 			}
 		}

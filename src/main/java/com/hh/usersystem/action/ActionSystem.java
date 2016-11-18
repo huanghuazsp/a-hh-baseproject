@@ -32,6 +32,10 @@ public class ActionSystem extends BaseAction {
 		systemService.initMenuAndUser();
 	}
 	
+	public void initDataList() {
+		systemService.initDataList();
+	}
+	
 	public void fileCopyDeleteTask() {
 		systemFileService.fileCopyDeleteTask();
 	}
