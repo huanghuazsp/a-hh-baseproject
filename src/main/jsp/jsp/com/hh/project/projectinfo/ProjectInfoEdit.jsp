@@ -6,12 +6,12 @@
 <html>
 <head>
 <title>数据编辑</title>
-<%=BaseSystemUtil.getBaseJs("checkform","date")%>
+<%=BaseSystemUtil.getBaseJs("checkform","date", "ueditor")%>
 
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
-	var width = 600;
-	var height = 450;
+	var width = 800;
+	var height = 650;
 
 	var objectid = '<%=Convert.toString(request.getParameter("id"))%>';
 
@@ -21,12 +21,22 @@
 				data : formData,
 				callback : function(result) {
 					if (result.success!=false) {
-						params.callback(formData);
-						Dialog.close();
+						if(params.callback){
+							params.callback(formData);
+						}
+						wdxm();
 					}
 				}
 			});
 		});
+	}
+	
+	function wdxm(){
+		if(parent.wdxm){
+			parent.wdxm();
+		}else{
+			Dialog.close();
+		}
 	}
 
 	function findData() {
@@ -45,59 +55,64 @@
 	function init() {
 		findData();
 	}
+	
+	var  userConfig = {
+			'name':'userStr', 
+			trhtml : '<table style="width:100%"><tr>'
+				+'<td xtype="label">参与者：</td><td><span xtype="selectUser" valuekey="user" config="  "></span></td>'
+				+'<td xtype="label">角色：</td><td><span xtype="combobox" valuekey="roleName" config="  "></span></td>'
+				+'</tr><tr>'
+				+'<td xtype="label">职责：</td><td><span xtype="text" valuekey="user" config="  "></span></td>'
+				+'<td xtype="label">加入日期：</td><td><span xtype="date" valuekey="joinDate" config=" type:'date' "></span></td>'
+				+'</tr></table>' 
+	}
 </script>
 </head>
 <body>
 	<div xtype="hh_content">
-		<form id="form" xtype="form">
+		<form id="form" xtype="form" class="form">
 			<span xtype="text" config=" hidden:true,name : 'id'"></span>
 			<table xtype="form">
 				
 				
 					<tr>
 						<td xtype="label">项目名称：</td>
-						<td><span xtype="text" config=" name : 'text' "></span></td>
+						<td colspan="3"><span xtype="text" config=" name : 'text' ,required :true "></span></td>
 					</tr>
-				
+					<tr>
+						<td xtype="label">开始日期：</td>
+						<td><span xtype="date"
+							config="name: 'startDate'  ,type:'date' ,required :true"></span></td>
+						<td xtype="label">（计划）<br>结束日期：</td>
+						<td><span xtype="date"
+							config="name: 'planEndDate'  ,type:'date' ,required :true "></span></td>
+					</tr>
 					<tr>
 						<td xtype="label">项目经理：</td>
-						<td><span xtype="text" config=" name : 'manager' "></span></td>
+						<td colspan="3"><span xtype="selectUser" config=" name : 'manager' "></span></td>
 					</tr>
 				
 					<tr>
-						<td xtype="label">项目经理名称：</td>
-						<td><span xtype="text" config=" name : 'managerText' "></span></td>
-					</tr>
-				
-					<tr>
-						<td xtype="label">客户：</td>
+						<td xtype="label">客户名称：</td>
 						<td><span xtype="text" config=" name : 'client' "></span></td>
+						<td xtype="label">（万）<br>项目金额：</td>
+						<td><span xtype="text" config=" name : 'money',number:true "></span></td>
 					</tr>
-				
 					<tr>
-						<td xtype="label">项目金额：</td>
-						<td><span xtype="text" config=" name : 'money' "></span></td>
+						<td  colspan="4">
+
+							<fieldset>
+							<legend>参与者信息</legend>
+							<span configVar="userConfig" xtype="tableitem" ></span>
+							</fieldset>
+						</td>
 					</tr>
 				
 					<tr>
 						<td xtype="label">描述：</td>
-						<td><span xtype="text" config=" name : 'describe' "></span></td>
+						<td colspan="3"><span xtype="ckeditor" config=" name : 'describe' "></span></td>
 					</tr>
 				
-					<tr>
-						<td xtype="label">开始日期：</td>
-						<td><span xtype="text" config=" name : 'startDate' "></span></td>
-					</tr>
-				
-					<tr>
-						<td xtype="label">计划结束日期：</td>
-						<td><span xtype="text" config=" name : 'planEndDate' "></span></td>
-					</tr>
-				
-					<tr>
-						<td xtype="label">结束日期：</td>
-						<td><span xtype="text" config=" name : 'endDate' "></span></td>
-					</tr>
 				
 			</table>
 		</form>

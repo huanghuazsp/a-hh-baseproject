@@ -3,15 +3,15 @@
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.system.util.base.BaseServiceAction;
-import com.hh.project.bean.ProjectProjectUserInfo;
+import com.hh.project.bean.ProjectUserInfo;
 import com.hh.system.service.impl.BaseService;
-import com.hh.project.service.impl.ProjectProjectUserInfoService;
+import com.hh.project.service.impl.ProjectUserInfoService;
 
 @SuppressWarnings("serial")
-public class ActionProjectUserInfo extends BaseServiceAction< ProjectProjectUserInfo > {
+public class ActionProjectUserInfo extends BaseServiceAction< ProjectUserInfo > {
 	@Autowired
-	private ProjectProjectUserInfoService projectprojectuserinfoService;
-	public BaseService<ProjectProjectUserInfo> getService() {
+	private ProjectUserInfoService projectprojectuserinfoService;
+	public BaseService<ProjectUserInfo> getService() {
 		return projectprojectuserinfoService;
 	}
 }

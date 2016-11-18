@@ -44,6 +44,10 @@
 			params : $('#queryForm').getValue()
 		});
 	}
+	
+	function renderMoney(value){
+		return value + '万';
+	}
 </script>
 </head>
 <body>
@@ -75,14 +79,17 @@
 				text : '项目名称'
 			},
 		
+		
 			{
-				name : 'manager' ,
-				text : '项目经理'
+				name : 'startDate' ,
+				text : '开始日期',
+				render : 'date',
+				width:80
 			},
 		
 			{
 				name : 'managerText' ,
-				text : '项目经理名称'
+				text : '项目经理'
 			},
 		
 			{
@@ -92,27 +99,9 @@
 		
 			{
 				name : 'money' ,
-				text : '项目金额'
-			},
-		
-			{
-				name : 'describe' ,
-				text : '描述'
-			},
-		
-			{
-				name : 'startDate' ,
-				text : '开始日期'
-			},
-		
-			{
-				name : 'planEndDate' ,
-				text : '计划结束日期'
-			},
-		
-			{
-				name : 'endDate' ,
-				text : '结束日期'
+				text : '项目金额',
+				width:100,
+				render : renderMoney
 			}
 		
 	]">

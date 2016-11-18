@@ -2,9 +2,9 @@
 import com.hh.system.service.impl.BaseService;
 import org.springframework.stereotype.Service;
 
-import com.hh.project.bean.ProjectProjectInfo;
+import com.hh.project.bean.ProjectInfo;
 
 @Service
-public class ProjectProjectInfoService extends BaseService<ProjectProjectInfo> {
+public class ProjectInfoService extends BaseService<ProjectInfo> {
 }
  

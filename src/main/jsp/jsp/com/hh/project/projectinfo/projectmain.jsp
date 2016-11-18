@@ -17,32 +17,27 @@
 			text : '创建项目',
 			img : '/hhcommon/images/icons/project/project-plus.png',
 			onClick : function() {
-				$('#iframe').attr('src','jsp-oa-notice-NoticeEdit');
+				$('#iframe').attr('src','jsp-project-projectinfo-ProjectInfoEdit');
 			}
 		}, {
 			text : '我参与的',
 			img : '/hhcommon/images/icons/project/project-horizontal.png',
 			onClick : function() {
-				wfbd();
+				$('#iframe').attr('src','jsp-project-projectinfo-PartProjectInfoList');
 			}
 		}, {
 			text : '我的项目',
 			img : '/hhcommon/images/icons/project/project.png',
 			onClick : function() {
-				wfbd();
+				wdxm();
 			}
 		}
 		]
 	};
 	
-	function wfbd(){
-		$('#iframe').attr('src','jsp-oa-notice-NoticeList?type=wfbd');
+	function wdxm(){
+		$('#iframe').attr('src','jsp-project-projectinfo-ProjectInfoList');
 	}
-	
-	function updateGG(id){
-		$('#iframe').attr('src','jsp-oa-notice-NoticeEdit?id='+id);
-	}
-	
 	
 	<%
 		String baseurl = "jsp-oa-notice-NoticeList?type=ggtz";
