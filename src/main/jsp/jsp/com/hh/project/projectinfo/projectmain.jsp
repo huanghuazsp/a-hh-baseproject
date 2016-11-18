@@ -40,7 +40,7 @@
 	}
 	
 	<%
-		String baseurl = "jsp-oa-notice-NoticeList?type=ggtz";
+		String baseurl = "jsp-project-projectinfo-PartProjectInfoList";
 	%>
 </script>
 </head>
