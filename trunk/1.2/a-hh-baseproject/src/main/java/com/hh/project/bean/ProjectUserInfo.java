@@ -12,8 +12,8 @@ import com.hh.hibernate.dao.inf.Order;
 @Order
 @SuppressWarnings("serial")
 @Entity
-@Table(name="PROJECT_PROJECT_USER_INFO")
-public class ProjectProjectUserInfo  extends BaseTwoEntity{
+@Table(name="PROJECT_USER_INFO")
+public class ProjectUserInfo  extends BaseTwoEntity{
 	//成员id
 	private String user;
 	
@@ -68,17 +68,6 @@ public class ProjectProjectUserInfo  extends BaseTwoEntity{
 	}
 	public void setJoinDate(Date joinDate) {
 		this.joinDate = joinDate;
-	}
-	
-	//直接上级
-	private String directManager;
-	
-	@Column(name="DIRECT_MANAGER", length = 64)
-	public String getDirectManager() {
-		return directManager;
-	}
-	public void setDirectManager(String directManager) {
-		this.directManager = directManager;
 	}
 	
 	//描述

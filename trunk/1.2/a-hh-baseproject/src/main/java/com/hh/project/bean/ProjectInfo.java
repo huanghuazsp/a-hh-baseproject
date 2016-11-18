@@ -12,8 +12,8 @@ import com.hh.hibernate.dao.inf.Order;
 @Order
 @SuppressWarnings("serial")
 @Entity
-@Table(name="PROJECT_PROJECT_INFO")
-public class ProjectProjectInfo  extends BaseTwoEntity{
+@Table(name="PROJECT_INFO")
+public class ProjectInfo  extends BaseTwoEntity{
 	//项目名称
 	private String text;
 	
@@ -59,13 +59,13 @@ public class ProjectProjectInfo  extends BaseTwoEntity{
 	}
 	
 	//项目金额
-	private Long money;
+	private Double money;
 	
 	@Column(name="MONEY", length = 16)
-	public Long getMoney() {
+	public Double getMoney() {
 		return money;
 	}
-	public void setMoney(Long money) {
+	public void setMoney(Double money) {
 		this.money = money;
 	}
 	
@@ -115,6 +115,38 @@ public class ProjectProjectInfo  extends BaseTwoEntity{
 	}
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+	
+	
+	private String userStr;
+	private String fileStr;
+	private String modularStr;
+
+	@Lob
+	@Column(name="USER_STR")
+	public String getUserStr() {
+		return userStr;
+	}
+	public void setUserStr(String userStr) {
+		this.userStr = userStr;
+	}
+	
+	@Lob
+	@Column(name="FILE_STR")
+	public String getFileStr() {
+		return fileStr;
+	}
+	public void setFileStr(String fileStr) {
+		this.fileStr = fileStr;
+	}
+	
+	@Lob
+	@Column(name="MODULAR_STR")
+	public String getModularStr() {
+		return modularStr;
+	}
+	public void setModularStr(String modularStr) {
+		this.modularStr = modularStr;
 	}
 	
 }
