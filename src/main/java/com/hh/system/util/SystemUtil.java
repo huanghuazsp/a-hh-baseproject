@@ -110,7 +110,7 @@ public class SystemUtil {
 		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
 		for (SysData sysData : sysDatas) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("id", sysData.getId());
+			map.put("id", sysData.getCode());
 			map.put("text", sysData.getText());
 			mapList.add(map);
 		}

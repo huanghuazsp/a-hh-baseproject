@@ -59,4 +59,16 @@ public class ProjectFile  extends BaseTwoEntity{
 		this.projectId = projectId;
 	}
 	
+	
+	//类型
+	private String typeText;
+	
+	@Column(name="TYPE_TEXT", length = 64)
+	public String getTypeText() {
+		return typeText;
+	}
+	public void setTypeText(String typeText) {
+		this.typeText = typeText;
+	}
+	
 }
