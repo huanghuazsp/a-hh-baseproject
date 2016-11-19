@@ -6,7 +6,7 @@
 
 <html>
 <head>
-<title>数据编辑</title>
+<title>附件编辑</title>
 <%=BaseSystemUtil.getBaseJs("checkform","date","fileUpload")%>
 
 <script type="text/javascript">
