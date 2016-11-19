@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.date.DateFormat"%>
 <%@page import="com.hh.system.util.SystemUtil"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.BaseSystemUtil"%>
@@ -65,7 +66,7 @@
 				
 					<tr>
 						<td xtype="label">加入日期：</td>
-						<td><span xtype="date" config=" name : 'joinDate',type:'date' ,required :true  "></span></td>
+						<td><span xtype="date" config=" name : 'joinDate',type:'date' ,required :true,value:'<%=DateFormat.getDate("yyyy-MM-dd")%>'  "></span></td>
 						<td xtype="label">职责：</td>
 						<td><span xtype="text" config=" name : 'duty' "></span></td>
 					</tr>
