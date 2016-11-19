@@ -66,6 +66,21 @@
 			});
 		});
 	}
+	
+	function doView(){
+		$.hh.pagelist.callRow("pagelist", function(row) {
+			Dialog.open({
+				url : 'jsp-project-projectinfo-ProjectInfoView',
+				urlParams : {
+					id : row.id
+				},
+				params : {
+					callback : function() {
+					}
+				}
+			});
+		});
+	}
 </script>
 </head>
 <body>
@@ -75,6 +90,8 @@
 		{ text : '编辑模块' , onClick : setModular },
 		{ text : '编辑附件' , onClick : setFile } ]"></span>
 		<span xtype="button" config=" text:'项目信息添加/修改',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
+		
+		<span xtype="button" config="onClick:doView,text:'查看' , itype :'view' "></span>
 	</div>
 	<table xtype="form" id="queryForm" style="width:600px;">
 		<tr>

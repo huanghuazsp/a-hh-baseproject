@@ -10,7 +10,7 @@
 
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
-	var width = 800;
+	var width = 900;
 	var height = 650;
 
 	var objectid = '<%=Convert.toString(request.getParameter("id"))%>';
@@ -33,11 +33,37 @@
 		findData();
 	}
 	
+	function renderFile(value){
+		var str = '';
+		
+		if(value){
+			var fileList = $.hh.toObject(value);
+			for(var i=0;i<fileList.length;i++){
+				var data = fileList[i];
+				str+=$.hh.property.getFileTypeIcon(data.fileType)+data.text+'&nbsp;&nbsp;<a href="javascript:Request.download(\''+data.id+'\');">下载</a>&nbsp;&nbsp;<a href="javascript:Request.viewFile(\''+data.id+'\');">查看</a><br>'
+			}
+		}
+		return str;
+	}
+	
+	var modularrender = false;
+	var userrender = false;
+	var filerender = false;
+	
 	var tabconfig = {
 		activate : function(ui) {
 			var newPanel = ui.newPanel;
 			var id = newPanel.attr('id');
-			
+			if (id == 'modularDiv' && modularrender == false) {
+				modularrender = true;
+				$('#modularDiv').render();
+			} else if (id == 'userDiv' && userrender == false) {
+				userrender = true;
+				$('#userDiv').render();
+			} else if (id == 'fileDiv' && filerender == false) {
+				filerender = true;
+				$('#fileDiv').render();
+			}
 		}
 	}
 </script>
@@ -91,7 +117,7 @@
 			</div>
 			
 			<div id="modularDiv" xtype="pagelist"
-				config=" params : {projectId:objectid} , url: 'project-ProjectModular-queryPagingData' ,column : [
+				config=" render :false,  params : {projectId:objectid} , url: 'project-ProjectModular-queryPagingData' ,column : [
 					{
 						name : 'text' ,
 						text : '名称',
@@ -101,6 +127,61 @@
 						name : 'describe' ,
 						align:'left',
 						text : '描述'
+					}
+			]">
+			</div>
+			
+			
+			<div id="userDiv" xtype="pagelist"
+				config=" render :false, params : {projectId: objectid } , url: 'project-ProjectUserInfo-queryPagingData' ,column : [
+					{
+						name : 'userText' ,
+						text : '成员名称'
+					},
+					{
+						name : 'roleText' ,
+						text : '角色'
+					},
+					{
+						name : 'duty' ,
+						text : '职责'
+					},
+					{
+						name : 'joinDate' ,
+						text : '加入日期',
+						render : 'date',
+						width:100
+					},
+					{
+						name : 'directManagerText' ,
+						text : '直接上级'
+					},
+					{
+						name : 'describe' ,
+						text : '描述'
+					} 
+			]">
+			</div>
+			
+			
+			
+			<div id="fileDiv" xtype="pagelist"
+				config="render :false,  params : {projectId: objectid } , url: 'project-ProjectFile-queryPagingData' ,column : [
+					{
+						name : 'text' ,
+						text : '文档名称',
+						width:170
+					},
+					{
+						name : 'typeText' ,
+						text : '类型',
+						width:100
+					},
+					{
+						name : 'fileStr' ,
+						text : '附件',
+						align:'left',
+						render : renderFile
 					}
 			]">
 			</div>
