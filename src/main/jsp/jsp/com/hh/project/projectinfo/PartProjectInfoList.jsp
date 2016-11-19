@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.SystemUtil"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.BaseSystemUtil"%>
 <%=BaseSystemUtil.getBaseDoctype()%>
@@ -5,7 +6,7 @@
 <html>
 <head>
 <title>数据列表</title>
-<%=BaseSystemUtil.getBaseJs()%>
+<%=BaseSystemUtil.getBaseJs()+SystemUtil.getUser()%>
 
 <script type="text/javascript">
 	function doQuery() {
@@ -23,7 +24,8 @@
 			Dialog.open({
 				url : 'jsp-project-projectuserinfo-ProjectUserInfoList',
 				urlParams : {
-					projectId : row.id
+					projectId : row.id,
+					oper : loginUser.id==row.vcreate ||  loginUser.id==row.manager ? 'all':''
 				},
 				params : {
 					callback : function() {
@@ -38,7 +40,8 @@
 			Dialog.open({
 				url : 'jsp-project-projectmodular-ProjectModularList',
 				urlParams : {
-					projectId : row.id
+					projectId : row.id,
+					oper : loginUser.id==row.vcreate ||  loginUser.id==row.manager ? 'all':''
 				},
 				params : {
 					callback : function() {
@@ -53,7 +56,8 @@
 			Dialog.open({
 				url : 'jsp-project-projectfile-ProjectFileList',
 				urlParams : {
-					projectId : row.id
+					projectId : row.id,
+					oper : loginUser.id==row.vcreate ||  loginUser.id==row.manager ? 'all':''
 				},
 				params : {
 					callback : function() {
@@ -72,12 +76,14 @@
 		{ text : '编辑附件' , onClick : setFile } ]"></span>
 		<span xtype="button" config=" text:'项目信息添加/修改',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 	</div>
-	<!-- <table xtype="form" id="queryForm" style="width:600px;">
+	<table xtype="form" id="queryForm" style="width:600px;">
 		<tr>
-			<td xtype="label">test：</td>
-			<td><span xtype="text" config=" name : 'test'"></span></td>
+			<td xtype="label">名称：</td>
+			<td><span xtype="text" config=" name : 'text'"></span></td>
+			<td><span xtype="button"
+						config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
 		</tr>
-	</table> -->
+	</table> 
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'project-ProjectInfo-queryPartPage' ,column : [
 		

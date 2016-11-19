@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.SystemUtil"%>
 <%@page import="com.hh.system.util.Convert"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.BaseSystemUtil"%>
@@ -6,7 +7,7 @@
 <html>
 <head>
 <title>模块列表</title>
-<%=BaseSystemUtil.getBaseJs()%>
+<%=BaseSystemUtil.getBaseJs()+SystemUtil.getUser()%>
 
 <script type="text/javascript">
 
@@ -55,14 +56,57 @@
 			params : $('#queryForm').getValue()
 		});
 	}
+	
+	
+
+	
+	
+	var oper = '<%=Convert.toString(request.getParameter("oper"))%>';
+	
+	function deleteById(value){
+		Dialog.confirm({
+			message : '您确认要删除数据吗？',
+			yes : function(result) {
+				Request.request('project-ProjectModular-deleteByIds', {
+							data : {ids:value}
+						}, function(result) {
+							if (result.success != false) {
+								$("#pagelist" ).loadData();
+							}
+						});
+			}
+		});
+	}
+	
+	function updateById(value){
+		Dialog.open({
+			url : 'jsp-project-projectmodular-ProjectModularEdit',
+			urlParams : {
+				id : value,
+				projectId:projectId
+			},
+			params : {
+				callback : function() {
+					$("#pagelist").loadData();
+				}
+			}
+		});
+	}
+	
+	function renderoper(value, row) {
+		if(loginUser.id!=row.vcreate && oper!='all'){
+			return '无权限';
+		}
+		
+		return '<a  href="javascript:deleteById(\'' + value
+				+ '\')" >删除</a>&nbsp;<a  href="javascript:updateById(\'' + value
+				+ '\')" >修改</a>';
+	}
 </script>
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
 		<span xtype="button" config="onClick:doAdd,text:'添加' , itype :'add' "></span>
-		<span xtype="button"
-			config="onClick:doEdit,text:'修改' , itype :'edit' "></span> <span
-			xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span>
 		<!--  <span
 			xtype="button" config="onClick: doQuery ,text:'查询' , itype :'query' "></span> --> <span
 			xtype="button"
@@ -91,6 +135,11 @@
 				name : 'describe' ,
 				align:'left',
 				text : '描述'
+			},{
+				name : 'id' ,
+				text : '操作',
+				width: 65,
+				render : renderoper
 			}
 		
 	]">

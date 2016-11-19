@@ -54,7 +54,8 @@
 			Dialog.open({
 				url : 'jsp-project-projectuserinfo-ProjectUserInfoList',
 				urlParams : {
-					projectId : row.id
+					projectId : row.id,
+					oper : 'all'
 				},
 				params : {
 					callback : function() {
@@ -69,7 +70,8 @@
 			Dialog.open({
 				url : 'jsp-project-projectmodular-ProjectModularList',
 				urlParams : {
-					projectId : row.id
+					projectId : row.id,
+					oper : 'all'
 				},
 				params : {
 					callback : function() {
@@ -84,7 +86,8 @@
 			Dialog.open({
 				url : 'jsp-project-projectfile-ProjectFileList',
 				urlParams : {
-					projectId : row.id
+					projectId : row.id,
+					oper : 'all'
 				},
 				params : {
 					callback : function() {
@@ -93,33 +96,42 @@
 			});
 		});
 	}
+	
+	function doView(){
+		
+	}
 </script>
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
 		<span xtype="button" config="onClick:doAdd,text:'添加' , itype :'add' "></span>
-		<span xtype="button"
-			config="onClick:doEdit,text:'修改' , itype :'edit' "></span> <span
-			xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span>
-		<span
-			xtype="button"
-			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'project-ProjectInfo-order'}  ,  icon : 'hh_up' "></span>
-		<span xtype="button"
-			config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'project-ProjectInfo-order'} , icon : 'hh_down' "></span>
+		<span xtype="button" config="onClick:doEdit,text:'修改' , itype :'edit' "></span>
+		<span xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span>
+		
 	
+		
 	
 		<span xtype=menu    config=" id:'menu1', data : [ 
 		{ text : '编辑参与者' , onClick : setUserInfo } ,
 		{ text : '编辑模块' , onClick : setModular },
 		{ text : '编辑附件' , onClick : setFile } ]"></span>
 		<span xtype="button" config=" text:'项目信息添加/修改',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
+		<span
+			xtype="button"
+			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'project-ProjectInfo-order'}  ,  icon : 'hh_up' "></span>
+		<span xtype="button"
+			config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'project-ProjectInfo-order'} , icon : 'hh_down' "></span>
+	
+		<span xtype="button" config="onClick:doView,text:'查看' , itype :'view' "></span>
 	</div>
-	<!-- <table xtype="form" id="queryForm" style="width:600px;">
+	<table xtype="form" id="queryForm" style="width:600px;">
 		<tr>
-			<td xtype="label">test：</td>
-			<td><span xtype="text" config=" name : 'test'"></span></td>
+			<td xtype="label">名称：</td>
+			<td><span xtype="text" config=" name : 'text'"></span></td>
+			<td><span xtype="button"
+						config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
 		</tr>
-	</table> -->
+	</table> 
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'project-ProjectInfo-queryPagingData' ,column : [
 		
