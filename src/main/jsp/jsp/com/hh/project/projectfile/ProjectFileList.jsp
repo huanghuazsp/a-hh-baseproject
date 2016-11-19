@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>数据列表</title>
+<title>附件列表</title>
 <%=BaseSystemUtil.getBaseJs()%>
 
 <script type="text/javascript">
@@ -96,12 +96,14 @@
 		
 			{
 				name : 'text' ,
-				text : '文档名称'
+				text : '文档名称',
+				width:170
 			},
 		
 			{
 				name : 'typeText' ,
-				text : '类型'
+				text : '类型',
+				width:100
 			},
 		
 			{

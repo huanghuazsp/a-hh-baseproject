@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>数据列表</title>
+<title>模块列表</title>
 <%=BaseSystemUtil.getBaseJs()%>
 
 <script type="text/javascript">
@@ -83,11 +83,13 @@
 		
 			{
 				name : 'text' ,
-				text : '名称'
+				text : '名称',
+				width:170
 			},
 		
 			{
 				name : 'describe' ,
+				align:'left',
 				text : '描述'
 			}
 		
