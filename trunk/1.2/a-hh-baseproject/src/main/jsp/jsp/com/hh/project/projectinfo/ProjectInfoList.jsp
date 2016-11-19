@@ -98,7 +98,18 @@
 	}
 	
 	function doView(){
-		
+		$.hh.pagelist.callRow("pagelist", function(row) {
+			Dialog.open({
+				url : 'jsp-project-projectinfo-ProjectInfoView',
+				urlParams : {
+					id : row.id
+				},
+				params : {
+					callback : function() {
+					}
+				}
+			});
+		});
 	}
 </script>
 </head>
