@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.SystemUtil"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.BaseSystemUtil"%>
 <%@page import="com.hh.system.util.Convert"%>
@@ -6,7 +7,7 @@
 <html>
 <head>
 <title>数据编辑</title>
-<%=BaseSystemUtil.getBaseJs("checkform","date")%>
+<%=BaseSystemUtil.getBaseJs("checkform","date","fileUpload")%>
 
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
@@ -38,8 +39,14 @@
 					id : objectid
 				},
 				callback : function(result) {
+					result.fileStr = result.id;
 					$('#form').setValue(result);
 				}
+			});
+		}else{
+			$('#form').setValue({
+				bid : uuid,
+				fileStr : uuid
 			});
 		}
 	}
@@ -58,17 +65,18 @@
 				
 					<tr>
 						<td xtype="label">文档名称：</td>
-						<td><span xtype="text" config=" name : 'text' "></span></td>
+						<td><span xtype="text" config=" name : 'text',required :true  "></span></td>
 					</tr>
 				
 					<tr>
 						<td xtype="label">类型：</td>
-						<td><span xtype="text" config=" name : 'type' "></span></td>
+						<td><span xtype="radio" config=" name : 'type' ,required :true , data : <%=SystemUtil.getJsonDataByCode("fujianleixing")%>   "></span></td>
 					</tr>
 				
 					<tr>
-						<td xtype="label">附件id：</td>
-						<td><span xtype="text" config=" name : 'fileId' "></span></td>
+						<td xtype="label">附件：</td>
+						<td><span xtype="fileUpload"
+						config=" name : 'fileStr',type:'projectFile' ,request:true"></span></td>
 					</tr>
 				
 					

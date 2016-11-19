@@ -37,16 +37,17 @@ public class ProjectFile  extends BaseTwoEntity{
 	}
 	
 	//附件id
-	private String fileId;
+	private String fileStr;
 	
-	@Column(name="FILE_ID", length = 36)
-	public String getFileId() {
-		return fileId;
+	@Lob
+	@Column(name="FILE_STR")
+	public String getFileStr() {
+		return fileStr;
 	}
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
+	public void setFileStr(String fileStr) {
+		this.fileStr = fileStr;
 	}
-	
+
 	//项目id
 	private String projectId;
 	
