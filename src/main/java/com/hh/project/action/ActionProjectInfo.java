@@ -14,5 +14,11 @@ public class ActionProjectInfo extends BaseServiceAction< ProjectInfo > {
 	public BaseService<ProjectInfo> getService() {
 		return projectprojectinfoService;
 	}
+	
+	
+	public Object queryPartPage() {
+		return projectprojectinfoService.queryPartPage(object,
+				this.getPageRange());
+	}
 }
  
