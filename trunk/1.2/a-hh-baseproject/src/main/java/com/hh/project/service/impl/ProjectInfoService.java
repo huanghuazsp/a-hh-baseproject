@@ -1,4 +1,5 @@
- package com.hh.project.service.impl;
+package com.hh.project.service.impl;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ import com.hh.usersystem.service.impl.LoginUserUtilService;
 
 @Service
 public class ProjectInfoService extends BaseService<ProjectInfo> {
-	
+
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 	@Autowired
@@ -27,6 +28,7 @@ public class ProjectInfoService extends BaseService<ProjectInfo> {
 	private ProjectModularService projectModularService;
 	@Autowired
 	private ProjectUserInfoService projectUserInfoService;
+
 	@Override
 	public void deleteByIds(String ids) {
 		projectFileService.deleteByProperty("projectId", Convert.strToList(ids));
@@ -34,29 +36,29 @@ public class ProjectInfoService extends BaseService<ProjectInfo> {
 		projectUserInfoService.deleteByProperty("projectId", Convert.strToList(ids));
 		super.deleteByIds(ids);
 	}
+
 	@Override
 	public PagingData<ProjectInfo> queryPagingData(ProjectInfo entity, PageRange pageRange) {
 		ParamInf hqlParamList = ParamFactory.getParamHb();
-		hqlParamList.is("vcreate",loginUserUtilService.findUserId());
-		hqlParamList.is("manager",loginUserUtilService.findUserId());
-		return queryPagingData(pageRange, ParamFactory.getParamHb().or(hqlParamList));
+		hqlParamList.is("vcreate", loginUserUtilService.findUserId());
+		hqlParamList.is("manager", loginUserUtilService.findUserId());
+
+		ParamInf hqlParamList2 = ParamFactory.getParamHb().or(hqlParamList);
+		if (Check.isNoEmpty(entity.getText())) {
+			hqlParamList2.like("text", entity.getText());
+		}
+		return queryPagingData(pageRange, hqlParamList2);
 	}
-	
-	
-	public PagingData<Map<String, Object>> queryPartPage(ProjectInfo object,
-			PageRange pageRange) {
+
+	public PagingData<Map<String, Object>> queryPartPage(ProjectInfo object, PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
 
-		String hql = "select a.text as text,a.id as id, a.startDate  as startDate, a.managerText  as managerText, a.client as client , a.money as money from "
-				+ ProjectInfo.class.getName()
-				+ " a , "
-				+ ProjectUserInfo.class.getName()
+		String hql = "select a.text as text,a.id as id, a.startDate  as startDate, a.managerText  as managerText"
+				+ ", a.client as client " + ", a.money as money, a.vcreate as vcreate, a.manager as manager from "
+				+ ProjectInfo.class.getName() + " a , " + ProjectUserInfo.class.getName()
 				+ " b  where  a.id=b.projectId and b.user=:userId ";
-		String hqlCount = "select count(b) from "
-				+ ProjectInfo.class.getName()
-				+ " a , "
-				+ ProjectUserInfo.class.getName()
-				+ " b  where a.id=b.projectId and b.user=:userId";
+		String hqlCount = "select count(b) from " + ProjectInfo.class.getName() + " a , "
+				+ ProjectUserInfo.class.getName() + " b  where a.id=b.projectId and b.user=:userId";
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userId", userId);
@@ -66,12 +68,10 @@ public class ProjectInfoService extends BaseService<ProjectInfo> {
 			whereSql += " and a.text like :text ";
 		}
 
-		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql
-				+ whereSql + " ORDER BY b.dupdate DESC", hqlCount + whereSql,
-				paramMap, pageRange);
+		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql + whereSql + " ORDER BY b.dupdate DESC",
+				hqlCount + whereSql, paramMap, pageRange);
 
 		return page;
 	}
-	
+
 }
- 

@@ -184,6 +184,24 @@ public class MenuService extends BaseService<SysMenu> {
 			}
 		}
 	}
+	
+	public List<SysMenu> addZmtbById(String ids) {
+		if (Check.isNoEmpty(ids)) {
+			List<String> idList = Convert.strToList(ids);
+			for (String id : idList) {
+				UsUserMenuZmtb hhXtYhCdZmtb = new UsUserMenuZmtb();
+				// SysMenu hhXtCd = dao.findEntityByPK(SysMenu.class, id);
+				hhXtYhCdZmtb.setCdId(id);
+				hhXtYhCdZmtb.setYhId(loginUserUtilService.findLoginUser().getId());
+				xtyhcdzmtb.createEntity(hhXtYhCdZmtb);
+			}
+			UsUser hhXtYh = loginUserService.findLoginUser();
+			hhXtYh.setDesktopQuickList(zmtbService.queryZmtbByUserId(hhXtYh.getId()));
+			ActionContext.getContext().getSession().put("loginuser", hhXtYh);
+			return hhXtYh.getDesktopQuickList();
+		}
+		return new ArrayList<SysMenu>();
+	}
 
 	public List<SysMenu> addZmtb(String texts) {
 		if (Check.isNoEmpty(texts)) {

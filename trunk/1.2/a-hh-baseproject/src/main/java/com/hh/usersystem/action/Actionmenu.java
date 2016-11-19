@@ -55,7 +55,7 @@ public class Actionmenu extends BaseServiceAction<SysMenu> {
 	}
 
 	public void addZmtb() {
-		menuService.addZmtb(this.object.getId());
+		menuService.addZmtbById(this.object.getId());
 	}
 
 	public void deleteZmtb() {
