@@ -6,7 +6,7 @@
 <html>
 <head>
 <title>数据编辑</title>
-<%=BaseSystemUtil.getBaseJs("checkform","date")%>
+<%=BaseSystemUtil.getBaseJs("checkform","date", "ueditor")%>
 
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
@@ -14,9 +14,11 @@
 	var height = 450;
 
 	var objectid = '<%=Convert.toString(request.getParameter("id"))%>';
+	var projectId = '<%=Convert.toString(request.getParameter("projectId"))%>';
 
 	function save() {
 		$.hh.validation.check('form', function(formData) {
+			formData.projectId = projectId;
 			Request.request('project-ProjectModular-save', {
 				data : formData,
 				callback : function(result) {
@@ -56,17 +58,12 @@
 				
 					<tr>
 						<td xtype="label">名称：</td>
-						<td><span xtype="text" config=" name : 'text' "></span></td>
+						<td><span xtype="text" config=" name : 'text' ,required :true "></span></td>
 					</tr>
 				
 					<tr>
 						<td xtype="label">描述：</td>
-						<td><span xtype="text" config=" name : 'describe' "></span></td>
-					</tr>
-				
-					<tr>
-						<td xtype="label">项目id：</td>
-						<td><span xtype="text" config=" name : 'projectId' "></span></td>
+						<td><span xtype="ckeditor" config=" name : 'describe' "></span></td>
 					</tr>
 				
 			</table>

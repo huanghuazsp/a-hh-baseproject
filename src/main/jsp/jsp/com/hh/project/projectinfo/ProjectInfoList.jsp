@@ -48,6 +48,51 @@
 	function renderMoney(value){
 		return value + '万';
 	}
+	
+	function setUserInfo(){
+		$.hh.pagelist.callRow("pagelist", function(row) {
+			Dialog.open({
+				url : 'jsp-project-projectuserinfo-ProjectUserInfoList',
+				urlParams : {
+					projectId : row.id
+				},
+				params : {
+					callback : function() {
+					}
+				}
+			});
+		});
+	}
+	
+	function setModular(){
+		$.hh.pagelist.callRow("pagelist", function(row) {
+			Dialog.open({
+				url : 'jsp-project-projectmodular-ProjectModularList',
+				urlParams : {
+					projectId : row.id
+				},
+				params : {
+					callback : function() {
+					}
+				}
+			});
+		});
+	}
+	
+	function setFile(){
+		$.hh.pagelist.callRow("pagelist", function(row) {
+			Dialog.open({
+				url : 'jsp-project-projectfile-ProjectFileList',
+				urlParams : {
+					projectId : row.id
+				},
+				params : {
+					callback : function() {
+					}
+				}
+			});
+		});
+	}
 </script>
 </head>
 <body>
@@ -56,12 +101,18 @@
 		<span xtype="button"
 			config="onClick:doEdit,text:'修改' , itype :'edit' "></span> <span
 			xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span>
-		<!--  <span
-			xtype="button" config="onClick: doQuery ,text:'查询' , itype :'query' "></span> --> <span
+		<span
 			xtype="button"
 			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'project-ProjectInfo-order'}  ,  icon : 'hh_up' "></span>
 		<span xtype="button"
 			config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'project-ProjectInfo-order'} , icon : 'hh_down' "></span>
+	
+	
+		<span xtype=menu    config=" id:'menu1', data : [ 
+		{ text : '设置用户' , onClick : setUserInfo } ,
+		{ text : '设置模块' , onClick : setModular },
+		{ text : '添加附件' , onClick : setFile } ]"></span>
+		<span xtype="button" config=" text:'项目信息设置',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 	</div>
 	<!-- <table xtype="form" id="queryForm" style="width:600px;">
 		<tr>

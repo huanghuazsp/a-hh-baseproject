@@ -1,13 +1,20 @@
+<%@page import="com.hh.system.util.Convert"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.BaseSystemUtil"%>
 <%=BaseSystemUtil.getBaseDoctype()%>
 
 <html>
 <head>
-<title>数据列表</title>
+<title>项目参与者列表</title>
 <%=BaseSystemUtil.getBaseJs()%>
 
 <script type="text/javascript">
+	
+	var projectId = '<%=Convert.toString(request.getParameter("projectId"))%>';
+	
+	var width = 900;
+	var height = 650;
+
 	function doDelete() {
 		$.hh.pagelist.deleteData({
 			pageid : 'pagelist',
@@ -17,6 +24,9 @@
 	function doAdd() {
 		Dialog.open({
 			url : 'jsp-project-projectuserinfo-ProjectUserInfoEdit',
+			urlParams : {
+				projectId:projectId
+			},
 			params : {
 				callback : function() {
 					$("#pagelist").loadData();
@@ -29,7 +39,8 @@
 			Dialog.open({
 				url : 'jsp-project-projectuserinfo-ProjectUserInfoEdit',
 				urlParams : {
-					id : row.id
+					id : row.id,
+					projectId: projectId
 				},
 				params : {
 					callback : function() {
@@ -66,22 +77,16 @@
 		</tr>
 	</table> -->
 	<div id="pagelist" xtype="pagelist"
-		config=" url: 'project-ProjectUserInfo-queryPagingData' ,column : [
+		config=" params : {projectId:'<%=Convert.toString(request.getParameter("projectId"))%>'} , url: 'project-ProjectUserInfo-queryPagingData' ,column : [
 		
-		
-		
+ 
 			{
-				name : 'user' ,
-				text : '成员id'
-			},
-		
-			{
-				name : 'userName' ,
+				name : 'userText' ,
 				text : '成员名称'
 			},
 		
 			{
-				name : 'roleName' ,
+				name : 'roleText' ,
 				text : '角色'
 			},
 		
@@ -92,23 +97,20 @@
 		
 			{
 				name : 'joinDate' ,
-				text : '加入日期'
+				text : '加入日期',
+				render : 'date',
+				width:100
 			},
 		
 			{
-				name : 'directManager' ,
+				name : 'directManagerText' ,
 				text : '直接上级'
 			},
 		
 			{
 				name : 'describe' ,
 				text : '描述'
-			},
-		
-			{
-				name : 'projectId' ,
-				text : '项目id'
-			}
+			} 
 		
 	]">
 	</div>
