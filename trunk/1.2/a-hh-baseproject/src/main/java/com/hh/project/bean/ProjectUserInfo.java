@@ -26,27 +26,37 @@ public class ProjectUserInfo  extends BaseTwoEntity{
 	}
 	
 	//成员名称
-	private String userName;
+	private String userText;
 	
-	@Column(name="USER_NAME", length = 64)
-	public String getUserName() {
-		return userName;
+	@Column(name="USER_TEXT", length = 64)
+	public String getUserText() {
+		return userText;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUserText(String userText) {
+		this.userText = userText;
 	}
 	
 	//角色
-	private String roleName;
+	private String role;
+	private String roleText;
 	
-	@Column(name="ROLE_NAME", length = 64)
-	public String getRoleName() {
-		return roleName;
+	
+	@Column(name="ROLE_",length=64)
+	public String getRole() {
+		return role;
 	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
+	@Column(name="ROLE_TEXT",length=64)
+	public String getRoleText() {
+		return roleText;
+	}
+	public void setRoleText(String roleText) {
+		this.roleText = roleText;
+	}
+
 	//职责
 	private String duty;
 	
@@ -92,5 +102,27 @@ public class ProjectUserInfo  extends BaseTwoEntity{
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
+	
+	private String directManager;
+	private String directManagerText;
+
+	@Column(name="DIRECT_MANAGER", length = 36)
+	public String getDirectManager() {
+		return directManager;
+	}
+	public void setDirectManager(String directManager) {
+		this.directManager = directManager;
+	}
+	
+	@Column(name="DIRECT_MANAGER_TEXT", length = 64)
+	public String getDirectManagerText() {
+		return directManagerText;
+	}
+	public void setDirectManagerText(String directManagerText) {
+		this.directManagerText = directManagerText;
+	}
+	
+	
+	
 	
 }

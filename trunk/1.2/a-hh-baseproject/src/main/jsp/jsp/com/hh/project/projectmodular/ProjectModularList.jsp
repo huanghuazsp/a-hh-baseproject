@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.Convert"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.BaseSystemUtil"%>
 <%=BaseSystemUtil.getBaseDoctype()%>
@@ -8,6 +9,12 @@
 <%=BaseSystemUtil.getBaseJs()%>
 
 <script type="text/javascript">
+
+	var projectId = '<%=Convert.toString(request.getParameter("projectId"))%>';
+	
+	var width = 900;
+	var height = 650;
+
 	function doDelete() {
 		$.hh.pagelist.deleteData({
 			pageid : 'pagelist',
@@ -17,6 +24,9 @@
 	function doAdd() {
 		Dialog.open({
 			url : 'jsp-project-projectmodular-ProjectModularEdit',
+			urlParams : {
+				projectId:projectId
+			},
 			params : {
 				callback : function() {
 					$("#pagelist").loadData();
@@ -29,7 +39,8 @@
 			Dialog.open({
 				url : 'jsp-project-projectmodular-ProjectModularEdit',
 				urlParams : {
-					id : row.id
+					id : row.id,
+					projectId:projectId
 				},
 				params : {
 					callback : function() {
@@ -66,7 +77,7 @@
 		</tr>
 	</table> -->
 	<div id="pagelist" xtype="pagelist"
-		config=" url: 'project-ProjectModular-queryPagingData' ,column : [
+		config=" params : {projectId:'<%=Convert.toString(request.getParameter("projectId"))%>'} , url: 'project-ProjectModular-queryPagingData' ,column : [
 		
 		
 		
@@ -78,11 +89,6 @@
 			{
 				name : 'describe' ,
 				text : '描述'
-			},
-		
-			{
-				name : 'projectId' ,
-				text : '项目id'
 			}
 		
 	]">

@@ -14,9 +14,11 @@
 	var height = 450;
 
 	var objectid = '<%=Convert.toString(request.getParameter("id"))%>';
+	var projectId = '<%=Convert.toString(request.getParameter("projectId"))%>';
 
 	function save() {
 		$.hh.validation.check('form', function(formData) {
+			formData.projectId = projectId;
 			Request.request('project-ProjectFile-save', {
 				data : formData,
 				callback : function(result) {
@@ -69,11 +71,7 @@
 						<td><span xtype="text" config=" name : 'fileId' "></span></td>
 					</tr>
 				
-					<tr>
-						<td xtype="label">项目id：</td>
-						<td><span xtype="text" config=" name : 'projectId' "></span></td>
-					</tr>
-				
+					
 			</table>
 		</form>
 	</div>

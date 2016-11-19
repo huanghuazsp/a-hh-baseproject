@@ -126,11 +126,29 @@ public class SetupInitializer {
 		
 		
 		
+		StaticProperties.addData("项目管理", "", "类别", "", "", "");
+		StaticProperties.addData("项目管理参与者角色", "项目管理", "类别", "", "", "");
+		
+		StaticProperties.addData("项目负责人", "", "字典", "项目管理参与者角色", "1", "");
+		StaticProperties.addData("研发负责人", "", "字典", "项目管理参与者角色", "2", "");
+		StaticProperties.addData("研发工程师", "", "字典", "项目管理参与者角色", "3", "");
+		
+		StaticProperties.addData("技术负责人", "", "字典", "项目管理参与者角色", "4", "");
+		StaticProperties.addData("技术工程师", "", "字典", "项目管理参与者角色", "5", "");
+		
+		StaticProperties.addData("测试负责人", "", "字典", "项目管理参与者角色", "6", "");
+		StaticProperties.addData("测试工程师", "", "字典", "项目管理参与者角色", "7", "");
+		
+		
+		StaticProperties.addData("附件类型", "项目管理", "类别", "", "", "");
+		
+		StaticProperties.addData("需求文档", "", "字典", "附件类型", "1", "");
+		StaticProperties.addData("设计文档", "", "字典", "附件类型", "2", "");
+		StaticProperties.addData("帮助文档", "", "字典", "附件类型", "3", "");
 		
 		
 		
 		
-
 		
 		
 		
