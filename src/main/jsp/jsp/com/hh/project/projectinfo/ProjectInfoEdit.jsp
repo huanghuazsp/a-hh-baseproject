@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>数据编辑</title>
+<title>编辑项目信息</title>
 <%=BaseSystemUtil.getBaseJs("checkform","date", "ueditor")%>
 
 <script type="text/javascript">
