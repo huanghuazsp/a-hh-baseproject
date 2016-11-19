@@ -109,10 +109,10 @@
 	
 	
 		<span xtype=menu    config=" id:'menu1', data : [ 
-		{ text : '设置用户' , onClick : setUserInfo } ,
-		{ text : '设置模块' , onClick : setModular },
-		{ text : '添加附件' , onClick : setFile } ]"></span>
-		<span xtype="button" config=" text:'项目信息设置',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
+		{ text : '编辑参与者' , onClick : setUserInfo } ,
+		{ text : '编辑模块' , onClick : setModular },
+		{ text : '编辑附件' , onClick : setFile } ]"></span>
+		<span xtype="button" config=" text:'项目信息添加/修改',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 	</div>
 	<!-- <table xtype="form" id="queryForm" style="width:600px;">
 		<tr>
