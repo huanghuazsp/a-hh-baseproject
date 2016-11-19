@@ -50,6 +50,16 @@
 			});
 		}
 	}
+	
+	function fileChange(data){
+		var oldValue = $('#span_text').getValue();
+		if(oldValue){
+			oldValue=oldValue+','+data.text;
+		}else{
+			oldValue = data.text;
+		}
+		$('#span_text').setValue(oldValue);
+	}
 
 	function init() {
 		findData();
@@ -60,13 +70,8 @@
 	<div xtype="hh_content">
 		<form id="form" xtype="form">
 			<span xtype="text" config=" hidden:true,name : 'id'"></span>
+			<span id="bidspan" xtype="text" config=" hidden:true,name : 'bid' "></span>
 			<table xtype="form">
-				
-				
-					<tr>
-						<td xtype="label">文档名称：</td>
-						<td><span xtype="text" config=" name : 'text',required :true  "></span></td>
-					</tr>
 				
 					<tr>
 						<td xtype="label">类型：</td>
@@ -76,10 +81,13 @@
 					<tr>
 						<td xtype="label">附件：</td>
 						<td><span xtype="fileUpload"
-						config=" name : 'fileStr',type:'projectFile' ,request:true"></span></td>
+						config=" name : 'fileStr',type:'projectFile' ,request:true ,parentServiceId: projectId , onChange : fileChange "></span></td>
 					</tr>
 				
-					
+					<tr>
+						<td xtype="label">文档名称：</td>
+						<td><span xtype="text" config=" name : 'text',required :true  "></span></td>
+					</tr>
 			</table>
 		</form>
 	</div>

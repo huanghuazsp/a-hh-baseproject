@@ -55,6 +55,19 @@
 			params : $('#queryForm').getValue()
 		});
 	}
+	
+	function renderFile(value){
+		var str = '';
+		
+		if(value){
+			var fileList = $.hh.toObject(value);
+			for(var i=0;i<fileList.length;i++){
+				var data = fileList[i];
+				str+=$.hh.property.getFileTypeIcon(data.fileType)+data.text+'&nbsp;&nbsp;<a href="javascript:Request.download(\''+data.id+'\');">下载</a>&nbsp;&nbsp;<a href="javascript:Request.viewFile(\''+data.id+'\');">查看</a><br>'
+			}
+		}
+		return str;
+	}
 </script>
 </head>
 <body>
@@ -87,13 +100,15 @@
 			},
 		
 			{
-				name : 'type' ,
+				name : 'typeText' ,
 				text : '类型'
 			},
 		
 			{
-				name : 'fileId' ,
-				text : '附件id'
+				name : 'fileStr' ,
+				text : '附件',
+				align:'left',
+				render : renderFile
 			}
 		
 	]">
