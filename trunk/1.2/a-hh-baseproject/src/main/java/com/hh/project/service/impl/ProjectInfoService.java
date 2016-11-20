@@ -53,12 +53,12 @@ public class ProjectInfoService extends BaseService<ProjectInfo> {
 	public PagingData<Map<String, Object>> queryPartPage(ProjectInfo object, PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
 
-		String hql = "select a.text as text,a.id as id, a.startDate  as startDate, a.managerText  as managerText"
+		String hql = "select DISTINCT a.text as text,a.id as id, a.startDate  as startDate, a.managerText  as managerText"
 				+ ", a.client as client " + ", a.money as money, a.vcreate as vcreate, a.manager as manager from "
 				+ ProjectInfo.class.getName() + " a , " + ProjectUserInfo.class.getName()
-				+ " b  where  a.id=b.projectId and b.user=:userId ";
+				+ " b  where  a.id=b.projectId and (b.user=:userId or a.allUserRead=1) ";
 		String hqlCount = "select count(b) from " + ProjectInfo.class.getName() + " a , "
-				+ ProjectUserInfo.class.getName() + " b  where a.id=b.projectId and b.user=:userId";
+				+ ProjectUserInfo.class.getName() + " b  where a.id=b.projectId and (b.user=:userId or a.allUserRead=1)";
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userId", userId);
