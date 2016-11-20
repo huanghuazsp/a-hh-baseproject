@@ -1,3 +1,4 @@
+<%@page import="com.hh.system.util.SystemUtil"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.BaseSystemUtil"%>
 <%@page import="com.hh.system.util.Convert"%>
@@ -6,7 +7,7 @@
 <html>
 <head>
 <title>编辑项目信息</title>
-<%=BaseSystemUtil.getBaseJs("checkform","date", "ueditor")%>
+<%=BaseSystemUtil.getBaseJs("checkform","date", "ueditor")+SystemUtil.getUser()%>
 
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
@@ -49,6 +50,11 @@
 					$('#form').setValue(result);
 				}
 			});
+		}else{
+			$('#form').setValue({
+				manager:loginUser.id,
+				managerText:loginUser.text
+			});
 		}
 	}
 
@@ -79,7 +85,7 @@
 					</tr>
 					<tr>
 						<td xtype="label">项目经理：</td>
-						<td><span xtype="selectUser" config=" name : 'manager' "></span></td>
+						<td><span xtype="selectUser" config=" name : 'manager' ,required :true "></span></td>
 						<td xtype="label">所有人可见：</td>
 						<td><span xtype="check" config=" name : 'allUserRead',num:1 "></span></td>
 					</tr>
