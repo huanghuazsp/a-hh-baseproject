@@ -96,7 +96,9 @@
 							</tr>
 							<tr>
 								<td xtype="label">项目经理：</td>
-								<td colspan="3"><span xtype="html" config=" name : 'managerText' "></span></td>
+								<td><span xtype="html" config=" name : 'managerText' "></span></td>
+								<td xtype="label">所有人可见：</td>
+								<td><span xtype="check" config=" name : 'allUserRead' "></span></td>
 							</tr>
 						
 							<tr>

@@ -20,7 +20,7 @@
 				$('#iframe').attr('src','jsp-project-projectinfo-ProjectInfoEdit');
 			}
 		}, {
-			text : '我参与的',
+			text : '我相关的',
 			img : '/hhcommon/images/icons/project/project-horizontal.png',
 			onClick : function() {
 				$('#iframe').attr('src','jsp-project-projectinfo-PartProjectInfoList');

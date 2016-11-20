@@ -149,4 +149,17 @@ public class ProjectInfo  extends BaseTwoEntity{
 		this.modularStr = modularStr;
 	}
 	
+	
+	private int allUserRead;
+
+	
+	@Column(name="ALL_USER_READ",columnDefinition = "int default 0")
+	public int getAllUserRead() {
+		return allUserRead;
+	}
+	public void setAllUserRead(int allUserRead) {
+		this.allUserRead = allUserRead;
+	}
+	
+	
 }

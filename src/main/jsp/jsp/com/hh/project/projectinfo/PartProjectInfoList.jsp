@@ -16,7 +16,7 @@
 	}
 	
 	function renderMoney(value){
-		return value + '万';
+		return (value||0) + '万';
 	}
 	
 	function setUserInfo(){

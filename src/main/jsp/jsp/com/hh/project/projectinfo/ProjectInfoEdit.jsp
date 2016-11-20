@@ -79,7 +79,9 @@
 					</tr>
 					<tr>
 						<td xtype="label">项目经理：</td>
-						<td colspan="3"><span xtype="selectUser" config=" name : 'manager' "></span></td>
+						<td><span xtype="selectUser" config=" name : 'manager' "></span></td>
+						<td xtype="label">所有人可见：</td>
+						<td><span xtype="check" config=" name : 'allUserRead',num:1 "></span></td>
 					</tr>
 				
 					<tr>
