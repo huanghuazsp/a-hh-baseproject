@@ -1,5 +1,6 @@
 package com.hh.project.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import com.hh.project.bean.ProjectUserInfo;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
+import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
@@ -58,7 +60,8 @@ public class ProjectInfoService extends BaseService<ProjectInfo> {
 				+ ProjectInfo.class.getName() + " a , " + ProjectUserInfo.class.getName()
 				+ " b  where  a.id=b.projectId and (b.user=:userId or a.allUserRead=1) ";
 		String hqlCount = "select count(b) from " + ProjectInfo.class.getName() + " a , "
-				+ ProjectUserInfo.class.getName() + " b  where a.id=b.projectId and (b.user=:userId or a.allUserRead=1)";
+				+ ProjectUserInfo.class.getName()
+				+ " b  where a.id=b.projectId and (b.user=:userId or a.allUserRead=1)";
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userId", userId);
@@ -72,6 +75,31 @@ public class ProjectInfoService extends BaseService<ProjectInfo> {
 				hqlCount + whereSql, paramMap, pageRange);
 
 		return page;
+	}
+
+	@Override
+	public ProjectInfo save(ProjectInfo entity) throws MessageException {
+		ProjectInfo projectInfo = super.save(entity);
+
+		if (Check.isNoEmpty(entity.getManager())) {
+			ParamInf paramList = ParamFactory.getParamHb();
+			paramList.is("projectId", entity.getId());
+			paramList.is("user", entity.getManager());
+			int count = projectUserInfoService.findCount(paramList);
+			if (count == 0) {
+				ProjectUserInfo projectUserInfo = new ProjectUserInfo();
+				projectUserInfo.setUser(entity.getManager());
+				projectUserInfo.setUserText(entity.getManagerText());
+				projectUserInfo.setJoinDate(new Date());
+				projectUserInfo.setProjectId( entity.getId());
+				
+				projectUserInfo.setRole("1");
+				projectUserInfo.setRoleText("项目负责人");
+				projectUserInfoService.save(projectUserInfo);
+			}
+		}
+		
+		return projectInfo;
 	}
 
 }
