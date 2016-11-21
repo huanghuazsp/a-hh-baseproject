@@ -44,6 +44,16 @@ public class SysMenu extends BaseTreeNodeEntity<SysMenu> {
 		this.setExpanded(exp);
 		this.setLeaf(leaf);
 	}
+	public SysMenu(String id,String text, String vsj, String vdtp,String icon, int exp,
+			int leaf) {
+		this.setVdtp(vdtp);
+		this.setId(id);
+		this.setText(text);
+		this.setVsj(vsj);
+		this.setIcon(icon);
+		this.setExpanded(exp);
+		this.setLeaf(leaf);
+	}
 
 	@Column(name = "VSJ", length = 256)
 	public String getVsj() {

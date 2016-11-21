@@ -63,21 +63,26 @@ public class SetupInitializer {
 		SysMenu rootMailHhXtCd = new SysMenu("Mj38uTS5EDGou2cOCY4", "个人邮件",
 				"jsp-message-email-emailmain",
 				"/hhcommon/images/icons/email/email.png", 0, 1);
+		
+		rootMailHhXtCd.setVdtp("/hhcommon/images/big/apple/email.png");
 
 		rootHhXtCd.getChildren().add(rootMailHhXtCd);
+		
+		
+		
 
 		rootHhXtCd.getChildren().add(
 				new SysMenu("7fmZpjkk034UGEL6K7W", "日程安排",
-						"jsp-oa-schedule-fullcalendar",
+						"jsp-oa-schedule-fullcalendar","/hhcommon/images/big/apple/3.png",
 						"/hhcommon/images/extjsico/17460310.png", 0, 1));
 
 		rootHhXtCd.getChildren().add(
 				new SysMenu("5P4L5383QPwpsjwvjN0", "文件中心",
-						"jsp-system-resources-resourcesmain",
+						"jsp-system-resources-resourcesmain","/hhcommon/images/big/apple/28.png",
 						"/hhcommon/images/icons/folder/folder.png", 0, 1));
 
 		SysMenu notice = new SysMenu("QoGVp009MF5vDM5qCQs", "公告通知",
-				"jsp-oa-notice-noticemain",
+				"jsp-oa-notice-noticemain","/hhcommon/images/big/apple/2.png",
 				"/hhcommon/images/icons/newspaper/newspaper.png", 0, 1);
 		rootHhXtCd.getChildren().add(notice);
 		
@@ -90,7 +95,7 @@ public class SetupInitializer {
 		
 		
 		SysMenu meeting = new SysMenu("id04ZkRCOJ78aUzjwW", "会议管理",
-				"jsp-oa-meeting-meetingmain",
+				"jsp-oa-meeting-meetingmain","/hhcommon/images/big/apple/29.png",
 				"/hhcommon/images/icons/telephone/telephone.png", 0, 1);
 		
 		StaticProperties.sysOperList.add(new SysOper("lzl2ky7M7RRiyO9D3uJ",
@@ -100,7 +105,7 @@ public class SetupInitializer {
 		
 		
 		SysMenu project = new SysMenu("dL8F5prALiQFtgnnH4K", "项目管理",
-				"jsp-project-projectinfo-projectmain",
+				"jsp-project-projectinfo-projectmain","/hhcommon/images/big/apple/0.png",
 				"/hhcommon/images/icons/project/project.png", 0, 1);
 		
 		rootHhXtCd.getChildren().add(project);
