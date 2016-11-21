@@ -6,6 +6,7 @@
 <title>修改密码</title>
 <%=SystemUtil.getBaseJs("checkform")%>
 <script type="text/javascript">
+	var height = 300;
 	function updatePassWord() {
 		$.hh.validation.check('form', function(formData) {
 			if (formData.vmm != formData.mm) {
