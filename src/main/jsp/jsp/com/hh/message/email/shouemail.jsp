@@ -45,7 +45,7 @@
 				filehtml+='<a href="'+fileitem.path+'">'+fileitem.attachmentFileName+'</a>&nbsp;；';
 			}
 		} */
-		var content ='<h3>【'+data.sendUserName+'】于'+ data.dcreate+'向【'+data.userNames+'】发送了一封邮件【'+data.title+'】！</h3><br/><br/>';
+		var content ='<h3>【'+data.sendUserName+'】于'+ ($.hh.formatDate(data.vcreate, 'yyyy年MM月dd日 （EEE） HH:mm'))+'向【'+data.userNames+'】发送了一封邮件【'+data.title+'】！</h3><br/><br/>';
 		if(filehtml){
 			content+='附件：'+filehtml+'<br/>'
 		}
@@ -82,6 +82,8 @@
 	<div xtype="hh_content">
 		<form id="form" xtype="form" class="form">
 			<div></div>
+			<span xtype="text" config=" name : 'sendUserId' ,hidden:true "></span>
+			
 			<table width=100%>
 				<tr>
 					<td xtype="label" style="text-align:left;padding:10px;">

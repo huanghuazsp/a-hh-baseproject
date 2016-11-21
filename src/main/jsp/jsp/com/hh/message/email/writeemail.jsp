@@ -71,6 +71,10 @@
 			writeObject = writeObject || {}; 
 			writeObject.bid = uuid;
 			writeObject.file = uuid;
+			if(writeObject.users){
+				writeObject.usersText = writeObject.users.text;
+				writeObject.users = writeObject.users.id;
+			}
 			$('#form').setValue(writeObject);
 		}
 	}
