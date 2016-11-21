@@ -108,6 +108,8 @@
 			<div xtype="toolbar" config="type:'head'">
 			
 				<table style="font-size: 12" width=100%  cellspacing="0" cellpadding="0" ><tr>
+				<td align=center >菜单管理
+				</td>
 				<td >
 				
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span>
@@ -131,6 +133,7 @@
 		</div>
 		<div id="czTreeDiv">
 			<div xtype="toolbar" config="type:'head'">
+			操作管理（页面按钮）
 				<span xtype="button" config="onClick: doAddOper ,text:'添加' "></span>
 				&nbsp;&nbsp;<span id="operspan" style="color:red;" ></span>
 			</div>
