@@ -130,6 +130,8 @@
 			<div xtype="toolbar" config="type:'head'">
 				
 				<table  style="font-size: 12" width=100%  cellspacing="0" cellpadding="0" ><tr>
+				<td align=center >字典类型
+				</td>
 				<td >
 				<span xtype="button" config="onClick:addType,text:'添加'"></span>
 				<span xtype="button"
@@ -155,6 +157,7 @@
 		</div>
 		<div id="datacenter">
 			<div xtype="toolbar" config="type:'head'">
+				字典管理
 				<span xtype="button" config="onClick:addData,text:'添加'"></span>
 				<span xtype="button"
 					config="onClick : function(){dataTreeObject.refresh()} ,text: '刷新'"></span>
