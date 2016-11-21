@@ -18,6 +18,8 @@
 <script
 	src='/hhcommon/opensource/jquery/fullcalendar/2.0.1/fullcalendar.min.js'></script>
 <script>
+	var currUserId = '<%=Convert.toString(request.getParameter("currUserId"))%>';
+	var isEdit_ = currUserId==''?true:false;
 	function getBackground(isOk) {
 		return isOk == 0 ? 'red' : 'green';
 	}
@@ -116,41 +118,44 @@
 						prevYear : '«', // «
 						nextYear : '»' // »
 					},
-					selectable : true,
-					selectHelper : true,
+					selectable : isEdit_,
+					selectHelper : isEdit_,
+					editable : isEdit_,
 					eventClick : function(calEvent,
 							jsEvent, view) {
-						var object = getEventObject(calEvent);
-						Dialog
-								.open({
-									url : 'jsp-oa-schedule-calendaredit',
-									params : {
-										object : object,
-										callback : function(
-												resultData) {
-											if (resultData == 'delete') {
-												$(
-														'#calendar')
-														.fullCalendar(
-																'removeEvents',
-																[ object.id ]);
-											} else {
-												$
-														.extend(
-																calEvent,
-																toEvent(resultData));
-												$(
-														'#calendar')
-														.fullCalendar(
-																'updateEvent',
-																calEvent,
-																true);
-												renderEvent();
-											}
+						if(isEdit_){
+							var object = getEventObject(calEvent);
+							Dialog
+									.open({
+										url : 'jsp-oa-schedule-calendaredit',
+										params : {
+											object : object,
+											callback : function(
+													resultData) {
+												if (resultData == 'delete') {
+													$(
+															'#calendar')
+															.fullCalendar(
+																	'removeEvents',
+																	[ object.id ]);
+												} else {
+													$
+															.extend(
+																	calEvent,
+																	toEvent(resultData));
+													$(
+															'#calendar')
+															.fullCalendar(
+																	'updateEvent',
+																	calEvent,
+																	true);
+													renderEvent();
+												}
 
+											}
 										}
-									}
-								});
+									});
+						}
 					},
 					eventDrop : function(event) {
 						Request
@@ -196,7 +201,7 @@
 									}
 								});
 					},
-					editable : true,
+					
 					events : function(start, end, ddd,
 							callback) {
 						Request
@@ -208,7 +213,7 @@
 														.format('YYYY-MM-DD HH:mm:ss'),
 												endDate : end
 														.format('YYYY-MM-DD HH:mm:ss'),
-														'currUserId':'<%=Convert.toString(request.getParameter("currUserId"))%>'
+														'currUserId': currUserId
 											}
 										},
 										function(result) {

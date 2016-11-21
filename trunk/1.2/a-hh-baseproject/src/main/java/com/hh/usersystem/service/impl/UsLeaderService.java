@@ -18,6 +18,7 @@ import com.hh.system.util.dto.ParamInf;
 import com.hh.usersystem.bean.usersystem.UsLeader;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
 import com.hh.usersystem.bean.usersystem.UsUser;
+import com.hh.usersystem.util.steady.StaticProperties;
 
 @Service
 public class UsLeaderService extends BaseService<UsLeader> {
@@ -127,10 +128,24 @@ public class UsLeaderService extends BaseService<UsLeader> {
 			}
 			List<UsUser> hhXtYhs = userService.queryListByIds(objectIdList);
 			usOrganizationList.addAll(organizationService.addOrgUser(hhXtYhs));
+			for (UsOrganization org : usOrganizationList) {
+				org.setLeaf(1);
+			}
 		}
 
 		usOrganizationList.addAll(organizationService.queryOrgAndUsersList(objectIdList, node));
 
+		if (objectIdList.size() > 0 && Check.isEmpty(node)) {
+			for (UsOrganization org : usOrganizationList) {
+				if (!StaticProperties.HHXT_NO_ON_LINE_USER_ICON.equals(org.getIcon())
+						&& !StaticProperties.HHXT_USERSYSTEM_NV.equals(org.getIcon())
+						&& !StaticProperties.HHXT_USERSYSTEM_NAN.equals(org.getIcon())) {
+					org.setChildren(null);
+					org.setLeaf(0);
+				}
+			}
+
+		}
 		return usOrganizationList;
 	}
 
