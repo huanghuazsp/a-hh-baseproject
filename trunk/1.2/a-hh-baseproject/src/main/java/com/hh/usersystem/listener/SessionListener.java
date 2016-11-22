@@ -1,5 +1,6 @@
 package com.hh.usersystem.listener;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 
@@ -20,8 +21,11 @@ public class SessionListener implements HttpSessionAttributeListener
 	public void attributeAdded(HttpSessionBindingEvent event) {
 		if (event.getName().equals("loginuser")) {
 			UsUser object = (UsUser) event.getValue();
-			ThreadUtil.getThreadPool().execute(
-					new SaveOperLogThread(Request.getRequest().getRemoteAddr(),object.getId(), object.getText() , object.getText() + "上线了......"));
+			HttpServletRequest request = Request.getRequest();
+			if (request!=null) {
+				ThreadUtil.getThreadPool().execute(
+						new SaveOperLogThread(request.getRemoteAddr(),object.getId(), object.getText() , object.getText() + "上线了......"));
+			}
 			logger.info(object.getText() + "上线了......");
 			LoginUser.put(object.getId(), object, event.getSession());
 			logger.info("当前在线数：" + LoginUser.getLoginUserCount());
@@ -31,8 +35,11 @@ public class SessionListener implements HttpSessionAttributeListener
 	public void attributeRemoved(HttpSessionBindingEvent event) {
 		if (event.getName().equals("loginuser")) {
 			UsUser object = (UsUser) event.getValue();
-			ThreadUtil.getThreadPool().execute(
-					new SaveOperLogThread(Request.getRequest().getRemoteAddr(),object.getId(), object.getText() , object.getText() +"下线了......"));
+			HttpServletRequest request = Request.getRequest();
+			if (request!=null) {
+				ThreadUtil.getThreadPool().execute(
+						new SaveOperLogThread(request.getRemoteAddr(),object.getId(), object.getText() , object.getText() +"下线了......"));
+			}
 			logger.info(object.getText() + "下线了......");
 			LoginUser.remove(object.getId());
 			logger.info("当前在线数：" + LoginUser.getLoginUserCount());
