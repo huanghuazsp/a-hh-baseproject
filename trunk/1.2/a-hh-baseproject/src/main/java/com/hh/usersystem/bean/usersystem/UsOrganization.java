@@ -13,14 +13,14 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
-import com.hh.hibernate.util.base.BaseTreeNodeEntity;
+import com.hh.hibernate.util.base.BaseEntityTree;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "US_ORGANIZATION")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE,region="eternal")
 @Order(fields = "order", sorts = "asc")
-public class UsOrganization    extends BaseTreeNodeEntity<UsOrganization> implements java.io.Serializable {
+public class UsOrganization    extends BaseEntityTree<UsOrganization> implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return this.getId();

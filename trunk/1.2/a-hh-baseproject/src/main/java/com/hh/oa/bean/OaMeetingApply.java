@@ -13,7 +13,7 @@ import com.hh.hibernate.dao.inf.Order;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="OA_MEETING_APPLY")
-public class OaMeetingApply  extends BaseTwoEntity{
+public class OaMeetingApply  extends BaseEntity{
 	//会议主题
 	private String text;
 	

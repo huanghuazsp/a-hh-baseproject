@@ -8,11 +8,11 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Index;
 
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 
 @Entity
 @Table(name = "SYS_EMAIL")
-public class SysEmail extends BaseTwoEntity {
+public class SysEmail extends BaseEntity {
 	
 	private String type;
 	private String content;

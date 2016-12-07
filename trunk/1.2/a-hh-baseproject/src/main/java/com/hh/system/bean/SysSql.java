@@ -7,13 +7,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.hh.hibernate.dao.inf.Order;
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 
 @SuppressWarnings("serial")
 @Entity
 @Order
 @Table(name = "SYS_SQL")
-public class SysSql extends BaseTwoEntity {
+public class SysSql extends BaseEntity {
 	private long elapsedTime;
 	private String sql;
 	private String createUserName;

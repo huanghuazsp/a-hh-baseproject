@@ -10,14 +10,14 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
-import com.hh.hibernate.util.base.BaseTreeNodeEntity;
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntityTree;
+import com.hh.hibernate.util.base.BaseEntity;
 
 @Entity
 @Table(name = "US_SYS_GROUP")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order(fields = "order", sorts = "asc")
-public class UsSysGroup  extends BaseTreeNodeEntity<UsSysGroup> {
+public class UsSysGroup  extends BaseEntityTree<UsSysGroup> {
 	private String remark;
 	private String users;
 	

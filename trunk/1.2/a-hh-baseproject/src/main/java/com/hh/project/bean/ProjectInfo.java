@@ -13,7 +13,7 @@ import com.hh.hibernate.dao.inf.Order;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="PROJECT_INFO")
-public class ProjectInfo  extends BaseTwoEntity{
+public class ProjectInfo  extends BaseEntity{
 	//项目名称
 	private String text;
 	

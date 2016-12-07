@@ -6,7 +6,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.hh.hibernate.util.base.BaseOneEntity;
+import com.hh.hibernate.util.base.BaseEntitySimple;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
 import com.hh.system.util.SysParam;
@@ -14,7 +14,7 @@ import com.hh.system.util.SysParam;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "SYS_PARAMS")
-public class SysParams extends BaseOneEntity {
+public class SysParams extends BaseEntitySimple {
 	private int logSql;
 	private int dataBaseSql;
 	

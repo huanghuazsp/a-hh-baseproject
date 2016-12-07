@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 
 /**
  * HhXtJsCd entity.
@@ -17,7 +17,7 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 @Entity
 @Table(name = "US_ROLE_OPER")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class UsRoleOper extends BaseTwoEntity implements java.io.Serializable {
+public class UsRoleOper extends BaseEntity implements java.io.Serializable {
 	private String jsId;
 	private String operLevel;
 	

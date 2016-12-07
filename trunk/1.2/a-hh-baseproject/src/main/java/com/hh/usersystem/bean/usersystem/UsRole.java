@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 
 /**
  * HhXtJs entity.
@@ -17,7 +17,7 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 @Entity
 @Table(name = "US_ROLE")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class UsRole extends BaseTwoEntity  {
+public class UsRole extends BaseEntity  {
 
 	private String text;
 	private String vbz;

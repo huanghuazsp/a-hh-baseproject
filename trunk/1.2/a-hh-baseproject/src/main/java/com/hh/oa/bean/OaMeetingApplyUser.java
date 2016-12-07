@@ -13,7 +13,7 @@ import com.hh.hibernate.dao.inf.Order;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="OA_MEETING_APPLY_USER")
-public class OaMeetingApplyUser  extends BaseTwoEntity{
+public class OaMeetingApplyUser  extends BaseEntity{
 	//主ID
 	private String objectId;
 	

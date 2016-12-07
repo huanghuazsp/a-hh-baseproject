@@ -13,7 +13,7 @@ import com.hh.hibernate.dao.inf.Order;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="SYS_RESOURCES")
-public class SystemResources  extends BaseTwoEntity{
+public class SystemResources  extends BaseEntity{
 	//text
 	private String text;
 	private String files;

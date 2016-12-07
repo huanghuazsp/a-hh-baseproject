@@ -7,12 +7,12 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
-import com.hh.hibernate.util.base.BaseTreeNodeEntity;
+import com.hh.hibernate.util.base.BaseEntityTree;
 
 @Entity(name = "SYS_DATA")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order(fields = "order", sorts = "asc")
-public class SysData extends BaseTreeNodeEntity {
+public class SysData extends BaseEntityTree {
 	private String dataTypeId;
 
 	@Column(name = "DATA_TYPE_ID", length = 36)

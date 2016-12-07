@@ -8,13 +8,13 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.hh.hibernate.util.base.BaseOneEntity;
+import com.hh.hibernate.util.base.BaseEntitySimple;
 
 
 @Entity
 @Table(name = "US_LEADER")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class UsLeader extends BaseOneEntity {
+public class UsLeader extends BaseEntitySimple {
 	private String objectId;
 	private String leaderId;
 	private int objectType;
