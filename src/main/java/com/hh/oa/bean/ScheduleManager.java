@@ -10,11 +10,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 
 @Entity
 @Table(name = "SYS_SCHEDULE_MANAGER")
-public class ScheduleManager extends BaseTwoEntity {
+public class ScheduleManager extends BaseEntity {
 	
 	private String userId;
 	private String comment;

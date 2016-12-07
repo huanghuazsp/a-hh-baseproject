@@ -6,11 +6,11 @@ import javax.persistence.Entity;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Table;
 
-import com.hh.hibernate.util.base.BaseOneEntity;
+import com.hh.hibernate.util.base.BaseEntitySimple;
 
 @Entity(name = "SYS_EMAIL_USER")
 @Table(indexes = { @Index(name = "SYS_EMAIL_USER_INDEX_USER_ID_EMAIL_ID", columnNames = { "USER_ID", "EMAIL_ID" }) }, appliesTo = "SYS_EMAIL_USER")
-public class SysEmailUser extends BaseOneEntity {
+public class SysEmailUser extends BaseEntitySimple {
 
 	private String emailId;
 	private String userId;

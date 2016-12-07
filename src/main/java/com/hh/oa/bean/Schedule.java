@@ -11,12 +11,12 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.hh.hibernate.dao.inf.Comment;
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 
 @Comment("日程安排")
 @Entity
 @Table(name = "SYS_SCHEDULE")
-public class Schedule extends BaseTwoEntity {
+public class Schedule extends BaseEntity {
 	private boolean allDay;
 	private String content;
 	

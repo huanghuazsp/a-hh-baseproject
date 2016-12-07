@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 
 /**
  * HhXtJsCd entity.
@@ -19,7 +19,7 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 @Entity
 @Table(name = "US_ROLE_MENU")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class UsRoleMenu extends BaseTwoEntity implements java.io.Serializable {
+public class UsRoleMenu extends BaseEntity implements java.io.Serializable {
 
 	// Fields
 	private String jsId;

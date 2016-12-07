@@ -9,13 +9,13 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Index;
 
 import com.hh.hibernate.dao.inf.Order;
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "SYS_MESSAGE")
 @Order
-public class SysMessage extends BaseTwoEntity {
+public class SysMessage extends BaseEntity {
 	private String content;
 	
 	private String sendHeadpic = "";

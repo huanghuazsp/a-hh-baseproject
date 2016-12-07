@@ -4,11 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.hh.hibernate.util.base.BaseOneEntity;
+import com.hh.hibernate.util.base.BaseEntitySimple;
 
 @Entity
 @Table(name = "US_REG")
-public class UsReg extends BaseOneEntity {
+public class UsReg extends BaseEntitySimple {
 	private String email;
 	private String code;
 

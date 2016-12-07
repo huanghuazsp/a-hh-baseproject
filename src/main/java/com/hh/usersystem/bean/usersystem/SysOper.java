@@ -8,12 +8,12 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 
 @Entity
 @Table(name = "SYS_OPER")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SysOper extends BaseTwoEntity {
+public class SysOper extends BaseEntity {
 
 	public SysOper() {
 

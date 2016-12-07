@@ -11,7 +11,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 
 /**
  * HhXtYhCdZmtb entity.
@@ -22,7 +22,7 @@ import com.hh.hibernate.util.base.BaseTwoEntity;
 @Table(name = "US_USER_MENU_ZMTB")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order
-public class UsUserMenuZmtb extends BaseTwoEntity {
+public class UsUserMenuZmtb extends BaseEntity {
 	private String cdId;
 	@Column(name = "HHXTCD_ID", length = 36)
 	public String getCdId() {

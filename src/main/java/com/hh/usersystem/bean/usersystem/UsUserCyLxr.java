@@ -8,13 +8,13 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 
 @Entity
 @Table(name = "US_USER_CYLXR")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order
-public class UsUserCyLxr extends BaseTwoEntity {
+public class UsUserCyLxr extends BaseEntity {
 
 	private String yhId;
 	private String cylxrId;

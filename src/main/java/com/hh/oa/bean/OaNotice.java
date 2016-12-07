@@ -15,7 +15,7 @@ import com.hh.hibernate.dao.inf.Order;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="OA_NOTICE")
-public class OaNotice  extends BaseTwoEntity{
+public class OaNotice  extends BaseEntity{
 	
 	private String content;
 	private String title;

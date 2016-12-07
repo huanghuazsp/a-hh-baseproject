@@ -9,7 +9,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
-import com.hh.hibernate.util.base.BaseTreeNodeEntity;
+import com.hh.hibernate.util.base.BaseEntityTree;
 import com.hh.system.util.PinYinUtil;
 import com.hh.system.util.pk.PrimaryKey;
 
@@ -22,7 +22,7 @@ import com.hh.system.util.pk.PrimaryKey;
 @Table(name = "SYS_MENU")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order(fields = "order", sorts = "asc")
-public class SysMenu extends BaseTreeNodeEntity<SysMenu> {
+public class SysMenu extends BaseEntityTree<SysMenu> {
 	private String vsj;
 	private String vbz;
 	private String vdtp = "/hhcommon/images/big/apple/20.png";

@@ -13,7 +13,7 @@ import com.hh.hibernate.dao.inf.Order;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="SYS_OPER_LOG")
-public class SystemOperLog  extends BaseTwoEntity{
+public class SystemOperLog  extends BaseEntity{
 	private String ipStr;
 	//userName
 	private String userName;

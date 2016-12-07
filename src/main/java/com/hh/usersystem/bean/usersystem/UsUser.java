@@ -18,7 +18,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
-import com.hh.hibernate.util.base.BaseTwoEntity;
+import com.hh.hibernate.util.base.BaseEntity;
 import com.hh.system.util.PinYinUtil;
 import com.hh.usersystem.IUser;
 import com.hh.usersystem.util.steady.StaticProperties;
@@ -32,7 +32,7 @@ import com.hh.usersystem.util.steady.StaticProperties;
 @Table(name = "US_USER")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Order
-public class UsUser extends BaseTwoEntity implements IUser {
+public class UsUser extends BaseEntity implements IUser {
 	@Override
 	public String toString() {
 		return this.getId();
