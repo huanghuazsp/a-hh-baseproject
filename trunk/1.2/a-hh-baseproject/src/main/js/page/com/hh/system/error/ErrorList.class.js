@@ -31,7 +31,7 @@ Ext.define('com.hh.system.error.ErrorList', {
 			flex : 0.5
 		}, {
 			text : '异常生成时间',
-			dataIndex : 'dcreate',
+			dataIndex : 'createTime',
 			flex : 1,
 			renderer : Ext.util.Format.dateRenderer('Y年m月d日 H时i分s秒')
 		}, {
@@ -45,6 +45,6 @@ Ext.define('com.hh.system.error.ErrorList', {
 		} ];
 	},
 	getStoreFields : function() {
-		return [ 'id', 'name', 'message', 'allMessage', 'dcreate' ];
+		return [ 'id', 'name', 'message', 'allMessage', 'createTime' ];
 	}
 });

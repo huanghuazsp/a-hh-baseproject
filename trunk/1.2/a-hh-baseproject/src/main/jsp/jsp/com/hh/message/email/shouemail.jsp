@@ -45,7 +45,7 @@
 				filehtml+='<a href="'+fileitem.path+'">'+fileitem.attachmentFileName+'</a>&nbsp;；';
 			}
 		} */
-		var content ='<h3>【'+data.sendUserName+'】于'+ ($.hh.formatDate(data.vcreate, 'yyyy年MM月dd日 （EEE） HH:mm'))+'向【'+data.userNames+'】发送了一封邮件【'+data.title+'】！</h3><br/><br/>';
+		var content ='<h3>【'+data.sendUserName+'】于'+ ($.hh.formatDate(data.createUser, 'yyyy年MM月dd日 （EEE） HH:mm'))+'向【'+data.userNames+'】发送了一封邮件【'+data.title+'】！</h3><br/><br/>';
 		if(filehtml){
 			content+='附件：'+filehtml+'<br/>'
 		}
@@ -91,7 +91,7 @@
 						<font size=4 ><b><span xtype="html" config=" name : 'title' "></span></b></font>
 						</div>
 						发&nbsp;件&nbsp;人：<span xtype="html" config="name: 'sendUserName' "></span><br>
-						时&nbsp;&nbsp;&nbsp;间：<span xtype="html" config="name: 'dcreate' ,dateType:'yyyy年MM月dd日 （EEE） HH:mm'"></span><br>
+						时&nbsp;&nbsp;&nbsp;间：<span xtype="html" config="name: 'createTime' ,dateType:'yyyy年MM月dd日 （EEE） HH:mm'"></span><br>
 						收&nbsp;件&nbsp;人：<span xtype="html" config="name: 'userNames' "></span><br>
 						附&nbsp;&nbsp;&nbsp;件： <span xtype="fileUpload"
 						config="name: 'file' , type:'email' ,request:true"></span>

@@ -69,11 +69,11 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 		if (addCylxr == 1) {
 			UsUserCyLxr usUserCyLxr = new UsUserCyLxr();
 
-			usUserCyLxr.setVcreate(sysMessage.getVcreate());
-			usUserCyLxr.setVupdate(sysMessage.getVupdate());
-			usUserCyLxr.setVorgid(sysMessage.getVorgid());
-			usUserCyLxr.setVdeptid(sysMessage.getVdeptid());
-			usUserCyLxr.setVjobid(sysMessage.getVjobid());
+			usUserCyLxr.setCreateUser(sysMessage.getCreateUser());
+			usUserCyLxr.setUpdateUser(sysMessage.getUpdateUser());
+			usUserCyLxr.setOrgid(sysMessage.getOrgid());
+			usUserCyLxr.setDeptid(sysMessage.getDeptid());
+			usUserCyLxr.setJobid(sysMessage.getJobid());
 
 			usUserCyLxr.setYhId(sysMessage.getSendUserId());
 			usUserCyLxr.setCylxrId(sysMessage.getToObjectId());
@@ -256,12 +256,12 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 		UsUser user = loginUserUtilService.findLoginUser();
 		SysMessage message = new SysMessage();
 		String currUserId = user.getId();
-		message.setVcreate(currUserId);
-		message.setVupdate(currUserId);
-		message.setVorgid(user.getOrgId());
-		message.setVdeptid(user.getDeptId());
-		message.setVjobid(user.getJobId());
-		message.setVcreateName(user.getText());
+		message.setCreateUser(currUserId);
+		message.setUpdateUser(currUserId);
+		message.setOrgid(user.getOrgId());
+		message.setDeptid(user.getDeptId());
+		message.setJobid(user.getJobId());
+		message.setCreateUserName(user.getText());
 
 		message.setSendUserId(currUserId);
 		message.setSendUserName(user.getText());

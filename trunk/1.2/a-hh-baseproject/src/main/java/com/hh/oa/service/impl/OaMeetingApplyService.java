@@ -89,7 +89,7 @@ public class OaMeetingApplyService extends BaseService<OaMeetingApply> {
 
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		String userId = loginUserUtilService.findUserId();
-		hqlParamList.is("vcreate", userId);
+		hqlParamList.is("createUser", userId);
 		if (Check.isNoEmpty(entity.getText())) {
 			hqlParamList.like("text", entity.getText());
 		}
@@ -100,7 +100,7 @@ public class OaMeetingApplyService extends BaseService<OaMeetingApply> {
 			PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
 
-		String hql = "select a.meetingId as meetingId,a.meetingIdText as meetingIdText,a.describe as describe,a.end as end,a.start as start,a.attendOrgText as attendOrgText,a.attendUserText as attendUserText, a.id as id, a.text  as text, a.dcreate  as dcreate , a.vcreateName as vcreateName,b.read as read from "
+		String hql = "select a.meetingId as meetingId,a.meetingIdText as meetingIdText,a.describe as describe,a.end as end,a.start as start,a.attendOrgText as attendOrgText,a.attendUserText as attendUserText, a.id as id, a.text  as text, a.createTime  as createTime , a.createUserName as createUserName,b.read as read from "
 				+ OaMeetingApply.class.getName()
 				+ " a , "
 				+ OaMeetingApplyUser.class.getName()
@@ -120,7 +120,7 @@ public class OaMeetingApplyService extends BaseService<OaMeetingApply> {
 		}
 
 		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql
-				+ whereSql + " ORDER BY b.dupdate DESC", hqlCount + whereSql,
+				+ whereSql + " ORDER BY b.updateTime DESC", hqlCount + whereSql,
 				paramMap, pageRange);
 
 		return page;

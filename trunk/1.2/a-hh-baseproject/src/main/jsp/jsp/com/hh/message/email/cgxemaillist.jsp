@@ -64,7 +64,7 @@
 			text : '标题',
 			align : 'left'
 		},{
-			name : 'dcreate' ,
+			name : 'createTime' ,
 			text : '时间',
 			render:'datetime',
 			width:120

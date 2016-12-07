@@ -25,7 +25,7 @@ public class ErrorService extends BaseService<SysError> {
 		List<SysError> sysErrors = pageData.getItems();
 		for (SysError sysError : sysErrors) {
 			UsUser hhXtYh = userService.findObjectById_user(sysError
-					.getVcreate());
+					.getCreateUser());
 			if (Check.isNoEmpty(hhXtYh)) {
 				sysError.setCreateUserName(hhXtYh.getText());
 			}

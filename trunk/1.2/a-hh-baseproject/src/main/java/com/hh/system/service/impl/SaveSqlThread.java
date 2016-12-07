@@ -29,9 +29,9 @@ public class SaveSqlThread extends Thread {
 		SysSql sqlObject = new SysSql();
 		sqlObject.setElapsedTime(elapsedTime);
 		sqlObject.setSql(sql);
-		sqlObject.setVcreate(userid);
-		sqlObject.setVupdate(userid);
-		sqlObject.setVorgid(currOrg);
+		sqlObject.setCreateUser(userid);
+		sqlObject.setUpdateUser(userid);
+		sqlObject.setOrgid(currOrg);
 		try {
 			service.save(sqlObject);
 		} catch (MessageException e1) {

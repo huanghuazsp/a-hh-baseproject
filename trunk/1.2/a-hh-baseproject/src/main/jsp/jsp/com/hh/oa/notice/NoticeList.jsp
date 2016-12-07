@@ -94,7 +94,7 @@
 		},
 		<%} %>
 		<% if("sygg".equals(type)){ %>{
-			name : 'vcreateName' ,
+			name : 'createUserName' ,
 			text : '发布人',
 			width:100
 		},<%} %>{
@@ -102,7 +102,7 @@
 			text : '公告类型',
 			width :60
 		},{
-			name : 'dcreate' ,
+			name : 'createTime' ,
 			text : '时间',
 			render:'datetime',
 			width:120

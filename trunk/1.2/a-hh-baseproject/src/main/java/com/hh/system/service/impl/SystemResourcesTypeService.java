@@ -26,11 +26,11 @@ public class SystemResourcesTypeService extends
 		if (object.getState() == 1) {
 			paramInf.is("state", 1);
 		} else {
-			paramInf.is("vcreate", userService.findUserId());
+			paramInf.is("createUser", userService.findUserId());
 		}
 
-		if (Check.isNoEmpty(object.getVcreate())) {
-			paramInf.is("vcreate", object.getVcreate());
+		if (Check.isNoEmpty(object.getCreateUser())) {
+			paramInf.is("createUser", object.getCreateUser());
 		}
 
 		String node = Check.isEmpty(object.getNode()) ? "root" : object
@@ -56,7 +56,7 @@ public class SystemResourcesTypeService extends
 			for (SystemResourcesType systemResourcesType : resourcesTypes) {
 				if (systemResourcesType.getState() == 1) {
 					systemResourcesType.setText(systemResourcesType.getText()
-							+ "[" + systemResourcesType.getVcreateName() + "]");
+							+ "[" + systemResourcesType.getCreateUserName() + "]");
 					;
 				}
 				render2(systemResourcesType.getChildren());
@@ -84,13 +84,13 @@ public class SystemResourcesTypeService extends
 	}
 
 	protected boolean checkTextOnly(SystemResourcesType entity) {
-		entity.setVcreate(userService.findUserId());
+		entity.setCreateUser(userService.findUserId());
 		return dao
 				.findWhetherData(
 						"select count(o) from "
 								+ entity.getClass().getName()
 								+ " o "
-								+ "where o.text=:text and (o.id!=:id or :id is null) and node = :node and vcreate = :vcreate ",
+								+ "where o.text=:text and (o.id!=:id or :id is null) and node = :node and createUser = :createUser ",
 						entity);
 	}
 }

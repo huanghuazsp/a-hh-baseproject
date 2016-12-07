@@ -72,7 +72,7 @@
 			$.hh.tree.getTree('tree').refresh();
 		}
 		iframe.findData(treeNode.id);
-		/* if(treeNode.vcreate!=loginUser.id){
+		/* if(treeNode.createUser!=loginUser.id){
 			$('#upBtn').hide();
 			$('#downBtn').hide();
 		}else{
@@ -84,7 +84,7 @@
 		$('#centerdiv').disabled('请选择要编辑的树节点或添加新的数据！');
 	}
 	function showBtn(treeid,node){
-		return node.vcreate==loginUser.id;
+		return node.createUser==loginUser.id;
 	}
 	function querytree(){
 		$('#span_tree').loadData({

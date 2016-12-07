@@ -60,7 +60,7 @@
 			text : '发件人',
 			width:100
 		},{
-			name : 'dcreate' ,
+			name : 'createTime' ,
 			text : '时间',
 			render:'datetime',
 			width:120

@@ -37,7 +37,7 @@
 					id : objid
 				},
 				callback : function(result) {
-					/* if(result.vcreate!=loginUser.id){
+					/* if(result.createUser!=loginUser.id){
 						$('#saveBtn').hide();
 					}else{
 						$('#saveBtn').show();

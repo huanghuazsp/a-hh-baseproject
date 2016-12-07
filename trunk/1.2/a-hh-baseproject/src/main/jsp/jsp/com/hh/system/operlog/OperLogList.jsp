@@ -75,7 +75,7 @@
 				text : '操作人员',
 				width:120
 			},{
-				name : 'dcreate' ,
+				name : 'createTime' ,
 				text : '操作时间',
 				render:'datetime',
 				width:120

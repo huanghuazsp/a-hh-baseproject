@@ -57,7 +57,7 @@ public class ActionGroup extends BaseServiceAction<UsSysGroup> {
 			List<UsGroup> userGroups = userGroupService.queryTreeList(
 					object.getNode(),
 					ParamFactory.getParamHb().or(
-							ParamFactory.getParamHb().is("vcreate", userId)
+							ParamFactory.getParamHb().is("createUser", userId)
 									.like("users", userId)));
 			if (andUser == 1) {
 				for (UsGroup userGroup2 : userGroups) {

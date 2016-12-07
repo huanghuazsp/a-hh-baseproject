@@ -239,7 +239,7 @@
 	}
 	
 	function addData(data){
-		data.date = $.hh.formatDate(data.dcreate,'yyyy-MM-dd HH:mm:ss');
+		data.date = $.hh.formatDate(data.createTime,'yyyy-MM-dd HH:mm:ss');
 		data.message = data.content;
 		data.type = data.sendUserId == loginUser.id ? 'my' : 'you';
 		data.sendHeadpic = data.sendHeadpic;

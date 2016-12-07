@@ -41,7 +41,7 @@
 			text : '异常类名',
 			width: 150
 		},{
-			name : 'dcreate' ,
+			name : 'createTime' ,
 			text : '异常生成时间',
 			render:'datetime',
 			width: 150
