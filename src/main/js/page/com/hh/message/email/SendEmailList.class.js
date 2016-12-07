@@ -21,7 +21,7 @@ Ext.define('com.hh.message.email.SendEmailList', {
 				},
 				{
 					text : '时间',
-					dataIndex : 'dcreate',
+					dataIndex : 'createTime',
 					renderer : Ext.util.Format.dateRenderer('Y年m月d日 H时i分s秒'),
 					flex : 1
 				},
@@ -36,6 +36,6 @@ Ext.define('com.hh.message.email.SendEmailList', {
 				}, this.getOperateGridColumn() ];
 	},
 	getStoreFields : function() {
-		return [ 'id', 'title', 'content', 'dcreate', 'users', 'type' ];
+		return [ 'id', 'title', 'content', 'createTime', 'users', 'type' ];
 	}
 });

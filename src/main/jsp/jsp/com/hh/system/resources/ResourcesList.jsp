@@ -107,7 +107,7 @@
 		/* var as = true;
 		for(var i=0;i<dataList.length;i++){
 			var data = dataList[i];
-			if(data.vcreate!=loginUser.id){
+			if(data.createUser!=loginUser.id){
 				as = false;
 				break;
 			}
@@ -192,12 +192,12 @@
 		  doChange : doChange , url: '<%="1".equals(request.getParameter("share"))? "system-Resources-querySharePagingData":"system-Resources-queryPagingData" %>' ,column : [
 		
 		{
-				name : 'vcreateName' ,
+				name : 'createUserName' ,
 				text : '创建人',
 				align:'center',
 			width:80
 			},{
-			name : 'dcreate' ,
+			name : 'createTime' ,
 			text : '时间',
 			render:'datetime',
 			width:120

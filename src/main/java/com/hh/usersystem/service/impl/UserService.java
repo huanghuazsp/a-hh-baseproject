@@ -518,7 +518,7 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 	public void fileOper(SystemFile systemFile) {
 		int count = findCount(ParamFactory.getParamHb().is("headpic", systemFile.getId()));
 		if (count == 0) {
-			systemFile.setDestroy(1);
+			systemFile.setStatus(1);
 		}
 	}
 

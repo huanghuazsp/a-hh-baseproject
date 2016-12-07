@@ -55,7 +55,7 @@ public class OaNoticeService extends BaseService<OaNotice> implements LoadDataTi
 
 		if ("wfbd".equals(entity.getType())) {
 			String userId = loginUserUtilService.findUserId();
-			hqlParamList.is("vcreate", userId);
+			hqlParamList.is("createUser", userId);
 		}
 		
 		if (Check.isNoEmpty(entity.getTitle())) {
@@ -68,7 +68,7 @@ public class OaNoticeService extends BaseService<OaNotice> implements LoadDataTi
 			PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
 
-		String hql = "select a.typeText as typeText,a.id as id, a.title  as title, a.dcreate  as dcreate, a.type as type , a.vcreateName as vcreateName,b.read as read from "
+		String hql = "select a.typeText as typeText,a.id as id, a.title  as title, a.createTime  as createTime, a.type as type , a.createUserName as createUserName,b.read as read from "
 				+ OaNotice.class.getName()
 				+ " a , "
 				+ OaNoticeUser.class.getName()
@@ -88,7 +88,7 @@ public class OaNoticeService extends BaseService<OaNotice> implements LoadDataTi
 		}
 
 		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql
-				+ whereSql + " ORDER BY b.dupdate DESC", hqlCount + whereSql,
+				+ whereSql + " ORDER BY b.updateTime DESC", hqlCount + whereSql,
 				paramMap, pageRange);
 
 		return page;
@@ -211,7 +211,7 @@ public class OaNoticeService extends BaseService<OaNotice> implements LoadDataTi
 	public void fileOper(SystemFile systemFile) {
 		OaNotice OaNotice = findObjectById(systemFile.getServiceId());
 		if (OaNotice == null) {
-			systemFile.setDestroy(1);
+			systemFile.setStatus(1);
 		}
 	}
 	

@@ -89,13 +89,13 @@ public class SecurityInterceptor implements Interceptor {
 					if (hhXtCz.getType()==1) {
 						isSecurity=true;
 					}else {
-						Object vcreates = request.getParameter("vcreates");
-						if (vcreates == null || "".equals(vcreates)) {
+						Object createUsers = request.getParameter("createUsers");
+						if (createUsers == null || "".equals(createUsers)) {
 							isSecurity = true;
 						} else {
 							boolean isOper = true;
-							for (String vcreate : vcreates.toString().split(",")) {
-								if (!vcreate.equals(hhXtYh.getId())) {
+							for (String createUser : createUsers.toString().split(",")) {
+								if (!createUser.equals(hhXtYh.getId())) {
 									isOper = false;
 									break;
 								}

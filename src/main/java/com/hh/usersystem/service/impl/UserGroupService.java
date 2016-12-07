@@ -48,7 +48,7 @@ public class UserGroupService extends BaseService<UsGroup> {
 
 	@Override
 	public List<UsGroup> queryTreeList(String node) {
-		return super.queryTreeList(node,ParamFactory.getParamHb().is("vcreate", loginUserService.findUserId()));
+		return super.queryTreeList(node,ParamFactory.getParamHb().is("createUser", loginUserService.findUserId()));
 	}
 
 

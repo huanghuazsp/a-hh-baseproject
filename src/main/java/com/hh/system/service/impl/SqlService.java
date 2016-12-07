@@ -24,7 +24,7 @@ public class SqlService extends BaseService<SysSql> {
 		List<SysSql> sysErrors = pageData.getItems();
 		for (SysSql sysError : sysErrors) {
 			UsUser hhXtYh = userService.findObjectById_user(sysError
-					.getVcreate());
+					.getCreateUser());
 			if (Check.isNoEmpty(hhXtYh)) {
 				sysError.setCreateUserName(hhXtYh.getText());
 			}

@@ -35,8 +35,8 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 
 	@Override
 	public PagingData<SysEmail> queryPagingData(SysEmail entity, PageRange pageRange) {
-		return dao.queryPagingData(this.getGenericType(0), ParamFactory.getParamHb().orderDesc("dcreate"), pageRange,
-				new String[] { "id", "title", "dcreate", "type", "sendUserName", "userNames" });
+		return dao.queryPagingData(this.getGenericType(0), ParamFactory.getParamHb().orderDesc("createTime"), pageRange,
+				new String[] { "id", "title", "createTime", "type", "sendUserName", "userNames" });
 	}
 
 	@Transactional
@@ -142,7 +142,7 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 	public PagingData<Map<String, Object>> queryDeletePage(SysEmail object, PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
 
-		String hql = "select a.id as id, a.title  as title, a.dcreate  as dcreate, a.type as type,  a.sendUserName as sendUserName, a.userNames as userNames,b.read as read from "
+		String hql = "select a.id as id, a.title  as title, a.createTime  as createTime, a.type as type,  a.sendUserName as sendUserName, a.userNames as userNames,b.read as read from "
 				+ SysEmail.class.getName() + " a , " + SysEmailUser.class.getName()
 				+ " b  where  (b.type=8 and a.id=b.emailId and b.userId=:userId) ";
 		String hqlCount = "select count(b) from " + SysEmail.class.getName() + " a , " + SysEmailUser.class.getName()
@@ -157,7 +157,7 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 			whereSql+=" and a.title like :title ";
 		}
 
-		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql+whereSql+" ORDER BY b.dupdate DESC", hqlCount+whereSql, paramMap, pageRange);
+		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql+whereSql+" ORDER BY b.updateTime DESC", hqlCount+whereSql, paramMap, pageRange);
 
 		return page;
 	}
@@ -166,23 +166,23 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 		return dao.queryPagingData(this.getGenericType(0),
 				ParamFactory.getParamHb().is("sendUserId", loginUserUtilService.findUserId())
 						.is("type", "cgx").is("meDelete", 0)
-						.orderDesc("dcreate").like("title", object.getTitle()),
-				pageRange, new String[] { "id", "title", "dcreate", "type", "sendUserName", "userNames" });
+						.orderDesc("createTime").like("title", object.getTitle()),
+				pageRange, new String[] { "id", "title", "createTime", "type", "sendUserName", "userNames" });
 	}
 
 	public PagingData<SysEmail> querySendPage(SysEmail object, PageRange pageRange) {
 		return dao.queryPagingData(this.getGenericType(0),
 				ParamFactory.getParamHb().is("sendUserId", loginUserUtilService.findUserId())
 						.is("type", "yfs").is("meDelete", 0)
-						.orderDesc("dcreate").like("title", object.getTitle()),
-				pageRange, new String[] { "id", "title", "dcreate", "type", "sendUserName", "userNames" });
+						.orderDesc("createTime").like("title", object.getTitle()),
+				pageRange, new String[] { "id", "title", "createTime", "type", "sendUserName", "userNames" });
 	}
 
 
 	public PagingData<Map<String, Object>> queryShouPage(SysEmail object, PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
 
-		String hql = "select a.id as id, a.title  as title, a.dcreate  as dcreate, a.type as type , a.sendUserName as sendUserName, a.userNames as userNames,b.read as read from "
+		String hql = "select a.id as id, a.title  as title, a.createTime  as createTime, a.type as type , a.sendUserName as sendUserName, a.userNames as userNames,b.read as read from "
 				+ SysEmail.class.getName() + " a , " + SysEmailUser.class.getName()
 				+ " b  where a.type='yfs' and b.type=0 and a.id=b.emailId and b.userId=:userId ";
 		String hqlCount = "select count(b) from " + SysEmail.class.getName() + " a , " + SysEmailUser.class.getName()
@@ -196,7 +196,7 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 			whereSql+=" and a.title like :title ";
 		}
 
-		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql+whereSql+" ORDER BY b.dupdate DESC", hqlCount+whereSql, paramMap, pageRange);
+		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql+whereSql+" ORDER BY b.updateTime DESC", hqlCount+whereSql, paramMap, pageRange);
 
 		return page;
 	}
@@ -253,7 +253,7 @@ public class EmailService extends BaseService<SysEmail> implements LoadDataTime,
 	public void fileOper(SystemFile systemFile) {
 		SysEmail sysEmail = dao.findEntityByPK(SysEmail.class, systemFile.getServiceId());
 		if (sysEmail == null) {
-			systemFile.setDestroy(1);
+			systemFile.setStatus(1);
 		}
 	}
 

@@ -19,7 +19,7 @@
 				<td xtype="label" width=100px>创建人</td>
 				<td domName="createUserName"></td>
 				<td xtype="label">生成时间</td>
-				<td domName="dcreate" render="datetime"></td>
+				<td domName="createTime" render="datetime"></td>
 			</tr>
 			<tr>
 				<td xtype="label">异常类名</td>

@@ -31,7 +31,7 @@ public class SysParamService extends BaseService<SysParams> implements
 				ParamFactory.getParamHb().is("sysImg", systemFile.getId())
 						.is("sysIcon", systemFile.getId())));
 		if (count == 0) {
-			systemFile.setDestroy(1);
+			systemFile.setStatus(1);
 		}
 	}
 }

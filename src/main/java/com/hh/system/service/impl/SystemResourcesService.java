@@ -70,7 +70,7 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 		}
 
 		if (share != 1) {
-			paramInf.is("vcreate", userService.findUserId());
+			paramInf.is("createUser", userService.findUserId());
 		}
 
 		return super.queryPagingData( pageRange, paramInf);
@@ -81,7 +81,7 @@ public class SystemResourcesService extends BaseService<SystemResources> impleme
 		int count = findCount(ParamFactory.getParamHb()
 				.or(ParamFactory.getParamHb().like("files", systemFile.getId()).is("img", systemFile.getId())));
 		if (count == 0) {
-			systemFile.setDestroy(1);
+			systemFile.setStatus(1);
 		}
 	}
 

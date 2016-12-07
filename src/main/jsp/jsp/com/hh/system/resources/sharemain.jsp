@@ -22,7 +22,7 @@
 		$('#span_tree').loadData({
 			params : {
 				text:$('#span_treeText').getValue(),
-				vcreate :$('#span_vcreate').getValue()
+				createUser :$('#span_createUser').getValue()
 			}
 		});
 	}
@@ -33,7 +33,7 @@
 	<div xtype="border_layout">
 		<div config="render : 'west',width:220"  style="overflow :hidden; ">
 			<div xtype="toolbar" config="type:'head'">
-				<span xtype="selectUser" config=" name : 'vcreate' "></span>
+				<span xtype="selectUser" config=" name : 'createUser' "></span>
 				<table style="font-size: 12" width=100%  cellspacing="0" cellpadding="0" ><tr>
 				<td >
 				<span xtype="text" config=" name : 'treeText' ,enter: querytree"></span>

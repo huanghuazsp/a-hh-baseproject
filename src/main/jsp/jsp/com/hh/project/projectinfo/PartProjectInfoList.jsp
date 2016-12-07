@@ -25,7 +25,7 @@
 				url : 'jsp-project-projectuserinfo-ProjectUserInfoList',
 				urlParams : {
 					projectId : row.id,
-					oper : loginUser.id==row.vcreate ||  loginUser.id==row.manager ? 'all':''
+					oper : loginUser.id==row.createUser ||  loginUser.id==row.manager ? 'all':''
 				},
 				params : {
 					callback : function() {
@@ -41,7 +41,7 @@
 				url : 'jsp-project-projectmodular-ProjectModularList',
 				urlParams : {
 					projectId : row.id,
-					oper : loginUser.id==row.vcreate ||  loginUser.id==row.manager ? 'all':''
+					oper : loginUser.id==row.createUser ||  loginUser.id==row.manager ? 'all':''
 				},
 				params : {
 					callback : function() {
@@ -57,7 +57,7 @@
 				url : 'jsp-project-projectfile-ProjectFileList',
 				urlParams : {
 					projectId : row.id,
-					oper : loginUser.id==row.vcreate ||  loginUser.id==row.manager ? 'all':''
+					oper : loginUser.id==row.createUser ||  loginUser.id==row.manager ? 'all':''
 				},
 				params : {
 					callback : function() {

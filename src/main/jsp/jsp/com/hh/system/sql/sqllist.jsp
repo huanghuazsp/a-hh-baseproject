@@ -40,7 +40,7 @@
 			name : 'elapsedTime' ,
 			text : '耗时（毫秒）'
 		},{
-			name : 'dcreate' ,
+			name : 'createTime' ,
 			text : '生成时间',
 			render:'datetime'
 		},{

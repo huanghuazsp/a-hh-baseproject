@@ -40,14 +40,14 @@ Ext
 					},
 					afDataLoad : function() {
 						var fileUUID = UUID.getUUID();
-						this.object.dcreate = Ext.util.Format.date(
-								this.object.dcreate, "Y年m月d日 H时i分s秒")
+						this.object.createTime = Ext.util.Format.date(
+								this.object.createTime, "Y年m月d日 H时i分s秒")
 						var tpl = Ext
 								.create(
 										'Ext.Template',
 										'<h1>{title}</h1>',
 										'<span class=labelText>发件人：</span>{sendUserName}<br/>',
-										'<span class=labelText>时   间：</span>{dcreate}<br/>',
+										'<span class=labelText>时   间：</span>{createTime}<br/>',
 										'<span class=labelText>收件人：</span>{userNames}<br/>',
 										fileUUID,
 										'<hr/>',

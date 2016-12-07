@@ -91,7 +91,7 @@
 	}
 	
 	function renderoper(value, row) {
-		if(loginUser.id!=row.vcreate && oper!='all'){
+		if(loginUser.id!=row.createUser && oper!='all'){
 			return '无权限';
 		}
 		

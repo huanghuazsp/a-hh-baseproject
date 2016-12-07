@@ -37,7 +37,7 @@ Ext
 														+ this.eobject.sendUserName
 														+ '<br/>'
 														+ '<span style="margin: 0 0 5px 0px;font-size: 13px;	font-weight: bold;	width: 80px;	display: -moz-inline-box;display: inline-block;">时   间：</span>'
-														+ this.eobject.dcreate
+														+ this.eobject.createTime
 														+ '<br/>'
 														+ '<span style="margin: 0 0 5px 0px;font-size: 13px;	font-weight: bold;	width: 80px;	display: -moz-inline-box;display: inline-block;">收件人：</span>'
 														+ this.eobject.userNames

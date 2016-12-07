@@ -317,7 +317,7 @@ public class UsUser extends BaseEntity implements IUser {
 		this.theme = theme;
 	}
 
-	@Column(name = "JOB_ID", length = 36)
+	@Column(name = "JOB_ID_", length = 36)
 	public String getJobId() {
 		return jobId;
 	}
@@ -326,7 +326,7 @@ public class UsUser extends BaseEntity implements IUser {
 		this.jobId = jobId;
 	}
 
-	@Column(name = "DEPT_ID", length = 36)
+	@Column(name = "DEPT_ID_", length = 36)
 	public String getDeptId() {
 		return deptId;
 	}
@@ -335,7 +335,7 @@ public class UsUser extends BaseEntity implements IUser {
 		this.deptId = deptId;
 	}
 
-	@Column(name = "ORG_ID", length = 36)
+	@Column(name = "ORG_ID_", length = 36)
 	public String getOrgId() {
 		return orgId;
 	}

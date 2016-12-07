@@ -42,7 +42,7 @@ public class ProjectInfoService extends BaseService<ProjectInfo> {
 	@Override
 	public PagingData<ProjectInfo> queryPagingData(ProjectInfo entity, PageRange pageRange) {
 		ParamInf hqlParamList = ParamFactory.getParamHb();
-		hqlParamList.is("vcreate", loginUserUtilService.findUserId());
+		hqlParamList.is("createUser", loginUserUtilService.findUserId());
 		hqlParamList.is("manager", loginUserUtilService.findUserId());
 
 		ParamInf hqlParamList2 = ParamFactory.getParamHb().or(hqlParamList);
@@ -56,7 +56,7 @@ public class ProjectInfoService extends BaseService<ProjectInfo> {
 		String userId = loginUserUtilService.findUserId();
 
 		String hql = "select DISTINCT a.text as text,a.id as id, a.startDate  as startDate, a.managerText  as managerText"
-				+ ", a.client as client " + ", a.money as money, a.vcreate as vcreate, a.manager as manager from "
+				+ ", a.client as client " + ", a.money as money, a.createUser as createUser, a.manager as manager from "
 				+ ProjectInfo.class.getName() + " a , " + ProjectUserInfo.class.getName()
 				+ " b  where  a.id=b.projectId and (b.user=:userId or a.allUserRead=1) ";
 		String hqlCount = "select count(b) from " + ProjectInfo.class.getName() + " a , "
@@ -71,7 +71,7 @@ public class ProjectInfoService extends BaseService<ProjectInfo> {
 			whereSql += " and a.text like :text ";
 		}
 
-		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql + whereSql + " ORDER BY b.dupdate DESC",
+		PagingData<Map<String, Object>> page = dao.queryPagingDataByHql(hql + whereSql + " ORDER BY b.updateTime DESC",
 				hqlCount + whereSql, paramMap, pageRange);
 
 		return page;

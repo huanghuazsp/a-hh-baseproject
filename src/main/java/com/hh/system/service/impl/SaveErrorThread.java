@@ -31,9 +31,9 @@ public class SaveErrorThread extends Thread {
 		sysError.setName(e.getClass().getName());
 		sysError.setMessage(e.getMessage());
 		sysError.setAllMessage(ExceptionUtil.getMessage(e));
-		sysError.setVcreate(userid);
-		sysError.setVupdate(userid);
-		sysError.setVorgid(currOrg);
+		sysError.setCreateUser(userid);
+		sysError.setUpdateUser(userid);
+		sysError.setOrgid(currOrg);
 		try {
 			errorService.save(sysError);
 		} catch (MessageException e1) {

@@ -193,11 +193,11 @@ public class SystemService implements LoadDataTime, SystemServiceInf {
 	}
 
 	public static void setBeanSysFields(BaseBean object) {
-		object.setVcreate("system");
-		object.setVupdate("system");
-		object.setVorgid("system");
-		object.setDcreate(new Date());
-		object.setDupdate(new Date());
+		object.setCreateUser("system");
+		object.setUpdateUser("system");
+		object.setOrgid("system");
+		object.setCreateTime(new Date());
+		object.setUpdateTime(new Date());
 		object.setOrder(PrimaryKey.getTime());
 	}
 	@Override
