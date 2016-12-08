@@ -53,6 +53,8 @@ public class LoginUserUtilService implements LoginUserServiceInf {
 		user.setOperPageTextMap(null);
 		user.setOperUrlList(null);
 		user.setDesktopQuickList(null);
+		user.setMobileHead(null);
+		user.setVzmbj(null);
 		return user;
 	}
 
