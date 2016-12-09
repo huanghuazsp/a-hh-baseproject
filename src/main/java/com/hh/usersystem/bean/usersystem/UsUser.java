@@ -162,7 +162,7 @@ public class UsUser extends BaseEntity implements IUser {
 	public UsUser() {
 	}
 
-	@Column(name = "TEXT", length = 64,columnDefinition="COMMENT '名称'")
+	@Column(name = "TEXT", length = 64)
 	public String getText() {
 		return this.text;
 	}
