@@ -3,7 +3,7 @@
 <%=SystemUtil.getBaseDoctype()%>
 <html>
 <head>
-<title>岗位切换</title>
+<title>部门切换</title>
 <%=SystemUtil.getBaseJs("checkform")%>
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();

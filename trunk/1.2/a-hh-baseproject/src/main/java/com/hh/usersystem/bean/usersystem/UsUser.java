@@ -19,6 +19,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.hh.hibernate.dao.inf.Order;
 import com.hh.hibernate.util.base.BaseEntity;
+import com.hh.system.util.Convert;
 import com.hh.system.util.PinYinUtil;
 import com.hh.usersystem.IUser;
 import com.hh.usersystem.util.steady.StaticProperties;
@@ -462,6 +463,14 @@ public class UsUser extends BaseEntity implements IUser {
 		this.mobileHead = mobileHead;
 	}
 	
-	
+	public boolean hasRoleId(String role) {
+		for (UsRole roleo : roleList) {
+			if (Convert.toString(role).equals(roleo.getId()) || Convert.toString(role).equals(roleo.getJssx())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	
 }
