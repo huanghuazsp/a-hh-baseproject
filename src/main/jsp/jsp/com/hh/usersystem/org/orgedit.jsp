@@ -27,10 +27,10 @@
 		}, {
 			id : 2,
 			text : '部门'
-		}, {
+		}/* , {
 			id : 3,
 			text : '岗位'
-		} ]
+		}  */]
 	}
 	
 	function callback(){
@@ -78,10 +78,10 @@
 			}, {
 				id : 2,
 				text : '部门'
-			}, {
+			}/* , {
 				id : 3,
 				text : '岗位'
-			} ];
+			}  */];
 		}else if(lx_==1){
 			lxconfig.data=[ {
 				id : 1,
@@ -89,18 +89,18 @@
 			}, {
 				id : 2,
 				text : '部门'
-			}, {
+			}/* , {
 				id : 3,
 				text : '岗位'
-			} ];
+			}  */];
 		}else if(lx_==2){
 			lxconfig.data=[ {
 				id : 2,
 				text : '部门'
-			}, {
+			}/* , {
 				id : 3,
 				text : '岗位'
-			} ];
+			} */ ];
 		}else if(lx_==3){
 			lxconfig.data=[ {
 				id : 3,

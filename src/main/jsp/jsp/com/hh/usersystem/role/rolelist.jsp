@@ -97,7 +97,7 @@
 			select.append('<option value="">无权限</option>');
 			select.append('<option value="ALL">所有</option>');
 			select.append('<option value="BR">本人</option>');
-			select.append('<option value="BGW">本岗位</option>');
+			//select.append('<option value="BGW">本岗位</option>');
 			select.append('<option value="BBM">本部门</option>');
 			select.append('<option value="BJG">本机构</option>');
 			

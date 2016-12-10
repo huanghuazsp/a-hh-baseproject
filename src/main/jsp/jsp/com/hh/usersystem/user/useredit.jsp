@@ -68,8 +68,8 @@
 	}
 	
 	function deptChange(data){
-		$('#span_jobId').setConfig({params:{node:data.id}});
-		$('#span_jobId').setValue('');
+		//$('#span_jobId').setConfig({params:{node:data.id}});
+		//$('#span_jobId').setValue('');
 	}
 	
 </script>
@@ -128,9 +128,14 @@
 					<td colspan="3"><span xtype="selectOrg"  config="name: 'deptId' ,selectType:'dept'  ,onChange : deptChange "></td>
 				</tr>
 				<tr trtype="systemmanager" >
+					<td xtype="label">所属组：</td>
+					<td colspan="3"><span xtype="selectTree"
+						config="name: 'sysGroupIds'  , url:'usersystem-Group-queryTreeList' ,findTextAction:'usersystem-Group-findObjectById' "></td>
+				</tr>
+				<!-- <tr trtype="systemmanager" >
 					<td xtype="label">岗位：</td>
 					<td colspan="3"><span xtype="selectOrg"  config="name: 'jobId' ,selectType:'job'   "></td>
-				</tr>
+				</tr> -->
 			</table>
 		</form>
 	</div>
