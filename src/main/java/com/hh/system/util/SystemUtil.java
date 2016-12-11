@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.hh.system.bean.SysData;
 import com.hh.system.service.impl.BeanFactoryHelper;
 import com.hh.system.service.impl.SysDataService;
+import com.hh.system.service.impl.SystemFileService;
 import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 
@@ -25,12 +26,22 @@ public class SystemUtil {
 		}
 		return loginUserUtilService;
 	}
-	
+
 	public static SysDataService getSysDataService() {
 		if (sysDataService == null) {
 			sysDataService = BeanFactoryHelper.getBeanFactory().getBean(SysDataService.class);
 		}
 		return sysDataService;
+	}
+
+	static SystemFileService systemFileService = null;
+
+	public static SystemFileService getSystemFileService() {
+		if (systemFileService != null) {
+			return systemFileService;
+		}
+		systemFileService = BeanFactoryHelper.getBean(SystemFileService.class);
+		return systemFileService;
 	}
 
 	public static String getBaseDoctype() {
@@ -71,7 +82,7 @@ public class SystemUtil {
 
 	public static String getMobileHead(String quickMenu) {
 		UsUser hhXtYh = userService.findLoginUser();
-		String returnstr=hhXtYh.getMobileHead();
+		String returnstr = hhXtYh.getMobileHead();
 		if (Check.isNoEmpty(quickMenu)) {
 			List<Map<String, Object>> mapList = Json.toMapList(quickMenu);
 			StringBuffer str = new StringBuffer();
@@ -103,8 +114,7 @@ public class SystemUtil {
 	public static String getMobileDown() {
 		return "</div>";
 	}
-	
-	
+
 	public static String getJsonDataByCode(String code) {
 		List<SysData> sysDatas = getSysDataService().queryListByCode(code);
 		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
