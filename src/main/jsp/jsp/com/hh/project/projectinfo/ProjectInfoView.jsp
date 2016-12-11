@@ -1,12 +1,12 @@
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page import="com.hh.system.util.BaseSystemUtil"%>
+<%@page import="com.hh.system.util.SystemUtil"%>
 <%@page import="com.hh.system.util.Convert"%>
-<%=BaseSystemUtil.getBaseDoctype()%>
+<%=SystemUtil.getBaseDoctype()%>
 
 <html>
 <head>
 <title>项目信息</title>
-<%=BaseSystemUtil.getBaseJs("checkform")%>
+<%=SystemUtil.getBaseJs("checkform")%>
 
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();

@@ -1,13 +1,12 @@
 <%@page import="com.hh.system.util.SystemUtil"%>
 <%@page import="com.hh.system.util.Convert"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page import="com.hh.system.util.BaseSystemUtil"%>
-<%=BaseSystemUtil.getBaseDoctype()%>
+<%=SystemUtil.getBaseDoctype()%>
 
 <html>
 <head>
 <title>模块列表</title>
-<%=BaseSystemUtil.getBaseJs()+SystemUtil.getUser()%>
+<%=SystemUtil.getBaseJs()+SystemUtil.getUser()%>
 
 <script type="text/javascript">
 

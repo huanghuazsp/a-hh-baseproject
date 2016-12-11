@@ -1,12 +1,12 @@
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page import="com.hh.system.util.BaseSystemUtil"%>
+<%@page import="com.hh.system.util.SystemUtil"%>
 <%@page import="com.hh.system.util.Convert"%>
-<%=BaseSystemUtil.getBaseDoctype()%>
+<%=SystemUtil.getBaseDoctype()%>
 
 <html>
 <head>
 <title>模块编辑</title>
-<%=BaseSystemUtil.getBaseJs("checkform","date", "ueditor")%>
+<%=SystemUtil.getBaseJs("checkform","date", "ueditor")%>
 
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();

@@ -1,11 +1,11 @@
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page import="com.hh.system.util.BaseSystemUtil"%>
-<%=BaseSystemUtil.getBaseDoctype()%>
+<%@page import="com.hh.system.util.SystemUtil"%>
+<%=SystemUtil.getBaseDoctype()%>
 
 <html>
 <head>
 <title>数据列表</title>
-<%=BaseSystemUtil.getBaseJs()%>
+<%=SystemUtil.getBaseJs()%>
 
 <script type="text/javascript">
 	function doView() {

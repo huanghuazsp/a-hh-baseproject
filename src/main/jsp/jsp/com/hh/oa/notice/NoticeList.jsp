@@ -1,6 +1,6 @@
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page import="com.hh.system.util.BaseSystemUtil"%>
-<%=BaseSystemUtil.getBaseDoctype()%>
+<%@page import="com.hh.system.util.SystemUtil"%>
+<%=SystemUtil.getBaseDoctype()%>
 <% 
 	String type=request.getParameter("type");
 	String pageUrl = "oa-Notice-queryShouPage";
@@ -13,7 +13,7 @@
 <html>
 <head>
 <title>数据列表</title>
-<%=BaseSystemUtil.getBaseJs()%>
+<%=SystemUtil.getBaseJs()%>
 
 <script type="text/javascript">
 	function doDelete() {

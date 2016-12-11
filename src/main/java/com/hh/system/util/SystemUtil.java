@@ -127,4 +127,16 @@ public class SystemUtil {
 		return gson.toJson(mapList).replaceAll("\"", "'");
 	}
 
+	public static String getMobileBaseJs(Map<String, String> paramsMap, String... args) {
+		return BaseSystemUtil.getMobileBaseJs(paramsMap, args);
+	}
+
+	public static String getMobileBaseJs(String... args) {
+		return BaseSystemUtil.getMobileBaseJs(args);
+	}
+
+	public static String getKey(String... args) {
+		return BaseSystemUtil.getKey(args);
+	}
+
 }
