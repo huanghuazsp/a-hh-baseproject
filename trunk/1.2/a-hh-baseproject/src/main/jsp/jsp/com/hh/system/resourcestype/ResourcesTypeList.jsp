@@ -1,13 +1,12 @@
 <%@page import="com.hh.system.util.SystemUtil"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page import="com.hh.system.util.BaseSystemUtil"%>
 <%@page import="com.hh.system.util.pk.PrimaryKey"%>
-<%=BaseSystemUtil.getBaseDoctype()%>
+<%=SystemUtil.getBaseDoctype()%>
 
 <html>
 <head>
 <title>数据列表</title>
-<%=BaseSystemUtil.getBaseJs("layout","ztree", "ztree_edit")+SystemUtil.getUser()%>
+<%=SystemUtil.getBaseJs("layout","ztree", "ztree_edit")+SystemUtil.getUser()%>
 <%
 	String iframeId = PrimaryKey.getUUID();
 %>
