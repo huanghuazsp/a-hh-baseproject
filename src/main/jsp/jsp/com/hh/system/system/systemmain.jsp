@@ -20,7 +20,7 @@
 			url : 'jsp-system-systemplantask-SystemPlantaskList',
 			onClick : onClick
 		}, {
-			text : '数据库管理',
+			text : '数据库',
 			img : '/hhcommon/images/icons/page/page_white_database.png',
 			url : 'jsp-database-connect-main',
 			onClick : onClick
