@@ -8,15 +8,19 @@
 <%=SystemUtil.getBaseJs("checkform", "date")%>
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
-	var width = 650;
-	var height = 300
+	var width = 750;
+	var height = 600
 
 	var object = params.object;
 	var objectid = object ? object.id : '';
 
 	var yxjconfig = {
 		name : 'level',
-		data : [
+		value:'0',
+		data : [{
+					'id' : '0',
+					'text' : '无优先级'
+				},
 				{
 					'id' : '4',
 					'text' : '<img src=\'/hhcommon/images/icons/flag/flag_red.png\'/>重要紧急'
@@ -32,10 +36,7 @@
 				{
 					'id' : '1',
 					'text' : '<img src=\'/hhcommon/images/icons/flag/flag_green.png\'/>不重要不紧急'
-				}, {
-					'id' : '',
-					'text' : '无优先级'
-				} ]
+				}]
 	}
 
 	function save() {
@@ -102,6 +103,47 @@
 	function init() {
 		findData();
 	}
+	
+
+	
+	function queryHtml(){
+		return '<table xtype="form" id="queryForm" style="">'
+							+'<tr>'
+							+'<td xtype="label">名称：</td>'
+							+'<td><span xtype="text" config=" name : \'text\' ,enter: doQuery "></span></td>'
+							+'<td style="width:100px;"><span	xtype="button" config="onClick: doQuery ,text:\'查询\' , itype :\'query\' "></span></td>'
+						+'</tr>'
+					+'</table>';
+	}
+	
+	var projectConfig = {
+			openWidth:800,
+			name : 'projectId',
+			findTextAction :'project-ProjectInfo-findObjectById' ,
+			pageconfig:{
+				queryHtml : queryHtml(),
+				url:'project-ProjectInfo-queryPartPage' ,
+				column : [
+					{
+						name : 'text' ,
+						text : '项目名称'
+					},
+				
+				
+					{
+						name : 'startDate' ,
+						text : '开始日期',
+						render : 'date',
+						width:80
+					},
+				
+					{
+						name : 'managerText' ,
+						text : '项目经理'
+					}
+				]
+			}
+	};
 </script>
 </head>
 <body>
@@ -110,8 +152,13 @@
 			<span xtype="text" config=" hidden:true,name : 'id'"></span>
 			<table xtype="form">
 				<tr>
+					<td xtype="label">所属项目：</td>
+					<td colspan="3"><span xtype="selectPageList"
+						configVar=" projectConfig " ></span></td>
+				</tr>
+				<tr>
 					<td xtype="label">内容：</td>
-					<td colspan="3"><span xtype="text"
+					<td colspan="3"><span xtype="textarea"
 						config=" name : 'content' ,required :true "></span></td>
 				</tr>
 				<!-- <tr>
@@ -130,6 +177,12 @@
 				<tr>
 					<td xtype="label">优先级：</td>
 					<td colspan="3"><span xtype="radio" configVar="yxjconfig"></span></td>
+				</tr>
+				
+				<tr>
+					<td xtype="label">总结：</td>
+					<td colspan="3"><span xtype="textarea"
+						config=" name : 'summary' "></span></td>
 				</tr>
 			</table>
 		</form>

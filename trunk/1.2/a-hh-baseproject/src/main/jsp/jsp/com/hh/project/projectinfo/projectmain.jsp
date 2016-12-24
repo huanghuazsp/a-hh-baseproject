@@ -74,10 +74,10 @@
 				
 				<span xtype=menu  configVar="emailMenu" ></span>
 			
-				<hr>
+				<!-- <hr>
 			
 				<span xtype=menu  configVar="taskMenu" ></span>
-				<span xtype="button" config=" text:'任务',menuId:'taskMenu',width:'100%' "></span>
+				<span xtype="button" config=" text:'任务',menuId:'taskMenu',width:'100%' "></span> -->
 			</div>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>

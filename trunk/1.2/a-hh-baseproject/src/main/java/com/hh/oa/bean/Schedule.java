@@ -29,6 +29,11 @@ public class Schedule extends BaseEntity {
 	
 	private String userId;
 	
+	private String summary;
+	
+	private String projectId;
+	private String projectIdText;
+	
 	@Comment("是否全天")
 	public boolean isAllDay() {
 		return allDay;
@@ -99,6 +104,35 @@ public class Schedule extends BaseEntity {
 	}
 	public void setLevel(String level) {
 		this.level = level;
+	}
+	
+	@Comment("总结")
+	@Lob
+	@Column(name = "SUMMARY_")
+	public String getSummary() {
+		return summary;
+	}
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+	
+	@Comment("所属项目")
+	@Column(name = "PROJECT_ID",length=32)
+	public String getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+	
+	
+	@Comment("所属项目名称")
+	@Column(name = "PROJECT_ID_TEXT",length=128)
+	public String getProjectIdText() {
+		return projectIdText;
+	}
+	public void setProjectIdText(String projectIdText) {
+		this.projectIdText = projectIdText;
 	}
 	
 }

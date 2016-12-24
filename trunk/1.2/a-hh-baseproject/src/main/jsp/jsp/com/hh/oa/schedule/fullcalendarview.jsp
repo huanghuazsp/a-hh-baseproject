@@ -46,14 +46,23 @@
 	}
 	function toEvent(data) {
 		if (data) {
+			var title =  data.content ;
+			
+			if(data.summary){
+				title+='\n总结：' +data.summary;
+			}
+			if(data.projectIdText){
+				title+='\n项目：' +data.projectIdText;
+			}
 			var data = $.extend(data, {
-				title : data.content,
+				title : title,
 				start : $.hh.formatDate(data.start,'yyyy-MM-dd HH:mm:ss'),
 				end : $.hh.formatDate(data.end,'yyyy-MM-dd HH:mm:ss'),
 				color : getBackground(data.isOk),
 				className : getClassName(data.level),
 				textColor : null,
-				borderColor : null
+				borderColor : null,
+				level :data.level
 			});
 		}
 		return data;
@@ -67,8 +76,12 @@
 		}
 		object.id = event.id;
 		object.content = event.content;
+		object.summary = event.summary;
+		object.projectId = event.projectId;
+		object.projectIdText = event.projectIdText;
+		
 		object.participants = event.participants;
-		object.level = event.level;
+		object.level = event.level || '0';
 		object.isOk = event.isOk;
 		object.userId = event.userId;
 		return object;
@@ -178,7 +191,8 @@
 							start : start
 									.format('YYYY-MM-DD HH:mm:ss'),
 							end : end
-									.format('YYYY-MM-DD HH:mm:ss')
+									.format('YYYY-MM-DD HH:mm:ss'),
+							level:'0'
 						};
 						Dialog
 								.open({
@@ -213,7 +227,8 @@
 														.format('YYYY-MM-DD HH:mm:ss'),
 												endDate : end
 														.format('YYYY-MM-DD HH:mm:ss'),
-														'currUserId': currUserId
+														'currUserId': currUserId,
+														level:'0'
 											}
 										},
 										function(result) {
