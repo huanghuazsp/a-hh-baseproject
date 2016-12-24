@@ -77,7 +77,6 @@
 				<li><a href="#userDiv">参与者信息</a></li>
 				<li><a href="#fileDiv">附件文档</a></li>
 			</ul>
-			
 			<div id="formDiv">
 				<form id="form" xtype="form" class="form">
 					<span xtype="text" config=" hidden:true,name : 'id'"></span>
