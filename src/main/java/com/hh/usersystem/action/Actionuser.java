@@ -48,6 +48,8 @@ public class Actionuser extends BaseServiceAction<UsUser>  {
 
 	private String oldPassword;
 	private int selectType;
+	
+	private int currOrg;
 
 	@Override
 	public BaseService<UsUser> getService() {
@@ -55,19 +57,19 @@ public class Actionuser extends BaseServiceAction<UsUser>  {
 	}
 
 	public Object queryPagingData() {
-		return userService.queryPagingData(object, this.getPageRange(),selectType, this.getIds(), orgs, roles, groups,usgroups);
+		return userService.queryPagingData(object, this.getPageRange(),selectType, this.getIds(), orgs, roles, groups,usgroups,currOrg);
 	}
 
 	public Object queryPagingDataCombox() {
 		if (Check.isNoEmpty(this.object.getId())) {
 			return userService.queryItemsByIdsStr(object.getId());
 		} else {
-			return userService.queryPagingData(object, this.getPageRange(), 0,null, null, null, null,null);
+			return userService.queryPagingData(object, this.getPageRange(), 0,null, null, null, null,null,currOrg);
 		}
 	}
 
 	public Object queryPagingDataList() {
-		return userService.queryPagingData(object, this.getPageRange(),0, null, null, null, null,null);
+		return userService.queryPagingData(object, this.getPageRange(),0, null, null, null, null,null,currOrg);
 	}
 
 	public Object queryOnLinePagingData() {
@@ -406,6 +408,14 @@ public class Actionuser extends BaseServiceAction<UsUser>  {
 
 	public void setSelectType(int selectType) {
 		this.selectType = selectType;
+	}
+	
+	public int getCurrOrg() {
+		return currOrg;
+	}
+
+	public void setCurrOrg(int currOrg) {
+		this.currOrg = currOrg;
 	}
 	
 }

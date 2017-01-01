@@ -20,7 +20,7 @@
 		render : false,
 		id : 'orgTree',
 		nheight : 78 ,
-		url : 'usersystem-Org-queryOrgAndUsersList',
+		url : 'usersystem-Org-queryOrgAndUsersList?currOrg=1',
 		onClick : function(node) {
 			if (node.id == 'default') {
 				//Dialog.infomsg('请输入内容！');

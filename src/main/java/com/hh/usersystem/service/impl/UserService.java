@@ -90,7 +90,7 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 	}
 
 	public PagingData<UsUser> queryPagingData(UsUser hhXtYh, PageRange pageRange, int selectType, String ids,
-			String orgs, String roles, String groups, String usgroups) {
+			String orgs, String roles, String groups, String usgroups,int currOrg) {
 		UsUser user = loginUserUtilService.findLoginUser();
 		if (selectType == 1) {
 			orgs = user.getDeptId();
@@ -146,6 +146,13 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 		}
 		if (Check.isNoEmpty(idParamList)) {
 			hqlParamList.add(Restrictions.in("id", idParamList));
+		}
+		
+		
+		if (currOrg==0 && !"admin".equals(user.getId())) {
+			if (user.getOrg()!=null ) {
+				hqlParamList.is("orgId", user.getOrgId());
+			}
 		}
 		// tiaojian(orgs, roles, users, groups, hqlParamList);
 

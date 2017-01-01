@@ -37,6 +37,8 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 
 	@Autowired
 	private RoleService roleService;
+	
+	private int currOrg;
 
 	@Override
 	public BaseService<UsOrganization> getService() {
@@ -54,11 +56,13 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	}
 
 	public Object queryOrgAndUsersList() {
-		return organizationService.queryOrgAndUsersList(object);
+		return organizationService.queryOrgAndUsersList(object,currOrg);
 	}
 
 	public Object queryOrgListByPid() {
-		List<UsOrganization> organizationList = organizationService.queryOrgListByPid(object.getNode(), orgs,object.getText(),selectType);
+		
+		
+		List<UsOrganization> organizationList = organizationService.queryOrgListByPid(object.getNode(), orgs,object.getText(),selectType,currOrg);
 		return organizationList;
 	}
 
@@ -265,6 +269,15 @@ public class ActionOrg extends BaseServiceAction<UsOrganization> {
 	public void setSelectType(String selectType) {
 		this.selectType = selectType;
 	}
+
+	public int getCurrOrg() {
+		return currOrg;
+	}
+
+	public void setCurrOrg(int currOrg) {
+		this.currOrg = currOrg;
+	}
+
 	
 
 }
