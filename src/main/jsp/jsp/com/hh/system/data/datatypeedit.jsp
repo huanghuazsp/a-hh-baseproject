@@ -69,7 +69,7 @@
 					<tr>
 						<td xtype="label">名称：</td>
 						<td><span xtype="text" config=" name : 'text',required :true,blur: zwblur "></span></td>
-						<td xtype="label">父节点：</td>
+						<td xtype="label">上级节点：</td>
 						<td><span xtype="selectTree" id="node_span"
 							config="name: 'node' , tableName : 'SYS_DATA_TYPE',  url : 'system-SysDataType-queryTreeList'"></span>
 						</td>

@@ -68,7 +68,7 @@
 					<td><span xtype="text" config=" name : 'text',required :true"></span></td>
 				</tr>
 				<tr>
-					<td xtype="label">父节点：</td>
+					<td xtype="label">上级节点：</td>
 					<td><span id="node_span" xtype="selectTree"
 						config="name: 'node' , findTextAction : 'system-ResourcesType-findObjectById' , url : 'system-ResourcesType-queryTreeList' "></span>
 					</td>

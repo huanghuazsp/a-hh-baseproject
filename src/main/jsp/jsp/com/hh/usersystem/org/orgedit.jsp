@@ -152,7 +152,7 @@
 				<tr>
 					<td xtype="label">名称：</td>
 					<td><span xtype="text" config=" name : 'text',required :true"></span></td>
-					<td xtype="label">父节点：</td>
+					<td xtype="label">上级节点：</td>
 					<td><span id="node_span" xtype="selectTree"
 						config="name: 'node' , tableName : 'US_ORGANIZATION' , url : 'usersystem-Org-queryTreeListByLx' ,params :{lx_:2}  , onChange : node_span_change"></span>
 					</td>
