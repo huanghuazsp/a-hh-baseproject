@@ -84,7 +84,7 @@ Ext.define('com.hh.system.data.DataEdit', {
 					name : "node",
 					columnWidth : 0.5,
 					defaultSubmitValue : 'root',
-					fieldLabel : "父节点",
+					fieldLabel : "上级节点",
 					action : "system-GlobalComboBoxTree-queryTree",
 					extraParams : "{'table_name':'hh_xt_data','leaf':0}",
 					'paramType' : "paramsMap",

@@ -171,14 +171,14 @@ public class OrganizationService extends BaseService<UsOrganization> {
 			throw new MessageException("同级下名称不能一样，请更换！");
 		}
 		if (checkParentNotLeaf(organization)) {
-			throw new MessageException("父节点不能是自己的子节点，请更换！");
+			throw new MessageException("选择的上级节点不能是自己的子节点，请更换！");
 		}
 
 		if (Check.isNoEmpty(organization.getNode())
 				&& !"root".equals(organization.getNode())) {
 			if (this.findObjectById(organization.getNode()).getLx_() > organization
 					.getLx_()) {
-				throw new MessageException("父节点的类型不能小于本节点的类型！");
+				throw new MessageException("上级节点的类型不能小于本节点的类型！");
 			}
 		}
 
