@@ -169,7 +169,7 @@ public class UsUser extends BaseEntity implements IUser {
 	}
 
 	public void setText(String text) {
-		textpinyin = PinYinUtil.getPinYin(text);
+		textpinyin = PinYinUtil.getPinYinAll(text);
 		this.text = text;
 	}
 

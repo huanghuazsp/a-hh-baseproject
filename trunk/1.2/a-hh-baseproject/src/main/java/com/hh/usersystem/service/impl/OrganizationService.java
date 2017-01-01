@@ -43,6 +43,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	private UsLeaderService usLeaderService;
 
 	public List<UsOrganization> queryTreeList(UsOrganization object) {
+		
 		String node =Check.isEmpty(object.getNode()) ? "root" : object.getNode();
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		if (Check.isNoEmpty(object.getText()) && "root".equals(node)) {
@@ -50,8 +51,13 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		}else{
 			hqlParamList.is("node", node);
 		}
-		return organizationToIconCls(
-				queryTreeList(hqlParamList	));
+		
+		UsUser user=loginUserUtilService.findLoginUser();
+		if (user.getOrg()!=null) {
+			hqlParamList.likenoreg("code_", user.getOrg().getCode_()+"%");
+		}
+		return 
+				queryTreeList(hqlParamList	);
 	}
 
 	public List<UsOrganization> queryTreeList(ParamInf paramList) {
@@ -115,7 +121,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 				dao.queryTreeList(UsOrganization.class, hqlParamList));
 	}
 	public List<UsOrganization> queryOrgListByPid(String node,
-			List<String> orgs,String text,String selectType) {
+			List<String> orgs,String text,String selectType,int currOrg) {
 		ParamInf hqlParamList = ParamFactory.getParamHb();
 		List<UsOrganization> organizationList = null;
 		
@@ -146,13 +152,20 @@ public class OrganizationService extends BaseService<UsOrganization> {
 		
 		hqlParamList.nis("state", 1);
 		hqlParamList.order("lx_");
+		UsUser user=loginUserUtilService.findLoginUser();
+		if (currOrg==0 && !"admin".equals(user.getId())) {
+			if (user.getOrg()!=null  ) {
+				hqlParamList.likenoreg("code_", user.getOrg().getCode_()+"%");
+			}
+		}
+		
 		organizationList = dao
 				.queryTreeList(UsOrganization.class, hqlParamList);
 		return organizationToIconCls(organizationList,selectType);
 	}
 	public List<UsOrganization> queryOrgListByPid(String node,
-			String orgs,String text,String selectType) {
-		return queryOrgListByPid(node, Convert.strToList(orgs),text,selectType);
+			String orgs,String text,String selectType,int currOrg) {
+		return queryOrgListByPid(node, Convert.strToList(orgs),text,selectType,currOrg);
 	}
 
 	public UsOrganization findObjectById(String id) {
@@ -237,7 +250,7 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	
 	public List<UsOrganization> queryOrgAndUsersList(List<String> orgIdList,String node) {
 		List<UsOrganization> organizations = this.queryOrgListByPid(
-				node, orgIdList,"","");
+				node, orgIdList,"","",0);
 		for (UsOrganization organization : organizations) {
 			organization.setLeaf(0);
 			updateLeaf(organization);
@@ -249,9 +262,9 @@ public class OrganizationService extends BaseService<UsOrganization> {
 	}
 
 	public List<UsOrganization> queryOrgAndUsersList(
-			UsOrganization organization1) {
+			UsOrganization organization1,int currOrg) {
 		List<UsOrganization> organizations = this.queryOrgListByPid(
-				organization1.getNode(),"",organization1.getText(),"");
+				organization1.getNode(),"",organization1.getText(),"",currOrg);
 		for (UsOrganization organization : organizations) {
 			organization.setLeaf(0);
 			updateLeaf(organization);

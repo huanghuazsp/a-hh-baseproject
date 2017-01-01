@@ -84,7 +84,7 @@ public class SysDataTypeService extends BaseService<SysDataType> {
 			String name = Convert.toString(map.get("名称"));
 			String code = Convert.toString(map.get("编码"));
 			if (Check.isEmpty(code)) {
-				code=PinYinUtil.getPinYin(name);
+				code=PinYinUtil.getPinYinAll(name);
 			}
 			String node = "root";
 			if ("字典".equals(type)) {
