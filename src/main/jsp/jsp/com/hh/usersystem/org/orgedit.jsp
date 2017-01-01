@@ -113,7 +113,7 @@
 	
 	function newData(params) {
 		if(params.lx_==null){
-			params.lx_=0;
+			params.lx_=1;
 		}
 		renderLxSpan(params.lx_);
 		$.extend(params, {
