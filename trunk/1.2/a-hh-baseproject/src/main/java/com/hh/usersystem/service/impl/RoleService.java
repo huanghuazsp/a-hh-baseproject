@@ -13,6 +13,7 @@ import com.hh.hibernate.dao.inf.IHibernateDAO;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.Convert;
+import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
 import com.hh.system.util.dto.ParamFactory;
@@ -57,6 +58,12 @@ public class RoleService extends BaseService<UsRole> {
 	}
 
 	public void deleteByIds(String ids) {
+		if (ids.indexOf("default")>-1) {
+			throw new MessageException("默认角色不能删除！");
+		}
+		if (ids.indexOf("admin")>-1) {
+			throw new MessageException("超级管理员角色不能删除！");
+		}
 		List<String> idList = Convert.strToList(ids);
 		if (!Check.isEmpty(idList)) {
 			xtjsdao.deleteEntity(UsRole.class, "id", idList);
