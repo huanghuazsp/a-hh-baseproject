@@ -15,6 +15,7 @@
 	var view = '<%=Convert.toString(request.getParameter("view"))%>';
 	var objectid = '<%=Convert.toString(request.getParameter("id"))%>';
 	
+	
 	function save() {
 		$.hh.validation.check('form', function(formData) {
 			Request.request('usersystem-user-save', {
@@ -49,6 +50,17 @@
 					$('#span_jobId').setConfig({params:{node:result.deptId}});
 				}
 			});
+		}else{
+			var object = {
+					orgId : params.orgId,
+					orgIdText : params.orgText,
+					deptId : params.deptId,
+					deptIdText : params.deptText,
+					jobId : params.jobId,
+					jobIdText : params.jobText,
+					nxb:1
+			};
+			$('#form').setValue(object);
 		}
 	}
 
@@ -127,12 +139,12 @@
 					<td xtype="label">部门：</td>
 					<td colspan="3"><span xtype="selectOrg"  config="name: 'deptId' ,selectType:'dept'  ,onChange : deptChange "></td>
 				</tr>
-				<tr trtype="systemmanager" >
+				<!--<tr trtype="systemmanager" >
 					<td xtype="label">所属组：</td>
 					<td colspan="3"><span xtype="selectTree"
 						config="name: 'sysGroupIds'  , url:'usersystem-Group-queryTreeList' ,findTextAction:'usersystem-Group-findObjectById' "></td>
 				</tr>
-				<!-- <tr trtype="systemmanager" >
+				 <tr trtype="systemmanager" >
 					<td xtype="label">岗位：</td>
 					<td colspan="3"><span xtype="selectOrg"  config="name: 'jobId' ,selectType:'job'   "></td>
 				</tr> -->

@@ -14,9 +14,16 @@
 		});
 	}
 	function doAdd() {
+		
 		Dialog.open({
 			url : 'jsp-usersystem-user-useredit',
 			params : {
+				deptId : sDeptId,
+				deptText : sDeptText,
+				orgId : sOrgId,
+				orgText : sOrgText,
+				jobId : sJobId,
+				jobText : sJobText,
 				callback : function() {
 					$("#pagelist").loadData();
 				}
@@ -82,13 +89,73 @@
 		Request.submit('usersystem-user-download', {});
 	}
 	
+	var sDeptId;
+	var sDeptText;
+	var sOrgId;
+	var sOrgText;
+	var sJobId;
+	var sJobText;
+	
+	function getParentOrg(node){
+		var parentNode = node.getParentNode();
+		if(parentNode && parentNode.lx_==1){
+			return parentNode;
+		}else if(parentNode){
+			return getParentOrg(parentNode);
+		}
+	}
+	
+	function getParentDept(node){
+		var parentNode = node.getParentNode();
+		if(parentNode && parentNode.lx_==2){
+			return parentNode;
+		}else if(parentNode){
+			return getParentDept(parentNode);
+		}
+	}
+	
 	function orgTreeClick( treeNode) {
+		 sDeptId = null;
+		 sDeptText = null;
+		 sOrgId = null;
+		 sOrgText = null;
+		 sJobId = null;
+		 sJobText = null;
+		if(treeNode.lx_==3){
+			sJobId = treeNode.id;
+			sJobText = treeNode.name;
+			var selectDept = getParentDept(treeNode);
+			if(selectDept){
+				sDeptId = selectDept.id;
+				sDeptText = selectDept.name;
+				
+				var selectOrg = getParentOrg(selectDept);
+				if(selectOrg){
+					sOrgId = selectOrg.id;
+					sOrgText = selectOrg.name;
+				}
+			}
+			
+		}else if(treeNode.lx_==2){
+			sDeptId = treeNode.id;
+			sDeptText = treeNode.name;
+			
+			var selectOrg = getParentOrg(treeNode);
+			if(selectOrg){
+				sOrgId = selectOrg.id;
+				sOrgText = selectOrg.name;
+			}
+		}else if(treeNode.lx_==1){
+			sOrgId = treeNode.id;
+			sOrgText = treeNode.name;
+		}
 		selectOrgId = treeNode.id;
 		$('#selectNodeTd')
 					.html(
 							treeNode.text
 									+ '&nbsp;&nbsp;<a href="javascript:allData();">所有数据</a>');
 		doQuery();
+		
 	}
 	function allData(){
 		selectOrgId = '';
