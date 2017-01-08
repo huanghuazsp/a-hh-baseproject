@@ -21,25 +21,15 @@ public class UsRole extends BaseEntity  {
 
 	private String text;
 	private String vbz;
-	private int nlx;
 	
 	private String jssx;
+	private String jssxText;
 
 	// Constructors
 
 	/** default constructor */
 	public UsRole() {
 	}
-
-	@Column(name = "NLX", precision = 1, scale = 0)
-	public int getNlx() {
-		return nlx;
-	}
-
-	public void setNlx(int nlx) {
-		this.nlx = nlx;
-	}
-
 
 	@Column(name = "TEXT", length = 64)
 	public String getText() {
@@ -58,15 +48,6 @@ public class UsRole extends BaseEntity  {
 	public void setVbz(String vbz) {
 		this.vbz = vbz;
 	}
-	
-	@Column(name = "JSSX", length = 64)
-	public String getJssx() {
-		return jssx;
-	}
-
-	public void setJssx(String jssx) {
-		this.jssx = jssx;
-	}
 
 	private int state;
 	@Column(name="STATE_")
@@ -77,5 +58,25 @@ public class UsRole extends BaseEntity  {
 	public void setState(int state) {
 		this.state = state;
 	}
+	
+	@Column(name = "JSSX", length = 64)
+	public String getJssx() {
+		return jssx;
+	}
+
+	public void setJssx(String jssx) {
+		this.jssx = jssx;
+	}
+
+	@Column(name = "JSSX_TEXT", length = 64)
+	public String getJssxText() {
+		return jssxText;
+	}
+
+	public void setJssxText(String jssxText) {
+		this.jssxText = jssxText;
+	}
+	
+	
 	
 }

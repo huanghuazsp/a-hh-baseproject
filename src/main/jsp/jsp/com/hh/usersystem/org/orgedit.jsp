@@ -162,8 +162,12 @@
 					<td><span id="sjbmspan"  xtype="text"
 						config=" name : 'sjbm_', readonly : true "></span></td> -->
 					<td xtype="label">编码：</td>
-					<td colspan="3"><span id="spancode_" xtype="text"
+					<td><span id="spancode_" xtype="text"
 						config=" name : 'code_',readonly :true ,watermark : '自动生成'"></span></td>
+					<td xtype="label">机构属性：</td>
+					<td>
+					<span xtype="combobox" config=" name : 'jgsx' , data : <%=SystemUtil.getJsonDataByCode("jigoushuxing")%> "></span>
+					</td>
 				</tr>
 				
 				<tr>

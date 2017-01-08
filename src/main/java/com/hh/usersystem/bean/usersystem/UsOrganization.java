@@ -95,6 +95,9 @@ public class UsOrganization    extends BaseEntityTree<UsOrganization> implements
 //	public void setNode(String node) {
 //		this.node = node;
 //	}
+	
+	private String jgsx;
+	private String jgsxText;
 
 	@Column(length = 256)
 	public String getCode_() {
@@ -187,5 +190,25 @@ public class UsOrganization    extends BaseEntityTree<UsOrganization> implements
 	public void setState(int state) {
 		this.state = state;
 	}
+
+	@Column(name = "JGSX", length = 64)
+	public String getJgsx() {
+		return jgsx;
+	}
+
+	public void setJgsx(String jgsx) {
+		this.jgsx = jgsx;
+	}
+	
+	@Column(name = "JGSX_TEXT", length = 64)
+	public String getJgsxText() {
+		return jgsxText;
+	}
+
+	public void setJgsxText(String jgsxText) {
+		this.jgsxText = jgsxText;
+	}
+	
+	
 
 }

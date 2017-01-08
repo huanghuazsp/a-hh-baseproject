@@ -92,7 +92,6 @@ public class SystemService implements LoadDataTime, SystemServiceInf {
 		hhXtJs.setText(StaticVar.role_admin_text);
 		hhXtJs.setVbz(StaticVar.role_admin_text);
 		hhXtJs.setJssx(StaticVar.role_admin_id);
-		hhXtJs.setNlx(3);
 		roledao.saveOrUpdateEntity(hhXtJs);
 
 		UsRole hhXtJs2 = new UsRole();
@@ -101,7 +100,6 @@ public class SystemService implements LoadDataTime, SystemServiceInf {
 		hhXtJs2.setText(StaticVar.role_default_text);
 		hhXtJs2.setVbz(StaticVar.role_default_text);
 		hhXtJs2.setJssx(StaticVar.role_default_id);
-		hhXtJs2.setNlx(3);
 		roledao.saveOrUpdateEntity(hhXtJs2);
 
 		jscddao.deleteEntity(UsRoleMenu.class, "jsId", hhXtJs.getId());
