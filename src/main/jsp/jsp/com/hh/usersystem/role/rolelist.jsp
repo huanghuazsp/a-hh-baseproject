@@ -44,6 +44,9 @@
 				: value == 3 ? "系统内置角色" : "";
 	}
 	function renderoper(value, row) {
+		if(value=='admin'){
+			return '';
+		}
 		return '<a  href="javascript:loadMenuTree(\'' + value
 				+ '\',\'' + row.text
 				+ '\')" >权限设置</a>';

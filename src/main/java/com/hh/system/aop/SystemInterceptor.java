@@ -13,8 +13,11 @@ import com.google.gson.Gson;
 import com.hh.system.service.impl.SaveErrorThread;
 import com.hh.system.service.impl.SaveOperLogThread;
 import com.hh.system.util.ExceptionUtil;
+import com.hh.system.util.Json;
+import com.hh.system.util.MessageException;
 import com.hh.system.util.SysParam;
 import com.hh.system.util.ThreadUtil;
+import com.hh.system.util.model.ReturnModel;
 import com.hh.system.util.request.Request;
 import com.hh.usersystem.IUser;
 import com.opensymphony.xwork2.ActionContext;
@@ -67,7 +70,12 @@ public class SystemInterceptor implements Interceptor {
 			// if (!( arg0.getAction() instanceof IFileAction)) {
 			// response.getWriter().print("{'success':true}");
 			// }
-		} catch (Exception e) {
+		} catch(MessageException e){
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("returnModel", new ReturnModel(e.getMessage()));
+			map.put("success", true);
+			response.getWriter().print(Json.toStr(map));
+		}catch (Exception e) {
 			e.printStackTrace();
 			response.setStatus(500);
 			Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -80,7 +88,7 @@ public class SystemInterceptor implements Interceptor {
 			// 线程池
 			ThreadUtil.getThreadPool().execute(
 					new SaveErrorThread(e, userid, orgid));
-			response.getWriter().print(new Gson().toJson(resultMap));
+			response.getWriter().print(Json.toStr(resultMap));
 		}
 		return result;
 	}
