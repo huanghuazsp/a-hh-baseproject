@@ -209,10 +209,10 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 		if (checkEmailOnly(hhXtYh)) {
 			throw new MessageException("电子邮箱已存在，请更换！" + hhXtYh.getVdlzh());
 		}
-		if (Check.isEmpty(hhXtYh.getRoleIds())) {
-			hhXtYh.setRoleIds(StaticVar.role_default_id);
-			hhXtYh.setRoleIdsText(StaticVar.role_default_text);
-		}
+//		if (Check.isEmpty(hhXtYh.getRoleIds())) {
+//			hhXtYh.setRoleIds(StaticVar.role_default_id);
+//			hhXtYh.setRoleIdsText(StaticVar.role_default_text);
+//		}
 		if (Check.isEmpty(hhXtYh.getId())) {
 			// HHXtZmsx hhXtZmsx = new HHXtZmsx();
 			// hhXtYh.setHhXtZmsx(hhXtZmsx);
@@ -247,6 +247,9 @@ public class UserService extends BaseService<UsUser> implements IFileOper {
 	}
 
 	public void deleteByIds(String ids) {
+		if (ids.indexOf("admin")>-1) {
+			throw new MessageException("超级管理员不能删除！");
+		}
 		List<String> idList = Convert.strToList(ids);
 		if (!Check.isEmpty(idList)) {
 			xtyhdao.deleteEntity(UsUser.class, "id", idList);

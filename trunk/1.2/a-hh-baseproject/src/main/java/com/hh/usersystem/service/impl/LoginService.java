@@ -154,6 +154,7 @@ public class LoginService {
 					returnModel.setHref("webapp-desktop-desktop");
 
 					List<String> jsids = Convert.strToList(hhXtYh.getRoleIds());
+					jsids.add("default");
 
 					addOrg(hhXtYh);
 
@@ -325,6 +326,6 @@ public class LoginService {
 				ParamFactory.getParamHb().is("yhId", hhXtYh.getId())
 		// .addCondition(Order.asc(StaticVar.ORDER))
 		);
-		return menuService.queryListByZmtb(desktopQuickList);
+		return menuService.queryListByZmtb(desktopQuickList,hhxtcdIdList);
 	}
 }

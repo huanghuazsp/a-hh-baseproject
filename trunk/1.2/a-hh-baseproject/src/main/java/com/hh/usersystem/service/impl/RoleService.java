@@ -54,6 +54,9 @@ public class RoleService extends BaseService<UsRole> {
 		if (hhXtJs.getState() == 1) {
 			hqlParamList.nis("state", 1);
 		}
+		if (!"default".equals(hhXtJs.getId())) {
+			hqlParamList.nis("id", "default");
+		}
 		return xtjsdao.queryPagingData(UsRole.class, hqlParamList, pageRange);
 	}
 

@@ -4,73 +4,32 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hh.system.util.Convert;
 import com.hh.system.util.base.BaseAction;
 import com.hh.usersystem.bean.usersystem.SysMenu;
-import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.bean.usersystem.UsOrganization;
-import com.hh.usersystem.service.impl.LoginService;
+import com.hh.usersystem.bean.usersystem.UsUser;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 import com.hh.usersystem.service.impl.OrganizationService;
-import com.hh.usersystem.service.impl.UserService;
-//import com.hh.usersystem.service.impl.ZmsxService;
-import com.hh.usersystem.service.impl.ZmtbService;
-import com.opensymphony.xwork2.ActionContext;
 
 @SuppressWarnings("serial")
 public class ActionApp extends BaseAction {
 	@Autowired
 	private LoginUserUtilService loginUserUtilService;
 	private String currOrgId;
-	@Autowired
-	private UserService userService;
 	private String node;
 	private String action;
 	@Autowired
 	private OrganizationService organizationService;
-	@Autowired
-	private ZmtbService zmtbService;
-
-	@Autowired
-	private LoginService loginService;
-	
-//	public Object queryLoginOrgList() {
-//		return loginUserUtilService.findLoginUser()
-//				.getOrganizationList();
-//	}
-
-//	public Object changeOrg() {
-//		HhXtYh hhXtYh = loginUserUtilService.findLoginUser();
-//		List<Organization> organizations = hhXtYh.getOrganizationList();
-//		Organization organization1 = new Organization();
-//
-//		for (Organization organization : organizations) {
-//			if (organization.getId().equals(currOrgId)) {
-//				hhXtYh.setOrganization(loginService.addGwJtJgBm(organization));
-//				ActionContext.getContext().getSession()
-//						.put("loginuser", hhXtYh);
-//				organization1 = organization;
-//				if ("on".equals(request.getParameter("remember")) || Convert.toInt(request.getParameter("remember"))==1) {
-//					userService.updateDefaultOrg(hhXtYh.getId(),
-//							organization1.getId());
-//				} else {
-//					userService.updateDefaultOrg(hhXtYh.getId(), "");
-//				}
-//				break;
-//			}
-//		}
-//		return organization1;
-//	}
 
 	public Object queryCurrOrgTree() {
 		List<UsOrganization> organizationList = organizationService
 				.queryCurrOrgTree(node, action);
 		return organizationList;
 	}
-	
 	public Object queryZmtb() {
 		UsUser hhXtYh = loginUserUtilService.findLoginUser();
-		return zmtbService.queryZmtbByUserId(hhXtYh.getId());
+		List<SysMenu> sysMenus = hhXtYh.getDesktopQuickList();
+		return sysMenus;
 	}
 
 	public String getCurrOrgId() {

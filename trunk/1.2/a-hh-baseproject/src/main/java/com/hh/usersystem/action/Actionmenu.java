@@ -5,14 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hh.system.service.impl.BaseService;
-import com.hh.system.util.MessageException;
 import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.model.ExtCheckTree;
-import com.hh.system.util.model.ReturnModel;
 import com.hh.usersystem.bean.usersystem.SysMenu;
 import com.hh.usersystem.service.impl.MenuService;
 import com.hh.usersystem.util.steady.StaticProperties;
-import com.opensymphony.xwork2.ModelDriven;
 
 @SuppressWarnings("serial")
 public class Actionmenu extends BaseServiceAction<SysMenu> {
