@@ -186,7 +186,7 @@
 				xtype="button" config="onClick:doDelete,text:'删除'"></span>
 		</div>
 		<div id="pagelist" xtype="pagelist"
-			config=" url: 'usersystem-role-queryPagingData' ,column : [
+			config="  params:{id:'default'}, url: 'usersystem-role-queryPagingData' ,column : [
 					{
 						name : 'text' ,
 						text : '名称'
@@ -196,9 +196,8 @@
 						width : 50,
 						render : 'rendernzt'
 					},{
-						name : 'nlx' ,
-						text : '类型',
-						render : 'rendernlx',
+						name : 'jssxText' ,
+						text : '角色属性',
 						width: 150
 					},{
 						name : 'vbz' ,

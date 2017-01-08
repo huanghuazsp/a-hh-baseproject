@@ -36,18 +36,12 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 				new Object[] { order2_, id1 });
 	}
 
-	public List<SysMenu> queryZmtbByUserId(String userId) {
+	public List<SysMenu> queryZmtbByUserId(String userId,List<String> menuList) {
 		List<UsUserMenuZmtb> desktopQuickList = dao.queryList(UsUserMenuZmtb.class,
 				ParamFactory.getParamHb().is("yhId", userId));
-		
-		return menuService.queryListByZmtb(desktopQuickList);
+		return menuService.queryListByZmtb(desktopQuickList,menuList);
 	}
 	
-	
-	public List<UsUserMenuZmtb> queryZmtbByUserId() {
-		return dao.queryList(UsUserMenuZmtb.class,
-				ParamFactory.getParamHb().is("yhId", loginUserService.findUserId()));
-	}
 	
 
 	@Transactional
@@ -63,9 +57,8 @@ public class ZmtbService extends BaseService<UsUserMenuZmtb> {
 			hhXtYhCdZmtb.setYhId(userid);
 			dao.createEntity(hhXtYhCdZmtb);
 		}
-		UsUser hhXtYh = loginUserService.findLoginUser();
-		hhXtYh.setDesktopQuickList(queryZmtbByUserId(hhXtYh.getId()));
-		ActionContext.getContext().getSession().put("loginuser", hhXtYh);
+		
+		menuService.updateSessionZmtb();
 	}
 
 }
