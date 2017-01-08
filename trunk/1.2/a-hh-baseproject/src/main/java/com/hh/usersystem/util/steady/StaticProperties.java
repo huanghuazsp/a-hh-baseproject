@@ -34,9 +34,12 @@ public class StaticProperties {
 		addData("女", "", "字典", "性别", "0", "");
 		
 		addData("是否", "基础数据字典", "类别", "", "", "");
-		
 		addData("是", "", "字典", "是否", "1", "");
 		addData("否", "", "字典", "是否", "0", "");
+		
+		
+		addData("角色属性", "基础数据字典", "类别", "", "", "");
+		addData("机构属性", "基础数据字典", "类别", "", "", "");
 	}
 	
 	public static void addData(String text ,String parentText,String type,String parentType,String code,String id){
