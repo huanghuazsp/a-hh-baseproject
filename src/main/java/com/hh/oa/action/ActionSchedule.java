@@ -11,6 +11,7 @@ import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
 import com.hh.system.util.base.BaseServiceAction;
 import com.hh.system.util.dto.ParamFactory;
+import com.hh.system.util.dto.ParamInf;
 import com.hh.usersystem.service.impl.LoginUserUtilService;
 
 @SuppressWarnings("serial")
@@ -20,6 +21,7 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 	private Date endDate;
 
 	private String currUserId;
+	
 
 	public BaseService<Schedule> getService() {
 		return scheduleService;
@@ -38,12 +40,26 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 
 	public Object queryListByDate() {
 		String userId = loginUserUtilService.findUserId();
+		if (Check.isNoEmpty(object.getProjectId())) {
+			userId="";
+		}
+		
 		if (Check.isNoEmpty(currUserId)) {
 			userId = currUserId;
 		}
 
+		ParamInf paramInf = ParamFactory.getParamHb().ge("start", startDate).le("end", endDate);
+		
+		if (Check.isNoEmpty(userId)) {
+			paramInf.is("userId", userId);
+		}
+		
+		if (Check.isNoEmpty(object.getProjectId())) {
+			paramInf.is("projectId", object.getProjectId());
+		}
+		
 		List<Schedule> schedules = scheduleService
-				.queryList(ParamFactory.getParamHb().ge("start", startDate).le("end", endDate).is("userId", userId));
+				.queryList(paramInf);
 		return schedules;
 	}
 
@@ -75,4 +91,6 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 		this.currUserId = currUserId;
 	}
 
+
+	
 }

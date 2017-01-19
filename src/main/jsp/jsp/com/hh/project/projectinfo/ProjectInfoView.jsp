@@ -49,7 +49,7 @@
 	var modularrender = false;
 	var userrender = false;
 	var filerender = false;
-	
+	var fullcalendar = false;
 	var tabconfig = {
 		activate : function(ui) {
 			var newPanel = ui.newPanel;
@@ -63,7 +63,14 @@
 			} else if (id == 'fileDiv' && filerender == false) {
 				filerender = true;
 				$('#fileDiv').render();
+			}else if (id == 'fullcalendarDiv' && fullcalendar == false) {
+				fullcalendar = true;
+				$('#fullcalendarDiv').find('iframe').attr(
+						'src',
+						'jsp-oa-schedule-fullcalendarview?projectId='
+								+ objectid + '');
 			}
+			
 		}
 	}
 </script>
@@ -76,6 +83,7 @@
 				<li><a href="#modularDiv">模块信息</a></li>
 				<li><a href="#userDiv">参与者信息</a></li>
 				<li><a href="#fileDiv">附件文档</a></li>
+				<li><a href="#fullcalendarDiv">项目日志</a></li>
 			</ul>
 			<div id="formDiv">
 				<form id="form" xtype="form" class="form">
@@ -187,7 +195,9 @@
 			]">
 			</div>
 			
-			
+			<div id="fullcalendarDiv">
+				<iframe frameborder=0 width=100% height=100% src="about:blank"></iframe>
+			</div>
 		</div>
 	</div>
 </body>

@@ -19,7 +19,15 @@
 	src='/hhcommon/opensource/jquery/fullcalendar/2.0.1/fullcalendar.min.js'></script>
 <script>
 	var currUserId = '<%=Convert.toString(request.getParameter("currUserId"))%>';
+	var projectId = '<%=Convert.toString(request.getParameter("projectId"))%>';
 	var isEdit_ = currUserId==''?true:false;
+	if(projectId){
+		isEdit_ = false;
+	}
+	var defaultView='basicWeek';
+	if(isEdit_){
+		defaultView = 'agendaWeek';
+	}
 	function getBackground(isOk) {
 		return isOk == 0 ? 'red' : 'green';
 	}
@@ -51,8 +59,11 @@
 			if(data.summary){
 				title+='\n总结：' +data.summary;
 			}
-			if(data.projectIdText){
+			if(data.projectIdText && !projectId){
 				title+='\n项目：' +data.projectIdText;
+			}
+			if(projectId){
+				title+='\n创建者：' +data.createUserName;
 			}
 			var data = $.extend(data, {
 				title : title,
@@ -97,12 +108,13 @@
 		$('#calendar')
 		.fullCalendar(
 				{
-					defaultView:'agendaWeek',
+					defaultView: defaultView,
 					//lazyFetching : false,
 					header : {
+						//month,basicWeek,basicDay,agendaWeek,agendaDay
 						left : 'title',
 						center : 'prevYear,prev,next,nextYear today',
-						right : 'month,agendaWeek,agendaDay'
+						right : 'month,basicWeek,agendaWeek,basicDay,agendaDay'
 					},
 					titleFormat : {
 						month : 'YYYY年MM月',
@@ -126,6 +138,8 @@
 						month : '月',
 						week : '周',
 						day : '日',
+						agendaWeek : '周[时间]',
+						agendaDay : '日[时间]',
 						prev : '‹', // ‹
 						next : '›', // ›
 						prevYear : '«', // «
@@ -228,6 +242,7 @@
 												endDate : end
 														.format('YYYY-MM-DD HH:mm:ss'),
 														'currUserId': currUserId,
+														'projectId' : projectId,
 														level:'0'
 											}
 										},
