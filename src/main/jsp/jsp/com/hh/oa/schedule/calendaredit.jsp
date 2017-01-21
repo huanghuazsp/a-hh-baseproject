@@ -96,7 +96,8 @@
 				}
 				$('#deletespan').show();
 			}
-				$('#form').setValue(object);
+			$('#form').setValue(object);
+			renderModular();
 		}
 	}
 
@@ -128,22 +129,51 @@
 						name : 'text' ,
 						text : '项目名称'
 					},
-				
-				
 					{
 						name : 'startDate' ,
 						text : '开始日期',
 						render : 'date',
 						width:80
 					},
-				
 					{
 						name : 'managerText' ,
 						text : '项目经理'
 					}
 				]
+			},
+			onChange:function(data){
+				renderModular();
 			}
 	};
+	
+	function renderModular(){
+		var projectId1 = $('#span_projectId').getValue();
+		
+		if(projectId1){
+			modularConfig.url='project-ProjectModular-queryListByProjectId';
+			modularConfig.params={
+					projectId : projectId1
+			};
+			$('#modularIdSpan').render(modularConfig);
+			$('#modularIdTr').show();
+		}else{
+			$('#modularIdTr').hide();
+		}
+		
+	}
+	
+	var modularConfig = {
+		render:false,
+		name:'modularId',
+		renderAfter:function (data){
+			if(!data ||data.length==0){
+				$('#modularIdTr').hide();
+			}
+			if (object && object.modularId) {
+				$('#modularIdSpan').setValue(object.modularId);
+			}
+		}
+	}
 </script>
 </head>
 <body>
@@ -155,6 +185,11 @@
 					<td xtype="label">所属项目：</td>
 					<td colspan="3"><span xtype="selectPageList"
 						configVar=" projectConfig " ></span></td>
+				</tr>
+				<tr style="display:none;" id="modularIdTr">
+					<td xtype="label">所属模块：</td>
+					<td colspan="3"><span id="modularIdSpan" xtype="combobox"
+						configVar=" modularConfig " ></span></td>
 				</tr>
 				<tr>
 					<td xtype="label">内容：</td>

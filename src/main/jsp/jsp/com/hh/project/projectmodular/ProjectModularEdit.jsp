@@ -54,13 +54,14 @@
 		<form id="form" xtype="form">
 			<span xtype="text" config=" hidden:true,name : 'id'"></span>
 			<table xtype="form">
-				
-				
 					<tr>
 						<td xtype="label">名称：</td>
 						<td><span xtype="text" config=" name : 'text' ,required :true "></span></td>
 					</tr>
-				
+					<tr>
+						<td xtype="label">计划投入：</td>
+						<td><span xtype="text" config=" name : 'input' , integer :true ,suffix:'人日' "></span></td>
+					</tr>
 					<tr>
 						<td xtype="label">描述：</td>
 						<td><span xtype="ckeditor" config=" name : 'describe' "></span></td>

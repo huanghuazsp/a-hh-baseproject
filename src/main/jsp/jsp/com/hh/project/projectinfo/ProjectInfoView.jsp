@@ -133,6 +133,14 @@
 						width:170
 					},
 					{
+						name : 'input' ,
+						text : '计划投入',
+						width:100,
+						render :function(v){
+							return v +'人日';
+						}
+					},
+					{
 						name : 'describe' ,
 						align:'left',
 						text : '描述'

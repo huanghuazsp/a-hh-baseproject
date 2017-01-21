@@ -34,6 +34,10 @@ public class Schedule extends BaseEntity {
 	private String projectId;
 	private String projectIdText;
 	
+	
+	private String modularId;
+	private String modularIdText;
+	
 	@Comment("是否全天")
 	public boolean isAllDay() {
 		return allDay;
@@ -133,6 +137,23 @@ public class Schedule extends BaseEntity {
 	}
 	public void setProjectIdText(String projectIdText) {
 		this.projectIdText = projectIdText;
+	}
+	
+	@Comment("所属模块")
+	@Column(name = "MODULAR_ID",length=32)
+	public String getModularId() {
+		return modularId;
+	}
+	public void setModularId(String modularId) {
+		this.modularId = modularId;
+	}
+	@Comment("所属模块名称")
+	@Column(name = "MODULAR_ID_TEXT",length=128)
+	public String getModularIdText() {
+		return modularIdText;
+	}
+	public void setModularIdText(String modularIdText) {
+		this.modularIdText = modularIdText;
 	}
 	
 }

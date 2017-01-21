@@ -62,6 +62,10 @@
 			if(data.projectIdText && !projectId){
 				title+='\n项目：' +data.projectIdText;
 			}
+			if(data.modularIdText){
+				title+='\n模块：' +data.modularIdText;
+			}
+			
 			if(projectId){
 				title+='\n创建者：' +data.createUserName;
 			}
@@ -90,6 +94,10 @@
 		object.summary = event.summary;
 		object.projectId = event.projectId;
 		object.projectIdText = event.projectIdText;
+		object.modularId = event.modularId;
+		object.modularIdText = event.modularIdText;
+		
+		
 		
 		object.participants = event.participants;
 		object.level = event.level || '0';
