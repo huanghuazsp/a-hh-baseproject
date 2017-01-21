@@ -13,11 +13,11 @@ import javax.persistence.Transient;
 import com.hh.hibernate.dao.inf.Comment;
 import com.hh.hibernate.util.base.BaseEntity;
 
-@Comment("日程安排")
+@Comment("计划总结")
 @Entity
 @Table(name = "SYS_SCHEDULE")
 public class Schedule extends BaseEntity {
-	private boolean allDay;
+	private int allDay;
 	private String content;
 	
 	private String participants;
@@ -39,10 +39,11 @@ public class Schedule extends BaseEntity {
 	private String modularIdText;
 	
 	@Comment("是否全天")
-	public boolean isAllDay() {
+	@Column(name = "ALLDAY_",length=36)
+	public int isAllDay() {
 		return allDay;
 	}
-	public void setAllDay(boolean allDay) {
+	public void setAllDay(int allDay) {
 		this.allDay = allDay;
 	}
 	

@@ -69,10 +69,17 @@
 			if(projectId){
 				title+='\n创建者：' +data.createUserName;
 			}
+			var allDay=0;
+			var start_ = $.hh.formatDate(data.start,'yyyy-MM-dd HH:mm:ss').replace(' 00:00:00','');
+			var end_ = $.hh.formatDate(data.end,'yyyy-MM-dd HH:mm:ss').replace(' 00:00:00','');
+			if(start_.length==10 && end_.length==10){
+				allDay=1;
+			}
 			var data = $.extend(data, {
 				title : title,
-				start : $.hh.formatDate(data.start,'yyyy-MM-dd HH:mm:ss'),
-				end : $.hh.formatDate(data.end,'yyyy-MM-dd HH:mm:ss'),
+				start : start_,
+				end : end_,
+				allDay : allDay,
 				color : getBackground(data.isOk),
 				className : getClassName(data.level),
 				textColor : null,
