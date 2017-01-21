@@ -34,17 +34,17 @@
 	function getClassName(level) {
 		var img = '';
 		if (level == '1') {
-			img = 'green';
+			img = '【不重要不紧急】';
 		} else if (level == '2') {
-			img = 'blue';
+			img = '【紧急不重要】';
 		} else if (level == '3') {
-			img = 'yellow';
+			img = '【重要不紧急】';
 		} else if (level == '4') {
-			img = 'red';
+			img = '【重要紧急】';
 		}
 		return img;
 	}
-
+	
 	function toEvents(dataList) {
 		var resultList = [];
 		for (var i = 0; i < dataList.length; i++) {
@@ -54,7 +54,8 @@
 	}
 	function toEvent(data) {
 		if (data) {
-			var title =  data.content ;
+			var title =  getClassName(data.level)+data.content ;
+			
 			
 			if(data.summary){
 				title+='\n总结：' +data.summary;
@@ -69,6 +70,7 @@
 			if(projectId){
 				title+='\n创建者：' +data.createUserName;
 			}
+			
 			var allDay=0;
 			var start_ = $.hh.formatDate(data.start,'yyyy-MM-dd HH:mm:ss').replace(' 00:00:00','');
 			var end_ = $.hh.formatDate(data.end,'yyyy-MM-dd HH:mm:ss').replace(' 00:00:00','');
@@ -81,7 +83,7 @@
 				end : end_,
 				allDay : allDay,
 				color : getBackground(data.isOk),
-				className : getClassName(data.level),
+				className:'',
 				textColor : null,
 				borderColor : null,
 				level :data.level
@@ -288,34 +290,7 @@ body {
 	font-size: 14px;
 }
 
-/* .fc-event-time {
-	padding-left: 20px;
-}
 
-.fc-event-title {
-	padding-left: 20px;
-} */
-
-.green:after {
-	content:"【不重要不紧急】";
-}
-
-.red:after {
-	 content:"【 重要紧急 】";
-     /*background-color:yellow;
-     color:green;
-     text-align:center;
-     font-weight:bold;
-     width:100%;*/
-}
-
-.blue:after {
-	content:"【 紧急不重要】";
-}
-
-.yellow:after {
-	content:"【 重要不紧急】";
-}
 
 #calendar {
 	width: 900;
@@ -330,7 +305,7 @@ body {
 	<td><span  xtype="combobox"
 			config=" onChange : rangeChange , width:150, value:'all', name : 'range' , data : [{id:'all',text:'所有'},{id:'day',text:'日计划'},{id:'stepDay',text:'跨日计划'}] " ></span></td>
 	<td><span  xtype="combobox"
-			config=" onChange : rangeChange , width:150, value:'all', name : 'level' , data : [{id:'all',text:'所有优先级'},
+			config=" onChange : rangeChange , width:150, value:'all', name : 'level' , data : [{id:'all',text:'优先级'},
 				{
 					'id' : '0',
 					'text' : '无优先级'
