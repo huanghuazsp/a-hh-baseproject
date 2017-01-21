@@ -48,4 +48,15 @@ public class ProjectModular  extends BaseEntity{
 		this.projectId = projectId;
 	}
 	
+	private int input;
+
+	@Column(name="INPUT_")
+	public int getInput() {
+		return input;
+	}
+	public void setInput(int input) {
+		this.input = input;
+	}
+	
+	
 }
