@@ -38,6 +38,8 @@ public class Schedule extends BaseEntity {
 	private String modularId;
 	private String modularIdText;
 	
+	private int type;
+	
 	@Comment("是否全天")
 	@Column(name = "ALLDAY_",length=36)
 	public int isAllDay() {
@@ -156,5 +158,15 @@ public class Schedule extends BaseEntity {
 	public void setModularIdText(String modularIdText) {
 		this.modularIdText = modularIdText;
 	}
+	
+	@Comment("计划类型：0:日计划,1:跨日计划")
+	@Column(name = "TYPE_")
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	
 	
 }

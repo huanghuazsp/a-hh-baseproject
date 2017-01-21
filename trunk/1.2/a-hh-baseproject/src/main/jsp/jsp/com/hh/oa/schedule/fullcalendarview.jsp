@@ -120,8 +120,7 @@
 					});
 	
 	function renderData(){
-		$('#calendar')
-		.fullCalendar(
+		$('#calendar').fullCalendar(
 				{
 					defaultView: defaultView,
 					//lazyFetching : false,
@@ -247,24 +246,26 @@
 					
 					events : function(start, end, ddd,
 							callback) {
+						params_start = start.format('YYYY-MM-DD HH:mm:ss');
+						params_end = end.format('YYYY-MM-DD HH:mm:ss');
+						queryCallBack = callback;
 						Request
-								.request(
-										'oa-Schedule-queryListByDate',
-										{
-											data : {
-												startDate : start
-														.format('YYYY-MM-DD HH:mm:ss'),
-												endDate : end
-														.format('YYYY-MM-DD HH:mm:ss'),
-														'currUserId': currUserId,
-														'projectId' : projectId,
-														level:'0'
-											}
-										},
-										function(result) {
-											callback(toEvents(result));
-											renderEvent();
-										});
+						.request(
+								'oa-Schedule-queryListByDate',
+								{
+									data : {
+										startDate : params_start,
+										endDate : params_end,
+										'currUserId': currUserId,
+										'projectId' : projectId,
+										level:$('#span_level').getValue(),
+										range : $('#span_range').getValue()
+									}
+								},
+								function(result) {
+									callback(toEvents(result));
+									renderEvent();
+								});
 					}
 				});
 
@@ -276,6 +277,10 @@
 			$(this).attr('title',$(this).text());
 		});
 	}
+	
+	function rangeChange(){
+		$('#calendar').fullCalendar( 'refetchEvents' );
+	}
 </script>
 <style>
 body {
@@ -283,40 +288,33 @@ body {
 	font-size: 14px;
 }
 
-.fc-event-time {
+/* .fc-event-time {
 	padding-left: 20px;
 }
 
 .fc-event-title {
 	padding-left: 20px;
+} */
+
+.green:after {
+	content:"【不重要不紧急】";
 }
 
-.green {
-	background-image: url(/hhcommon/images/icons/flag/flag_green.png);
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
+.red:after {
+	 content:"【 重要紧急 】";
+     /*background-color:yellow;
+     color:green;
+     text-align:center;
+     font-weight:bold;
+     width:100%;*/
 }
 
-.red {
-	background-image: url(/hhcommon/images/icons/flag/flag_red.png);
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
+.blue:after {
+	content:"【 紧急不重要】";
 }
 
-.blue {
-	background-image: url(/hhcommon/images/icons/flag/flag_blue.png);
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
-}
-
-.yellow {
-	background-image: url(/hhcommon/images/icons/flag/flag_yellow.png);
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
+.yellow:after {
+	content:"【 重要不紧急】";
 }
 
 #calendar {
@@ -326,6 +324,35 @@ body {
 </style>
 </head>
 <body>
+	<div style="padding:5px;">
+	<table>
+	<tr>
+	<td><span  xtype="combobox"
+			config=" onChange : rangeChange , width:150, value:'all', name : 'range' , data : [{id:'all',text:'所有'},{id:'day',text:'日计划'},{id:'stepDay',text:'跨日计划'}] " ></span></td>
+	<td><span  xtype="combobox"
+			config=" onChange : rangeChange , width:150, value:'all', name : 'level' , data : [{id:'all',text:'所有优先级'},
+				{
+					'id' : '0',
+					'text' : '无优先级'
+				},{
+					'id' : '4',
+					'text' : '重要紧急'
+				},
+				{
+					'id' : '3',
+					'text' : '重要不紧急'
+				},
+				{
+					'id' : '2',
+					'text' : '紧急不重要'
+				},
+				{
+					'id' : '1',
+					'text' : '不重要不紧急'
+				}] " ></span></td>
+	</tr>
+	</table>
+	</div>
 	<div id='calendar'></div>
 </body>
 </html>

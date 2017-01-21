@@ -244,41 +244,6 @@ body {
 	font-size: 14px;
 }
 
-.fc-event-time {
-	padding-left: 20px;
-}
-
-.fc-event-title {
-	padding-left: 20px;
-}
-
-.green {
-	background-image: url(/hhcommon/images/icons/flag/flag_green.png);
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
-}
-
-.red {
-	background-image: url(/hhcommon/images/icons/flag/flag_red.png);
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
-}
-
-.blue {
-	background-image: url(/hhcommon/images/icons/flag/flag_blue.png);
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
-}
-
-.yellow {
-	background-image: url(/hhcommon/images/icons/flag/flag_yellow.png);
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
-}
 
 #calendar {
 	width: 900;

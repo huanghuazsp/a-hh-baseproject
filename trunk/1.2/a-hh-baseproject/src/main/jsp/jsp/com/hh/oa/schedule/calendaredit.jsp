@@ -39,8 +39,13 @@
 				}]
 	}
 
-	function save() {
+	function save(ok) {
 		$.hh.validation.check('form', function(formData) {
+			if(ok!=null){
+				formData.isOk=ok;
+			}else if(object){
+				formData.isOk = object.isOk;
+			}
 			Request.request('oa-Schedule-save', {
 				data : formData,
 				callback : function(result) {
@@ -224,9 +229,9 @@
 	</div>
 	<div xtype="toolbar">
 		<span id="okspan" xtype="button"
-			config="text:'完成' , onClick : ok ,hidden:true ,params:1"></span><span
+			config="text:'完成' , onClick : save ,hidden:true ,params:1"></span><span
 			id="nookspan" xtype="button"
-			config="text:'未完成' , onClick : ok ,hidden:true,params:0"></span> <span
+			config="text:'未完成' , onClick : save ,hidden:true,params:0"></span> <span
 			id="deletespan" xtype="button"
 			config="text:'删除' , onClick : doDelete ,hidden:true"></span> <span
 			id="savespan" xtype="button" config="text:'保存' , onClick : save "></span>
