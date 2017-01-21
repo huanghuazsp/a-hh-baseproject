@@ -72,7 +72,7 @@ public class SetupInitializer {
 		
 
 		rootHhXtCd.getChildren().add(
-				new SysMenu("7fmZpjkk034UGEL6K7W", "日程安排",
+				new SysMenu("7fmZpjkk034UGEL6K7W", "计划总结",
 						"jsp-oa-schedule-fullcalendar","/hhcommon/images/big/apple/3.png",
 						"/hhcommon/images/extjsico/17460310.png", 0, 1));
 

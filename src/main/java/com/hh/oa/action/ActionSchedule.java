@@ -22,6 +22,8 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 
 	private String currUserId;
 	
+	private String range;
+	
 
 	public BaseService<Schedule> getService() {
 		return scheduleService;
@@ -58,6 +60,20 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 			paramInf.is("projectId", object.getProjectId());
 		}
 		
+		if (Check.isNoEmpty(object.getProjectId())) {
+			paramInf.is("projectId", object.getProjectId());
+		}
+		
+		if ("day".equals(range)) {
+			paramInf.is("type", 0);
+		}else if ("stepDay".equals(range)) {
+			paramInf.is("type", 1);
+		}
+		
+		if (Check.isNoEmpty(object.getLevel()) && !"all".equals(object.getLevel())) {
+			paramInf.is("level", object.getLevel());
+		}
+		
 		List<Schedule> schedules = scheduleService
 				.queryList(paramInf);
 		return schedules;
@@ -91,6 +107,12 @@ public class ActionSchedule extends BaseServiceAction<Schedule> {
 		this.currUserId = currUserId;
 	}
 
+	public String getRange() {
+		return range;
+	}
 
+	public void setRange(String range) {
+		this.range = range;
+	}
 	
 }

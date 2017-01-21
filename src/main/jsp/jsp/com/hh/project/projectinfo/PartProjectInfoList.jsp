@@ -4,7 +4,7 @@
 
 <html>
 <head>
-<title>数据列表</title>
+<title>项目管理</title>
 <%=SystemUtil.getBaseJs()+SystemUtil.getUser()%>
 
 <script type="text/javascript">
@@ -68,16 +68,14 @@
 	
 	function doView(){
 		$.hh.pagelist.callRow("pagelist", function(row) {
-			Dialog.open({
-				url : 'jsp-project-projectinfo-ProjectInfoView',
-				urlParams : {
+			$.hh.addTab({
+				id : row.id,
+				text :  document.title+'-'+row.text,
+				src : 'jsp-project-projectinfo-ProjectInfoView?' + $.param({
 					id : row.id
-				},
-				params : {
-					callback : function() {
-					}
-				}
+				})
 			});
+
 		});
 	}
 </script>
