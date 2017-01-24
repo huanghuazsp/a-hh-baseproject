@@ -56,13 +56,24 @@
 	function renderMeeting(value,data){
 		return '<a href="javascript:openMeeting(\''+data.meetingId+'\')">'+value+'</a>';
 	}
+	
+	function doView() {
+		$.hh.pagelist.callRow("pagelist", function(row) {
+				Dialog.open({
+					url : 'jsp-oa-meetingapply-MeetingApplyView',
+					urlParams : {
+						id : row.id
+					}
+				});
+		});
+	}
 </script>
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
-		<span xtype="button" config="onClick:doAdd,text:'添加' , itype :'add' "></span>
 		<span xtype="button"
-			config="onClick:doEdit,text:'修改' , itype :'edit' "></span> <span
+			config="onClick: doView ,text:'查看' , itype :'view' "></span>
+<span
 			xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span>
 		<!--  <span
 			xtype="button" config="onClick: doQuery ,text:'查询' , itype :'query' "></span> --> <span
