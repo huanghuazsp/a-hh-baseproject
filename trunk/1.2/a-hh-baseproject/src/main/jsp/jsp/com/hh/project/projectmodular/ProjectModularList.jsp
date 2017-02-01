@@ -1,154 +1,102 @@
-<%@page import="com.hh.system.util.SystemUtil"%>
 <%@page import="com.hh.system.util.Convert"%>
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@page import="com.hh.system.util.SystemUtil"%>
+<%@page import="com.hh.system.util.pk.PrimaryKey"%>
 <%=SystemUtil.getBaseDoctype()%>
 
 <html>
 <head>
-<title>模块列表</title>
-<%=SystemUtil.getBaseJs()+SystemUtil.getUser()%>
+<title>数据列表</title>
+<%=SystemUtil.getBaseJs("layout","ztree", "ztree_edit")%>
+<%String iframeId = PrimaryKey.getUUID();%>
 
 <script type="text/javascript">
-
+	var iframeId = '<%=iframeId%>';
 	var projectId = '<%=Convert.toString(request.getParameter("projectId"))%>';
-	
-	var width = 900;
-	var height = 650;
-
-	function doDelete() {
-		$.hh.pagelist.deleteData({
-			pageid : 'pagelist',
-			action : 'project-ProjectModular-deleteByIds'
-		});
-	}
-	function doAdd() {
-		Dialog.open({
-			url : 'jsp-project-projectmodular-ProjectModularEdit',
-			urlParams : {
-				projectId:projectId
-			},
-			params : {
-				callback : function() {
-					$("#pagelist").loadData();
-				}
-			}
-		});
-	}
-	function doEdit() {
-		$.hh.pagelist.callRow("pagelist", function(row) {
-			Dialog.open({
-				url : 'jsp-project-projectmodular-ProjectModularEdit',
-				urlParams : {
-					id : row.id,
-					projectId:projectId
-				},
-				params : {
-					callback : function() {
-						$("#pagelist").loadData();
-					}
-				}
-			});
-		});
-	}
-	function doQuery() {
-		$('#pagelist').loadData({
-			params : $('#queryForm').getValue()
-		});
-	}
-	
-	
-
-	
-	
 	var oper = '<%=Convert.toString(request.getParameter("oper"))%>';
-	
-	function deleteById(value){
-		Dialog.confirm({
-			message : '您确认要删除数据吗？',
-			yes : function(result) {
-				Request.request('project-ProjectModular-deleteByIds', {
-							data : {ids:value}
-						}, function(result) {
-							if (result.success != false) {
-								$("#pagelist" ).loadData();
-							}
-						});
-			}
-		});
-	}
-	
-	function updateById(value){
+	function doAdd() {
+		$('#centerdiv').undisabled();
+		var selectNode = $.hh.tree.getSelectNode('tree');
+		var iframe = window.frames[iframeId];
+		iframe.callback = function() {
+			$.hh.tree.refresh('tree');
+			$('#centerdiv').disabled('请选择要编辑的树节点或添加新的数据！');
+		}
+		if (selectNode) {
+			iframe.newData({
+				node : selectNode.id
+			});
+		} else {
+			iframe.newData({});
+		}
+		return;
 		Dialog.open({
 			url : 'jsp-project-projectmodular-ProjectModularEdit',
-			urlParams : {
-				id : value,
-				projectId:projectId
-			},
 			params : {
+				selectNode : selectNode,
 				callback : function() {
-					$("#pagelist").loadData();
+					$.hh.tree.refresh('tree');
 				}
 			}
 		});
 	}
-	
-	function renderoper(value, row) {
-		if(loginUser.id!=row.createUser && oper!='all'){
-			return '无权限';
+	function doEdit(treeNode) {
+		Dialog.open({
+			url : 'jsp-project-projectmodular-ProjectModularEdit',
+			params : {
+				object : treeNode,
+				callback : function() {
+					$.hh.tree.refresh('tree');
+				}
+			}
+		});
+	}
+	function doDelete(treeNode) {
+		$.hh.tree.deleteData({
+			pageid : 'tree',
+			action : 'project-ProjectModular-deleteTreeByIds',
+			id : treeNode.id,
+			callback : function(result) {
+				if (result.success!=false) {
+					$('#centerdiv').disabled('请选择要编辑的树节点或添加新的数据！');
+				}
+			}
+		});
+	}
+	function treeClick(treeNode) {
+		$('#centerdiv').undisabled();
+		var iframe = window.frames[iframeId];
+		iframe.callback = function(object) {
+			treeNode.name = object.text;
+			$.hh.tree.updateNode('tree', treeNode);
+			$.hh.tree.getTree('tree').refresh();
 		}
-		
-		return '<a  href="javascript:deleteById(\'' + value
-				+ '\')" >删除</a>&nbsp;<a  href="javascript:updateById(\'' + value
-				+ '\')" >修改</a>';
+		iframe.findData(treeNode.id);
+	}
+	function init(){
+		$('#centerdiv').disabled('请选择要编辑的树节点或添加新的数据！');
 	}
 </script>
 </head>
 <body>
-	<div xtype="toolbar" config="type:'head'">
-		<span xtype="button" config="onClick:doAdd,text:'添加' , itype :'add' "></span>
-		<!--  <span
-			xtype="button" config="onClick: doQuery ,text:'查询' , itype :'query' "></span> --> <span
-			xtype="button"
-			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'project-ProjectModular-order'}  ,  icon : 'hh_up' "></span>
-		<span xtype="button"
-			config="onClick: $.hh.pagelist.doDown , params:{ pageid :'pagelist',action:'project-ProjectModular-order'} , icon : 'hh_down' "></span>
-	</div>
-	<!-- <table xtype="form" id="queryForm" style="width:600px;">
-		<tr>
-			<td xtype="label">test：</td>
-			<td><span xtype="text" config=" name : 'test'"></span></td>
-		</tr>
-	</table> -->
-	<div id="pagelist" xtype="pagelist"
-		config=" params : {projectId:'<%=Convert.toString(request.getParameter("projectId"))%>'} , url: 'project-ProjectModular-queryPagingData' ,column : [
-		
-		
-		
-			{
-				name : 'text' ,
-				text : '名称',
-				width:170
-			},
-			{
-				name : 'input' ,
-				text : '计划投入',
-				width:100,
-				render :function(v){
-					return v +'人日';
-				}
-			},
-			{
-				name : 'describe' ,
-				align:'left',
-				text : '描述'
-			},{
-				name : 'id' ,
-				text : '操作',
-				width: 65,
-				render : renderoper
-			}
-		
-	]">
+	<div xtype="border_layout">
+		<div config="render : 'west'">
+			<div xtype="toolbar" config="type:'head'">
+				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span> <span
+					xtype="button"
+					config="onClick: $.hh.tree.doUp , params:{treeid:'tree',action:'project-ProjectModular-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
+				<span xtype="button"
+					config="onClick: $.hh.tree.doDown , params:{treeid:'tree',action:'project-ProjectModular-order'} , textHidden : true,text:'下移' ,icon : 'hh_down' "></span>
+				<span xtype="button"
+					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'tree'  "></span>
+			</div>
+			<span xtype="tree"
+				config=" id:'tree', url:'project-ProjectModular-queryTreeList' ,remove: doDelete , onClick : treeClick , params :{projectId:projectId} "></span>
+		</div>
+		<div style="overflow: visible;" id=centerdiv>
+			<iframe id="<%=iframeId%>" name="<%=iframeId%>" width=100%
+				height=100% frameborder=0 src="jsp-project-projectmodular-ProjectModularEdit?projectId=<%=Convert.toString(request.getParameter("projectId"))%>"></iframe>
+		</div>
 	</div>
 </body>
 </html>
