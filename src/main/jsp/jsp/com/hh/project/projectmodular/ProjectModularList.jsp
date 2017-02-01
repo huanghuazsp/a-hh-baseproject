@@ -2,15 +2,27 @@
 <%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="com.hh.system.util.SystemUtil"%>
 <%@page import="com.hh.system.util.pk.PrimaryKey"%>
-<%=SystemUtil.getBaseDoctype()%>
+<%=SystemUtil.getBaseDoctype()+SystemUtil.getUser()%>
 
 <html>
 <head>
 <title>数据列表</title>
+<style type="text/css">
+.ztree li span.button.task_ico_docu{margin-right:2px; background: url(/hhcommon/images/icons/task/task.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.task_ico_open{margin-right:2px; background: url(/hhcommon/images/icons/task/task.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.task_ico_close{margin-right:2px; background: url(/hhcommon/images/icons/task/task.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+
+.ztree li span.button.folder_ico_docu{margin-right:2px; background: url(/hhcommon/images/icons/folder/folder.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.folder_ico_open{margin-right:2px; background: url(/hhcommon/images/icons/folder/folder.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.folder_ico_close{margin-right:2px; background: url(/hhcommon/images/icons/folder/folder.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+
+</style>
 <%=SystemUtil.getBaseJs("layout","ztree", "ztree_edit")%>
 <%String iframeId = PrimaryKey.getUUID();%>
 
 <script type="text/javascript">
+	var width = 950;
+	var height = 650;
 	var iframeId = '<%=iframeId%>';
 	var projectId = '<%=Convert.toString(request.getParameter("projectId"))%>';
 	var oper = '<%=Convert.toString(request.getParameter("oper"))%>';
@@ -71,7 +83,20 @@
 			$.hh.tree.updateNode('tree', treeNode);
 			$.hh.tree.getTree('tree').refresh();
 		}
-		iframe.findData(treeNode.id);
+		var oper_ = true;
+		if(loginUser.id!=treeNode.createUser && oper!='all'){
+			oper_ = false;
+		}
+		
+		iframe.findData(treeNode.id,oper_);
+	}
+	
+	function showRemoveBtn(treeId, treeNode) {
+		var oper_ = true;
+		if(loginUser.id!=treeNode.createUser && oper!='all'){
+			oper_ = false;
+		}
+		return oper_;
 	}
 	function init(){
 		$('#centerdiv').disabled('请选择要编辑的树节点或添加新的数据！');
@@ -91,7 +116,7 @@
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'tree'  "></span>
 			</div>
 			<span xtype="tree"
-				config=" id:'tree', url:'project-ProjectModular-queryTreeList' ,remove: doDelete , onClick : treeClick , params :{projectId:projectId} "></span>
+				config=" id:'tree', url:'project-ProjectModular-queryTreeList' ,remove: doDelete , onClick : treeClick , params :{projectId:projectId},showRemoveBtn:showRemoveBtn "></span>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="<%=iframeId%>" name="<%=iframeId%>" width=100%
