@@ -32,6 +32,12 @@
 			onClick : function() {
 				wdxm();
 			}
+		}, {
+			text : '问题管理',
+			img : '/hhcommon/images/icons/bug/bug.png',
+			onClick : function() {
+				bug();
+			}
 		}
 		]
 	};
@@ -62,6 +68,9 @@
 		$('#iframe').attr('src','jsp-project-projectinfo-ProjectInfoList');
 	}
 	
+	function bug(){
+		$('#iframe').attr('src','jsp-project-bug-BugList');
+	}
 	<%
 		String baseurl = "jsp-project-projectinfo-PartProjectInfoList";
 	%>

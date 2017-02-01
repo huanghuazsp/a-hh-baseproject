@@ -33,4 +33,17 @@
     <column defaultValue="" empty="true" id="42928831-ce61-48cd-a85d-94e78a3f23c9" length="36" name="fileId" primary="false" text="附件id" type="String"/>
     <column defaultValue="" empty="true" id="6b09b1ab-607f-4065-9850-672e83fee745" length="36" name="projectId" primary="false" text="项目id" type="String"/>
   </table>
+  <table id="76775216-cfcc-4884-87f5-3141bb4ba4c2" name="Bug" text="Bug" type="table">
+    <column defaultValue="" empty="true" id="3b957db8-bdf2-493b-bf69-c367aba4e3ae" length="128" name="text" primary="false" text="名称" type="String"/>
+    <column defaultValue="" empty="true" id="7113da6b-6fce-407e-b11f-6a892a25e0fb" length="36" name="projectId" primary="false" text="项目ID" type="String"/>
+    <column defaultValue="" empty="true" id="a43e5a41-b097-435f-ab88-8dbebf8ce165" length="128" name="projectIdText" primary="false" text="项目名称" type="String"/>
+    <column defaultValue="" empty="true" id="46414541-8820-4405-995e-e5e1089a6d0d" length="36" name="modularId" primary="false" text="模块ID" type="String"/>
+    <column defaultValue="" empty="true" id="6939d2a4-3578-4d1a-afe5-7844aa4982b6" length="128" name="modularIdText" primary="false" text="模块名称" type="String"/>
+    <column defaultValue="" empty="true" id="053e88ad-0c84-4d24-9e54-5b36a6c57af0" length="大字段" name="describe_" primary="false" text="描述" type="String"/>
+    <column defaultValue="" empty="true" id="bba0f51f-f1e7-4dc2-b3e5-75f523c32075" length="36" name="processingPeople" primary="false" text="处理人" type="String"/>
+    <column defaultValue="" empty="true" id="3f3ca1fd-9f49-48c1-b755-a98887c1695c" length="128" name="processingPeopleText" primary="false" text="处理人名称" type="String"/>
+    <column defaultValue="" empty="true" id="6784273c-c2ba-4ea7-bac3-0207f5bd9b0e" length="大字段" name="handlingUsers" primary="false" text="抄送人" type="String"/>
+    <column defaultValue="" empty="true" id="f6056a2d-d9c3-4963-b263-75d955e082a5" length="大字段" name="handlingUsersText" primary="false" text="抄送人名称" type="String"/>
+    <column defaultValue="" empty="true" id="ab2166d7-3516-4884-8e53-e2cb697a7e1b" length="16" name="state" primary="false" text="状态【0：新建，1：已解决，2：重现，9：关闭】" type="int"/>
+  </table>
 </project>

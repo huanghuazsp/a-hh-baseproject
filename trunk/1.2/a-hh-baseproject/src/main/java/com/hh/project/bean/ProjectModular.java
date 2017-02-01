@@ -1,4 +1,4 @@
- package com.hh.project.bean;
+package com.hh.project.bean;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -60,6 +60,29 @@ public class ProjectModular  extends BaseEntityTree<ProjectModular>{
 	}
 	public void setType(int type) {
 		this.type = type;
+	}
+	
+	
+	private String processingPeople;
+	
+	@Comment("处理人")
+	@Column(name="PROCESSING_PEOPLE", length = 36)
+	public String getProcessingPeople() {
+		return processingPeople;
+	}
+	public void setProcessingPeople(String processingPeople) {
+		this.processingPeople = processingPeople;
+	}
+	
+	private String processingPeopleText;
+	
+	@Comment("处理人名称")
+	@Column(name="PROCESSING_PEOPLE_TEXT", length = 128)
+	public String getProcessingPeopleText() {
+		return processingPeopleText;
+	}
+	public void setProcessingPeopleText(String processingPeopleText) {
+		this.processingPeopleText = processingPeopleText;
 	}
 	
 	
