@@ -9,25 +9,16 @@ import javax.persistence.Transient;
 import javax.persistence.Lob;
 import com.hh.hibernate.util.base.*;
 import com.hh.hibernate.dao.inf.Order;
+import com.hh.hibernate.dao.inf.Comment;
+@Comment("模块/任务")
 @Order
 @SuppressWarnings("serial")
 @Entity
 @Table(name="PROJECT_MODULAR")
-public class ProjectModular  extends BaseEntity{
-	//名称
-	private String text;
-	
-	@Column(name="TEXT", length = 128)
-	public String getText() {
-		return text;
-	}
-	public void setText(String text) {
-		this.text = text;
-	}
-	
-	//描述
+public class ProjectModular  extends BaseEntityTree<ProjectModular>{
 	private String describe;
 	
+	@Comment("描述")
 	@Lob
 	@Column(name="DESCRIBE_")
 	public String getDescribe() {
@@ -37,9 +28,9 @@ public class ProjectModular  extends BaseEntity{
 		this.describe = describe;
 	}
 	
-	//项目id
 	private String projectId;
 	
+	@Comment("项目id")
 	@Column(name="PROJECT_ID", length = 36)
 	public String getProjectId() {
 		return projectId;
@@ -49,13 +40,26 @@ public class ProjectModular  extends BaseEntity{
 	}
 	
 	private int input;
-
+	
+	@Comment("投入")
 	@Column(name="INPUT_")
 	public int getInput() {
 		return input;
 	}
 	public void setInput(int input) {
 		this.input = input;
+	}
+	
+	
+	private int type;
+
+	@Comment("类型【0：任务，1：模块】")
+	@Column(name="TYPE_")
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
 	
 	

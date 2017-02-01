@@ -1,4 +1,5 @@
- package com.hh.project.service.impl;
+package com.hh.project.service.impl;
+
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -23,7 +24,5 @@ public class ProjectModularService extends BaseService<ProjectModular> {
 	public List<ProjectModular> queryListByProjectId(String projectId) {
 		return queryList(ParamFactory.getParamHb().is("projectId", projectId));
 	}
-	
-	
+
 }
- 
