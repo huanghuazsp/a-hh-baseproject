@@ -76,6 +76,10 @@
 					<td><span xtype="text" config=" name : 'text',required :true"></span></td>
 				</tr>
 				<tr>
+					<td xtype="label">处理人：</td>
+					<td><span xtype="selectUser" config=" name : 'processingPeople' "></span></td>
+				</tr>
+				<tr>
 					<td xtype="label">父节点：</td>
 					<td><span id="node_span" xtype="selectTree"
 						config="name: 'node' , findTextAction : 'project-ProjectModular-findObjectById' , url : 'project-ProjectModular-queryTreeList' "></span>

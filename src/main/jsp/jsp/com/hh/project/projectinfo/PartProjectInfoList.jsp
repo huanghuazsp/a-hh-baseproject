@@ -75,7 +75,6 @@
 					id : row.id
 				})
 			});
-
 		});
 	}
 </script>
