@@ -31,7 +31,7 @@
 		});
 	}
 
-	function findData(objid) {
+	function findData(objid,oper) {
 		if (objid) {
 			Request.request('project-ProjectModular-findObjectById', {
 				data : {
@@ -41,11 +41,18 @@
 					$('#form').setValue(result);
 				}
 			});
+			if(!oper){
+				$('#saveSpan').hide();
+			}else{
+				$('#saveSpan').show();
+			}
 		}
 	}
 
 	function newData(params) {
+		$('#saveSpan').show();
 		params.expanded=0;
+		params.type=0;
 		$('#form').setValue(params);
 	}
 
@@ -59,6 +66,11 @@
 		<form id="form" xtype="form" class="form">
 			<span xtype="text" config=" hidden:true,name : 'id'"></span>
 			<table xtype="form" width=80% align=center>
+				<tr>
+					<td xtype="label">类型：</td>
+					<td><span xtype="radio"
+						config="name: 'type' ,value : 0,  data :[{id:1,text:'模块'},{id:0,text:'任务'}]"></span></td>
+				</tr>	
 				<tr>
 					<td xtype="label">名称：</td>
 					<td><span xtype="text" config=" name : 'text',required :true"></span></td>
@@ -86,7 +98,7 @@
 		</form>
 	</div>
 	<div xtype="toolbar">
-		<span xtype="button" config="text:'保存' , onClick : save "></span>
+		<span id="saveSpan" xtype="button" config="text:'保存' , onClick : save "></span>
 	</div>
 </body>
 </html>
