@@ -155,29 +155,29 @@
 		var projectId1 = $('#span_projectId').getValue();
 		
 		if(projectId1){
-			modularConfig.url='project-ProjectModular-queryListByProjectId';
+			modularConfig.url='project-ProjectModular-queryTreeListSelect';
 			modularConfig.params={
 					projectId : projectId1
 			};
+			modularConfig.noCheckParent=true;
 			$('#modularIdSpan').render(modularConfig);
 			$('#modularIdTr').show();
 		}else{
 			$('#modularIdTr').hide();
 		}
 		
+		if (object && object.modularId) {
+			$('#modularIdSpan').setValue({
+				id:object.modularId,
+				text : object.modularIdText
+			});
+		}
+		
 	}
 	
 	var modularConfig = {
 		render:false,
-		name:'modularId',
-		renderAfter:function (data){
-			if(!data ||data.length==0){
-				$('#modularIdTr').hide();
-			}
-			if (object && object.modularId) {
-				$('#modularIdSpan').setValue(object.modularId);
-			}
-		}
+		name:'modularId'
 	}
 </script>
 </head>
@@ -193,7 +193,7 @@
 				</tr>
 				<tr style="display:none;" id="modularIdTr">
 					<td xtype="label">所属模块：</td>
-					<td colspan="3"><span id="modularIdSpan" xtype="combobox"
+					<td colspan="3"><span id="modularIdSpan" xtype="selectTree"
 						configVar=" modularConfig " ></span></td>
 				</tr>
 				<tr>
