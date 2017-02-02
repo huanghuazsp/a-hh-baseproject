@@ -16,7 +16,7 @@ public class ActionBug extends BaseServiceAction< ProjectBug > {
 	}
 	
 	public void updateState() {
-		getService().update(object.getId(), "state", object.getState());
+		projectbugService.updateState(object);
 	}
 	
 }

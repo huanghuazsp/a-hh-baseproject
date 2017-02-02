@@ -140,4 +140,67 @@ public class ProjectBug  extends BaseEntity{
 		this.state = state;
 	}
 	
+	private String solveUser;
+	private String solveUserText;
+	private String closeUser;
+	private String closeUserText;
+	private String findUser;
+	private String findUserText;
+
+	@Comment("解决人")
+	@Column(name="SOLVE_USER")
+	public String getSolveUser() {
+		return solveUser;
+	}
+	public void setSolveUser(String solveUser) {
+		this.solveUser = solveUser;
+	}
+	@Comment("解决人")
+	@Column(name="SOLVE_USER_TEXT")
+	public String getSolveUserText() {
+		return solveUserText;
+	}
+	public void setSolveUserText(String solveUserText) {
+		this.solveUserText = solveUserText;
+	}
+	
+	@Comment("关闭人")
+	@Column(name="CLOSE_USER")
+	public String getCloseUser() {
+		return closeUser;
+	}
+	public void setCloseUser(String closeUser) {
+		this.closeUser = closeUser;
+	}
+	
+	@Comment("关闭人")
+	@Column(name="CLOSE_USER_TEXT")
+	public String getCloseUserText() {
+		return closeUserText;
+	}
+	public void setCloseUserText(String closeUserText) {
+		this.closeUserText = closeUserText;
+	}
+	
+	@Comment("发现人")
+	@Column(name="FIND_USER")
+	public String getFindUser() {
+		return findUser;
+	}
+	public void setFindUser(String findUser) {
+		this.findUser = findUser;
+	}
+	
+	@Comment("发现人")
+	@Column(name="FIND_USER_TEXT")
+	public String getFindUserText() {
+		return findUserText;
+	}
+	public void setFindUserText(String findUserText) {
+		this.findUserText = findUserText;
+	}
+	
+	
+	
+	
 }
