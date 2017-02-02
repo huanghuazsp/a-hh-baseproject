@@ -91,18 +91,31 @@
 	</div>
 	<table xtype="form" id="queryForm" style="width:700px;">
 		<tr>
-			<td><span xtype="radio"
+			<td xtype="label">名称：</td>
+			<td><span xtype="text" config=" name : 'text' "></span></td>
+			<td colspan="3" style="text-align:center;"><span xtype="radio"
 						config="name: 'state' ,value : 99,  data :[
 						{id:99,text:'所有'},
 						{id:0,text:'新建'},
 						{id:1,text:'解决'},
 						{id:2,text:'重现'},
 						{id:9,text:'关闭'}
-						] ,onChange:doQuery"></span></td>
-			<td xtype="label">名称：</td>
-			<td><span xtype="text" config=" name : 'text'"></span></td>
-			<td><span xtype="button"
+						] ,onChange:doQuery"></span>
+			</td>
+		</tr>
+		<tr>
+			<td xtype="label">发现人：</td>
+			<td><span xtype="text" config=" name : 'findUserText' "></span></td>
+			<td xtype="label">负责人：</td>
+			<td><span xtype="text" config=" name : 'processingPeopleText'"></span></td>
+			<td rowspan="2"><span xtype="button"
 						config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
+		</tr>
+		<tr>
+			<td xtype="label">解决人：</td>
+			<td><span xtype="text" config=" name : 'solveUserText'"></span></td>
+			<td xtype="label">关闭人：</td>
+			<td><span xtype="text" config=" name : 'closeUserText'"></span></td>
 		</tr>
 	</table> 
 	<div id="pagelist" xtype="pagelist"
@@ -129,7 +142,7 @@
 		
 			{
 				name : 'processingPeopleText' ,
-				text : '处理人名称'
+				text : '负责人名称'
 			}
 		
 	]">
