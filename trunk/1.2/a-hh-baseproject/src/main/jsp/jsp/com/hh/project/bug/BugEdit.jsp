@@ -145,7 +145,7 @@
 					</tr>
 					
 					<tr>
-						<td xtype="label">处理人：</td>
+						<td xtype="label">负责人：</td>
 						<td><span xtype="selectUser" config=" name : 'processingPeople' "></span></td>
 					</tr>
 					<tr>

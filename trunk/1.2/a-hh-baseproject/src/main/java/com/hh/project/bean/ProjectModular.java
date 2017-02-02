@@ -65,7 +65,7 @@ public class ProjectModular  extends BaseEntityTree<ProjectModular>{
 	
 	private String processingPeople;
 	
-	@Comment("处理人")
+	@Comment("负责人")
 	@Column(name="PROCESSING_PEOPLE", length = 36)
 	public String getProcessingPeople() {
 		return processingPeople;
@@ -76,7 +76,7 @@ public class ProjectModular  extends BaseEntityTree<ProjectModular>{
 	
 	private String processingPeopleText;
 	
-	@Comment("处理人名称")
+	@Comment("负责人名称")
 	@Column(name="PROCESSING_PEOPLE_TEXT", length = 128)
 	public String getProcessingPeopleText() {
 		return processingPeopleText;
