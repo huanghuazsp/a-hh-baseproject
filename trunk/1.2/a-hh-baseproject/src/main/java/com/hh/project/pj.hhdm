@@ -46,4 +46,9 @@
     <column defaultValue="" empty="true" id="f6056a2d-d9c3-4963-b263-75d955e082a5" length="大字段" name="handlingUsersText" primary="false" text="抄送人名称" type="String"/>
     <column defaultValue="" empty="true" id="ab2166d7-3516-4884-8e53-e2cb697a7e1b" length="16" name="state" primary="false" text="状态【0：新建，1：已解决，2：重现，9：关闭】" type="int"/>
   </table>
+  <table id="5f735764-8957-47a6-b25f-c9244fdca449" name="BugLog" text="错误日志" type="table">
+    <column defaultValue="" empty="true" id="e01d9a61-b118-4fb0-bebc-f0673078aa9e" length="大字段" name="describe_" primary="false" text="描述" type="String"/>
+    <column defaultValue="" empty="true" id="b872ef9b-afb1-43a3-b71b-2618b123a24d" length="16" name="type" primary="false" text="类型【1：解决，2：重现，9：关闭】" type="int"/>
+    <column defaultValue="" empty="true" id="9ff6896d-4e59-419c-ab64-530e5352baaa" length="36" name="bugId" primary="false" text="bugId" type="String"/>
+  </table>
 </project>

@@ -89,8 +89,16 @@
 	
 		<span xtype="button" config="onClick: doView ,text:'查看' , itype :'view' "></span>
 	</div>
-	<table xtype="form" id="queryForm" style="width:600px;">
+	<table xtype="form" id="queryForm" style="width:700px;">
 		<tr>
+			<td><span xtype="radio"
+						config="name: 'state' ,value : 99,  data :[
+						{id:99,text:'所有'},
+						{id:0,text:'新建'},
+						{id:1,text:'解决'},
+						{id:2,text:'重现'},
+						{id:9,text:'关闭'}
+						] ,onChange:doQuery"></span></td>
 			<td xtype="label">名称：</td>
 			<td><span xtype="text" config=" name : 'text'"></span></td>
 			<td><span xtype="button"
@@ -98,7 +106,7 @@
 		</tr>
 	</table> 
 	<div id="pagelist" xtype="pagelist"
-		config=" url: 'project-Bug-queryPagingData' ,column : [
+		config=" params:{state:99}, url: 'project-Bug-queryPagingData' ,column : [
 			{
 				name : 'state' ,
 				text : '状态',

@@ -148,17 +148,14 @@
 						<td xtype="label">处理人：</td>
 						<td><span xtype="selectUser" config=" name : 'processingPeople' "></span></td>
 					</tr>
-				
 					<tr>
 						<td xtype="label">抄送人：</td>
 						<td><span xtype="selectUser" config=" name : 'handlingUsers',many:true "></span></td>
 					</tr>
-				
 					<tr>
 						<td xtype="label">描述：</td>
 						<td><span xtype="ckeditor" config=" name : 'describe_' "></span></td>
 					</tr>
-				
 			</table>
 		</form>
 	</div>

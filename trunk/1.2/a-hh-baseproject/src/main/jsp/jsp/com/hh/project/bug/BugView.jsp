@@ -6,7 +6,7 @@
 <html>
 <head>
 <title>数据编辑</title>
-<%=SystemUtil.getBaseJs("checkform")%>
+<%=SystemUtil.getBaseJs("checkform","ueditor")%>
 
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
@@ -20,6 +20,8 @@
 				},
 				callback : function(result) {
 					result.state = stateRender(result.state);
+					result.describe = result.describe_;
+					result.describe_='';
 					$('#form').setValue(result);
 				}
 			});
@@ -45,7 +47,8 @@
 		Request.request('project-Bug-updateState', {
 			data : {
 				state:state,
-				id : objectid
+				id : objectid,
+				describe_ : $('#span_describe_').getValue()
 			},
 			callback : function(result) {
 				if (result.success!=false) {
@@ -54,6 +57,20 @@
 				}
 			}
 		});
+	}
+	
+	function renderData(value,data){
+		var returnStr = data.createUserName+'更新了状态';
+		 if(data.type==1){
+			returnStr+= '[解决]';
+		}else if(data.type==2){
+			returnStr+= '[重现]';
+		}else if(data.type==9){
+			returnStr+= '[关闭]';
+		}
+		 returnStr+='<br/>';
+		 returnStr+='描述：'+value;
+		 return returnStr;
 	}
 </script>
 </head>
@@ -91,12 +108,28 @@
 						<td xtype="label">抄送人：</td>
 						<td><span xtype="html" config=" name : 'handlingUsersText' "></span></td>
 					</tr>
-				
+					<tr>
+						<td xtype="label">bug描述：</td>
+						<td><span xtype="html" config=" name : 'describe' "></span></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div id="pagelist" xtype="pagelist"
+							config=" params:{bugId:objectid},paging:false,title:false, url: 'project-BugLog-queryList' ,column : [
+								{
+									name : 'describe_' ,
+									text : '描述',
+									render : renderData,
+									align:'left'
+								}
+								]  ">
+						</div>
+						</td>
+					</tr>
 					<tr>
 						<td xtype="label">描述：</td>
-						<td><span xtype="html" config=" name : 'describe_' "></span></td>
+						<td><span xtype="ckeditor" config=" name : 'describe_' "></span></td>
 					</tr>
-				
 			</table>
 		</form>
 	</div>
@@ -108,6 +141,3 @@
 	</div>
 </body>
 </html>
-
- 
- 
