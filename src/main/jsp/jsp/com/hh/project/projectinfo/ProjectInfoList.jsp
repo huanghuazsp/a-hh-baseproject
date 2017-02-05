@@ -111,6 +111,10 @@
 			});
 		});
 	}
+	
+	function projectApproval(){
+		
+	}
 </script>
 </head>
 <body>
@@ -120,13 +124,12 @@
 		<span xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span>
 		
 	
-		
-	
 		<span xtype=menu    config=" id:'menu1', data : [ 
 		{ text : '编辑参与者' , onClick : setUserInfo } ,
 		{ text : '编辑模块' , onClick : setModular },
-		{ text : '编辑附件' , onClick : setFile } ]"></span>
-		<span xtype="button" config=" text:'项目信息添加/修改',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
+		{ text : '编辑附件' , onClick : setFile } ,
+		{ text : '项目立项' , onClick : projectApproval }]"></span>
+		<span xtype="button" config=" text:'项目信息操作',icon : 'ui-icon-triangle-1-s' ,menuId:'menu1' "></span>
 		<span
 			xtype="button"
 			config="onClick: $.hh.pagelist.doUp , params:{ pageid :'pagelist',action:'project-ProjectInfo-order'}  ,  icon : 'hh_up' "></span>
