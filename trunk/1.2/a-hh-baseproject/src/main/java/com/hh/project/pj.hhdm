@@ -51,4 +51,21 @@
     <column defaultValue="" empty="true" id="b872ef9b-afb1-43a3-b71b-2618b123a24d" length="16" name="type" primary="false" text="类型【1：解决，2：重现，9：关闭】" type="int"/>
     <column defaultValue="" empty="true" id="9ff6896d-4e59-419c-ab64-530e5352baaa" length="36" name="bugId" primary="false" text="bugId" type="String"/>
   </table>
+  <table id="193d35d7-a0fc-4fb6-84d7-08edb780176e" name="Approval" text="立项申请" type="table">
+    <column defaultValue="" empty="true" id="840c1099-d23e-4e09-ad33-bdb92f9994ab" length="36" name="applyUser" primary="false" text="申请人" type="String"/>
+    <column defaultValue="" empty="true" id="1ace3bbe-dd6c-4c42-aadc-f407be202912" length="128" name="applyUserText" primary="false" text="申请人名称" type="String"/>
+    <column defaultValue="" empty="true" id="d97c413b-4373-41ea-b5ab-fade8c034dec" length="" name="applyDate" primary="false" text="申请时间" type="Date"/>
+    <column defaultValue="" empty="true" id="6b2d8450-09d6-404a-971d-2d81c5395971" length="" name="approvalDate" primary="false" text="立项时间" type="Date"/>
+    <column defaultValue="" empty="true" id="1845d255-4424-4479-8205-a9814736657c" length="大字段" name="applyComment" primary="false" text="申请内容" type="String"/>
+    <column defaultValue="" empty="true" id="a5ea3350-896f-405b-89f3-8420f9507ca0" length="36" name="deptManager" primary="false" text="部门经理" type="String"/>
+    <column defaultValue="" empty="true" id="1dcdd912-600d-456f-8226-6b9c2f94b429" length="128" name="deptManagerText" primary="false" text="部门经理" type="String"/>
+    <column defaultValue="" empty="true" id="dc0842ab-680b-4d95-b02d-a57098897aec" length="大字段" name="deptManagerComment" primary="false" text="部门经理意见" type="String"/>
+    <column defaultValue="" empty="true" id="7f18f28e-9d21-40b0-979d-4628b3f18681" length="36" name="branchDeputyManager" primary="false" text="分管副总" type="String"/>
+    <column defaultValue="" empty="true" id="ed2aa737-9fe1-40dd-ad4d-80f8097c1a6d" length="128" name="branchDeputyManagerText" primary="false" text="分管副总" type="String"/>
+    <column defaultValue="" empty="true" id="359b8cf1-2252-403b-9b50-f0c0644c15b6" length="大字段" name="branchDeputyManagerComment" primary="false" text="分管副总意见" type="String"/>
+    <column defaultValue="" empty="true" id="76532793-2728-43e1-96ba-a1c3bb344bbd" length="36" name="overallManager" primary="false" text="总经理" type="String"/>
+    <column defaultValue="" empty="true" id="96c905a0-71ca-463a-b551-bb540d64e78c" length="128" name="overallManagerText" primary="false" text="总经理" type="String"/>
+    <column defaultValue="" empty="true" id="4368a626-8d0c-48ec-8ed0-8d737cf3d940" length="大字段" name="overallManagerComment" primary="false" text="总经理意见" type="String"/>
+    <column defaultValue="" empty="true" id="b00579a9-5ed4-4564-a895-6030352dc9e7" length="36" name="projectId" primary="false" text="项目ID" type="String"/>
+  </table>
 </project>
