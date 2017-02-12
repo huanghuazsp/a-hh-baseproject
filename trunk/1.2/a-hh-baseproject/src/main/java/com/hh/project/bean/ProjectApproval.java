@@ -187,4 +187,15 @@ public class ProjectApproval  extends BaseEntity{
 		this.projectId = projectId;
 	}
 	
+	private String projectIdText;
+
+	@Comment("项目")
+	@Column(name="PROJECT_ID_TEXT", length = 128)
+	public String getProjectIdText() {
+		return projectIdText;
+	}
+	public void setProjectIdText(String projectIdText) {
+		this.projectIdText = projectIdText;
+	}
+	
 }
