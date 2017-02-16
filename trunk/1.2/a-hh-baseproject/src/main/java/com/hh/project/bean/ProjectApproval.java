@@ -108,6 +108,20 @@ public class ProjectApproval  extends BaseEntity{
 		this.deptManagerComment = deptManagerComment;
 	}
 	
+	
+	
+	private Date deptManagerDate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="DEPT_MANAGER_DATE",length = 7)
+	public Date getDeptManagerDate() {
+		return deptManagerDate;
+	}
+	public void setDeptManagerDate(Date deptManagerDate) {
+		this.deptManagerDate = deptManagerDate;
+	}
+	
+	
 	private String branchDeputyManager;
 	
 	@Comment("分管副总")
@@ -141,6 +155,21 @@ public class ProjectApproval  extends BaseEntity{
 	public void setBranchDeputyManagerComment(String branchDeputyManagerComment) {
 		this.branchDeputyManagerComment = branchDeputyManagerComment;
 	}
+	
+	
+	private Date branchDeputyManagerDate;
+	
+	@Comment("分管副总审批时间")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="BRANCH_DEPUTY_MANAGER_DATE",length = 7)
+	public Date getBranchDeputyManagerDate() {
+		return branchDeputyManagerDate;
+	}
+	public void setBranchDeputyManagerDate(Date branchDeputyManagerDate) {
+		this.branchDeputyManagerDate = branchDeputyManagerDate;
+	}
+	
+	
 	
 	private String overallManager;
 	
@@ -176,6 +205,19 @@ public class ProjectApproval  extends BaseEntity{
 		this.overallManagerComment = overallManagerComment;
 	}
 	
+	
+	private Date overallManagerDate;
+	
+	@Comment("总经理审批时间")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="OVERALL_MANAGER_COMMENT_DATE",length = 7)
+	public Date getOverallManagerDate() {
+		return overallManagerDate;
+	}
+	public void setOverallManagerDate(Date overallManagerDate) {
+		this.overallManagerDate = overallManagerDate;
+	}
+
 	private String projectId;
 	
 	@Comment("项目ID")

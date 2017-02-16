@@ -6,7 +6,7 @@
 <html>
 <head>
 <title>数据编辑</title>
-<%=SystemUtil.getBaseJs("checkform", "ueditor","date")+ SystemUtil.getUser()%>
+<%=SystemUtil.getBaseJs("checkform", "ueditor","date","workflow")+ SystemUtil.getUser()%>
 
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
@@ -15,6 +15,8 @@
 
 	var objectid = '<%=Convert.toString(request.getParameter("objectId"))%>';
 
+	var dataManager = WF.getDataManager(params);
+	
 	function save() {
 		var returnObject = null;
 		$.hh.validation.check('form', function(formData) {
@@ -39,6 +41,8 @@
 				},
 				callback : function(result) {
 					$('#form').setValue(result);
+					
+					WF.dataManagerWidgets(dataManager);
 				}
 			});
 		}else{
@@ -47,6 +51,7 @@
 				applyUser:loginUser.id,
 				applyUserText:loginUser.text
 			});
+			WF.dataManagerWidgets(dataManager);
 		}
 	}
 
@@ -108,15 +113,31 @@
 						<td xtype="label">申请人：</td>
 						<td>
 						<span xtype="text" config=" required :true,name : 'applyUserText', readonly :true "></span>
-						<span xtype="text" config=" required :true,name : 'applyUser',hidden:true "></span></td>
+						<span xtype="text" config=" required :true,name : 'applyUser',hidden:true "></span>
+						</td>
 						<td xtype="label">申请时间：</td>
-						<td><span xtype="date" config=" required :true,name : 'applyDate' , readonly :true"></span></td>
+						<td><span xtype="date" config=" required :true,name : 'applyDate' , readonly :true,type:'datetime'"></span></td>
 					</tr>
-				
 					<tr>
 						<td xtype="label">申请内容：</td>
 						<td colspan="3"><span xtype="ckeditor" config="required :true, name : 'applyComment' "></span></td>
 					</tr>
+					
+					<tr>
+						<td xtype="label">部门经理：</td>
+						<td>
+						<span xtype="text" config=" required :true,name : 'deptManagerText', readonly :true,value:loginUser.text "></span>
+						<span xtype="text" config=" required :true,name : 'deptManager',hidden:true,value:loginUser.id "></span>
+						</td>
+						<td xtype="label">审批时间：</td>
+						<td><span xtype="date" config=" required :true,name : 'deptManagerDate' , readonly :true,type:'datetime' ,value:$.hh.formatDate($.hh.getDate(), 'yyyy-MM-dd HH:mm:ss')"></span></td>
+					</tr>
+					
+					<tr>
+						<td xtype="label">部门经理意见：</td>
+						<td colspan="3"><span xtype="textarea" config=" name : 'deptManagerComment' "></span></td>
+					</tr>
+					
 				
 					<!-- <tr>
 						<td xtype="label">立项时间：</td>
