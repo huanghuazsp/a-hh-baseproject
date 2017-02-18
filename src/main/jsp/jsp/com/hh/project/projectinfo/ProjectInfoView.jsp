@@ -56,7 +56,10 @@
 			var id = newPanel.attr('id');
 			if (id == 'modularDiv' && modularrender == false) {
 				modularrender = true;
-				$('#modularDiv').render();
+				$('#modularDiv').find('iframe').attr(
+						'src',
+						'jsp-project-projectmodular-ProjectModularList?projectId='
+								+ objectid + '&oper=false');
 			} else if (id == 'userDiv' && userrender == false) {
 				userrender = true;
 				$('#userDiv').render();
@@ -125,27 +128,8 @@
 				</form>
 			</div>
 			
-			<div id="modularDiv" xtype="pagelist"
-				config=" render :false,  params : {projectId:objectid} , url: 'project-ProjectModular-queryPagingData' ,column : [
-					{
-						name : 'text' ,
-						text : '名称',
-						width:170
-					},
-					{
-						name : 'input' ,
-						text : '计划投入',
-						width:100,
-						render :function(v){
-							return v +'人日';
-						}
-					},
-					{
-						name : 'describe' ,
-						align:'left',
-						text : '描述'
-					}
-			]">
+			<div id="modularDiv" style="padding: 0px;">
+				<iframe frameborder=0 width=100% height=100% src="about:blank"></iframe>
 			</div>
 			
 			
