@@ -87,11 +87,16 @@
 		if(loginUser.id!=treeNode.createUser && oper!='all'){
 			oper_ = false;
 		}
-		
+		if(oper=='false'){
+			oper_ = false;
+		}
 		iframe.findData(treeNode.id,oper_);
 	}
 	
 	function showRemoveBtn(treeId, treeNode) {
+		if(oper=='false'){
+			return false;
+		}
 		var oper_ = true;
 		if(loginUser.id!=treeNode.createUser && oper!='all'){
 			oper_ = false;
@@ -99,6 +104,10 @@
 		return oper_;
 	}
 	function init(){
+		if(oper=='false'){
+			$('#leftDiv').hide();
+		}
+		
 		$('#centerdiv').disabled('请选择要编辑的树节点或添加新的数据！');
 	}
 </script>
@@ -106,7 +115,7 @@
 <body>
 	<div xtype="border_layout">
 		<div config="render : 'west'">
-			<div xtype="toolbar" config="type:'head'">
+			<div xtype="toolbar" config="type:'head'" id="leftDiv">
 				<span xtype="button" config="onClick: doAdd ,text:'添加'"></span> <span
 					xtype="button"
 					config="onClick: $.hh.tree.doUp , params:{treeid:'tree',action:'project-ProjectModular-order'}  , textHidden : true,text:'上移' ,icon : 'hh_up' "></span>
@@ -116,7 +125,7 @@
 					config="onClick : $.hh.tree.refresh,text : '刷新' ,params: 'tree'  "></span>
 			</div>
 			<span xtype="tree"
-				config=" id:'tree', url:'project-ProjectModular-queryTreeList' ,remove: doDelete , onClick : treeClick , params :{projectId:projectId},showRemoveBtn:showRemoveBtn "></span>
+				config=" id:'tree', url:'project-ProjectModular-queryTreeList' ,remove: doDelete , onClick : treeClick , params :{projectId:projectId},showRemoveBtn:showRemoveBtn ,nheight:42"></span>
 		</div>
 		<div style="overflow: visible;" id=centerdiv>
 			<iframe id="<%=iframeId%>" name="<%=iframeId%>" width=100%

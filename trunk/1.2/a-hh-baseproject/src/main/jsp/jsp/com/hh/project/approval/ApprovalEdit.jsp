@@ -77,7 +77,10 @@
 				column : [
 					{
 						name : 'text' ,
-						text : '项目名称'
+						text : '项目名称',
+						render :function(value,data){
+							return '<a href="javascript:params.parentPage.doViewProject(\''+data.id+'\')">'+data.text+'</a>';
+						}
 					},
 					{
 						name : 'startDate' ,
@@ -93,6 +96,15 @@
 			}
 	};
 
+
+	function doViewProject(projectId){
+			Dialog.open({
+				url : 'jsp-project-projectinfo-ProjectInfoView',
+				urlParams : {
+					id : projectId
+				}
+			});
+	}
 </script>
 </head>
 <body>
