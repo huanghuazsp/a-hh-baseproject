@@ -69,6 +69,7 @@
 	var projectConfig = {
 			openWidth:800,
 			required :true,
+			textfield:'项目',
 			name : 'projectId',
 			findTextAction :'project-ProjectInfo-findObjectById' ,
 			pageconfig:{
@@ -121,60 +122,60 @@
 					<tr>
 						<td xtype="label">申请人：</td>
 						<td>
-						<span xtype="text" config=" required :true,name : 'applyUserText', readonly :true,value:loginUser.text "></span>
-						<span xtype="text" config=" required :true,name : 'applyUser',hidden:true,value:loginUser.id  "></span>
+						<span xtype="text" config=" textfield:'申请人',required :true,name : 'applyUserText', readonly :true,value:loginUser.text "></span>
+						<span xtype="text" config=" textfield:'申请人',required :true,name : 'applyUser',hidden:true,value:loginUser.id  "></span>
 						</td>
 						<td xtype="label">申请时间：</td>
-						<td><span xtype="date" config=" required :true,name : 'applyDate' , readonly :true,type:'datetime',value:$.hh.formatDate($.hh.getDate(), 'yyyy-MM-dd HH:mm:ss')"></span></td>
+						<td><span xtype="date" config="textfield:'申请时间', required :true,name : 'applyDate' , readonly :true,type:'datetime',value:$.hh.formatDate($.hh.getDate(), 'yyyy-MM-dd HH:mm:ss')"></span></td>
 					</tr>
 					<tr>
 						<td xtype="label">申请内容：</td>
-						<td colspan="3"><span xtype="ckeditor" config="required :true, name : 'applyComment' "></span></td>
+						<td colspan="3"><span xtype="ckeditor" config="textfield:'申请内容',required :true, name : 'applyComment' "></span></td>
 					</tr>
 					
 					<tr>
 						<td xtype="label">部门经理：</td>
 						<td>
-						<span xtype="text" config=" required :true,name : 'deptManagerText', readonly :true,value:loginUser.text "></span>
-						<span xtype="text" config=" required :true,name : 'deptManager',hidden:true,value:loginUser.id "></span>
+						<span xtype="text" config=" textfield:'部门经理',required :true,name : 'deptManagerText', readonly :true,value:loginUser.text "></span>
+						<span xtype="text" config=" textfield:'部门经理',required :true,name : 'deptManager',hidden:true,value:loginUser.id "></span>
 						</td>
 						<td xtype="label">审批时间：</td>
-						<td><span xtype="date" config=" required :true,name : 'deptManagerDate' , readonly :true,type:'datetime' ,value:$.hh.formatDate($.hh.getDate(), 'yyyy-MM-dd HH:mm:ss')"></span></td>
+						<td><span xtype="date" config=" textfield:'审批时间',required :true,name : 'deptManagerDate' , readonly :true,type:'datetime' ,value:$.hh.formatDate($.hh.getDate(), 'yyyy-MM-dd HH:mm:ss')"></span></td>
 					</tr>
 					
 					<tr>
 						<td xtype="label">部门经理意见：</td>
-						<td colspan="3"><span xtype="textarea" config=" name : 'deptManagerComment' "></span></td>
+						<td colspan="3"><span xtype="textarea" config="textfield:'部门经理意见', name : 'deptManagerComment' "></span></td>
 					</tr>
 					
 					<tr>
 						<td xtype="label">分管副总：</td>
 						<td>
-						<span xtype="text" config=" required :true,name : 'branchDeputyManagerText', readonly :true,value:loginUser.text "></span>
-						<span xtype="text" config=" required :true,name : 'branchDeputyManager',hidden:true,value:loginUser.id "></span>
+						<span xtype="text" config=" textfield:'分管副总',required :true,name : 'branchDeputyManagerText', readonly :true,value:loginUser.text "></span>
+						<span xtype="text" config=" textfield:'分管副总',required :true,name : 'branchDeputyManager',hidden:true,value:loginUser.id "></span>
 						</td>
 						<td xtype="label">审批时间：</td>
-						<td><span xtype="date" config=" required :true,name : 'branchDeputyManagerDate' , readonly :true,type:'datetime' ,value:$.hh.formatDate($.hh.getDate(), 'yyyy-MM-dd HH:mm:ss')"></span></td>
+						<td><span xtype="date" config="textfield:'审批时间', required :true,name : 'branchDeputyManagerDate' , readonly :true,type:'datetime' ,value:$.hh.formatDate($.hh.getDate(), 'yyyy-MM-dd HH:mm:ss')"></span></td>
 					</tr>
 					
 					<tr>
 						<td xtype="label">分管副总意见：</td>
-						<td colspan="3"><span xtype="textarea" config=" name : 'branchDeputyManagerComment' "></span></td>
+						<td colspan="3"><span xtype="textarea" config="textfield:'分管副总意见', name : 'branchDeputyManagerComment' "></span></td>
 					</tr>
 					
 					<tr>
 						<td xtype="label">总经理：</td>
 						<td>
-						<span xtype="text" config=" required :true,name : 'overallManagerText', readonly :true,value:loginUser.text "></span>
-						<span xtype="text" config=" required :true,name : 'overallManager',hidden:true,value:loginUser.id "></span>
+						<span xtype="text" config=" textfield:'总经理',required :true,name : 'overallManagerText', readonly :true,value:loginUser.text "></span>
+						<span xtype="text" config=" textfield:'总经理',required :true,name : 'overallManager',hidden:true,value:loginUser.id "></span>
 						</td>
 						<td xtype="label">审批时间：</td>
-						<td><span xtype="date" config=" required :true,name : 'overallManagerDate' , readonly :true,type:'datetime' ,value:$.hh.formatDate($.hh.getDate(), 'yyyy-MM-dd HH:mm:ss')"></span></td>
+						<td><span xtype="date" config=" textfield:'审批时间',required :true,name : 'overallManagerDate' , readonly :true,type:'datetime' ,value:$.hh.formatDate($.hh.getDate(), 'yyyy-MM-dd HH:mm:ss')"></span></td>
 					</tr>
 					
 					<tr>
 						<td xtype="label">总经理意见：</td>
-						<td colspan="3"><span xtype="textarea" config=" name : 'overallManagerComment' "></span></td>
+						<td colspan="3"><span xtype="textarea" config="textfield:'总经理意见', name : 'overallManagerComment' "></span></td>
 					</tr>
 					
 				
