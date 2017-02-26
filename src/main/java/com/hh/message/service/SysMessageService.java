@@ -290,4 +290,12 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 		return message;
 	}
 
+	public Object queryMyPagingData(SysMessage object, PageRange pageRange) {
+		ParamInf paramInf = ParamFactory.getParamHb();
+		UsUser user = loginUserUtilService.findLoginUser();
+		paramInf.is("toObjectId", user.getId());
+		List<SysMessage> sysMessages = queryList(paramInf, pageRange);
+		return sysMessages;
+	}
+
 }
