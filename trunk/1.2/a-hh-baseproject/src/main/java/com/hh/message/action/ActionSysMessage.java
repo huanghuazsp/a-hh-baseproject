@@ -41,6 +41,13 @@ public class ActionSysMessage extends BaseServiceAction<SysMessage> {
 		return service.queryMyPagingDataBySendObjectId(object,
 				this.getPageRange());
 	}
+	
+
+
+	public Object queryMyPagingData() {
+		return service.queryMyPagingData(object,
+				this.getPageRange());
+	}
 
 	public Object poll() {
 		String userId = userService.findUserId();

@@ -15,6 +15,9 @@
 <script type="text/javascript" src="/hhcommon/opensource/dwr/util.js"></script>
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
+	
+	var queryUrl = 'message-SysMessage-queryMyPagingData';
+	
 	var orgtreeconfig = {
 		//render : false,
 		render : false,
@@ -179,6 +182,7 @@
 				'<div style="margin-top:5px;"><a href="javascript:viewUser('+data.sendObjectType+',\''+data.id+'\');">' + data.text + '</a><span style="float:right;"><a href="javascript:openHi(\''+data.id+'\',\''+data.sendObjectType+'\',\''+data.text+'\')">查看历史记录</a></span></div>');
 		$('#userdiv').data('data', data);
 		indexpage=1;
+		queryUrl='message-SysMessage-queryMyPagingDataBySendObjectId';
 		requestDataLoad(data);
 	}
 	
@@ -194,7 +198,7 @@
 	function requestDataLoad(data){
 		var limit = 30;
 		var start = limit * indexpage - limit;
-		Request.request('message-SysMessage-queryMyPagingDataBySendObjectId', {
+		Request.request(queryUrl, {
 			data : {
 				limit : limit,
 				page : indexpage,
@@ -553,6 +557,7 @@
 
 		messageInit();
 
+		requestDataLoad({});
 	}
 
 	function errorLoad() {
