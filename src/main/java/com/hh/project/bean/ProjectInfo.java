@@ -8,6 +8,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Lob;
 import com.hh.hibernate.util.base.*;
+import com.hh.hibernate.dao.inf.Comment;
 import com.hh.hibernate.dao.inf.Order;
 @Order
 @SuppressWarnings("serial")
@@ -159,6 +160,17 @@ public class ProjectInfo  extends BaseEntity{
 	}
 	public void setAllUserRead(int allUserRead) {
 		this.allUserRead = allUserRead;
+	}
+	
+	private int stage;
+	
+	@Comment("项目阶段[0:项目立项，1:项目实施，9:项目结项]")
+	@Column(name="STAGE_",columnDefinition = "int default 0")
+	public int getStage() {
+		return stage;
+	}
+	public void setStage(int stage) {
+		this.stage = stage;
 	}
 	
 	

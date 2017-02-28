@@ -115,6 +115,15 @@
 	function projectApproval(){
 		
 	}
+	function stageRender(value){
+		if(value==1){
+			return '项目实施';
+		}else if(value==9){
+			return '项目结项';
+		}else{
+			return '项目立项';
+		}
+	}
 </script>
 </head>
 <body>
@@ -148,15 +157,15 @@
 	</table> 
 	<div id="pagelist" xtype="pagelist"
 		config=" url: 'project-ProjectInfo-queryPagingData' ,column : [
-		
-		
-		
 			{
 				name : 'text' ,
 				text : '项目名称'
 			},
-		
-		
+			{
+				name : 'stage' ,
+				text : '项目阶段',
+				render : stageRender
+			},
 			{
 				name : 'startDate' ,
 				text : '开始日期',

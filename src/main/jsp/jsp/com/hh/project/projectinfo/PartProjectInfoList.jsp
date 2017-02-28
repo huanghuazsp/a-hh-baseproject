@@ -77,6 +77,16 @@
 			});
 		});
 	}
+	
+	function stageRender(value){
+		if(value==1){
+			return '项目实施';
+		}else if(value==9){
+			return '项目结项';
+		}else{
+			return '项目立项';
+		}
+	}
 </script>
 </head>
 <body>
@@ -106,7 +116,11 @@
 				name : 'text' ,
 				text : '项目名称'
 			},
-		
+			{
+				name : 'stage' ,
+				text : '项目阶段',
+				render : stageRender
+			},
 		
 			{
 				name : 'startDate' ,
