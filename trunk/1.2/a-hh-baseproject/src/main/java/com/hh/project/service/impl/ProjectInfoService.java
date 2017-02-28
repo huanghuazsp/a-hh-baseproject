@@ -55,7 +55,7 @@ public class ProjectInfoService extends BaseService<ProjectInfo> {
 	public PagingData<Map<String, Object>> queryPartPage(ProjectInfo object, PageRange pageRange) {
 		String userId = loginUserUtilService.findUserId();
 
-		String hql = "select DISTINCT a.text as text,a.id as id, a.startDate  as startDate, a.managerText  as managerText"
+		String hql = "select DISTINCT a.stage as stage,a.text as text,a.id as id, a.startDate  as startDate, a.managerText  as managerText"
 				+ ", a.client as client " + ", a.money as money, a.createUser as createUser, a.manager as manager from "
 				+ ProjectInfo.class.getName() + " a , " + ProjectUserInfo.class.getName()
 				+ " b  where  a.id=b.projectId and (b.user=:userId or a.allUserRead=1) ";
