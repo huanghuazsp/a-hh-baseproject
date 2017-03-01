@@ -47,22 +47,19 @@
 		findData();
 	}
 	
-	function queryHtml(){
-		return '<table xtype="form" id="queryForm" style="">'
-							+'<tr>'
-							+'<td xtype="label">名称：</td>'
-							+'<td><span xtype="text" config=" name : \'text\' ,enter: doQuery "></span></td>'
-							+'<td style="width:100px;"><span	xtype="button" config="onClick: doQuery ,text:\'查询\' , itype :\'query\' "></span></td>'
-						+'</tr>'
-					+'</table>';
-	}
-	
+	var  queryHtml = '<table xtype="form" id="queryForm" style="">'
+			+'<tr>'
+			+'<td xtype="label">名称：</td>'
+			+'<td><span xtype="text" config=" name : \'text\' ,enter: doQuery "></span></td>'
+			+'<td style="width:100px;"><span	xtype="button" config="onClick: doQuery ,text:\'查询\' , itype :\'query\' "></span></td>'
+		+'</tr>'
+		+'</table>';
 	var projectConfig = {
 			openWidth:800,
 			name : 'projectId',
 			findTextAction :'project-ProjectInfo-findObjectById' ,
 			pageconfig:{
-				queryHtml : queryHtml(),
+				queryHtml : queryHtml,
 				url:'project-ProjectInfo-queryPartPage' ,
 				column : [
 					{

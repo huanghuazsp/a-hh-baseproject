@@ -1,6 +1,7 @@
  package com.hh.project.service.impl;
 import com.hh.system.service.impl.BaseService;
 import com.hh.system.util.Check;
+import com.hh.system.util.Convert;
 import com.hh.system.util.MessageException;
 import com.hh.system.util.dto.PageRange;
 import com.hh.system.util.dto.PagingData;
@@ -79,6 +80,14 @@ public class ProjectBugService extends BaseService<ProjectBug> {
 		entity.setFindUser(user.getId());
 		entity.setFindUserText(user.getText());
 		return super.save(entity);
+	}
+
+	@Override
+	public void deleteByIds(String ids) {
+		// TODO Auto-generated method stub
+		super.deleteByIds(ids);
+		
+		projectBugLogService.deleteByProperty("bugId", Convert.strToList( ids));
 	}
 	
 	
