@@ -123,6 +123,7 @@
 			<div id="formDiv">
 				<form id="form" xtype="form" class="form">
 					<span xtype="text" config=" hidden:true,name : 'id'"></span>
+					<span xtype="text" config=" hidden:true,name : 'stage'"></span>
 					<span id="bidspan" xtype="text" config=" hidden:true,name : 'bid' "></span>
 					<table xtype="form">
 						<tr>

@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>数据列表</title>
-<%=SystemUtil.getBaseJs()%>
+<%=SystemUtil.getBaseJs("workflow")%>
 
 <script type="text/javascript">
 	function doDelete() {
@@ -113,7 +113,9 @@
 	}
 	
 	function projectApproval(){
-		
+		$.hh.pagelist.callRow("pagelist", function(row) {
+			WF.start('X6XNgqvQbXfNeEtTYaM', row.text+'-立项',{object:row});
+		});
 	}
 	function stageRender(value){
 		if(value==1){
