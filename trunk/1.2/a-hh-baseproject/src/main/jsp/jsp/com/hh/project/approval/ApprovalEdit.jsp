@@ -14,7 +14,6 @@
 	var height = 450;
 
 	var objectid = '<%=Convert.toString(request.getParameter("objectId"))%>';
-
 	var dataManager = WF.getDataManager(params);
 	
 	function save() {
@@ -46,8 +45,12 @@
 				}
 			});
 		}else{
-			$('#form').setValue({
-			});
+			var baseObject = {};
+			if(params.object){
+				baseObject.projectId = params.object.id;
+				baseObject.projectIdText = params.object.text;
+			}
+			$('#form').setValue(baseObject);
 			WF.dataManagerWidgets(dataManager);
 		}
 	}
