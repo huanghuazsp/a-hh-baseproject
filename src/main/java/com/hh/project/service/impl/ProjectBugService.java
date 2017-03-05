@@ -48,7 +48,13 @@ public class ProjectBugService extends BaseService<ProjectBug> {
 		}
 		
 		if (entity.getState()!=99) {
-			hqlParamList.is("state", entity.getState());
+			if (entity.getState()==90) {
+				hqlParamList.nis("state", 9);
+			}else if (entity.getState()==91) {
+				hqlParamList.in("state", new Integer[]{0,2});
+			}else{
+				hqlParamList.is("state", entity.getState());
+			}
 		}
 		return super.queryPagingData(pageRange, hqlParamList);
 	}
