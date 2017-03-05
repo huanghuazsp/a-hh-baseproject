@@ -41,20 +41,29 @@
 	}
 	function doView(){
 		$.hh.pagelist.callRow("pagelist", function(row) {
-			$.hh.addTab({
-				id : row.id,
-				text :  document.title+'-'+row.text,
-				src : 'jsp-project-bug-BugView?' + $.param({
-					id : row.id
-				}),
-				params:{
-					callback:function(){
-						doQuery();
-					}
-				}
-			});
+			doView2(row.id,row.text)
 		});
 	}
+	
+	function doView2(id,text){
+		$.hh.addTab({
+			id : id,
+			text :  document.title+'-'+text,
+			src : 'jsp-project-bug-BugView?' + $.param({
+				id : id
+			}),
+			params:{
+				callback:function(){
+					doQuery();
+				}
+			}
+		});
+	}
+	
+	function textRender(value,data){
+		return '<a href="javascript:doView2(\''+data.id+'\',\''+value+'\')">'+value+'</a>';
+	}
+	
 	function doQuery() {
 		$('#pagelist').loadData({
 			params : $('#queryForm').getValue()
@@ -89,7 +98,7 @@
 	
 		<span xtype="button" config="onClick: doView ,text:'查看' , itype :'view' "></span>
 	</div>
-	<table xtype="form" id="queryForm" style="width:700px;">
+	<table xtype="form" id="queryForm" style="width:720px;">
 		<tr>
 			<td xtype="label">名称：</td>
 			<td><span xtype="text" config=" name : 'text' "></span></td>
@@ -99,7 +108,9 @@
 						{id:0,text:'新建'},
 						{id:1,text:'解决'},
 						{id:2,text:'重现'},
-						{id:9,text:'关闭'}
+						{id:9,text:'关闭'},
+						{id:90,text:'未关闭'},
+						{id:91,text:'未解决'}
 						] ,onChange:doQuery"></span>
 			</td>
 		</tr>
@@ -128,7 +139,8 @@
 			},
 			{
 				name : 'text' ,
-				text : '名称'
+				text : '名称',
+				render: textRender
 			},
 			{
 				name : 'projectIdText' ,
