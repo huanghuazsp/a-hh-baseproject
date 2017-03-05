@@ -31,6 +31,14 @@ public class ProjectBugService extends BaseService<ProjectBug> {
 			hqlParamList.like("text", entity.getText());
 		}
 		
+		if (Check.isNoEmpty(entity.getProjectId())) {
+			hqlParamList.is("projectId", entity.getProjectId());
+		}
+
+		if (Check.isNoEmpty(entity.getModularId())) {
+			hqlParamList.is("modularId", entity.getModularId());
+		}
+		
 		if (Check.isNoEmpty(entity.getFindUserText())) {
 			hqlParamList.like("findUserText", entity.getFindUserText());
 		}
