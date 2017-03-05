@@ -81,6 +81,61 @@
 			return '<font class=hh_green>关闭</font>';
 		}
 	}
+	
+	
+	
+	var  queryHtml = '<table xtype="form" id="queryForm" style="">'
+			+'<tr>'
+			+'<td xtype="label">名称：</td>'
+			+'<td><span xtype="text" config=" name : \'text\' ,enter: doQuery "></span></td>'
+			+'<td style="width:100px;"><span	xtype="button" config="onClick: doQuery ,text:\'查询\' , itype :\'query\' "></span></td>'
+		+'</tr>'
+		+'</table>';
+	var projectConfig = {
+			openWidth:800,
+			name : 'projectId',
+			findTextAction :'project-ProjectInfo-findObjectById' ,
+			pageconfig:{
+				queryHtml : queryHtml,
+				url:'project-ProjectInfo-queryPartPage' ,
+				column : [
+					{
+						name : 'text' ,
+						text : '项目名称'
+					},
+					{
+						name : 'startDate' ,
+						text : '开始日期',
+						render : 'date',
+						width:80
+					},
+					{
+						name : 'managerText' ,
+						text : '项目经理'
+					}
+				]
+			},
+			onChange:function(data){
+				renderModular({});
+			}
+	};
+	
+	function renderModular(object){
+		var projectId1 = $('#span_projectId').getValue();
+		if(projectId1){
+			modularConfig.params={
+					projectId : projectId1
+			};
+			$('#modularIdSpan').render(modularConfig);
+		}
+	}
+	
+	var modularConfig = {
+		render:false,
+		name:'modularId',
+		noCheckParent:true,
+		url : 'project-ProjectModular-queryTreeListSelect'
+	}
 </script>
 </head>
 <body>
@@ -98,10 +153,10 @@
 	
 		<span xtype="button" config="onClick: doView ,text:'查看' , itype :'view' "></span>
 	</div>
-	<table xtype="form" id="queryForm" style="width:720px;">
+	<table xtype="form" id="queryForm" style="width:80%;">
 		<tr>
 			<td xtype="label">名称：</td>
-			<td><span xtype="text" config=" name : 'text' "></span></td>
+			<td><span xtype="text" config=" name : 'text' ,watermark:'项目名称/名称' "></span></td>
 			<td colspan="3" style="text-align:center;"><span xtype="radio"
 						config="name: 'state' ,value : 99,  data :[
 						{id:99,text:'所有'},
@@ -115,12 +170,18 @@
 			</td>
 		</tr>
 		<tr>
+			<td xtype="label">项目：</td>
+			<td><span xtype="selectPageList" configVar=" projectConfig " ></span></td>
+			<td xtype="label">模块：</td>
+			<td><span id="modularIdSpan" xtype="selectTree" configVar=" modularConfig " ></span></td>
+			<td rowspan="3"><span xtype="button"
+						config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
+		</tr>
+		<tr>
 			<td xtype="label">发现人：</td>
 			<td><span xtype="text" config=" name : 'findUserText' "></span></td>
 			<td xtype="label">负责人：</td>
 			<td><span xtype="text" config=" name : 'processingPeopleText'"></span></td>
-			<td rowspan="2"><span xtype="button"
-						config="onClick: doQuery ,text:'查询' , itype :'query' "></span></td>
 		</tr>
 		<tr>
 			<td xtype="label">解决人：</td>
