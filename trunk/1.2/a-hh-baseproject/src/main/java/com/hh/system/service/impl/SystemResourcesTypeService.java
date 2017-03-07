@@ -55,9 +55,13 @@ public class SystemResourcesTypeService extends
 		if (resourcesTypes != null) {
 			for (SystemResourcesType systemResourcesType : resourcesTypes) {
 				if (systemResourcesType.getState() == 1) {
-					systemResourcesType.setText(systemResourcesType.getText()
-							+ "[" + systemResourcesType.getCreateUserName() + "]");
-					;
+					if ("root".equals(systemResourcesType.getNode())) {
+						systemResourcesType.setText(systemResourcesType.getText()
+								+ "[" + systemResourcesType.getCreateUserName() + "]");
+					}else{
+						systemResourcesType.setText(systemResourcesType.getText());
+					}
+					
 				}
 				render2(systemResourcesType.getChildren());
 			}
