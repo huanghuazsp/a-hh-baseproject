@@ -272,7 +272,6 @@
 	}
 	
 	function renderMessDivspan(data){
-		$('#messDivspan').removeAttr('rightload');
 		if(data){
 			$('#messDivspan').render(data);
 		}
