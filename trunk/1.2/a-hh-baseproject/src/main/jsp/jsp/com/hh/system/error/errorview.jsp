@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div xtype="hh_content">
-		<table xtype="form" id="table">
+		<table xtype="form" id="table" style="table-layout:fixed;word-wrap:break-word;">
 			<tr>
 				<td xtype="label" width=100px>创建人</td>
 				<td domName="createUserName"></td>
@@ -31,10 +31,7 @@
 			</tr>
 			<tr>
 				<td xtype="label">异常完整内容</td>
-				<td colspan="3"  style="word-break: keep-all;white-space:nowrap;width:600px">
-				<div  domName="allMessage" style="width:600px;text-align:center;vertical-align:middle;overflow:hidden;text-overflow:ellipsis;">
-				
-				</div>
+				<td colspan="3"  domName="allMessage">
 				</td>
 			</tr>
 		</table>
