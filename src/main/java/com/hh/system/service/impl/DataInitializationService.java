@@ -63,7 +63,7 @@ public class DataInitializationService {
 		if (size == 0) {
 			SysParams sysParam = new SysParams();
 			sysParam.setSysName("信息管理系统");
-			sysParam.setSysIcon("/hhcommon/images/extjsico/17460336.png");
+			sysParam.setSysIcon("/hhcommon/images/extjsico/icon.png");
 			sysParam.setSysImg("/hhcommon/images/big/apple/19.png");
 			sysParamService.createEntity(sysParam);
 			SysParam.sysParam = sysParam;
