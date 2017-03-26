@@ -16,7 +16,6 @@ public class SysError extends BaseEntity {
 	private String message;
 	private String allMessage;
 	
-	private String createUserName;
 
 	public String getName() {
 		return name;
@@ -42,16 +41,5 @@ public class SysError extends BaseEntity {
 	public void setAllMessage(String allMessage) {
 		this.allMessage = allMessage;
 	}
-
-	@Transient
-	public String getCreateUserName() {
-		return createUserName;
-	}
-
-	public void setCreateUserName(String createUserName) {
-		this.createUserName = createUserName;
-	}
-	
-	
 
 }
