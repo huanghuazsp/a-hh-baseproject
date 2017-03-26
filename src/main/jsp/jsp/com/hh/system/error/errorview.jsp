@@ -7,6 +7,7 @@
 <%=SystemUtil.getBaseJs()%>
 <script type="text/javascript">
 	var params = $.hh.getIframeParams();
+	var height = 600;
 	function init() {
 		$("#table").setValueName(params);
 	}
