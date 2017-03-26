@@ -48,9 +48,10 @@
 </head>
 <body>
 	<div xtype="toolbar" config="type:'head'">
-		<!-- <span xtype="button" config="onClick:doAdd,text:'添加' , itype :'add' "></span> -->
+		<!-- <span xtype="button" config="onClick:doAdd,text:'添加' , itype :'add' "></span> 
 		<span xtype="button"
-			config="onClick:doEdit,text:'修改' , itype :'edit' "></span> <span
+			config="onClick:doEdit,text:'修改' , itype :'edit' "></span> -->
+		<span
 			xtype="button" config="onClick:doDelete,text:'删除' , itype :'delete' "></span>
 		<!--  <span
 			xtype="button" config="onClick: doQuery ,text:'查询' , itype :'query' "></span> --> <span
