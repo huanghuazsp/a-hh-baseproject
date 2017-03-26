@@ -26,7 +26,7 @@
 			onClick : onClick
 		},{
 			text : '系统工具',
-			img : '/hhcommon/images/extjsico/application_16x16.gif',
+			img : '/hhcommon/images/extjsico/systemtool.gif',
 			url : 'jsp-system-tools-systemtools',
 			onClick : onClick
 		},{

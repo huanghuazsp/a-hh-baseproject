@@ -55,7 +55,7 @@ public class SetupInitializer {
 
 
 		rootHhXtCd.getChildren().add(new SysMenu("2PfT85tR2RRcqSAdmCS", "系统工具",
-				"jsp-system-system-systemmain", "/hhcommon/images/extjsico/application_16x16.gif", 0, 1));
+				"jsp-system-system-systemmain", "/hhcommon/images/extjsico/systemtool.gif", 0, 1));
 		
 		rootHhXtCd.getChildren().add(new SysMenu("JSf7slu3gvtNum8ant1", "基础配置",
 				"jsp-system-system-busmain", "/hhcommon/images/extjsico/17460325.png", 0, 1));
