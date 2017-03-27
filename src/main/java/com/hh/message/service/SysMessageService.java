@@ -289,6 +289,13 @@ public class SysMessageService extends BaseService<SysMessage> implements LoadDa
 
 		return message;
 	}
+	
+	public void deleteByParamsAndToUserId(String param,String userId){
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		paramsMap.put("params", param);
+		paramsMap.put("toObjectId", userId);
+		dao.deleteEntity("delete from "+SysMessage.class.getName()+" where params=:params and toObjectId=:toObjectId", paramsMap);
+	}
 
 	public Object queryMyPagingData(SysMessage object, PageRange pageRange) {
 		ParamInf paramInf = ParamFactory.getParamHb();
