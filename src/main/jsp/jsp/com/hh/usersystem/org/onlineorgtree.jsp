@@ -503,15 +503,23 @@
 		var headpic = config.sendHeadpic;
 		var userId = config.sendUserId;
 		
-		
+		var typeStr = '';
 		if(config.sendObjectType==11 && config.params){
 			message = '<a href="javascript:openEmail(\''+config.params+'\')">'+message+'</a>';
+			typeStr='邮件';
 		}else if(config.sendObjectType==12 && config.params){
 			message = '<a href="javascript:openTask(\''+config.params+'\')">'+message+'</a>';
+			typeStr='流程';
 		}else if(config.sendObjectType==13 && config.params){
 			message = '<a href="javascript:openNotice(\''+config.params+'\')">'+message+'</a>';
+			typeStr='公告';
 		}else if(config.sendObjectType==14 && config.params){
 			message = '<a href="javascript:openMeeting(\''+config.params+'\')">'+message+'</a>';
+			typeStr='会议';
+		}
+		
+		if(queryUrl == 'message-SysMessage-queryMyPagingData'){
+			message=typeStr+'-'+message;
 		}
 
 		if (headpic && headpic.indexOf('hhcomm') == -1) {
